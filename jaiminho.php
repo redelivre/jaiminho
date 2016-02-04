@@ -57,7 +57,6 @@ class Jaiminho extends SendPress
     add_submenu_page('sp-overview', __('Reports','sendpress'), __('Reports','sendpress'), $role, 'sp-reports', array($this,'render_view_jaiminho'));
     add_submenu_page('sp-overview', __('Subscribers','sendpress'), __('Subscribers','sendpress'), $role, 'sp-subscribers', array($this,'render_view_jaiminho'));
     add_submenu_page('sp-overview', __('Queue','sendpress'), __('Queue','sendpress')  . " " . $queue, $role, 'sp-queue', array($this,'render_view_jaiminho'));
-    // XXX settings esta bugado, acho que não carrega pois tem uma url diferenciada
     add_submenu_page('sp-overview', __('Settings','sendpress'), __('Settings','sendpress'), $role, 'sp-settings', array($this,'render_view_jaiminho'));
 
   }
@@ -82,6 +81,7 @@ class Jaiminho extends SendPress
 
   public function render_view_jaiminho() {
     $this->_page = SPNL()->validate->page( $_GET['page'] );
+    $this->_current_view = isset( $_GET['view'] ) ? sanitize_text_field( $_GET['view'] ) : '';
     $view_class = $this->get_view_class( $this->_page, $this->_current_view );
     //echo "About to render: $view_class, $this->_page";
     $view_class = NEW $view_class;
