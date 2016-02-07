@@ -15,6 +15,7 @@ define( 'JAIMINHO_URL', plugin_dir_url( __FILE__ ) );
 
 
 require_once( ABSPATH . '/wp-content/plugins/sendpress/sendpress.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-settings-account.php' );
 class Jaiminho extends SendPress
 {
   protected $plugin_name;
@@ -29,8 +30,24 @@ class Jaiminho extends SendPress
   {
     $sendpress_name = __( 'SendPress', 'sendpress' );
     add_action( 'admin_init', array($this,'remove_menus'));
-    add_action( 'admin_init', array($this,'add_menus'));
+    add_action( 'admin_init', array($this,'add_menus'), 999);
+    add_action( 'admin_init', array($this,'configure_credits'));
+    // this works!!!
+    //add_action( 'admin_footer' , array( $this , 'jaiminho_filter_html' ) );
+    add_action( 'jaiminho_page_sp-settings' , array( $this , 'jaiminho_filter_html' ) );
     //add_action( 'admin_init', array($this,'wpse_136058_debug_admin_menu'));
+  }
+
+  public function jaiminho_filter_html() {
+      echo "##############################";
+  }
+
+
+  public function configure_credits()
+  {
+    $options = array();
+    $options['emails-credits'] = str_replace($chars, "", $_POST['emails-credits']);
+    SendPress_Option::set($options);
   }
 
   // function for remove especific elements from seenpress
@@ -58,6 +75,8 @@ class Jaiminho extends SendPress
     add_submenu_page('sp-overview', __('Subscribers','sendpress'), __('Subscribers','sendpress'), $role, 'sp-subscribers', array($this,'render_view_jaiminho'));
     add_submenu_page('sp-overview', __('Queue','sendpress'), __('Queue','sendpress')  . " " . $queue, $role, 'sp-queue', array($this,'render_view_jaiminho'));
     add_submenu_page('sp-overview', __('Settings','sendpress'), __('Settings','sendpress'), $role, 'sp-settings', array($this,'render_view_jaiminho'));
+    // além da aba teriamos que colocar a opção no menu
+    //add_submenu_page('sp-overview', __('Settings','sendpress'), __('Settings','sendpress'), $role, 'sp-settings', array($this,'render_view_jaiminho'));
 
   }
 
@@ -84,6 +103,12 @@ class Jaiminho extends SendPress
     $this->_current_view = isset( $_GET['view'] ) ? sanitize_text_field( $_GET['view'] ) : '';
     $view_class = $this->get_view_class( $this->_page, $this->_current_view );
     //echo "About to render: $view_class, $this->_page";
+    // se o nome da variavel é SendPress_View_Settings_Account troque por Jaiminho_View_Settings_Account
+    var_dump($view_class);
+
+    if($view_class == SendPress_View_Settings_Account)
+      $view_class = "Jaiminho_View_Settings_Account";
+
     $view_class = NEW $view_class;
     $queue      = '<span id="queue-count-menu-tab">-</span>';
     //$queue = //SendPress_Data::emails_in_queue();
