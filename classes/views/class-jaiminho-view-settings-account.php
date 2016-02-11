@@ -7,6 +7,7 @@ if ( !defined( 'SENDPRESS_VERSION' ) ) {
 	die;
 }
 
+require_once( ABSPATH . '/wp-content/plugins/sendpress/classes/class-sendpress-option.php' );
 
 class Jaiminho_View_Settings_Account extends SendPress_View_Settings {
 
@@ -41,17 +42,14 @@ class Jaiminho_View_Settings_Account extends SendPress_View_Settings {
 			$fromemail = 'wordpress@' . $sitename;
 		}
 
-
 		SendPress_Option::set('fromemail', $fromemail );
 		SendPress_Option::set('fromname', $fromname );
+                SendPress_Option::set('bounceemail', $bounceemail );
 
-
-		$options['sendmethod'] = $_POST['sendpress-sender'];
 		// Provides: Hll Wrld f PHP
 		$chars = array(".", ",", " ", ":", ";", "$", "%", "*", "-", "=");
 		$options['emails-per-day'] =  str_replace($chars,"",$_POST['emails-per-day']);
-		$options['emails-per-hour'] = str_replace($chars,"",$_POST['emails-per-hour']);
-                $options['emails-credits'] = str_replace($chars, "", $_POST['emails-credits']);
+		$options['emails-per-hour'] =  str_replace($chars,"",$_POST['emails-per-hour']);
 		$options['email-charset'] = $_POST['email-charset'];
 		$options['email-encoding'] = $_POST['email-encoding'];
 		$options['testemail'] = $_POST['testemail'];
@@ -91,12 +89,16 @@ class Jaiminho_View_Settings_Account extends SendPress_View_Settings {
 
 
 	function html( $sp ) {
+                if (is_multisite() && !is_super_admin()) {
+                  return;
+                }
 		global  $sendpress_sender_factory;
 		$senders = $sendpress_sender_factory->get_all_senders();
 		ksort($senders);
 		$method = SendPress_Option::get( 'sendmethod' );
 		$fe = __('From Email','sendpress');
 		$fn = __('From Name','sendpress');
+		$be = __('Bounce Email','jaiminho');
 		?>
 <!--
 <div style="float:right;" >
@@ -118,6 +120,10 @@ class Jaiminho_View_Settings_Account extends SendPress_View_Settings {
 			<div class="form-group">
 				<label for="fromemail"><?php _e('From Email','sendpress'); ?></label>
 				<input name="fromemail" tabindex=2 type="text" id="fromemail" value="<?php echo SendPress_Option::get('fromemail'); ?>" class="form-control">
+			</div>
+			<div class="form-group">
+				<label for="bounceemail"><?php _e('Bounce Email','jaiminho'); ?></label>
+				<input name="bounceemail" tabindex=3 type="text" id="bounceemail" value="<?php echo SendPress_Option::get('bounceemail'); ?>" class="form-control">
 			</div>
 
 			<?php $this->panel_end(); ?>
@@ -249,9 +255,12 @@ class Jaiminho_View_Settings_Account extends SendPress_View_Settings {
 							<h2><?php _e('Email Sending Limits','sendpress'); ?></h2>
 
 							<?php
-							$emails_per_day = SendPress_Option::get('emails-per-day');
+							$emails_per_day  = SendPress_Option::get('emails-per-day');
 							$emails_per_hour =  SendPress_Option::get('emails-per-hour');
-                                                        $credits = SendPress_Option::get('emails-credits');
+                                                        $credits         = SendPress_Option::get('emails-credits');
+							var_dump(SendPress_Option::get('emails-per-hour'));
+                                                        var_dump(SendPress_Option::get('emails-per-day'));
+                                                        var_dump(SendPress_Option::get('emails-credits'));
 
 							//$hourly_emails = SendPress_Data::emails_sent_in_queue("hour");
 							$emails_so_far = SendPress_Data::emails_sent_in_queue("day");

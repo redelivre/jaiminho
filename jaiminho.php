@@ -15,7 +15,15 @@ define( 'JAIMINHO_URL', plugin_dir_url( __FILE__ ) );
 
 
 require_once( ABSPATH . '/wp-content/plugins/sendpress/sendpress.php' );
+require_once( ABSPATH . '/wp-content/plugins/sendpress/classes/views/class-sendpress-view.php' );
+//require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-settings-account.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-send.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-overview.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-queue-all.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-queue.php' );
+//Maurilio - A página settings possui um menu horizontal que é contruido pelo arquivo similar ao abaixo no sendpress. Aqui vou ter que fazer com que a página settings carregue o arquivo abaixo ao invez do arquivo original. TODO
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-settings.php' );
 class Jaiminho extends SendPress
 {
   protected $plugin_name;
@@ -31,24 +39,28 @@ class Jaiminho extends SendPress
     $sendpress_name = __( 'SendPress', 'sendpress' );
     add_action( 'admin_init', array($this,'remove_menus'));
     add_action( 'admin_init', array($this,'add_menus'), 999);
-    add_action( 'admin_init', array($this,'configure_credits'));
+    add_action( 'toplevel_page_sp-overview', array($this,'render_view_jaiminho'));
+    add_action( 'jaiminho_page_sp-settings', array($this,'render_view_jaiminho'));
     // this works!!!
     //add_action( 'admin_footer' , array( $this , 'jaiminho_filter_html' ) );
     add_action( 'jaiminho_page_sp-settings' , array( $this , 'jaiminho_filter_html' ) );
+    remove_action( 'in_admin_footer',array(SendPress_View::get_instance(),'footer'),10);
+    //$this->remove_filters_for_anonymous_class('in_admin_footer','SendPress_View','footer',10);
+    //new Jaiminho_View();
+    add_filter( 'admin_footer_text', '__return_empty_string', 11 ); 
+    add_filter( 'update_footer', '__return_empty_string', 11 );
+    //add_filter( 'in_admin_footer', '__return_empty_string', -1 );
     //add_action( 'admin_init', array($this,'wpse_136058_debug_admin_menu'));
+    //add_filter( 'sendpress_notices', array($this,'example_callback') );
+    //apply_filter('sendpress_notices', array($this, 'example_callback'), 10);
   }
+
 
   public function jaiminho_filter_html() {
       echo "##############################";
   }
 
 
-  public function configure_credits()
-  {
-    $options = array();
-    $options['emails-credits'] = str_replace($chars, "", $_POST['emails-credits']);
-    SendPress_Option::set($options);
-  }
 
   // function for remove especific elements from seenpress
   public function add_menus()
@@ -106,9 +118,42 @@ class Jaiminho extends SendPress
     // se o nome da variavel é SendPress_View_Settings_Account troque por Jaiminho_View_Settings_Account
     var_dump($view_class);
 
-    if($view_class == SendPress_View_Settings_Account)
+    if($view_class == "SendPress_View_Settings_Account")
+    {
       $view_class = "Jaiminho_View_Settings_Account";
+      // Maurilio - Hack Necessário pois não consegui direcionar para a função account_setup em jaiminho_settings_account
+      $chars = array(".", ",", " ", ":", ";", "$", "%", "*", "-", "=");
+      if($_POST['emails-credits'])
+        SendPress_Option::set('emails-credits', str_replace($chars, "",$_POST['emails-credits']) ); 
+      else if(SendPress_Option::get('emails-credits'))
+       SendPress_Option::get('emails-credits'); //Maurilio - depois fazer a mesma coisa para a opção bouceemail (email de retorno)
+      else 
+        SendPress_Option::set('emails-credits', 1000 ); 
 
+      if(isset($_POST['bounceemail']))
+      {
+        $bounceemail= $_POST['bounceemail'];
+      }
+      if ( !isset( $bounceemail ) ) 
+      {
+        // Get the site domain and get rid of www.
+        $sitename = strtolower( $_SERVER['SERVER_NAME'] );
+        if ( substr( $sitename, 0, 4 ) == 'www.' ) {
+          $sitename = substr( $sitename, 4 );
+        }
+        $bounceemail = 'bounce@' . $sitename;
+      }
+      SendPress_Option::set('bounceemail', $bounceemail );
+    }
+    if($view_class == "SendPress_View_Emails_Send")
+      $view_class = "Jaiminho_View_Emails_Send";
+    if($view_class == "SendPress_View_Overview")
+      $view_class = "Jaiminho_View_Overview";
+    if($view_class == "SendPress_View_Queue_All")
+      $view_class = "Jaiminho_View_Queue_All";
+    if($view_class == "SendPress_View_Queue")
+      $view_class = "Jaiminho_View_Queue";
+  
     $view_class = NEW $view_class;
     $queue      = '<span id="queue-count-menu-tab">-</span>';
     //$queue = //SendPress_Data::emails_in_queue();
@@ -122,6 +167,55 @@ class Jaiminho extends SendPress
     $view_class->prerender( $this );
     $view_class->render( $this );
   }
+
+
+public function remove_filters_with_method_name( $hook_name = '', $method_name = '', $priority = 0 ) {
+	global $wp_filter;
+	
+	// Take only filters on right hook name and priority
+	if ( !isset($wp_filter[$hook_name][$priority]) || !is_array($wp_filter[$hook_name][$priority]) )
+		return false;
+	
+	// Loop on filters registered
+	foreach( (array) $wp_filter[$hook_name][$priority] as $unique_id => $filter_array ) {
+		// Test if filter is an array ! (always for class/method)
+		if ( isset($filter_array['function']) && is_array($filter_array['function']) ) {
+			// Test if object is a class and method is equal to param !
+			if ( is_object($filter_array['function'][0]) && get_class($filter_array['function'][0]) && $filter_array['function'][1] == $method_name ) {
+				unset($wp_filter[$hook_name][$priority][$unique_id]);
+			}
+		}
+		
+	}
+	
+	return false;
+}
+/**
+ * Allow to remove method for an hook when, it's a class method used and class don't have variable, but you know the class name :)
+ */
+public function remove_filters_for_anonymous_class( $hook_name = '', $class_name ='', $method_name = '', $priority = 0 ) {
+	global $wp_filter;
+        //echo "<pre>";
+        //print_r($wp_filter);	
+        //echo "</pre>";
+	// Take only filters on right hook name and priority
+	if ( !isset($wp_filter[$hook_name][$priority]) || !is_array($wp_filter[$hook_name][$priority]) )
+		return false;
+	
+	// Loop on filters registered
+	foreach( (array) $wp_filter[$hook_name][$priority] as $unique_id => $filter_array ) {
+		// Test if filter is an array ! (always for class/method)
+		if ( isset($filter_array['function']) && is_array($filter_array['function']) ) {
+			// Test if object is a class, class and method is equal to param !
+			if ( is_object($filter_array['function'][0]) && get_class($filter_array['function'][0]) && get_class($filter_array['function'][0]) == $class_name && $filter_array['function'][1] == $method_name ) {
+				unset($wp_filter[$hook_name][$priority][$unique_id]);
+			}
+		}
+		
+	}
+	
+	return false;
+}
 
 
 }
