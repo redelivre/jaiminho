@@ -258,10 +258,7 @@ class Jaiminho_View_Settings_Account extends SendPress_View_Settings {
 							$emails_per_day  = SendPress_Option::get('emails-per-day');
 							$emails_per_hour =  SendPress_Option::get('emails-per-hour');
                                                         $credits         = SendPress_Option::get('emails-credits');
-							var_dump(SendPress_Option::get('emails-per-hour'));
-                                                        var_dump(SendPress_Option::get('emails-per-day'));
-                                                        var_dump(SendPress_Option::get('emails-credits'));
-
+                                                        //Maurilio: Amarelo comentou esta linha
 							//$hourly_emails = SendPress_Data::emails_sent_in_queue("hour");
 							$emails_so_far = SendPress_Data::emails_sent_in_queue("day");
 							?><?php

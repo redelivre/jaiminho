@@ -43,7 +43,6 @@ class Jaiminho extends SendPress
     add_action( 'jaiminho_page_sp-settings', array($this,'render_view_jaiminho'));
     // this works!!!
     //add_action( 'admin_footer' , array( $this , 'jaiminho_filter_html' ) );
-    add_action( 'jaiminho_page_sp-settings' , array( $this , 'jaiminho_filter_html' ) );
     remove_action( 'in_admin_footer',array(SendPress_View::get_instance(),'footer'),10);
     //$this->remove_filters_for_anonymous_class('in_admin_footer','SendPress_View','footer',10);
     //new Jaiminho_View();
@@ -53,16 +52,11 @@ class Jaiminho extends SendPress
     //add_action( 'admin_init', array($this,'wpse_136058_debug_admin_menu'));
     //add_filter( 'sendpress_notices', array($this,'example_callback') );
     //apply_filter('sendpress_notices', array($this, 'example_callback'), 10);
+    add_action( 'admin_print_styles' , array( $this , 'jaiminho_admin_footer_css_hide' ) );
   }
 
 
-  public function jaiminho_filter_html() {
-      echo "##############################";
-  }
-
-
-
-  // function for remove especific elements from seenpress
+  // Function for remove especific elements from seenpress
   public function add_menus()
   {
     
@@ -87,9 +81,6 @@ class Jaiminho extends SendPress
     add_submenu_page('sp-overview', __('Subscribers','sendpress'), __('Subscribers','sendpress'), $role, 'sp-subscribers', array($this,'render_view_jaiminho'));
     add_submenu_page('sp-overview', __('Queue','sendpress'), __('Queue','sendpress')  . " " . $queue, $role, 'sp-queue', array($this,'render_view_jaiminho'));
     add_submenu_page('sp-overview', __('Settings','sendpress'), __('Settings','sendpress'), $role, 'sp-settings', array($this,'render_view_jaiminho'));
-    // além da aba teriamos que colocar a opção no menu
-    //add_submenu_page('sp-overview', __('Settings','sendpress'), __('Settings','sendpress'), $role, 'sp-settings', array($this,'render_view_jaiminho'));
-
   }
 
   public function remove_menus()
@@ -114,9 +105,11 @@ class Jaiminho extends SendPress
     $this->_page = SPNL()->validate->page( $_GET['page'] );
     $this->_current_view = isset( $_GET['view'] ) ? sanitize_text_field( $_GET['view'] ) : '';
     $view_class = $this->get_view_class( $this->_page, $this->_current_view );
+    
+    echo "original: ".$view_class;
+    
     //echo "About to render: $view_class, $this->_page";
     // se o nome da variavel é SendPress_View_Settings_Account troque por Jaiminho_View_Settings_Account
-    var_dump($view_class);
 
     if($view_class == "SendPress_View_Settings_Account")
     {
@@ -153,7 +146,7 @@ class Jaiminho extends SendPress
       $view_class = "Jaiminho_View_Queue_All";
     if($view_class == "SendPress_View_Queue")
       $view_class = "Jaiminho_View_Queue";
-  
+    echo " nova: ".$view_class;  
     $view_class = NEW $view_class;
     $queue      = '<span id="queue-count-menu-tab">-</span>';
     //$queue = //SendPress_Data::emails_in_queue();
@@ -167,6 +160,16 @@ class Jaiminho extends SendPress
     $view_class->prerender( $this );
     $view_class->render( $this );
   }
+  function jaiminho_admin_footer_css_hide(){
+    ?>
+    <style type="text/css">
+        #wpfooter{
+            display: none !important;
+        }
+    </style>
+    <?php
+ 
+}
 
 }
 
