@@ -44,7 +44,7 @@ class Jaiminho_View_Settings_Account extends SendPress_View_Settings {
 
 		SendPress_Option::set('fromemail', $fromemail );
 		SendPress_Option::set('fromname', $fromname );
-                SendPress_Option::set('bounceemail', $bounceemail );
+                SendPress_Option::set('bounce_email', $bounceemail );
 
 		// Provides: Hll Wrld f PHP
 		$chars = array(".", ",", " ", ":", ";", "$", "%", "*", "-", "=");
@@ -123,7 +123,7 @@ class Jaiminho_View_Settings_Account extends SendPress_View_Settings {
 			</div>
 			<div class="form-group">
 				<label for="bounceemail"><?php _e('Bounce Email','jaiminho'); ?></label>
-				<input name="bounceemail" tabindex=3 type="text" id="bounceemail" value="<?php echo SendPress_Option::get('bounceemail'); ?>" class="form-control">
+				<input name="bounceemail" tabindex=3 type="text" id="bounceemail" value="<?php echo SendPress_Option::get('bounce_email'); ?>" class="form-control">
 			</div>
 
 			<?php $this->panel_end(); ?>

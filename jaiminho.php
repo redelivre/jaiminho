@@ -105,7 +105,7 @@ class Jaiminho extends SendPress
     $this->_page = SPNL()->validate->page( $_GET['page'] );
     $this->_current_view = isset( $_GET['view'] ) ? sanitize_text_field( $_GET['view'] ) : '';
     $view_class = $this->get_view_class( $this->_page, $this->_current_view );
-    
+    var_dump(SendPress_Option::get('website-hosting-provider')); 
     echo "original: ".$view_class;
     
     //echo "About to render: $view_class, $this->_page";
@@ -127,6 +127,8 @@ class Jaiminho extends SendPress
       {
         $bounceemail= $_POST['bounceemail'];
       }
+      else if (SendPress_Option::get('bounce_email'))
+        $bounceemail=SendPress_Option::get('bounce_email');
       if ( !isset( $bounceemail ) ) 
       {
         // Get the site domain and get rid of www.
@@ -136,7 +138,7 @@ class Jaiminho extends SendPress
         }
         $bounceemail = 'bounce@' . $sitename;
       }
-      SendPress_Option::set('bounceemail', $bounceemail );
+      SendPress_Option::set('bounce_email', $bounceemail );
     }
     if($view_class == "SendPress_View_Emails_Send")
       $view_class = "Jaiminho_View_Emails_Send";

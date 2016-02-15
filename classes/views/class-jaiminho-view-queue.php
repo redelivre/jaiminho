@@ -206,16 +206,20 @@ echo $time;//11:09
 		}
 	  $emails_per_hour =  SendPress_Option::get('emails-per-hour');
           $credits = SendPress_Option::get('emails-credits');
-          var_dump($credits);
 	  $hourly_emails = SendPress_Data::emails_sent_in_queue("hour");
 	  $emails_so_far = SendPress_Data::emails_sent_in_queue("day");
 	 
 		//print_r(SendPress_Data::emails_stuck_in_queue());
-
-	  	
+                global $wpdb;
+                $table = SendPress_Data::queue_table();
+                // Maurilio TODO: fazer com os créditos sejam contados a partir da 00:00:00 do primeiro dia do mês atual
+	  	$hour_ago = strtotime('-'.getdate()["mday"].' day');
+                $time = date('Y-m-d H:i:s', $hour_ago);
+                $query = $wpdb->prepare("SELECT COUNT(*) FROM $table where last_attempt > %s and success = %d", $time, 1 );
+                $credits_so_far =  $wpdb->get_var( $query );
 		?>
                 <h2><?php $credits?_e('You have', 'sendpress'):""; ?>
-                  <strong><?php echo $credits; ?></strong> <?php $credits?_e('credits.', 'sendpress'):""; ?></h2>
+                  <strong><?php echo $credits-$credits_so_far; ?></strong> <?php $credits?_e('credits.', 'sendpress'):""; ?></h2>
                 <?php if ($credits <= 0) { ?>
                   <!--Maurilio - Acho que podemos fazer um sistema de tradução do Jaiminho ai traduzimos isso por exemplo-->
                 <?php echo "<p class='alert alert-danger'>" . __("Oh no! You don't have any credits. To send the emails in your queue or send new emails, you need to get more credits.", "jaiminho") . "</p>"; ?>
