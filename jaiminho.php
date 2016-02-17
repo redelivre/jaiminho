@@ -56,6 +56,31 @@ class Jaiminho extends SendPress
   }
 
 
+  public function create_templates()
+  {
+    $post_id = wp_insert_post(
+                array(
+                        'post_name'             =>      'nota',
+                        'post_title'            =>      'Nota',
+                        'post_status'           =>      'sp-standard',
+                        'post_type'             =>      'sp_template',
+                     )
+              );
+    update_post_meta( $post_id, '_guid',  'cd8ab467-e236-49d3-bd6c-e84db055ae9a');
+    update_post_meta( $post_id, '_footer_page', "" );
+    update_post_meta( $post_id, '_header_content', "" );
+    update_post_meta( $post_id, '_header_padding', 'pad-header' );
+    add_option("note", $post_id );
+  }
+  
+  public function remove_templates()
+  {
+    $post_id = get_option( "note" );
+    wp_delete_post( $post_id );
+    delete_option( "note" );
+  }
+
+
   // Function for remove especific elements from seenpress
   public function add_menus()
   {
@@ -74,7 +99,6 @@ class Jaiminho extends SendPress
       $queue = '(<span id="queue-count-menu">-</span>)';//SendPress_Data::emails_in_queue();
     }
     add_menu_page( __('Jaiminho','sendpress'), __('Jaiminho','sendpress'), $role, 'sp-overview', array( $this , 'render_view_jaiminho' ), JAIMINHO_URL.'img/jaiminho-bg-16.png' );
-    // XXX ajuda e pro não saem do overview
     add_submenu_page('sp-overview', __('Overview','sendpress'), __('Overview','sendpress'), $role, 'sp-overview', array($this,'render_view_jaiminho'));
     $main = add_submenu_page('sp-overview', __('Emails','sendpress'), __('Emails','sendpress'), $role, 'sp-emails', array($this,'render_view_jaiminho'));
     add_submenu_page('sp-overview', __('Reports','sendpress'), __('Reports','sendpress'), $role, 'sp-reports', array($this,'render_view_jaiminho'));
@@ -119,7 +143,7 @@ class Jaiminho extends SendPress
       if($_POST['emails-credits'])
         SendPress_Option::set('emails-credits', str_replace($chars, "",$_POST['emails-credits']) ); 
       else if(SendPress_Option::get('emails-credits'))
-       SendPress_Option::get('emails-credits'); //Maurilio - depois fazer a mesma coisa para a opção bouceemail (email de retorno)
+       SendPress_Option::get('emails-credits');
       else 
         SendPress_Option::set('emails-credits', 1000 ); 
 
@@ -149,6 +173,7 @@ class Jaiminho extends SendPress
     if($view_class == "SendPress_View_Queue")
       $view_class = "Jaiminho_View_Queue";
     echo " nova: ".$view_class;  
+
     $view_class = NEW $view_class;
     $queue      = '<span id="queue-count-menu-tab">-</span>';
     //$queue = //SendPress_Data::emails_in_queue();
@@ -174,6 +199,9 @@ class Jaiminho extends SendPress
 }
 
 }
+
+register_activation_hook( __FILE__, array( 'Jaiminho' , 'create_templates' ) );
+register_deactivation_hook( __FILE__, array( 'Jaiminho' , 'remove_templates' ) );
 
 global $Jaiminho;
 
