@@ -13,17 +13,18 @@ Domain Path: /languages/
 
 define( 'JAIMINHO_URL', plugin_dir_url( __FILE__ ) );
 
-
+// sendpress classes
 require_once( ABSPATH . '/wp-content/plugins/sendpress/sendpress.php' );
 require_once( ABSPATH . '/wp-content/plugins/sendpress/classes/views/class-sendpress-view.php' );
+// jaiminho classes
 //require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-settings-account.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-send.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-overview.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-queue-all.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-queue.php' );
-//Maurilio - A página settings possui um menu horizontal que é contruido pelo arquivo similar ao abaixo no sendpress. Aqui vou ter que fazer com que a página settings carregue o arquivo abaixo ao invez do arquivo original. TODO
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-settings.php' );
+
 class Jaiminho extends SendPress
 {
   protected $plugin_name;
