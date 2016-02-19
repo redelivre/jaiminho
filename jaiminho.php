@@ -59,10 +59,19 @@ class Jaiminho extends SendPress
     add_action( 'admin_print_styles' , array( $this , 'jaiminho_admin_footer_css_hide' ) );
     global $wp_rewrite; 
     $wp_rewrite->flush_rules();
-
+    //add_filter( 'tiny_mce_before_init', array( $this , 'my_format_TinyMCE' ) );
+    add_filter( 'tiny_mce_before_init', array( $this, 'myformatTinyMCE' ) );
     sendpress_register_sender( 'Jaiminho_Sender_RedeLivre' );
   }
 
+  public function myformatTinyMCE( $in ) 
+  {
+    if ( isset( $in['plugins'] ) ) {
+      $in['plugins'] .= ' , wpeditimage';
+    }
+
+    return $in;
+  }
 
   public function create_templates()
   {
