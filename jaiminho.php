@@ -12,6 +12,7 @@ Domain Path: /languages/
 */
 
 define( 'JAIMINHO_URL', plugin_dir_url( __FILE__ ) );
+define('SPNL_DISABLE_SENDING_DELIVERY',false);
 
 // sendpress classes
 require_once( ABSPATH . '/wp-content/plugins/sendpress/sendpress.php' );
@@ -24,6 +25,7 @@ require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaimin
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-queue-all.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-queue.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-settings.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-sender-redelivre.php' );
 
 class Jaiminho extends SendPress
 {
@@ -37,6 +39,7 @@ class Jaiminho extends SendPress
 
   public function Init()
   {
+    
     $sendpress_name = __( 'SendPress', 'sendpress' );
     add_action( 'admin_init', array($this,'remove_menus'));
     add_action( 'admin_init', array($this,'add_menus'), 999);
@@ -54,6 +57,10 @@ class Jaiminho extends SendPress
     //add_filter( 'sendpress_notices', array($this,'example_callback') );
     //apply_filter('sendpress_notices', array($this, 'example_callback'), 10);
     add_action( 'admin_print_styles' , array( $this , 'jaiminho_admin_footer_css_hide' ) );
+    global $wp_rewrite; 
+    $wp_rewrite->flush_rules();
+
+    sendpress_register_sender( 'Jaiminho_Sender_RedeLivre' );
   }
 
 
@@ -132,7 +139,10 @@ class Jaiminho extends SendPress
     $view_class = $this->get_view_class( $this->_page, $this->_current_view );
     var_dump(SendPress_Option::get('website-hosting-provider')); 
     echo "original: ".$view_class;
-    
+    $rules = get_option( 'rewrite_rules' ); 
+    echo '<pre>';
+    //print_r($rules);
+    echo '</pre>';
     //echo "About to render: $view_class, $this->_page";
     // se o nome da variavel é SendPress_View_Settings_Account troque por Jaiminho_View_Settings_Account
 

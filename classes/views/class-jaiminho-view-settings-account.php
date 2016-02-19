@@ -8,8 +8,9 @@ if ( !defined( 'SENDPRESS_VERSION' ) ) {
 }
 
 require_once( ABSPATH . '/wp-content/plugins/sendpress/classes/class-sendpress-option.php' );
+require_once( ABSPATH . '/wp-content/plugins/sendpress/classes/views/class-sendpress-view-settings-account.php' );
 
-class Jaiminho_View_Settings_Account extends SendPress_View_Settings {
+class Jaiminho_View_Settings_Account extends SendPress_View_Settings_Account {
 
 	function account_setup(){
 
