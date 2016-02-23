@@ -12,6 +12,7 @@ Domain Path: /languages/
 */
 
 define( 'JAIMINHO_URL', plugin_dir_url( __FILE__ ) );
+define( 'JAIMINHO_VERSION', 0.0 );
 define('SPNL_DISABLE_SENDING_DELIVERY',false);
 
 // sendpress classes
@@ -39,8 +40,8 @@ class Jaiminho extends SendPress
 
   public function Init()
   {
-    
     $sendpress_name = __( 'SendPress', 'sendpress' );
+    wp_register_script('jaiminho_disable',JAIMINHO_URL .'js/disable.js' ,'',JAIMINHO_VERSION);
     add_action( 'admin_init', array($this,'remove_menus'));
     add_action( 'admin_init', array($this,'add_menus'), 999);
     add_action( 'toplevel_page_sp-overview', array($this,'render_view_jaiminho'));
@@ -192,6 +193,8 @@ class Jaiminho extends SendPress
       $view_class = "Jaiminho_View_Queue_All";
     if($view_class == "SendPress_View_Queue")
       $view_class = "Jaiminho_View_Queue";
+    if($view_class == "SendPress_View_Subscribers_Listcreate")
+      wp_enqueue_script('jaiminho_disable');
     echo " nova: ".$view_class;  
 
     $view_class = NEW $view_class;
@@ -216,7 +219,7 @@ class Jaiminho extends SendPress
     </style>
     <?php
  
-}
+   }
 
 }
 
