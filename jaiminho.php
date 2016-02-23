@@ -63,7 +63,58 @@ class Jaiminho extends SendPress
     //add_filter( 'tiny_mce_before_init', array( $this , 'my_format_TinyMCE' ) );
     add_filter( 'tiny_mce_before_init', array( $this, 'myformatTinyMCE' ) );
     sendpress_register_sender( 'Jaiminho_Sender_RedeLivre' );
+
+    add_action( 'network_admin_menu' , array( $this , 'jaiminho_network_settings' ) );
   }
+
+  public function jaiminho_network_settings()
+  {
+    add_submenu_page(
+         'settings.php',
+         __('Configurações do Jaiminho','jaiminho'),
+         __('Configurações do Jaiminho','jaiminho'),
+         'manage_network_options',
+         'jaiminho-network-settings',
+         array( $this , 'jaiminho_settings_network_html' )
+    );    
+  }
+
+  public function jaiminho_settings_network_html()
+  {
+      if($_POST && "SendPress_Sender_Website" == $_POST["sendpress-sender"])
+        SendPress_Option::set( 'sendmethod' , 'SendPress_Sender_Website');
+      ?>
+       <form id="post" method="post">
+    <?php
+  
+       global  $sendpress_sender_factory;
+       $senders = $sendpress_sender_factory->get_all_senders();
+       $method = SendPress_Option::get( 'sendmethod' );
+       $key = "SendPress_Sender_Website";
+       $sender = $senders[$key];
+       $class ='';
+       if ( $c >= 1 ) { $class = "margin-left: 4%"; }
+       echo "<div style=' float:left; width: 48%; $class' id='$key'>";
+    ?>
+       <p>&nbsp;<input name="sendpress-sender" type="radio"  
+    <?php 
+       if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { 
+    ?>
+       checked="checked"
+    <?php 
+       } 
+    ?> 
+        id="website" value="<?php echo $key;?>" /> 
+    <?php 
+        _e('Send Emails via','sendpress'); 
+       echo " " . $sender->label();
+       echo "</div><br>";
+       submit_button( __( 'Save' , 'jaiminho' ) );
+  ?>
+       </form>
+  <?php
+  }
+
 
   public function myformatTinyMCE( $in ) 
   {
@@ -116,7 +167,7 @@ class Jaiminho extends SendPress
     if ( isset( $_GET['page'] ) && in_array( SPNL()->validate->page( $_GET['page'] ), $this->adminpages ) ) {
       $queue = '(<span id="queue-count-menu">-</span>)';//SendPress_Data::emails_in_queue();
     }
-    add_menu_page( __('Jaiminho','sendpress'), __('Jaiminho','sendpress'), $role, 'sp-overview', array( $this , 'render_view_jaiminho' ), JAIMINHO_URL.'img/jaiminho-bg-16.png' );
+    add_menu_page( __('Jaiminho','jaiminho'), __('Jaiminho','jaiminho'), $role, 'sp-overview', array( $this , 'render_view_jaiminho' ), JAIMINHO_URL.'img/jaiminho-bg-16.png' );
     add_submenu_page('sp-overview', __('Overview','sendpress'), __('Overview','sendpress'), $role, 'sp-overview', array($this,'render_view_jaiminho'));
     $main = add_submenu_page('sp-overview', __('Emails','sendpress'), __('Emails','sendpress'), $role, 'sp-emails', array($this,'render_view_jaiminho'));
     add_submenu_page('sp-overview', __('Reports','sendpress'), __('Reports','sendpress'), $role, 'sp-reports', array($this,'render_view_jaiminho'));
