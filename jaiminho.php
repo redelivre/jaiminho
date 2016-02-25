@@ -28,6 +28,7 @@ require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaimin
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-queue.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-settings.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-templates.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-temp.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-sender-redelivre.php' );
 
 class Jaiminho extends SendPress
@@ -248,6 +249,8 @@ class Jaiminho extends SendPress
       $view_class = "Jaiminho_View_Queue";
     if($view_class == "SendPress_View_Emails_Templates")
       $view_class = "Jaiminho_View_Emails_Templates";
+    if($view_class == "SendPress_View_Emails_Temp")
+      $view_class = "Jaiminho_View_Emails_Temp";
     if($view_class == "SendPress_View_Subscribers_Listcreate")
       wp_enqueue_script('jaiminho_disable');
     echo " nova: ".$view_class;  
