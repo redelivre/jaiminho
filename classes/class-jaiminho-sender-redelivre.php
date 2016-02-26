@@ -34,9 +34,9 @@ class Jaiminho_Sender_RedeLivre extends SendPress_Sender
   <?php _e( 'Password' , 'sendpress'); ?>
   <p><input name="redelivrepass" type="password" value="<?php echo SendPress_Option::get( 'redelivrepass' ); ?>" style="width:100%;" /></p>
   <?php _e( 'Server' , 'jaiminho'); ?>
-  <p><input name="redelivreserver" type="password" value="<?php echo SendPress_Option::get( 'redelivreserver' ); ?>" style="width:100%;" /></p>
+  <p><input name="redelivreserver" type="text" value="<?php echo SendPress_Option::get( 'redelivreserver' ); ?>" style="width:100%;" /></p>
   <?php _e( 'Port' , 'redelivreport'); ?>
-  <p><input name="redelivreport" type="password" value="<?php echo SendPress_Option::get( 'redelivreport' ); ?>" style="width:100%;" /></p>
+  <p><input name="redelivreport" type="text" value="<?php echo SendPress_Option::get( 'redelivreport' ); ?>" style="width:100%;" /></p>
 	<?php
 
 	}
