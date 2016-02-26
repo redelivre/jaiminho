@@ -68,7 +68,30 @@ class Jaiminho extends SendPress
     sendpress_register_sender( 'Jaiminho_Sender_RedeLivre' );
 
     add_action( 'network_admin_menu' , array( $this , 'jaiminho_network_settings' ) );
+    add_action( 'init' , array( $this , 'jaiminho_check_rewrite' ) );
   }
+
+  public function jaiminho_check_rewrite() 
+  { 
+    $rules = get_option( 'rewrite_rules' ); 
+    $found = false; 
+    if(is_array($rules)) 
+    { 
+       foreach ($rules as $rule) 
+      { 
+        if(strpos($rule, 'sendpress') !== false) 
+       { 
+         $found = true; 
+         break; 
+       } 
+      } 
+      if ( ! $found ) 
+       { 
+         global $wp_rewrite; 
+         $wp_rewrite->flush_rules(); 
+       } 
+     } 
+   }
 
   public function jaiminho_network_settings()
   {
