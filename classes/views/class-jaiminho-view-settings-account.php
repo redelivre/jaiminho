@@ -211,28 +211,32 @@ class Jaiminho_View_Settings_Account extends SendPress_View_Settings_Account {
 					<ul class="nav nav-tabs">
 						<?php
 						foreach ( $senders as $key => $sender ) {
+                                                      if ($key !== 'SendPress_Sender_Website'){
 							$class ='';
 							if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { $class = "class='active'"; }
 							echo "<li $class><a href='#$key' data-toggle='tab'>";
 							if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { echo '<span class="glyphicon glyphicon-ok-sign"></span> '; }
 							echo $sender->label();
 							echo "</a></li>";
+                                                     }
 						}
 						?>
 					</ul>
 					<div class="tab-content" style="display:block;">
 						<?php
 						foreach ( $senders as $key => $sender ) {
-							$class ='';
-							if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { $class = "active"; }
-							echo "<div class='tab-pane $class' id='$key'>";
-							?>
-							<p>&nbsp;<input name="sendpress-sender" type="radio"  <?php if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { ?>checked="checked"<?php } ?> id="website" value="<?php echo $key; ?>" /> <?php _e('Activate','sendpress'); ?>
-								<?php
-								echo $sender->label();
-								echo "</p><div class='well'>";
-								echo $sender->settings();
-								echo "</div></div>";
+                                                          if ($key !== 'SendPress_Sender_Website'){
+							    $class ='';
+							    if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { $class = "active"; }
+							    echo "<div class='tab-pane $class' id='$key'>";
+							    ?>
+							    <p>&nbsp;<input name="sendpress-sender" type="radio"  <?php if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { ?>checked="checked"<?php } ?> id="website" value="<?php echo $key; ?>" /> <?php _e('Activate','sendpress'); ?>
+							    	<?php
+							    	echo $sender->label();
+							    	echo "</p><div class='well'>";
+							    	echo $sender->settings();
+							    	echo "</div></div>";
+                                                          }
 							}
 							?>
 

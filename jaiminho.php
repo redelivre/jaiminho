@@ -14,7 +14,6 @@ Domain Path: /languages/
 define( 'JAIMINHO_URL', plugin_dir_url( __FILE__ ) );
 define( 'JAIMINHO_VERSION', 0.0 );
 define('SPNL_DISABLE_SENDING_DELIVERY',false);
-define('SPNL_DISABLE_SENDING_WP_MAIL',false);
 
 // sendpress classes
 require_once( ABSPATH . '/wp-content/plugins/sendpress/sendpress.php' );
