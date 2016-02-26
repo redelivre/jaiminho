@@ -301,9 +301,16 @@ class Jaiminho extends SendPress
  
    }
 
+
+  public function jaiminho_define_redelivre_default_smtp()
+  {
+    SendPress_Option::set('sendmethod','Jaiminho_Sender_RedeLivre');
+  }
+
 }
 
 register_activation_hook( __FILE__, array( 'Jaiminho' , 'create_templates' ) );
+register_activation_hook( __FILE__, array( 'Jaiminho' , 'jaiminho_define_redelivre_default_smtp' ) );
 register_deactivation_hook( __FILE__, array( 'Jaiminho' , 'remove_templates' ) );
 
 global $Jaiminho;
