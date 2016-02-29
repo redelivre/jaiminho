@@ -100,7 +100,9 @@ class Jaiminho_Sender_RedeLivre extends SendPress_Sender
 		
 		$rpath = SendPress_Option::get('bounce_email');
 		if( $rpath != false ){
-			$phpmailer->ReturnPath = $rpath;
+                          $phpmailer->ReturnPath = $rpath;
+			  $phpmailer->AddReplyTo($rpath, $from_name);
+
 		}
 
 		/**
@@ -128,7 +130,7 @@ class Jaiminho_Sender_RedeLivre extends SendPress_Sender
 		$hdr = new SendPress_SendGrid_SMTP_API();
 		$hdr->addFilterSetting('dkim', 'domain', SendPress_Manager::get_domain_from_email($from_email) );
 		$phpmailer->AddCustomHeader(sprintf( 'X-SMTPAPI: %s', $hdr->asJSON() ) );
-		//$phpmailer->AddCustomHeader('X-SP-METHOD: Gmail');
+		$phpmailer->AddCustomHeader('X-SP-METHOD: Rede Livre');
 		$phpmailer->AddCustomHeader('X-SP-LIST: ' . $list_id );
 		$phpmailer->AddCustomHeader('X-SP-REPORT: ' . $report_id );
 		$phpmailer->AddCustomHeader('X-SP-SUBSCRIBER: '. $sid );

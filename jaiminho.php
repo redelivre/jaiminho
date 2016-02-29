@@ -65,8 +65,8 @@ class Jaiminho extends SendPress
     //add_filter( 'tiny_mce_before_init', array( $this , 'my_format_TinyMCE' ) );
     add_filter( 'tiny_mce_before_init', array( $this, 'myformatTinyMCE' ) );
     sendpress_register_sender( 'Jaiminho_Sender_RedeLivre' );
-
-    add_action( 'network_admin_menu' , array( $this , 'jaiminho_network_settings' ) );
+    if (is_multisite())
+      add_action( 'network_admin_menu' , array( $this , 'jaiminho_network_settings' ) );
     add_action( 'init' , array( $this , 'jaiminho_check_rewrite' ) );
   }
 
@@ -104,10 +104,12 @@ class Jaiminho extends SendPress
     );    
   }
 
+
   public function jaiminho_settings_network_html()
   {
-      if($_POST && "SendPress_Sender_Website" == $_POST["sendpress-sender"])
-        SendPress_Option::set( 'sendmethod' , 'SendPress_Sender_Website');
+      if (isset($_POST))
+        if($_POST["sendpress-sender"] === "SendPress_Sender_Website" )
+          SendPress_Option::set( 'sendmethod' , 'SendPress_Sender_Website');
       ?>
        <form id="post" method="post">
     <?php
@@ -139,7 +141,6 @@ class Jaiminho extends SendPress
        </form>
   <?php
   }
-
 
   public function myformatTinyMCE( $in ) 
   {
@@ -225,10 +226,6 @@ class Jaiminho extends SendPress
     $view_class = $this->get_view_class( $this->_page, $this->_current_view );
     var_dump(SendPress_Option::get('website-hosting-provider')); 
     echo "original: ".$view_class;
-    $rules = get_option( 'rewrite_rules' ); 
-    echo '<pre>';
-    //print_r($rules);
-    echo '</pre>';
     //echo "About to render: $view_class, $this->_page";
     // se o nome da variavel é SendPress_View_Settings_Account troque por Jaiminho_View_Settings_Account
 
@@ -249,7 +246,7 @@ class Jaiminho extends SendPress
         $bounceemail= $_POST['bounceemail'];
       }
       else if (SendPress_Option::get('bounce_email'))
-        $bounceemail=SendPress_Option::get('bounce_email');
+        $bounceemail = SendPress_Option::get('bounce_email');
       if ( !isset( $bounceemail ) ) 
       {
         // Get the site domain and get rid of www.
@@ -257,9 +254,22 @@ class Jaiminho extends SendPress
         if ( substr( $sitename, 0, 4 ) == 'www.' ) {
           $sitename = substr( $sitename, 4 );
         }
+      $sets['value'] = array_merge($sets['value'], get_option('plataform_defined_settings', array()));
         $bounceemail = 'bounce@' . $sitename;
       }
       SendPress_Option::set('bounce_email', $bounceemail );
+      $method = SendPress_Option::get( 'sendmethod' );
+      //echo "metodo: ".$method;
+      if ( $method === 'SendPress_Sender_Website' )
+      {
+         // depois ver se colocamos um campo de label
+         $sets = get_option('plataform_defined_settings');
+         //$sets['label']['emailReplyTo'] = __('E-Mail de Reposta', 'redelivre');^M
+         var_dump($sets);
+         $sets['value']['emailReplyTo'] = SendPress_Option::get('bounce_email');
+         $sets['value'] = array_merge($sets['value'], get_option('plataform_defined_settings', array()));
+      }
+
     }
     if($view_class == "SendPress_View_Emails_Send")
       $view_class = "Jaiminho_View_Emails_Send";

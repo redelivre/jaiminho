@@ -7,10 +7,8 @@ if ( !defined( 'SENDPRESS_VERSION' ) ) {
 	die;
 }
 
-require_once( ABSPATH . '/wp-content/plugins/sendpress/classes/class-sendpress-option.php' );
-require_once( ABSPATH . '/wp-content/plugins/sendpress/classes/views/class-sendpress-view-settings-account.php' );
 
-class Jaiminho_View_Settings_Account extends SendPress_View_Settings_Account {
+class Jaiminho_View_Settings_Account extends SendPress_View_Settings {
 
 	function account_setup(){
 
@@ -42,11 +40,10 @@ class Jaiminho_View_Settings_Account extends SendPress_View_Settings_Account {
 
 			$fromemail = 'wordpress@' . $sitename;
 		}
-
+                
 		SendPress_Option::set('fromemail', $fromemail );
 		SendPress_Option::set('fromname', $fromname );
-                SendPress_Option::set('bounce_email', $bounceemail );
-
+                $options['sendmethod'] = $_POST['sendpress-sender'];
 		// Provides: Hll Wrld f PHP
 		$chars = array(".", ",", " ", ":", ";", "$", "%", "*", "-", "=");
 		$options['emails-per-day'] =  str_replace($chars,"",$_POST['emails-per-day']);
@@ -90,16 +87,14 @@ class Jaiminho_View_Settings_Account extends SendPress_View_Settings_Account {
 
 
 	function html( $sp ) {
-                if (is_multisite() && !is_super_admin()) {
-                  return;
-                }
+                //if (is_multisite() && !is_super_admin())                            
+                //  return;
 		global  $sendpress_sender_factory;
 		$senders = $sendpress_sender_factory->get_all_senders();
 		ksort($senders);
 		$method = SendPress_Option::get( 'sendmethod' );
 		$fe = __('From Email','sendpress');
 		$fn = __('From Name','sendpress');
-		$be = __('Bounce Email','jaiminho');
 		?>
 <!--
 <div style="float:right;" >
@@ -211,32 +206,32 @@ class Jaiminho_View_Settings_Account extends SendPress_View_Settings_Account {
 					<ul class="nav nav-tabs">
 						<?php
 						foreach ( $senders as $key => $sender ) {
-                                                      if ($key !== 'SendPress_Sender_Website'){
 							$class ='';
 							if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { $class = "class='active'"; }
 							echo "<li $class><a href='#$key' data-toggle='tab'>";
 							if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { echo '<span class="glyphicon glyphicon-ok-sign"></span> '; }
 							echo $sender->label();
 							echo "</a></li>";
-                                                     }
 						}
 						?>
 					</ul>
 					<div class="tab-content" style="display:block;">
 						<?php
 						foreach ( $senders as $key => $sender ) {
-                                                          if ($key !== 'SendPress_Sender_Website'){
 							    $class ='';
 							    if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { $class = "active"; }
 							    echo "<div class='tab-pane $class' id='$key'>";
 							    ?>
-							    <p>&nbsp;<input name="sendpress-sender" type="radio"  <?php if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { ?>checked="checked"<?php } ?> id="website" value="<?php echo $key; ?>" /> <?php _e('Activate','sendpress'); ?>
+							    <p>&nbsp;<input name="sendpress-sender" type="<?php if($key==='SendPress_Sender_Website' && is_multisite()) {echo 'radio';} else {echo 'radio';} ?>" <?php if($key==='SendPress_Sender_Website' && is_multisite()) {echo 'style="display:none"'; } ?> <?php if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { ?>checked="checked"<?php } ?> id="website" value="<?php echo $key; ?>" /> <?php _e('Activate','sendpress'); ?>
 							    	<?php
 							    	echo $sender->label();
-							    	echo "</p><div class='well'>";
-							    	echo $sender->settings();
-							    	echo "</div></div>";
-                                                          }
+							    	echo "</p>";
+                                                                if($key !== 'SendPress_Sender_Website')
+                                                                {
+                                                                  echo "<div class='well'>";
+							    	  echo $sender->settings();
+							    	  echo "</div></div>";
+                                                                }
 							}
 							?>
 
