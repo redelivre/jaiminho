@@ -101,7 +101,7 @@ class Jaiminho_Sender_RedeLivre extends SendPress_Sender
 		$rpath = SendPress_Option::get('bounce_email');
 		if( $rpath != false ){
                           $phpmailer->ReturnPath = $rpath;
-			  $phpmailer->AddReplyTo($rpath, $from_name);
+			  $phpmailer->AddReplyTo($rpath, SendPress_Option::get('fromname'));
 
 		}
 

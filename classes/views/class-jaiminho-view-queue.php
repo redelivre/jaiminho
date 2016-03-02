@@ -231,7 +231,6 @@ echo $time;//11:09
 		  <small><?php _e('You can adjust these settings here','sendpress'); ?>: <a href="<?php echo SendPress_Admin::link('Settings_Account'); ?>"><?php _e('Settings','sendpress'); ?> > <?php _e('Sending Account','sendpress'); ?></a>.</small>
                 <?php } ?>
  		<?php
- 		if(  $autocron == 'no'){
 $offset = get_option( 'gmt_offset' ) * 60 * 60; // Time offset in seconds
 $local_timestamp = wp_next_scheduled('sendpress_cron_action') + $offset;
 
@@ -246,7 +245,7 @@ $local_timestamp = wp_next_scheduled('sendpress_cron_action') + $offset;
 ?><br><small><?php _e('The cron will run again around','sendpress'); ?>: <?php
 echo date_i18n( get_option('date_format') .' '. get_option('time_format'), $local_timestamp);
 ?></small>
-<?php } 
+<?php  
 
 
 

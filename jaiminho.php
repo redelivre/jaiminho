@@ -42,20 +42,20 @@ class Jaiminho extends SendPress
   public function Init()
   {
     $sendpress_name = __( 'SendPress', 'sendpress' );
+    add_action( 'init' , array( $this , 'jaiminho_check_rewrite' ) );
+    sendpress_register_sender( 'Jaiminho_Sender_RedeLivre' );
+    remove_action( 'in_admin_footer',array(SendPress_View::get_instance(),'footer'),10);
     wp_register_script('jaiminho_disable',JAIMINHO_URL .'js/disable.js' ,'',JAIMINHO_VERSION);
     add_action( 'admin_init', array($this,'remove_menus'));
     add_action( 'admin_init', array($this,'add_menus'));
     add_action( 'toplevel_page_sp-overview', array($this,'render_view_jaiminho'));
     add_action( 'jaiminho_page_sp-settings', array($this,'render_view_jaiminho'));
-    remove_action( 'in_admin_footer',array(SendPress_View::get_instance(),'footer'),10);
     add_filter( 'admin_footer_text', '__return_empty_string', 11 ); 
     add_filter( 'update_footer', '__return_empty_string', 11 );
     add_action( 'admin_print_styles' , array( $this , 'jaiminho_admin_footer_css_hide' ) );
     add_filter( 'tiny_mce_before_init', array( $this, 'myformatTinyMCE' ) );
-    sendpress_register_sender( 'Jaiminho_Sender_RedeLivre' );
     if (is_multisite())
       add_action( 'network_admin_menu' , array( $this , 'jaiminho_network_settings' ) );
-    add_action( 'init' , array( $this , 'jaiminho_check_rewrite' ) );
   }
 
   public function jaiminho_check_rewrite() 
@@ -203,32 +203,21 @@ class Jaiminho extends SendPress
     remove_menu_page('sp-overview');
   }
 
-  public function render_view_jaiminho() {
-    $this->_page = SPNL()->validate->page( $_GET['page'] );
-    $this->_current_view = isset( $_GET['view'] ) ? sanitize_text_field( $_GET['view'] ) : '';
-    $view_class = $this->get_view_class( $this->_page, $this->_current_view );
-    //$old_view_class = $this->get_view_class( $this->_page, $this->_current_view );
-    //echo "original: ".$view_class;
-    //echo "About to render: $view_class, $this->_page";
-
-    if( $view_class == "SendPress_View_Settings_Account" )
-    {
-      $view_class = "Jaiminho_View_Settings_Account";
+  public function jaiminho_settings_account_email( $emails_credits ){
       $chars = array(".", ",", " ", ":", ";", "$", "%", "*", "-", "=");
-      if($_POST['emails-credits'])
-        SendPress_Option::set('emails-credits', str_replace($chars, "",$_POST['emails-credits']) ); 
-      else if( SendPress_Option::get('emails-credits') )
-       SendPress_Option::get('emails-credits');
-      else 
-        SendPress_Option::set('emails-credits', 1000 ); 
+      SendPress_Option::set( 'emails-credits' , str_replace( $chars , "" , $emails_credits ) ); 
+  }
 
-      if(isset($_POST['bounceemail']))
+
+  public function jaiminho_settings_account_bounce($bounce_email)
+  {
+      if( isset ( $bounce_email ) )
       {
-        $bounceemail= $_POST['bounceemail'];
+        $_bounce_email = $bounce_email;
       }
-      else if (SendPress_Option::get('bounce_email'))
-        $bounceemail = SendPress_Option::get('bounce_email');
-      if ( !isset( $bounceemail ) ) 
+      else if ( SendPress_Option::get( 'bounce_email' ) )
+        $_bounce_email = SendPress_Option::get('bounce_email');
+      else 
       {
         // Get the site domain and get rid of www.
         $sitename = strtolower( $_SERVER['SERVER_NAME'] );
@@ -236,37 +225,57 @@ class Jaiminho extends SendPress
           $sitename = substr( $sitename, 4 );
         }
       $sets['value'] = array_merge($sets['value'], get_option('plataform_defined_settings', array()));
-        $bounceemail = 'bounce@' . $sitename;
+        $_bounce_email = 'bounce@' . $sitename;
       }
-      SendPress_Option::set('bounce_email', $bounceemail );
+      SendPress_Option::set('bounce_email', $_bounce_email );
       $method = SendPress_Option::get( 'sendmethod' );
+      // General site configuration of email to replay
       if ( $method === 'SendPress_Sender_Website' )
       {
-         // depois ver se colocamos um campo de label
          $sets = get_option('plataform_defined_settings');
          $sets['value']['emailReplyTo'] = SendPress_Option::get('bounce_email');
          $sets['value'] = array_merge($sets['value'], get_option('plataform_defined_settings', array()));
       }
+  }
 
-    }
-    if($view_class == "SendPress_View_Emails_Send")
-      $view_class = "Jaiminho_View_Emails_Send";
-    if($view_class == "SendPress_View_Overview")
-      $view_class = "Jaiminho_View_Overview";
-    if($view_class == "SendPress_View_Queue_All")
-      $view_class = "Jaiminho_View_Queue_All";
-    if($view_class == "SendPress_View_Queue")
-      $view_class = "Jaiminho_View_Queue";
-    if($view_class == "SendPress_View_Emails_Templates")
-      $view_class = "Jaiminho_View_Emails_Templates";
-    if($view_class == "SendPress_View_Emails_Temp")
-      $view_class = "Jaiminho_View_Emails_Temp";
-    if($view_class == "SendPress_View_Subscribers_Listcreate")
+  public function jaiminho_get_view_class($page, $current_view, $emails_credits, $bounce_email)
+  {
+
+    $view_class = $this->get_view_class( $page, $current_view );
+    switch ( $view_class ) {
+    case "SendPress_View_Emails_Send":
+      return "Jaiminho_View_Emails_Send";
+    case "SendPress_View_Overview":
+      return "Jaiminho_View_Overview";
+    case "SendPress_View_Queue_All":
+      return "Jaiminho_View_Queue_All";
+    case "SendPress_View_Queue":
+      return "Jaiminho_View_Queue";
+    case  "SendPress_View_Emails_Templates":
+      return "Jaiminho_View_Emails_Templates";
+    case "SendPress_View_Emails_Temp":
+      return $view_class = "Jaiminho_View_Emails_Temp";
+    case "SendPress_View_Subscribers_Listcreate":
       wp_enqueue_script('jaiminho_disable');
-    echo " nova: ".$view_class;  
+    case "SendPress_View_Settings_Account":
+      $this->jaiminho_settings_account_email( $emails_credits );
+      $this->jaiminho_settings_account_bounce( $bounce_email );
+      return "Jaiminho_View_Settings_Account";
+    default:
+      return $view_class;
+    }
+  }
+
+  public function render_view_jaiminho() {
+    $this->_page = SPNL()->validate->page( $_GET['page'] );
+    $this->_current_view = isset( $_GET['view'] ) ? sanitize_text_field( $_GET['view'] ) : '';
+    $emails_credits = isset (  $_POST['emails-credits'] ) ?  $_POST['emails-credits'] : SendPress_Option::get( 'emails-credits' );
+    $bounce_email = isset (  $_POST['bounceemail'] ) ?  $_POST['bounceemail'] : null;
+    $view_class = $this->jaiminho_get_view_class( $this->_page , $this->_current_view ,  $emails_credits  , $bounce_email );
+    //echo "About to render: $view_class, $this->_page";
+    //echo " nova: ".$view_class;  
 
     $view_class = NEW $view_class;
-    //unset($old_view_class);
     $queue      = '<span id="queue-count-menu-tab">-</span>';
     //$queue = //SendPress_Data::emails_in_queue();
     //add tabs

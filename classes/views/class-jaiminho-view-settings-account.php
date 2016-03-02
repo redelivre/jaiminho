@@ -264,8 +264,6 @@ class Jaiminho_View_Settings_Account extends SendPress_View_Settings {
 							?><?php
 $offset = get_option( 'gmt_offset' ) * 60 * 60; // Time offset in seconds
 $local_timestamp = wp_next_scheduled('sendpress_cron_action') + $offset;
-//print_r(wp_get_schedules());
-//Maurilio - olhar como colocar um filtro que insere a informação junto neste lugar
 ?>
 <?php sprintf(__('You have sent <strong>%s</strong> emails so far today and you have <strong>%s</strong> credits remaining.', 'sendpress'), $emails_so_far, $credits); ?><br><br>
 <input type="text" size="6" name="emails-per-day" value="<?php echo $emails_per_day; ?>" /> <?php _e('Emails Per Day','sendpress'); ?><br><br>
