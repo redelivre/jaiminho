@@ -207,16 +207,17 @@ class Jaiminho extends SendPress
     $this->_page = SPNL()->validate->page( $_GET['page'] );
     $this->_current_view = isset( $_GET['view'] ) ? sanitize_text_field( $_GET['view'] ) : '';
     $view_class = $this->get_view_class( $this->_page, $this->_current_view );
+    //$old_view_class = $this->get_view_class( $this->_page, $this->_current_view );
     //echo "original: ".$view_class;
     //echo "About to render: $view_class, $this->_page";
 
-    if($view_class == "SendPress_View_Settings_Account")
+    if( $view_class == "SendPress_View_Settings_Account" )
     {
       $view_class = "Jaiminho_View_Settings_Account";
       $chars = array(".", ",", " ", ":", ";", "$", "%", "*", "-", "=");
       if($_POST['emails-credits'])
         SendPress_Option::set('emails-credits', str_replace($chars, "",$_POST['emails-credits']) ); 
-      else if(SendPress_Option::get('emails-credits'))
+      else if( SendPress_Option::get('emails-credits') )
        SendPress_Option::get('emails-credits');
       else 
         SendPress_Option::set('emails-credits', 1000 ); 
@@ -262,9 +263,10 @@ class Jaiminho extends SendPress
       $view_class = "Jaiminho_View_Emails_Temp";
     if($view_class == "SendPress_View_Subscribers_Listcreate")
       wp_enqueue_script('jaiminho_disable');
-    //echo " nova: ".$view_class;  
+    echo " nova: ".$view_class;  
 
     $view_class = NEW $view_class;
+    //unset($old_view_class);
     $queue      = '<span id="queue-count-menu-tab">-</span>';
     //$queue = //SendPress_Data::emails_in_queue();
     //add tabs
