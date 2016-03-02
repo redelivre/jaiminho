@@ -19,7 +19,6 @@ define('SPNL_DISABLE_SENDING_DELIVERY',false);
 require_once( ABSPATH . '/wp-content/plugins/sendpress/sendpress.php' );
 require_once( ABSPATH . '/wp-content/plugins/sendpress/classes/views/class-sendpress-view.php' );
 // jaiminho classes
-//require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-settings-account.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-send.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-overview.php' );
@@ -45,24 +44,13 @@ class Jaiminho extends SendPress
     $sendpress_name = __( 'SendPress', 'sendpress' );
     wp_register_script('jaiminho_disable',JAIMINHO_URL .'js/disable.js' ,'',JAIMINHO_VERSION);
     add_action( 'admin_init', array($this,'remove_menus'));
-    add_action( 'admin_init', array($this,'add_menus'), 999);
+    add_action( 'admin_init', array($this,'add_menus'));
     add_action( 'toplevel_page_sp-overview', array($this,'render_view_jaiminho'));
     add_action( 'jaiminho_page_sp-settings', array($this,'render_view_jaiminho'));
-    // this works!!!
-    //add_action( 'admin_footer' , array( $this , 'jaiminho_filter_html' ) );
     remove_action( 'in_admin_footer',array(SendPress_View::get_instance(),'footer'),10);
-    //$this->remove_filters_for_anonymous_class('in_admin_footer','SendPress_View','footer',10);
-    //new Jaiminho_View();
     add_filter( 'admin_footer_text', '__return_empty_string', 11 ); 
     add_filter( 'update_footer', '__return_empty_string', 11 );
-    //add_filter( 'in_admin_footer', '__return_empty_string', -1 );
-    //add_action( 'admin_init', array($this,'wpse_136058_debug_admin_menu'));
-    //add_filter( 'sendpress_notices', array($this,'example_callback') );
-    //apply_filter('sendpress_notices', array($this, 'example_callback'), 10);
     add_action( 'admin_print_styles' , array( $this , 'jaiminho_admin_footer_css_hide' ) );
-    global $wp_rewrite; 
-    $wp_rewrite->flush_rules();
-    //add_filter( 'tiny_mce_before_init', array( $this , 'my_format_TinyMCE' ) );
     add_filter( 'tiny_mce_before_init', array( $this, 'myformatTinyMCE' ) );
     sendpress_register_sender( 'Jaiminho_Sender_RedeLivre' );
     if (is_multisite())
@@ -215,24 +203,16 @@ class Jaiminho extends SendPress
     remove_menu_page('sp-overview');
   }
 
-  public function wpse_136058_debug_admin_menu()
-  {
-    echo '<pre>' . print_r( $GLOBALS[ 'menu' ], TRUE) . '</pre>';
-  }
-
   public function render_view_jaiminho() {
     $this->_page = SPNL()->validate->page( $_GET['page'] );
     $this->_current_view = isset( $_GET['view'] ) ? sanitize_text_field( $_GET['view'] ) : '';
     $view_class = $this->get_view_class( $this->_page, $this->_current_view );
-    var_dump(SendPress_Option::get('website-hosting-provider')); 
-    echo "original: ".$view_class;
+    //echo "original: ".$view_class;
     //echo "About to render: $view_class, $this->_page";
-    // se o nome da variavel é SendPress_View_Settings_Account troque por Jaiminho_View_Settings_Account
 
     if($view_class == "SendPress_View_Settings_Account")
     {
       $view_class = "Jaiminho_View_Settings_Account";
-      // Maurilio - Hack Necessário pois não consegui direcionar para a função account_setup em jaiminho_settings_account
       $chars = array(".", ",", " ", ":", ";", "$", "%", "*", "-", "=");
       if($_POST['emails-credits'])
         SendPress_Option::set('emails-credits', str_replace($chars, "",$_POST['emails-credits']) ); 
@@ -259,13 +239,10 @@ class Jaiminho extends SendPress
       }
       SendPress_Option::set('bounce_email', $bounceemail );
       $method = SendPress_Option::get( 'sendmethod' );
-      //echo "metodo: ".$method;
       if ( $method === 'SendPress_Sender_Website' )
       {
          // depois ver se colocamos um campo de label
          $sets = get_option('plataform_defined_settings');
-         //$sets['label']['emailReplyTo'] = __('E-Mail de Reposta', 'redelivre');^M
-         var_dump($sets);
          $sets['value']['emailReplyTo'] = SendPress_Option::get('bounce_email');
          $sets['value'] = array_merge($sets['value'], get_option('plataform_defined_settings', array()));
       }
@@ -285,7 +262,7 @@ class Jaiminho extends SendPress
       $view_class = "Jaiminho_View_Emails_Temp";
     if($view_class == "SendPress_View_Subscribers_Listcreate")
       wp_enqueue_script('jaiminho_disable');
-    echo " nova: ".$view_class;  
+    //echo " nova: ".$view_class;  
 
     $view_class = NEW $view_class;
     $queue      = '<span id="queue-count-menu-tab">-</span>';
@@ -300,7 +277,7 @@ class Jaiminho extends SendPress
     $view_class->prerender( $this );
     $view_class->render( $this );
   }
-  function jaiminho_admin_footer_css_hide(){
+  public function jaiminho_admin_footer_css_hide(){
     ?>
     <style type="text/css">
         #wpfooter{
