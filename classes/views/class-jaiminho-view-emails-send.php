@@ -106,14 +106,25 @@ $post_type_object = get_post_type_object($sp->_email_post_type);
 <?php $this->panel_end(); ?>
 <div class="leftcol">
 <?php $this->panel_start( '<span class="glyphicon glyphicon-calendar"></span> '. __('Date & Time','sendpress')); ?>
-<?php _e('Send Later','sendpress'); ?><br>
-<div class="date-holder">
+<input type="radio" name="send-date" value="now" checked/> <?php _e('Start Sending Now','sendpress'); ?><br>
+<input type="radio" name="send-date" value="later"/> <?php _e('Send Later','sendpress'); ?><br>
+<div class="date-holder" style="display:none">
 	<br><!--Maurilio O Amarelo colocou get_option('date_format') mas eu optei apenas por mudar de 'Y/m/d' para  'd/m/Y' pois é melhor para vizualizar no tamanho do campo  -->
 <input type="text" name="date-pickit" id="date-pickit" class=" fifty float-left" value="<?php echo date_i18n(d/m/Y); ?>"/>&nbsp;at
 <script type="text/javascript">
 jQuery(document).ready(function($) {
-  $('#date-pickit').datepicker({
-  dateFormat : 'dd/mm/yy'
+$(".date-holder").hide();
+
+$('input[type=radio][name=send-date]').change(function() {
+        if (this.value == 'now') {
+            $(".date-holder").hide();
+        }
+        else if (this.value == 'later') {
+           $(".date-holder").show();
+        }
+    });
+$('#date-pickit').datepicker({
+dateFormat : 'dd/mm/yy'
 });
 });
 </script>
