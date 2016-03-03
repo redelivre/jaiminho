@@ -76,7 +76,7 @@ class Jaiminho_View_Emails_Templates extends SendPress_View_Emails{
 
 <div class="tab-content" style="display:block;">
   <div class="tab-pane in active" id="content-area-one-tab">
-  <?php wp_editor( $post->post_content, 'content_area_one_edit', array(
+  <?php wp_editor( isset( $post ) ? $post->post_content : '' , 'content_area_one_edit', array(
 	'dfw' => true,
 	'drag_drop_upload' => true,
 	'tabfocus_elements' => 'insert-media-button-1,save-post',
@@ -92,7 +92,7 @@ class Jaiminho_View_Emails_Templates extends SendPress_View_Emails{
 	if($enable_edits){
 		?>
 		<div class="tab-pane" id="header-content">
-			<?php wp_editor(  get_post_meta( $post->ID , '_header_content' , true), 'header_content_edit', array(
+			<?php wp_editor(  isset ( $post ) ? get_post_meta( $post->ID , '_header_content' , true)  : ''  , 'header_content_edit', array(
 		'dfw' => true,
 		'drag_drop_upload' => true,
 		'tabfocus_elements' => 'insert-media-button-1,save-post',
@@ -106,7 +106,7 @@ class Jaiminho_View_Emails_Templates extends SendPress_View_Emails{
 
 		</div>
 		<div class="tab-pane" id="footer-content">
-			<?php wp_editor(  get_post_meta( $post->ID , '_footer_page' , true), 'footer_content_edit', array(
+			<?php wp_editor(  isset ( $post ) ? get_post_meta( $post->ID , '_footer_page' , true) : '' , 'footer_content_edit', array(
 		'dfw' => true,
 		'drag_drop_upload' => true,
 		'tabfocus_elements' => 'insert-media-button-1,save-post',
@@ -133,7 +133,7 @@ class Jaiminho_View_Emails_Templates extends SendPress_View_Emails{
 <br><br>
 
 	<?php $this->panel_start( __('Template Name','jaiminho') ); ?>
-          <input type="text" name="post_title" value="<?php echo $post->post_title;?>"/>
+          <input type="text" name="post_title" value="<?php echo isset ( $post ) ? $post->post_title : '' ;?>"/>
 	<?php $this->panel_end(  ); ?>
 </div>
 </div>

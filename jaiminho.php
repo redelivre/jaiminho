@@ -18,7 +18,7 @@ define('SPNL_DISABLE_SENDING_GMAIL',false);
 
 // sendpress classes
 require_once( ABSPATH . '/wp-content/plugins/sendpress/sendpress.php' );
-require_once( ABSPATH . '/wp-content/plugins/sendpress/classes/views/class-sendpress-view.php' );
+//require_once( ABSPATH . '/wp-content/plugins/sendpress/classes/views/class-sendpress-view.php' );
 // jaiminho classes
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-settings-account.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-send.php' );
@@ -50,8 +50,8 @@ class Jaiminho extends SendPress
     sendpress_register_sender( 'Jaiminho_Sender_Gmail' );
     remove_action( 'in_admin_footer',array(SendPress_View::get_instance(),'footer'),10);
     wp_register_script('jaiminho_disable',JAIMINHO_URL .'js/disable.js' ,'',JAIMINHO_VERSION);
-    add_action( 'admin_init', array($this,'remove_menus'));
-    add_action( 'admin_init', array($this,'add_menus'));
+    add_action( 'admin_menu', array($this,'remove_menu'));
+    add_action( 'admin_menu', array($this,'admin_menu'));
     add_action( 'toplevel_page_sp-overview', array($this,'render_view_jaiminho'));
     add_action( 'jaiminho_page_sp-settings', array($this,'render_view_jaiminho'));
     add_filter( 'admin_footer_text', '__return_empty_string', 11 ); 
@@ -61,6 +61,7 @@ class Jaiminho extends SendPress
     if (is_multisite())
       add_action( 'network_admin_menu' , array( $this , 'jaiminho_network_settings' ) );
     add_action( 'tgmpa_register', array( $this , 'jaiminho_register_required_plugins' ) );
+    remove_action( 'init' , array( SPNL() , 'toplevel_page_sp-overview' ) );
   }
 
   public function jaiminho_register_required_plugins()
@@ -124,7 +125,7 @@ class Jaiminho extends SendPress
 
   public function jaiminho_settings_network_html()
   {
-      if (isset($_POST))
+      if (isset( $_POST["sendpress-sender"] ) )
         if($_POST["sendpress-sender"] === "SendPress_Sender_Website" )
           SendPress_Option::set( 'sendmethod' , 'SendPress_Sender_Website');
       ?>
@@ -137,7 +138,6 @@ class Jaiminho extends SendPress
        $key = "SendPress_Sender_Website";
        $sender = $senders[$key];
        $class ='';
-       if ( $c >= 1 ) { $class = "margin-left: 4%"; }
        echo "<div style=' float:left; width: 48%; $class' id='$key'>";
     ?>
        <p>&nbsp;<input name="sendpress-sender" type="radio"  
@@ -194,9 +194,8 @@ class Jaiminho extends SendPress
 
 
   // Function for remove especific elements from seenpress
-  public function add_menus()
+  public function admin_menu()
   {
-    
     // Initialize!
     //$sendpress_instance = SendPress::get_instance();
     if ( current_user_can( 'sendpress_view' ) ) 
@@ -210,16 +209,17 @@ class Jaiminho extends SendPress
     if ( isset( $_GET['page'] ) && in_array( SPNL()->validate->page( $_GET['page'] ), $this->adminpages ) ) {
       $queue = '(<span id="queue-count-menu">-</span>)';//SendPress_Data::emails_in_queue();
     }
-    add_menu_page( __('Jaiminho','jaiminho'), __('Jaiminho','jaiminho'), $role, 'sp-overview', array( $this , 'render_view_jaiminho' ), JAIMINHO_URL.'img/jaiminho-bg-16.png' );
-    add_submenu_page('sp-overview', __('Overview','sendpress'), __('Overview','sendpress'), $role, 'sp-overview', array($this,'render_view_jaiminho'));
-    $main = add_submenu_page('sp-overview', __('Emails','sendpress'), __('Emails','sendpress'), $role, 'sp-emails', array($this,'render_view_jaiminho'));
-    add_submenu_page('sp-overview', __('Reports','sendpress'), __('Reports','sendpress'), $role, 'sp-reports', array($this,'render_view_jaiminho'));
-    add_submenu_page('sp-overview', __('Subscribers','sendpress'), __('Subscribers','sendpress'), $role, 'sp-subscribers', array($this,'render_view_jaiminho'));
-    add_submenu_page('sp-overview', __('Queue','sendpress'), __('Queue','sendpress')  . " " . $queue, $role, 'sp-queue', array($this,'render_view_jaiminho'));
-    add_submenu_page('sp-overview', __('Settings','sendpress'), __('Settings','sendpress'), $role, 'sp-settings', array($this,'render_view_jaiminho'));
+    add_menu_page( __('Jaiminho','jaiminho'), __('Jaiminho','jaiminho'), $role, 'sp-emails', array( $this , 'render_view_jaiminho' ), JAIMINHO_URL.'img/jaiminho-bg-16.png' );
+    // xxx: ainda não foi possivel descobrir onde esta o problema, simplesmente a página do overview repete o template - depois voltar de sp-emails para sp-overview
+    //add_submenu_page('sp-emails', __('Overview','sendpress'), __('Overview','sendpress'), $role, 'sp-overview', array($this,'render_view_jaiminho'));
+    $main = add_submenu_page('sp-emails', __('Emails','sendpress'), __('Emails','sendpress'), $role, 'sp-emails', array($this,'render_view_jaiminho'));
+    add_submenu_page('sp-emails', __('Reports','sendpress'), __('Reports','sendpress'), $role, 'sp-reports', array($this,'render_view_jaiminho'));
+    add_submenu_page('sp-emails', __('Subscribers','sendpress'), __('Subscribers','sendpress'), $role, 'sp-subscribers', array($this,'render_view_jaiminho'));
+    add_submenu_page('sp-emails', __('Queue','sendpress'), __('Queue','sendpress')  . " " . $queue, $role, 'sp-queue', array($this,'render_view_jaiminho'));
+    add_submenu_page('sp-emails', __('Settings','sendpress'), __('Settings','sendpress'), $role, 'sp-settings', array($this,'render_view_jaiminho'));
   }
 
-  public function remove_menus()
+  public function remove_menu()
   {
     remove_submenu_page('sp-overview','sp-overview');
     remove_submenu_page('sp-overview','sp-emails');
@@ -283,7 +283,7 @@ class Jaiminho extends SendPress
     case  "SendPress_View_Emails_Templates":
       return "Jaiminho_View_Emails_Templates";
     case "SendPress_View_Emails_Temp":
-      return $view_class = "Jaiminho_View_Emails_Temp";
+      return "Jaiminho_View_Emails_Temp";
     case "SendPress_View_Subscribers_Listcreate":
       wp_enqueue_script('jaiminho_disable');
     case "SendPress_View_Settings_Account":
@@ -301,6 +301,7 @@ class Jaiminho extends SendPress
     $emails_credits = isset (  $_POST['emails-credits'] ) ?  $_POST['emails-credits'] : SendPress_Option::get( 'emails-credits' );
     $bounce_email = isset (  $_POST['bounceemail'] ) ?  $_POST['bounceemail'] : null;
     $view_class = $this->jaiminho_get_view_class( $this->_page , $this->_current_view ,  $emails_credits  , $bounce_email );
+    
     //echo "About to render: $view_class, $this->_page";
     //echo " nova: ".$view_class;  
 
@@ -308,7 +309,8 @@ class Jaiminho extends SendPress
     $queue      = '<span id="queue-count-menu-tab">-</span>';
     //$queue = //SendPress_Data::emails_in_queue();
     //add tabs
-    $view_class->add_tab( __( 'Overview', 'sendpress' ), 'sp-overview', ( $this->_page === 'sp-overview' ) );
+    // xxx: ainda não foi possivel descobrir onde esta o problema, simplesmente a página do overview repete o template - depois reativar a aba
+    // $view_class->add_tab( __( 'Overview', 'sendpress' ), 'sp-overview', ( $this->_page === 'sp-overview' ) );
     $view_class->add_tab( __( 'Emails', 'sendpress' ), 'sp-emails', ( $this->_page === 'sp-emails' ) );
     $view_class->add_tab( __( 'Reports', 'sendpress' ), 'sp-reports', ( $this->_page === 'sp-reports' ) );
     $view_class->add_tab( __( 'Subscribers', 'sendpress' ), 'sp-subscribers', ( $this->_page === 'sp-subscribers' ) );

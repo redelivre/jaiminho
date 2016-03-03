@@ -208,7 +208,7 @@ $stat_type = get_post_meta($report->ID, '_stat_type', true);
     <th><div style="text-align:right;">Email</div></th>
     </tr>
   	<?php 
-  		$recent = SendPress_Data::get_recent_subscribers();
+  		$recent = SPNL()->load("Subscribers_Tracker")->get_most_active(); // SendPress_Data::get_most_active_subscriber();
   		foreach($recent as $item){
         echo "<tr>";
          echo "<td>";
@@ -250,7 +250,7 @@ echo "<td >";
 	  <div class="panel-body">
 	  	<ul>
 	  	<?php
-	  	$recent =  SPNL()->load("Subscribers_Tracker")->get_most_active(); // SendPress_Data::get_most_active_subscriber();
+	  	$recent =  SendPress_Data::get_most_active_subscriber();
   		
       foreach($recent as $item){
         if(property_exists($item,'subscriber_id')){
