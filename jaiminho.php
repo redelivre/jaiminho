@@ -14,6 +14,7 @@ Domain Path: /languages/
 define( 'JAIMINHO_URL', plugin_dir_url( __FILE__ ) );
 define( 'JAIMINHO_VERSION', 0.0 );
 define('SPNL_DISABLE_SENDING_DELIVERY',false);
+define('SPNL_DISABLE_SENDING_GMAIL',false);
 
 // sendpress classes
 require_once( ABSPATH . '/wp-content/plugins/sendpress/sendpress.php' );
@@ -28,6 +29,7 @@ require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaimin
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-templates.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-temp.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-sender-redelivre.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-sender-gmail.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-tgm-plugin-activation.php' );
 
 class Jaiminho extends SendPress
@@ -45,6 +47,7 @@ class Jaiminho extends SendPress
     $sendpress_name = __( 'SendPress', 'sendpress' );
     add_action( 'init' , array( $this , 'jaiminho_check_rewrite' ) );
     sendpress_register_sender( 'Jaiminho_Sender_RedeLivre' );
+    sendpress_register_sender( 'Jaiminho_Sender_Gmail' );
     remove_action( 'in_admin_footer',array(SendPress_View::get_instance(),'footer'),10);
     wp_register_script('jaiminho_disable',JAIMINHO_URL .'js/disable.js' ,'',JAIMINHO_VERSION);
     add_action( 'admin_init', array($this,'remove_menus'));
