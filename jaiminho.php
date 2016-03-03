@@ -28,6 +28,7 @@ require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaimin
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-templates.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-temp.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-sender-redelivre.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-tgm-plugin-activation.php' );
 
 class Jaiminho extends SendPress
 {
@@ -56,6 +57,31 @@ class Jaiminho extends SendPress
     add_filter( 'tiny_mce_before_init', array( $this, 'myformatTinyMCE' ) );
     if (is_multisite())
       add_action( 'network_admin_menu' , array( $this , 'jaiminho_network_settings' ) );
+    add_action( 'tgmpa_register', array( $this , 'jaiminho_register_required_plugins' ) );
+  }
+
+  public function jaiminho_register_required_plugins()
+  {
+    $plugins = array(
+      array(
+        'name'      => 'sendpress',
+        'slug'      => 'sendpress',
+        'required'  => true
+      ),
+    );
+    $config = array(
+      'id'           => 'jaiminho',              // Unique ID for hashing notices for multiple instances of TGMPA.
+      'default_path' => '',                      // Default absolute path to bundled plugins.
+      'menu'         => 'tgmpa-install-plugins', // Menu slug.
+      'parent_slug'  => 'plugins.php',           // Parent menu slug.
+      'capability'   => 'manage_options',        // Capability needed to view plugin install page, should be a capability associated with the parent menu used.
+      'has_notices'  => true,                    // Show admin notices or not.
+      'dismissable'  => true,                    // If false, a user cannot dismiss the nag message.
+      'dismiss_msg'  => '',                      // If 'dismissable' is false, this message will be output at top of nag.
+      'is_automatic' => false,                   // Automatically activate plugins after installation or not.
+      'message'      => '',                      // Message to output right before the plugins table.
+    );
+    tgmpa( $plugins, $config );
   }
 
   public function jaiminho_check_rewrite() 
