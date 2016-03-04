@@ -286,6 +286,7 @@ class Jaiminho extends SendPress
       return "Jaiminho_View_Emails_Temp";
     case "SendPress_View_Subscribers_Listcreate":
       wp_enqueue_script('jaiminho_disable');
+      return $view_class;
     case "SendPress_View_Settings_Account":
       $this->jaiminho_settings_account_email( $emails_credits );
       $this->jaiminho_settings_account_bounce( $bounce_email );
