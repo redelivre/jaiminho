@@ -51,6 +51,7 @@ class Jaiminho_View_Emails_Templates extends SendPress_View_Emails{
             <div id="sp-cancel-btn" class="btn-group">
      		<a href="<?php echo SendPress_Admin::link('Emails_Temp'); ?>" id="cancel-update" class="btn btn-default"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
             </div>
+             <a class="btn btn-primary" href="<?php echo get_site_url().'/wp-admin/admin.php?page=sp-emails&view=temp'; ?>"><i class="icon-white icon-ok"></i> <?php echo __('Back','sendpress'); ?></a>
              <button class="btn btn-primary " type="submit" value="save" name="submit"><i class="icon-white icon-ok"></i> <?php echo __('Save','sendpress'); ?></button>
         </div>
 	
