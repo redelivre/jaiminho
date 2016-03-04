@@ -22,7 +22,7 @@ class Jaiminho_View_Emails_Templates extends SendPress_View_Emails{
 	}
 
 	public function html($sp){
-         if($_POST){
+         if(!isset($_POST['templateID'])){
             $post_id = wp_insert_post(
                         array(
                                 'post_name'             =>      sanitize_title($_POST["post_title"]),
