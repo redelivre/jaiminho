@@ -21,27 +21,47 @@ class Jaiminho_View_Emails_Templates extends SendPress_View_Emails{
 		*/
 	}
 
+	public function my_acf_admin_notice() {
+		?>
+			<div class="notice error my-acf-notice is-dismissible" >
+			<p><?php _e( 'ACF is not necessary for this plugin, but it will make your experience better, install it now!', 'my-text-domain' ); ?></p>
+			</div>
+			<?php
+	}
+
 	public function html($sp){
-         if(!isset($_POST['templateID'])){
-            $post_id = wp_insert_post(
-                        array(
-                                'post_name'             =>      sanitize_title($_POST["post_title"]),
-                                'post_title'            =>      $_POST["post_title"],
-                                'post_content'          =>      $_POST["content_area_one_edit"],
-                                'post_status'           =>      'sp-standard',
-                                'post_type'             =>      'sp_template',
-                             )
-                      );
-            update_post_meta( $post_id, '_guid',  'cd8ab467-e236-49d3-bd6c-e84db055ae9a');
-            update_post_meta( $post_id, '_footer_page', $_POST["footer_content_edit"] );
-            update_post_meta( $post_id, '_header_content', $_POST["header_content_edit"] );
-            update_post_meta( $post_id, '_header_padding', 'pad-header' );
-         }
-            SendPress_Admin::link('Emails_Temp');
-		if(isset($_GET['templateID'])){
-			$templateID = SPNL()->validate->int($_GET['templateID']);
-			$post = get_post( $templateID );
-			$post_ID = $post->ID;
+        // XXX removendo a parte de update para aprimorar depois
+	//	if(isset($_GET['templateID'])){
+	//		$templateID = SPNL()->validate->int($_GET['templateID']);
+	//		$post = get_post( $templateID );
+	//		$post_ID = $post->ID;
+	//		$post_id = wp_update_post(
+	//				array(
+        //                                        'ID'                    =>      $post_ID,
+	//					'post_title'            =>      $_POST['post_title'],
+	//					'post_content'          =>      $_POST['content_area_one_edit']
+	//				     )
+	//				);
+	//		update_post_meta( $post_id, '_guid',  'cd8ab467-e236-49d3-bd6c-e84db055ae9a');
+	//		update_post_meta( $post_id, '_footer_page', $_POST["footer_content_edit"] );
+	//		update_post_meta( $post_id, '_header_content', $_POST["header_content_edit"] );
+	//		update_post_meta( $post_id, '_header_padding', 'pad-header' );
+	//	}
+		if(isset($_POST['post_title'])){
+			$post_id = wp_insert_post(
+					array(
+						'post_name'             =>      sanitize_title($_POST['post_title']),
+						'post_title'            =>      $_POST['post_title'],
+						'post_content'          =>      $_POST['content_area_one_edit'],
+						'post_status'           =>      'sp-standard',
+						'post_type'             =>      'sp_template',
+					     )
+					);
+			update_post_meta( $post_id, '_guid',  'cd8ab467-e236-49d3-bd6c-e84db055ae9a');
+			update_post_meta( $post_id, '_footer_page', $_POST["footer_content_edit"] );
+			update_post_meta( $post_id, '_header_content', $_POST["header_content_edit"] );
+			update_post_meta( $post_id, '_header_padding', 'pad-header' );
+			SendPress_Admin::redirect('emails&view=temp');
 		}
 	  ?>
      <form method="post" id="post" role="form">
