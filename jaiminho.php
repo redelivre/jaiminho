@@ -28,6 +28,7 @@ require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaimin
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-settings.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-templates.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-temp.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-social.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-sender-redelivre.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-sender-gmail.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-tgm-plugin-activation.php' );
@@ -62,6 +63,7 @@ class Jaiminho extends SendPress
       add_action( 'network_admin_menu' , array( $this , 'jaiminho_network_settings' ) );
     add_action( 'tgmpa_register', array( $this , 'jaiminho_register_required_plugins' ) );
     remove_action( 'init' , array( SPNL() , 'toplevel_page_sp-overview' ) );
+    //add_filter( 'sendpress_notices', '__return_empty_string' ); 
   }
 
   public function jaiminho_register_required_plugins()
@@ -284,6 +286,8 @@ class Jaiminho extends SendPress
       return "Jaiminho_View_Emails_Templates";
     case "SendPress_View_Emails_Temp":
       return "Jaiminho_View_Emails_Temp";
+    case "SendPress_View_Emails_Social":
+      return "Jaiminho_View_Emails_Social";
     case "SendPress_View_Subscribers_Listcreate":
       wp_enqueue_script('jaiminho_disable');
       return $view_class;
