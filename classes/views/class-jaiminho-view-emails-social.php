@@ -6,7 +6,9 @@ if ( !defined('SENDPRESS_VERSION') ) {
 	die;
 }
 
-class Jaiminho_View_Emails_Social extends SendPress_View_Emails {
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails.php' );
+
+class Jaiminho_View_Emails_Social extends Jaiminho_View_Emails {
 	
 	function save($post, $sp){
 		$icon_list = SendPress_Data::social_icons();

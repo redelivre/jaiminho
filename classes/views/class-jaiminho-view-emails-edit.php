@@ -8,84 +8,131 @@ if ( !defined('SENDPRESS_VERSION') ) {
 
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails.php' );
 
-class Jaiminho_View_Emails_Templates extends Jaiminho_View_Emails{
-	public function prerender($sp = false)
-        {
-		wp_enqueue_script( 'dashboard' );
-		/*
-		sp_add_help_widget( 'help_support', 'Support Information', array(&$this,'help_support'));
-		sp_add_help_widget( 'help_knowledge', 'Recent Knowledge Base Articles', array(&$this,'help_knowledge'),'side' );
-		sp_add_help_widget( 'help_debug', 'Debug Information', array(&$this,'help_debug'), 'side');
+class Jaiminho_View_Emails_Edit extends Jaiminho_View_Emails {
+	
+	
+
+	function save_email(){
+		$this->security_check();
+	   //print_r($_POST['content-1']);
+//content-area-one-edit
+	//$template = get_post();
+	//$_POST['post_type'] = 'sp_newsletters';
+ 	//$my_post = _wp_translate_postdata(true);
+ 	//print_r($my_post);
+ 	//$template['post_content'] = $my_post->content_area_one_edit;
+	$post =	SPNL()->validate->int($_POST['post_ID']);
+		if($post > 0){
+		 	$post_update = array(
+		 		'ID'           => $_POST['post_ID'],
+		      	'post_content' => $_POST['content_area_one_edit']
+		    );
+		 	
+			update_post_meta( $_POST['post_ID'], '_sendpress_template', SPNL()->validate->int($_POST['template']) );
+			update_post_meta( $_POST['post_ID'], '_sendpress_subject', sanitize_text_field( $_POST['post_subject'] ) );
+			if( isset( $_POST['header_content_edit'])){
+				update_post_meta( $_POST['post_ID'], '_header_content', $_POST['header_content_edit'] );
+			} 
+			if( isset( $_POST['footer_content_edit'])){
+				update_post_meta( $_POST['post_ID'], '_footer_content', $_POST['footer_content_edit'] );
+			}
+
+		 	//	print_r($template);
+			wp_update_post( $post_update );
 		
-		sp_add_help_widget( 'help_blog', 'Recent Blog Posts', array(&$this,'help_blog'),'normal',  array(&$this,'help_blog_control') );
-		sp_add_help_widget( 'help_shortcodes', 'Shortcode Cheat Sheet', array(&$this,'help_shortcodes') ,'normal');
-		sp_add_help_widget( 'help_editemail', 'Customizing Emails', array(&$this,'help_editemail') ,'normal');
+		}
+        if(isset($_POST['submit']) && $_POST['submit'] == 'save-next'){
+            SendPress_Admin::redirect('Emails_Send', array('emailID'=> SPNL()->validate->int($_GET['emailID']) ) );
+        } else if (isset($_POST['submit']) && $_POST['submit'] == 'send-test'){
+            $email = new stdClass;
+            $email->emailID  = SPNL()->validate->int($_POST['post_ID']);
+            $email->subscriberID = 0;
+            $email->listID = 0;
+            $email->to_email = $_POST['test-email'];
+            $d =SendPress_Manager::send_test_email( $email );
+            //print_r($d);
+           SendPress_Admin::redirect('Emails_Edit', array('emailID'=>SPNL()->validate->int($_GET['emailID']) ));
+        } else {
+            SendPress_Admin::redirect('Emails_Edit', array('emailID'=>SPNL()->validate->int($_GET['emailID']) ));
+        }
+
+	}
+
+	function admin_init(){
+		global $is_IE;
+		remove_filter('the_editor',					'qtrans_modifyRichEditor');
+		/*
+		if (  ! wp_is_mobile() &&
+			 ! ( $is_IE && preg_match( '/MSIE [5678]/', $_SERVER['HTTP_USER_AGENT'] ) ) ) {
+
+			wp_enqueue_script('editor-expand');
+			$_wp_autoresize_on = true;
+		}
 		*/
 	}
 
-	public function my_acf_admin_notice() {
-		?>
-			<div class="notice error my-acf-notice is-dismissible" >
-			<p><?php _e( 'ACF is not necessary for this plugin, but it will make your experience better, install it now!', 'my-text-domain' ); ?></p>
-			</div>
-			<?php
-	}
+	function html($sp) {
+		global $is_IE;
+		global $post_ID, $post;
+		/*
+		if (  wp_is_mobile() &&
+			 ! ( $is_IE && preg_match( '/MSIE [5678]/', $_SERVER['HTTP_USER_AGENT'] ) ) ) {
 
-	public function html($sp){
-        // XXX removendo a parte de update para aprimorar depois
-	//	if(isset($_GET['templateID'])){
-	//		$templateID = SPNL()->validate->int($_GET['templateID']);
-	//		$post = get_post( $templateID );
-	//		$post_ID = $post->ID;
-	//		$post_id = wp_update_post(
-	//				array(
-        //                                        'ID'                    =>      $post_ID,
-	//					'post_title'            =>      $_POST['post_title'],
-	//					'post_content'          =>      $_POST['content_area_one_edit']
-	//				     )
-	//				);
-	//		update_post_meta( $post_id, '_guid',  'cd8ab467-e236-49d3-bd6c-e84db055ae9a');
-	//		update_post_meta( $post_id, '_footer_page', $_POST["footer_content_edit"] );
-	//		update_post_meta( $post_id, '_header_content', $_POST["header_content_edit"] );
-	//		update_post_meta( $post_id, '_header_padding', 'pad-header' );
-	//	}
-		if(isset($_POST['post_title'])){
-			$post_id = wp_insert_post(
-					array(
-						'post_name'             =>      sanitize_title($_POST['post_title']),
-						'post_title'            =>      $_POST['post_title'],
-						'post_content'          =>      $_POST['content_area_one_edit'],
-						'post_status'           =>      'sp-standard',
-						'post_type'             =>      'sp_template',
-					     )
-					);
-			update_post_meta( $post_id, '_guid',  'cd8ab467-e236-49d3-bd6c-e84db055ae9a');
-			update_post_meta( $post_id, '_footer_page', $_POST["footer_content_edit"] );
-			update_post_meta( $post_id, '_header_content', $_POST["header_content_edit"] );
-			update_post_meta( $post_id, '_header_padding', 'pad-header' );
-                        //SendPress_Admin::link('Emails_Social');
-			SendPress_Admin::redirect('emails&view=temp');
+			wp_enqueue_script('editor-expand');
+			$_wp_autoresize_on = true;
 		}
-	  ?>
+		*/
+		$view = isset($_GET['view']) ? $_GET['view'] : '' ;
+
+		if(isset($_GET['emailID'])){
+			$emailID = SPNL()->validate->int($_GET['emailID']);
+			$post = get_post( $emailID );
+			$post_ID = $post->ID;
+		}
+	
+        if($post->post_type !== 'sp_newsletters'){
+            SendPress_Admin::redirect('Emails');
+        }
+        $template_id = get_post_meta( $post->ID , '_sendpress_template' , true);
+
+		?>
      <form method="post" id="post" role="form">
-        <input type="hidden" name="action" id="action" value="save" />
+        <input type="hidden" name="post_ID" id="post_ID" value="<?php echo $post->ID; ?>" />
+        <input type="hidden" name="post_type" id="post_type" value="sp_newsletters" />
+        <input type="hidden" name="action" id="action" value="save-email" />
        <div  >
        <div style="float:right;" class="btn-toolbar">
             <div id="sp-cancel-btn" class="btn-group">
-     		<a href="<?php echo SendPress_Admin::link('Emails_Temp'); ?>" id="cancel-update" class="btn btn-default"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
+               <?php if($post->post_status != 'sp-autoresponder'  ) { ?>
+                <a href="?page=<?php echo SPNL()->validate->page($_GET['page']); ?>" id="cancel-update" class="btn btn-default"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
+            
+            <?php 
+            } else { ?>
+     		<a href="<?php echo SendPress_Admin::link('Emails_Autoresponder'); ?>" id="cancel-update" class="btn btn-default"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
+           
+            <?php } ?>
             </div>
-             <!--a class="btn btn-primary" href="<?php echo get_site_url().'/wp-admin/admin.php?page=sp-emails&view=temp'; ?>"><i class="icon-white icon-ok"></i> <?php echo __('Back','sendpress'); ?></a-->
-             <button class="btn btn-primary " type="submit" value="save" name="submit"><i class="icon-white icon-ok"></i> <?php echo __('Save','sendpress'); ?></button>
+            <div class="btn-group">
+            
+             <button class="btn btn-default " type="submit" value="save" name="submit"><i class="icon-white icon-ok"></i> <?php echo __('Update','sendpress'); ?></button>
+           
+            <?php if( SendPress_Admin::access('Emails_Send')  && $post->post_status != 'sp-autoresponder' ) { ?>
+            <button class="btn btn-primary " type="submit" value="save-next" name="submit"><i class="icon-envelope icon-white"></i> <?php echo __('Send','sendpress'); ?></button>
+            <?php } ?>
+            </div>
         </div>
 	
 
 </div>
-        <h2><?php _e('Create Template','jaiminho'); ?></h2>
+        <h2><?php _e('Edit Email Content','sendpress'); ?></h2>
         <br>
+        <?php $this->panel_start('<span class="glyphicon glyphicon-envelope"></span> '.  __('Subject','sendpress') ); ?>
+        <input type="text" name="post_subject" size="30" tabindex="1" class="form-control" value="<?php echo esc_attr( htmlspecialchars( get_post_meta($post->ID,'_sendpress_subject',true ) )); ?>" id="email-subject" autocomplete="off" />
+        <?php $this->panel_end(  ); ?>
         <div class="sp-row">
 <div class="sp-75 sp-first">
 <!-- Nav tabs -->
-<?php $enable_edits = true;?>
+<?php $enable_edits = SendPress_Option::get('enable_email_template_edit');?>
 <ul class="nav nav-tabs">
   <li class="active"><a href="#content-area-one-tab" data-toggle="tab"><?php _e('Main Content','sendpress'); ?></a></li>
   <?php if($enable_edits){
@@ -96,11 +143,16 @@ class Jaiminho_View_Emails_Templates extends Jaiminho_View_Emails{
   }
 
   ?>
+ 
+  <!--
+  <li><a href="#messages" data-toggle="tab">Messages</a></li>
+  <li><a href="#settings" data-toggle="tab">Settings</a></li>
+  -->
 </ul>
 
 <div class="tab-content" style="display:block;">
   <div class="tab-pane in active" id="content-area-one-tab">
-  <?php wp_editor( isset( $post ) ? $post->post_content : '' , 'content_area_one_edit', array(
+  <?php wp_editor( $post->post_content, 'content_area_one_edit', array(
 	'dfw' => true,
 	'drag_drop_upload' => true,
 	'tabfocus_elements' => 'insert-media-button-1,save-post',
@@ -116,7 +168,7 @@ class Jaiminho_View_Emails_Templates extends Jaiminho_View_Emails{
 	if($enable_edits){
 		?>
 		<div class="tab-pane" id="header-content">
-			<?php wp_editor(  isset ( $post ) ? get_post_meta( $post->ID , '_header_content' , true)  : ''  , 'header_content_edit', array(
+			<?php wp_editor(  get_post_meta( $post->ID , '_header_content' , true), 'header_content_edit', array(
 		'dfw' => true,
 		'drag_drop_upload' => true,
 		'tabfocus_elements' => 'insert-media-button-1,save-post',
@@ -130,7 +182,7 @@ class Jaiminho_View_Emails_Templates extends Jaiminho_View_Emails{
 
 		</div>
 		<div class="tab-pane" id="footer-content">
-			<?php wp_editor(  isset ( $post ) ? get_post_meta( $post->ID , '_footer_page' , true) : '' , 'footer_content_edit', array(
+			<?php wp_editor(  get_post_meta( $post->ID , '_footer_content' , true), 'footer_content_edit', array(
 		'dfw' => true,
 		'drag_drop_upload' => true,
 		'tabfocus_elements' => 'insert-media-button-1,save-post',
@@ -156,11 +208,65 @@ class Jaiminho_View_Emails_Templates extends Jaiminho_View_Emails{
 <div class="sp-25">
 <br><br>
 
-	<?php $this->panel_start( __('Template Name','jaiminho') ); ?>
-          <input type="text" name="post_title" value="<?php echo isset ( $post ) ? $post->post_title : '' ;?>"/>
+	<?php $this->panel_start( __('Template','sendpress') ); ?>
+	<select name="template" class="form-control">
+	<?php
+			$args = array(
+			'post_type' => 'sp_template' ,
+			'post_status' => array('sp-standard'),
+			);
+
+			$the_query = new WP_Query( $args );
+
+			if ( $the_query->have_posts() ) {
+			echo  '<optgroup label="SendPress Templates">';
+			while ( $the_query->have_posts() ) {
+				$the_query->the_post();
+				$temp_id = $the_query->post->ID;
+				$s = '';
+				if($temp_id == $template_id){
+					$s = 'selected';
+				}
+				echo '<option value="'.$temp_id .'" '.$s.'>' . get_the_title() . '</option>';
+			}
+			echo  '</optgroup>';
+			
+			} else {
+				echo '<option value="0" ></option>';
+			}
+
+		$args = array(
+			'post_type' => 'sp_template' ,
+			'post_status' => array('sp-custom'),
+			);
+
+			$the_query = new WP_Query( $args );
+
+			if ( $the_query->have_posts() ) {
+				echo  '<optgroup label="Custom Templates">';
+			while ( $the_query->have_posts() ) {
+				$the_query->the_post();
+				$temp_id = $the_query->post->ID;
+				$s = '';
+				if($temp_id == $template_id){
+					$s = 'selected';
+				}
+				echo '<option value="'.$temp_id .'" '.$s.'>' . get_the_title() . '</option>';
+			}
+			echo  '</optgroup>';
+			
+		}
+	?>
+	
+	</select>
 	<?php $this->panel_end(  ); ?>
 </div>
 </div>
+<div class="well clear">
+            <h2><?php _e('Test This Email','sendpress'); ?></h2>
+            <p><input type="text" name="test-email" value="" class="sp-text" placeholder="Email to send test to." /></p>
+            <button class="btn btn-success" name="submit" type="submit" value="send-test"><i class=" icon-white icon-inbox"></i> <?php _e('Send Test','sendpress'); ?></button>
+        </div>
 
 
 <div class="modal fade bs-modal-lg" id="sendpress-helper" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -341,11 +447,7 @@ class Jaiminho_View_Emails_Templates extends Jaiminho_View_Emails{
 </div>
 	<?php SendPress_Data::nonce_field(); ?>
         </form>
-<?php
-
+	<?php
 	}
-}
-// Add Access Controll!
-//SendPress_Admin::add_cap('Emails_Templates','sendpress_email');
-//SendPress_View_Overview::cap('sendpress_access');
 
+}

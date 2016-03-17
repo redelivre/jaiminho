@@ -5,10 +5,12 @@ if ( !defined('SENDPRESS_VERSION') ) {
 	die;
 }
 
-class Jaiminho_View_Emails_Send extends SendPress_View_Emails {
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails.php' );
+
+class Jaiminho_View_Emails_Send extends Jaiminho_View_Emails {
 
 	function save(){
-
+        $this->security_check();
         $post_info_id =  SPNL()->validate->int( $_POST['post_ID']);
         if($post_info_id > 0){
             if(isset($_POST['send-date']) && $_POST['send-date'] == 'later'){
@@ -109,8 +111,8 @@ $post_type_object = get_post_type_object($sp->_email_post_type);
 <input type="radio" name="send-date" value="now" checked/> <?php _e('Start Sending Now','sendpress'); ?><br>
 <input type="radio" name="send-date" value="later"/> <?php _e('Send Later','sendpress'); ?><br>
 <div class="date-holder" style="display:none">
-	<br><!--Maurilio O Amarelo colocou get_option('date_format') mas eu optei apenas por mudar de 'Y/m/d' para  'd/m/Y' pois é melhor para vizualizar no tamanho do campo  -->
-<input type="text" name="date-pickit" id="date-pickit" class=" fifty float-left" value="<?php echo date_i18n(d/m/Y); ?>"/>&nbsp;at
+	<br>
+<input type="text" name="date-pickit" id="date-pickit" class=" fifty float-left" value="<?php echo date_i18n('Y/m/d'); ?>"/>&nbsp;at
 <script type="text/javascript">
 jQuery(document).ready(function($) {
 $(".date-holder").hide();
@@ -124,7 +126,7 @@ $('input[type=radio][name=send-date]').change(function() {
         }
     });
 $('#date-pickit').datepicker({
-dateFormat : 'dd/mm/yy'
+dateFormat : 'yy/mm/dd'
 });
 });
 </script>

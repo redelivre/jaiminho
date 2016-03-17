@@ -31,6 +31,18 @@ require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaimin
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-templates.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-temp.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-social.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-systememail.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-tempstyle.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-systememailcreate.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-systememailedit.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-create.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-edit.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-send.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-send-confirm.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-send-queue.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-send-tempdelete.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-send-tempclone.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-sender-redelivre.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-sender-gmail.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-tgm-plugin-activation.php' );
@@ -298,6 +310,30 @@ class Jaiminho extends SendPress
 				return "Jaiminho_View_Emails_Temp";
 			case "SendPress_View_Emails_Social":
 				return "Jaiminho_View_Emails_Social";
+			case "SendPress_View_Emails_Systememail":
+				return "Jaiminho_View_Emails_Systememail";
+			case "SendPress_View_Emails":
+				return "Jaiminho_View_Emails";
+			case "SendPress_View_Emails_Tempstyle":
+				return "Jaiminho_View_Emails_Tempstyle";
+			case "SendPress_View_Emails_Systememailcreate":
+				return "Jaiminho_View_Emails_Systememailcreate";
+			case "SendPress_View_Emails_Systememailedit":
+				return "Jaiminho_View_Emails_Systememailedit";
+			case "SendPress_View_Emails_Create":
+				return "Jaiminho_View_Emails_Create";
+			case "SendPress_View_Emails_Edit":
+				return "Jaiminho_View_Emails_Edit";
+			case "SendPress_View_Emails_Send":
+				return "Jaiminho_View_Emails_Send";
+			case "SendPress_View_Emails_Send_Confirm":
+				return "Jaiminho_View_Emails_Send_Confirm";
+			case "SendPress_View_Emails_Send_Queue":
+				return "Jaiminho_View_Emails_Send_Queue";
+			case "SendPress_View_Emails_Tempdelete":
+				return "Jaiminho_View_Emails_Tempdelete";
+			case "SendPress_View_Emails_Tempclone":
+				return "Jaiminho_View_Emails_Tempclone";
 			case "SendPress_View_Subscribers_Listcreate":
 				wp_enqueue_script('jaiminho_disable');
 				return $view_class;

@@ -10,8 +10,9 @@ if( !class_exists('Jaiminho_View_Emails_Temp') ){
 
 
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-email-local-table.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails.php' );
 
-class Jaiminho_View_Emails_Temp extends SendPress_View_Emails{
+class Jaiminho_View_Emails_Temp extends Jaiminho_View_Emails{
 
 	function admin_init(){
 		add_action('load-sendpress_page_sp-emails',array($this,'screen_options'));
