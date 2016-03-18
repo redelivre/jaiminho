@@ -188,6 +188,7 @@ class Jaiminho extends SendPress
 		if ( isset( $in['plugins'] ) ) {
 			$in['plugins'] .= ' , wpeditimage';
 		}
+                $in['paste_data_images'] = true;
 
 		return $in;
 	}
