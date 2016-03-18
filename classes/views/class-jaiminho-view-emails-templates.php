@@ -116,7 +116,7 @@ class Jaiminho_View_Emails_Templates extends Jaiminho_View_Emails{
 	if($enable_edits){
 		?>
 		<div class="tab-pane" id="header-content">
-			<?php wp_editor(  isset ( $post ) ? get_post_meta( $post->ID , '_header_content' , true)  : ''  , 'header_content_edit', array(
+			<?php wp_editor( SendPress_Tag_Header_Content::content() , 'header_content_edit', array(
 		'dfw' => true,
 		'drag_drop_upload' => true,
 		'tabfocus_elements' => 'insert-media-button-1,save-post',
@@ -130,7 +130,7 @@ class Jaiminho_View_Emails_Templates extends Jaiminho_View_Emails{
 
 		</div>
 		<div class="tab-pane" id="footer-content">
-			<?php wp_editor(  isset ( $post ) ? get_post_meta( $post->ID , '_footer_page' , true) : '' , 'footer_content_edit', array(
+			<?php wp_editor(  SendPress_Tag_Footer_Page::content() , 'footer_content_edit', array(
 		'dfw' => true,
 		'drag_drop_upload' => true,
 		'tabfocus_elements' => 'insert-media-button-1,save-post',
