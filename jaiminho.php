@@ -145,15 +145,38 @@ class Jaiminho extends SendPress
 		{
 			if($_POST["sendpress-sender"] === "Jaiminho_Sender_RedeLivre" )
 			{
-				$options =  array();
-
-				$options['redelivreuser'] = $_POST['redelivreuser'];
-				$options['redelivrepass'] = $_POST['redelivrepass'];
-				$options['redelivreserver'] = $_POST['redelivreserver'];
-				$options['redelivreport'] = $_POST['redelivreport'];
-				$options['sendmethod'] = $_POST['sendpress-sender'];
-				SendPress_Option::set( $options );
-				//SendPress_Option::set( 'sendmethod' , 'Jaiminho_Sender_RedeLivre');
+				$args = array(
+						'network_id' => null,
+						'public'     => null,
+						'archived'   => null,
+						'mature'     => null,
+						'spam'       => null,
+						'deleted'    => null,
+						'limit'      => null,
+						'offset'     => 0,
+					     ); 
+				$blogs = wp_get_sites( $args );
+				$post = array (
+						'redelivreuser'   => $_POST['redelivreuser'] , 
+						'redelivrepass'   => $_POST['redelivrepass'] ,
+						'redelivreserver' => $_POST['redelivreserver'], 
+						'redelivreport'   => $_POST['redelivreport'] ,
+						'sendmethod'      => $_POST['sendpress-sender']
+						);
+				foreach( $blogs as $blog )
+				{ 
+					foreach( $post as $key => $value ) 
+					{
+						//echo $key . " " . $values[$key];
+						//echo $blog['blog_id']; 
+						//var_dump( get_blog_option( $blog['blog_id'] , $key ) );
+						//if ( get_blog_option( $blog['blog_id'] , $key ) )
+						//{
+                                                        //echo $key . " " . $values[$key];
+							update_blog_option ($blog['blog_id'], $key, $value );
+						//}
+					}
+				}
 			}
 		}
 		global  $sendpress_sender_factory;
@@ -161,7 +184,7 @@ class Jaiminho extends SendPress
 		$method = SendPress_Option::get( 'sendmethod' );
 		$key = 'Jaiminho_Sender_RedeLivre'; 
 		?>
-			<form method="post" id="post">
+			<form method="post" id="post" >
 			<div class="panel panel-default">
 			<div class="panel-heading">
 			<h3 class="panel-title"><?php _e('Sending Account Setup','sendpress'); ?></h3>
@@ -173,7 +196,20 @@ class Jaiminho extends SendPress
 			<?php
 			echo $sender->label();
 		echo "</p><div class='well'>";
-		echo $sender->settings();
+		//echo $sender->settings();
+                ?>
+			<!-- honeypot fields inserted for remove autocomplete, autocomplete dont work's on firefox -->
+			<input type="text" style="display: none" id="fakeUsername" name="fakeUsername" value="" />
+			<input type="password" style="display: none" id="fakePassword" name="fakePassword" value="" />
+			<?php _e( 'Username' , 'sendpress'); ?>
+			<p><input name="redelivreuser" type="text" value=""  placeholder="<?php echo __( 'Insira o seu nome de usuário' , 'jaiminho' ); ?>" style="width:50%;" /></p>
+			<?php _e( 'Password' , 'sendpress'); ?>
+			<p><input name="redelivrepass" type="password" value="" placeholder="<?php echo __( 'Insira sua Senha' , 'jaiminho' ); ?>"  style="width:50%;" /></p>
+			<?php echo __( 'Server' , 'jaiminho'); ?>
+			<p><input name="redelivreserver" type="text" value="" placeholder="<?php echo __( 'Insira o ip ou o dns do seu servidor sem o http://' , 'jaiminho' ); ?>" style="width:50%;" /></p>
+			<?php echo __( 'Port' , 'jaiminho'); ?>
+			<p><input name="redelivreport" type="text" placeholder="<?php echo __( 'Insira o numero da porta do serviço smtp do seu servidor' , 'jaiminho' ); ?>" value="" style="width:50%;" /></p>
+                <?php
 		echo "</div></div>";
 		?>
 			</div>
@@ -188,7 +224,7 @@ class Jaiminho extends SendPress
 		if ( isset( $in['plugins'] ) ) {
 			$in['plugins'] .= ' , wpeditimage';
 		}
-                $in['paste_data_images'] = true;
+		$in['paste_data_images'] = true;
 
 		return $in;
 	}

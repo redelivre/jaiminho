@@ -29,13 +29,14 @@ class Jaiminho_Sender_RedeLivre extends SendPress_Sender
 	}
 
 	function settings(){ ?>
+	 <p><?php _e( 'A RedeLivre é limitado a 1000 e-mails por dia. Insira abaixo a configuração pessoal da rede livre ou uma configuração para outro serviço, que inclui usuário, senha, servidor  smtp (ex.: smtp.redelivre.org) e  porta (ex.: 25, 486, 587)', 'jaminho' ); ?>.</p>
   <?php _e( 'Username' , 'sendpress'); ?>
   <p><input name="redelivreuser" type="text" value="<?php echo SendPress_Option::get( 'redelivreuser' ); ?>" style="width:100%;" /></p>
   <?php _e( 'Password' , 'sendpress'); ?>
   <p><input name="redelivrepass" type="password" value="<?php echo SendPress_Option::get( 'redelivrepass' ); ?>" style="width:100%;" /></p>
-  <?php _e( 'Server' , 'jaiminho'); ?>
+  <?php _e( 'Servidor' , 'jaiminho'); ?>
   <p><input name="redelivreserver" type="text" value="<?php echo SendPress_Option::get( 'redelivreserver' ); ?>" style="width:100%;" /></p>
-  <?php _e( 'Port' , 'redelivreport'); ?>
+  <?php _e( 'Porta' , 'jaiminho'); ?>
   <p><input name="redelivreport" type="text" value="<?php echo SendPress_Option::get( 'redelivreport' ); ?>" style="width:100%;" /></p>
 	<?php
 
