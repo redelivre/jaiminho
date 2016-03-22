@@ -158,6 +158,7 @@ class Jaiminho_Sender_RedeLivre extends SendPress_Sender
 		
 		}
 
+                if ( $result == true ) SendPress_Option::set('phpmailer_error', __('Nenhum erro encontrado' , 'jaiminho' ) ); 
 		if (  $result != true ){
 			$log_message = 'RedeLivre <br>';
 			$log_message .= $to . "<br>";

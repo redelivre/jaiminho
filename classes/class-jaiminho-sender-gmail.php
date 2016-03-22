@@ -92,7 +92,7 @@ class Jaiminho_Sender_Gmail extends SendPress_Sender {
 		$rpath = SendPress_Option::get('bounce_email');
 		if( $rpath != false ){
 			$phpmailer->ReturnPath = $rpath;
-                        $phpmailer->AddReplyTo($rpath, $from_name);
+                        $phpmailer->AddReplyTo($rpath,  SendPress_Option::get('fromname'));
 		}
 
 		/**
@@ -146,8 +146,8 @@ class Jaiminho_Sender_Gmail extends SendPress_Sender {
 			SendPress_Option::set('last_test_debug', $smtp_debug);
 		
 		}
-
-		if (  $result != true ){
+                if ( $result == true ) SendPress_Option::set('phpmailer_error', __('Nenhum erro encontrado' , 'jaiminho' ) ); 
+		if ( $result != true ){
 			$log_message = 'Gmail <br>';
 			$log_message .= $to . "<br>";
 			

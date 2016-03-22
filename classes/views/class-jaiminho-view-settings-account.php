@@ -119,7 +119,7 @@ class Jaiminho_View_Settings_Account extends SendPress_View_Settings {
 				<input name="fromemail" tabindex=2 type="text" id="fromemail" value="<?php echo SendPress_Option::get('fromemail'); ?>" class="form-control">
 			</div>
 			<div class="form-group">
-				<label for="bounceemail"><?php __('Bounce Email','jaiminho'); ?></label>
+				<label for="bounceemail"><?php _e('Email de Retorno','jaiminho'); ?></label>
 				<input name="bounceemail" tabindex=3 type="text" id="bounceemail" value="<?php echo SendPress_Option::get('bounce_email'); ?>" class="form-control">
 			</div>
 
@@ -269,7 +269,7 @@ $local_timestamp = wp_next_scheduled('sendpress_cron_action') + $offset;
 <?php sprintf(__('You have sent <strong>%s</strong> emails so far today and you have <strong>%s</strong> credits remaining.', 'sendpress'), $emails_so_far, $credits); ?><br><br>
 <input type="text" size="6" name="emails-per-day" value="<?php echo $emails_per_day; ?>" /> <?php _e('Emails Per Day','sendpress'); ?><br><br>
 <input type="text" size="6" name="emails-per-hour" value="<?php echo $emails_per_hour; ?>" /> <?php _e('Emails Per Hour','sendpress'); ?><br><br>
-<input type="text" size="6" name="emails-credits" value="<?php echo $credits; ?>" /> <?php _e('Available credits', 'sendpress'); ?>
+<input type="text" size="6" name="emails-credits" value="<?php echo $credits; ?>" /> <?php _e('Créditos Disponiveis', 'jaiminho'); ?>
 <br><br>
 <h2><?php _e('Email Encoding','sendpress'); ?></h2>
 <?php
