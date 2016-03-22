@@ -156,7 +156,7 @@ class Jaiminho_View_Emails_Templates extends Jaiminho_View_Emails{
 <div class="sp-25">
 <br><br>
 
-	<?php $this->panel_start( __('Template Name','jaiminho') ); ?>
+	<?php $this->panel_start( __('Template Name','sendpress') ); ?>
           <input type="text" name="post_title" value="<?php echo isset ( $post ) ? $post->post_title : '' ;?>"/>
 	<?php $this->panel_end(  ); ?>
 </div>

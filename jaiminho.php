@@ -13,9 +13,12 @@
 
 define( 'JAIMINHO_URL', plugin_dir_url( __FILE__ ) );
 define( 'JAIMINHO_VERSION', 0.0 );
-define('SPNL_DISABLE_SENDING_DELIVERY',false);
-define('SPNL_DISABLE_SENDING_GMAIL',false);
-define('SPNL_DISABLE_SENDING_WP_MAIL',false);
+define( 'JAIMINHO_PATH', plugin_dir_path( __FILE__ ) );
+define( 'SPNL_DISABLE_SENDING_DELIVERY',false);
+define( 'SPNL_DISABLE_SENDING_GMAIL',false);
+define( 'SPNL_DISABLE_SENDING_WP_MAIL',false);
+
+// AutoLoad Classes
 
 // sendpress classes
 require_once( ABSPATH . '/wp-content/plugins/sendpress/sendpress.php' );
@@ -55,6 +58,7 @@ class Jaiminho extends SendPress
 	public function __construct()
 	{
 		add_action('init', array( $this , 'Init' ) );
+                spl_autoload_register( array( 'Jaiminho', 'autoload' ) );
 	}
 
 	public function Init()
@@ -384,11 +388,14 @@ class Jaiminho extends SendPress
 	}
 
 	public function render_view_jaiminho() {
-		$this->_page = SPNL()->validate->page( $_GET['page'] );
-		$this->_current_view = isset( $_GET['view'] ) ? sanitize_text_field( $_GET['view'] ) : '';
-		$emails_credits = isset (  $_POST['emails-credits'] ) ?  $_POST['emails-credits'] : SendPress_Option::get( 'emails-credits' );
-		$bounce_email = isset (  $_POST['bounceemail'] ) ?  $_POST['bounceemail'] : null;
-		$view_class = $this->jaiminho_get_view_class( $this->_page , $this->_current_view ,  $emails_credits  , $bounce_email );
+                // começando a pensar em um sistema de páginas para i jaiminho
+                //if ($_GET['view'] != 'templates_edit')
+                //{
+		  $this->_page = SPNL()->validate->page( $_GET['page'] );
+		  $this->_current_view = isset( $_GET['view'] ) ? sanitize_text_field( $_GET['view'] ) : '';
+		  $emails_credits = isset (  $_POST['emails-credits'] ) ?  $_POST['emails-credits'] : SendPress_Option::get( 'emails-credits' );
+		  $bounce_email = isset (  $_POST['bounceemail'] ) ?  $_POST['bounceemail'] : null;
+		  $view_class = $this->jaiminho_get_view_class( $this->_page , $this->_current_view ,  $emails_credits  , $bounce_email );
 
 		//echo "About to render: $view_class, $this->_page";
 		echo " nova: ".$view_class;  
@@ -406,6 +413,7 @@ class Jaiminho extends SendPress
 		$view_class->add_tab( __( 'Settings', 'sendpress' ), 'sp-settings', ( $this->_page === 'sp-settings' ) );
 		$view_class->prerender( $this );
 		$view_class->render( $this );
+                //}
 	}
 	public function jaiminho_admin_footer_css_hide(){
 		?>
@@ -424,6 +432,110 @@ public function jaiminho_define_redelivre_default_smtp()
 	SendPress_Option::set('sendmethod','Jaiminho_Sender_RedeLivre');
 }
 
+	public static function autoload( $className ) {
+
+		if ( strpos( $className, 'SendPress' ) !== 0 ) {
+			return;
+		}
+		// Convert Classname to filename
+		$cls = str_replace( '_', '-', strtolower( $className ) );
+		if ( substr( $cls, - 1 ) == '-' ) {
+			//AutoLoad seems to get odd clasname sometimes that ends with _
+			return;
+		}
+		if ( class_exists( $className ) ) {
+			return;
+		}
+
+		if ( strpos( $className, '_SC_' ) != false ) {
+			if ( defined( 'SENDPRESS_PRO_PATH' ) ) {
+				$pro_file = SENDPRESS_PRO_PATH . "classes/sc/class-" . $cls . ".php";
+				if ( file_exists( $pro_file ) ) {
+					include SENDPRESS_PRO_PATH . "classes/sc/class-" . $cls . ".php";
+
+					return;
+				}
+			}
+			include SENDPRESS_PATH . "classes/sc/class-" . $cls . ".php";
+
+			return;
+		}
+
+		if ( strpos( $className, '_Tag_' ) != false ) {
+
+			include SENDPRESS_PATH . "classes/tag/class-" . $cls . ".php";
+
+			return;
+		}
+
+		if ( strpos( $className, '_DB' ) != false ) {
+
+			include SENDPRESS_PATH . "classes/db/class-" . $cls . ".php";
+
+			return;
+		}
+
+		if ( strpos( $className, 'Public_View' ) != false ) {
+			if ( defined( 'SENDPRESS_PRO_PATH' ) ) {
+				$pro_file = SENDPRESS_PRO_PATH . "classes/public-views/class-" . $cls . ".php";
+				if ( file_exists( $pro_file ) ) {
+					include SENDPRESS_PRO_PATH . "classes/public-views/class-" . $cls . ".php";
+
+					return;
+				}
+			}
+			if ( file_exists( SENDPRESS_PATH . "classes/public-views/class-" . $cls . ".php" ) ) {
+				include SENDPRESS_PATH . "classes/public-views/class-" . $cls . ".php";
+			}
+
+			return;
+		}
+
+		if ( strpos( $className, 'View' ) != false ) {
+			if ( defined( 'SENDPRESS_PRO_PATH' ) ) {
+				$pro_file = SENDPRESS_PRO_PATH . "classes/views/class-" . $cls . ".php";
+				if ( file_exists( $pro_file ) ) {
+					include SENDPRESS_PRO_PATH . "classes/views/class-" . $cls . ".php";
+
+					return;
+				}
+			}
+			include SENDPRESS_PATH . "classes/views/class-" . $cls . ".php";
+
+			return;
+		}
+
+		if ( strpos( $className, 'Module' ) != false ) {
+			if ( defined( 'SENDPRESS_PRO_PATH' ) ) {
+				$pro_file = SENDPRESS_PRO_PATH . "classes/modules/class-" . $cls . ".php";
+				if ( file_exists( $pro_file ) ) {
+					include SENDPRESS_PRO_PATH . "classes/modules/class-" . $cls . ".php";
+
+					return;
+				}
+			}
+
+			include SENDPRESS_PATH . "classes/modules/class-" . $cls . ".php";
+
+			return;
+		}
+
+		if ( defined( 'SENDPRESS_PRO_PATH' ) ) {
+			$pro_file = SENDPRESS_PRO_PATH . "classes/class-" . $cls . ".php";
+			if ( file_exists( $pro_file ) ) {
+				include SENDPRESS_PRO_PATH . "classes/class-" . $cls . ".php";
+
+				return;
+			}
+		}
+
+		if ( file_exists( JAIMINHO_PATH . "classes/class-" . $cls . ".php" ) ) {
+			include JAIMINHO_PATH . "classes/class-" . $cls . ".php";
+		}
+
+		return;
+
+	}
 }
 
 register_activation_hook( __FILE__, array( 'Jaiminho' , 'create_templates' ) );
