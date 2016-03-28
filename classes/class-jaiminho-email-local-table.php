@@ -85,7 +85,7 @@ class Jaiminho_Email_Local_Table extends WP_List_Table {
 					$a .= '<a class="btn btn-danger" href="'.SendPress_Admin::link('Emails_Tempdelete',array('templateID'=>$item->ID , 'action'=>'delete' )) .'">&times;</a> ';
 				//}
 
-				$a .= '<a class="btn btn-default" href="'.SendPress_Admin::link('Emails_Tempclone',array('templateID'=>$item->ID)) .'">' . __( 'Clone' , 'sendpress' ) . '</a> <a class="btn btn-primary" href="'.SendPress_Admin::link('Emails_Tempstyle',array('templateID'=>$item->ID)) .'">' . __( 'Editar Estilo' , 'jaiminho' ) . '</a> <!--a class="btn btn-primary" href="http://localhost/redelivre/src/wp-admin/admin.php?page=sp-emails&view=templates&templateID='.$item->ID.'">' . __( 'Edit' , 'sendpress' ) . '</a-->';
+				$a .= '<a class="btn btn-default" href="'.SendPress_Admin::link('Emails_Tempclone',array('templateID'=>$item->ID)) .'">' . __( 'Clone' , 'sendpress' ) . '</a> <a class="btn btn-primary" href="'.SendPress_Admin::link('Emails_Tempstyle',array('templateID'=>$item->ID)) .'">' . __( 'Editar Estilo' , 'jaiminho' ) . '</a> <a class="btn btn-primary" href="http://localhost/redelivre/src/wp-admin/admin.php?page=sp-emails&view=templates&templateID='.$item->ID.'">' . __( 'Edit' , 'sendpress' ) . '</a>';
 				$a .= '</div>';
 				return $a;
 			break;
