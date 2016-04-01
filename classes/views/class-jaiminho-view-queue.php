@@ -218,8 +218,8 @@ echo $time;//11:09
                 $query = $wpdb->prepare("SELECT COUNT(*) FROM $table where last_attempt > %s and success = %d", $time, 1 );
                 $credits_so_far =  $wpdb->get_var( $query );
 		?>
-                <h2><?php $credits?_e('You have', 'sendpress'):""; ?>
-                  <strong><?php echo $credits-$credits_so_far; ?></strong> <?php $credits?_e('credits.', 'sendpress'):""; ?></h2>
+                <h2><?php echo $credits? __('Você tem', 'jaiminho'):""; ?>
+                  <strong><?php echo $credits-$credits_so_far; ?></strong> <?php echo $credits?__('créditos', 'jaiminho'):""; ?>.</h2>
                 <?php if ($credits <= 0) { ?>
                   <!--Maurilio - Acho que podemos fazer um sistema de tradução do Jaiminho ai traduzimos isso por exemplo-->
                 <?php echo "<p class='alert alert-danger'>" . __("Oh no! You don't have any credits. To send the emails in your queue or send new emails, you need to get more credits.", "jaiminho") . "</p>"; ?>

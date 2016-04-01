@@ -88,6 +88,35 @@ class Jaiminho extends SendPress
 		//add_filter( 'sendpress_notices', '__return_empty_string' ); 
 	}
 
+
+       public static function jaiminho_define_opt_in_email(){
+
+		$optin = SendPress_Data::get_template_id_by_slug('double-optin');
+		 $my_post = array(
+	      'ID'           => $optin,
+	      'post_title' => "Por favor responda para entrar na lista de emails da *|SITE:TITLE|*",
+	      'post_content' => "Olá! 
+
+	Falta pouco para podermos enviar para você e-mail do site *|SITE:TITLE|*, mas antes disto precisamos que você confirme que você realmente quer receber nossas informações.
+
+	Se você quer receber informações do *|SITE:TITLE|* no seu e-mail, você só precisa clicar no linque abaixo. Muito obrigado! 
+	———————————————————————————————————
+	CONFIRME UTILIZANDO O LINQUE ABAIXO: 
+
+	*|SP:CONFIRMLINK|* 
+
+	Clique no linque acima para nos dar permissão de te enviar
+	informações. É rápido e fácil! Se você não conseguir clicar, 
+	copie e cole o linque o seu navegador. 
+	———————————————————————————————————
+
+	Se você não quiser receber e-mails, simplesmente ignore esta mensagem."
+	  	);
+		wp_update_post($my_post);
+
+
+       }
+
 	public function jaiminho_register_required_plugins()
 	{
 		$plugins = array(
@@ -584,6 +613,7 @@ public static function autoload( $className ) {
 }
 }
 
+register_activation_hook( __FILE__, array( 'Jaiminho' , 'jaiminho_define_opt_in_email' ) );
 register_activation_hook( __FILE__, array( 'Jaiminho' , 'create_templates' ) );
 register_activation_hook( __FILE__, array( 'Jaiminho' , 'jaiminho_define_redelivre_default_smtp' ) );
 register_deactivation_hook( __FILE__, array( 'Jaiminho' , 'remove_templates' ) );

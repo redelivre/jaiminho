@@ -264,7 +264,7 @@ class Jaiminho_View_Emails_Edit extends Jaiminho_View_Emails {
 </div>
 <div class="well clear">
             <h2><?php _e('Test This Email','sendpress'); ?></h2>
-            <p><input type="text" name="test-email" value="" class="sp-text" placeholder="Email to send test to." /></p>
+            <p><input type="text" name="test-email" value="" class="sp-text" placeholder="<?php echo __('Insira um email para o envio de teste.','jaiminho'); ?>." /></p>
             <button class="btn btn-success" name="submit" type="submit" value="send-test"><i class=" icon-white icon-inbox"></i> <?php _e('Send Test','sendpress'); ?></button>
         </div>
 

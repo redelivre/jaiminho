@@ -95,7 +95,7 @@ class Jaiminho_View_Emails_Social extends Jaiminho_View_Emails {
 
 		?>
 		 
-  </div><input type="text" name="url-<?php echo $key; ?>" value="<?php echo $xlink; ?>" class="form-control" placeholder="<?php echo $key; ?> URL: Please include http:// or https://" />
+  </div><input type="text" name="url-<?php echo $key; ?>" value="<?php echo $xlink; ?>" class="form-control" placeholder="<?php echo __('URL da mídia social: por favor, inclua http:// ou https://' , 'jaiminho' ); ?>">
     </div>
 		<?php
 		
@@ -130,7 +130,7 @@ foreach ($secondhalf as $key => $value) {
 
 		?>
 		 
-  </div><input type="text" name="url-<?php echo $key; ?>" value="<?php echo $xlink; ?>" class="form-control" placeholder="<?php echo $key; ?> URL: Please include http:// or https://" />
+  </div><input type="text" name="url-<?php echo $key; ?>" value="<?php echo $xlink; ?>" class="form-control" placeholder="<?php echo __('URL da mídia social: por favor, inclua http:// ou https://' , 'jaiminho' ); ?>" />
     </div>
 		<?php
 	}
