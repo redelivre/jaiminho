@@ -1,5 +1,8 @@
 <?php
 
+
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-emails-table.php' );
+
 // Prevent loading this file directly
 if ( !defined('SENDPRESS_VERSION') ) {
 	header('HTTP/1.0 403 Forbidden');
@@ -282,7 +285,7 @@ if( !class_exists('Jaiminho_View_Emails') ){
 		function html($sp){
 			SendPress_Tracking::event('Emails Tab');
 			//Create an instance of our package class...
-			$testListTable = new SendPress_Emails_Table();
+			$testListTable = new Jaiminho_Emails_Table();
 			//Fetch, prepare, sort, and filter our data...
 			$testListTable->prepare_items();
 

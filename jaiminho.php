@@ -86,7 +86,25 @@ class Jaiminho extends SendPress
 		add_action( 'tgmpa_register', array( $this , 'jaiminho_register_required_plugins' ) );
 		remove_action( 'init' , array( SPNL() , 'toplevel_page_sp-overview' ) );
 		//add_filter( 'sendpress_notices', '__return_empty_string' ); 
+                add_action( 'sendpress_notices', array( $this, 'jaiminho_notices' ) );
 	}
+
+
+
+ function jaiminho_notices() {
+                //XXX send_method != sendmethod isso vai dar problema
+	        if (!SendPress_Option::get('emails-credits')  &&  SendPress_Option::get( 'sendmethod' ) === 'Jaiminho_Sender_NetWork'  )
+                {
+                        echo '<div class="error"><p>';
+                        echo "<strong>";
+                        _e( 'Warning!', 'sendpress' );
+                        echo "</strong>&nbsp;";
+                        printf( __( '  Seus créditos acabaram, você deve esperar até o próximo mês para que seus créditos reiniciem.', 'jaiminho' ));
+                        echo '</p></div>';
+                }
+
+
+        }
 
 
        public static function jaiminho_define_opt_in_email(){

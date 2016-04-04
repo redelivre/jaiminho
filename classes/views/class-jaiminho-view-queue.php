@@ -85,7 +85,7 @@ class Jaiminho_View_Queue extends SendPress_View {
 		SendPress_Data::requeue_emails();
 		SendPress_Admin::redirect('Queue');
 	}
-        //Maurilio - recurso novo do sendpress ver com jac se ajuda
+
 	function pause_queue(){
 		$pause_sending = SendPress_Option::get('pause-sending','no');
 		//Stop Sending for now
@@ -194,37 +194,50 @@ echo $time;//11:09
 		}
 	?>
 	<div class="btn-group">
-	<a class="btn btn-large btn-default " href="<?php echo SendPress_Admin::link('Queue'); ?>&action=pause-queue" ><i class="icon-repeat icon-white "></i> <?php echo $txt; ?></a>
 
-	<a id="send-now" class="btn btn-primary btn-large " data-toggle="modal" href="#sendpress-sending"   ><i class="icon-white icon-refresh"></i> <?php _e('Send Emails Now','sendpress');?></a>
+	<?php if (SendPress_Option::get('emails-credits') &&  SendPress_Option::get( 'sendmethod' ) === 'Jaiminho_Sender_NetWork' || SendPress_Option::get( 'sendmethod' ) != 'Jaiminho_Sender_NetWork' ){
+          SendPress_Option::set('pause-sending','no');
+          echo  '<a class="btn btn-large btn-default " href="' . SendPress_Admin::link('Queue') . '&action=pause-queue" <i class="icon-repeat icon-white "></i>' . $txt  . '</a>';
+          echo '<a id="send-now" class="btn btn-primary btn-large " data-toggle="modal" href="#sendpress-sending"   ><i class="icon-white icon-refresh"></i>' . __('Send Emails Now','sendpress') . '</a>'; ?>
 	</div>
 	</div>
-	<?php
+	<?php }
+
+              else 
+             {
+               SendPress_Option::set('pause-sending','yes');
+             }
 		$emails_per_day = SendPress_Option::get('emails-per-day');
 		if($emails_per_day == 0){
 			$emails_per_day = __('Unlimited','sendpress');
 		}
 	  $emails_per_hour =  SendPress_Option::get('emails-per-hour');
-          $credits = SendPress_Option::get('emails-credits');
 	  $hourly_emails = SendPress_Data::emails_sent_in_queue("hour");
 	  $emails_so_far = SendPress_Data::emails_sent_in_queue("day");
+          $credits = SendPress_Option::get('emails-credits');
 	 
 		//print_r(SendPress_Data::emails_stuck_in_queue());
                 global $wpdb;
                 $table = SendPress_Data::queue_table();
                 // Maurilio TODO: fazer com os créditos sejam contados a partir da 00:00:00 do primeiro dia do mês atual
 	  	$hour_ago = strtotime('-'.getdate()["mday"].' day');
+                //var_dump($hour_ago);
                 $time = date('Y-m-d H:i:s', $hour_ago);
+                //var_dump($time);
                 $query = $wpdb->prepare("SELECT COUNT(*) FROM $table where last_attempt > %s and success = %d", $time, 1 );
                 $credits_so_far =  $wpdb->get_var( $query );
+                $result_credits = $credits-$credits_so_far;
 		?>
-                <h2><?php echo $credits? __('Você tem', 'jaiminho'):""; ?>
-                  <strong><?php echo $credits-$credits_so_far; ?></strong> <?php echo $credits?__('créditos', 'jaiminho'):""; ?>.</h2>
-                <?php if ($credits <= 0) { ?>
-                  <!--Maurilio - Acho que podemos fazer um sistema de tradução do Jaiminho ai traduzimos isso por exemplo-->
-                <?php echo "<p class='alert alert-danger'>" . __("Oh no! You don't have any credits. To send the emails in your queue or send new emails, you need to get more credits.", "jaiminho") . "</p>"; ?>
-                <?php } ?>
-		
+                <?php if ($credits <= 0) 
+                      {
+                        echo "<p class='alert alert-danger' style='width:70%;'>" . __("Vixe! Você não tem créditos. Para enviar emails em sua fila ou enviar novos emails, você precisa obter mais créditos.", "jaiminho") . "</p>"; ?>
+                <?php } 
+                      else
+                      {?>
+                        <h2><?php echo $credits? __('Você tem', 'jaiminho'):""; ?>
+                          <strong><?php echo $result_credits?$result_cresdits:""; ?></strong> <?php echo $credits?__('créditos', 'jaiminho'):""; ?>.
+                        </h2>
+	        <?php } ?>	
 		<h2><strong><?php echo $emails_so_far; ?></strong> <?php _e('of a possible','sendpress'); ?> <strong><?php echo $emails_per_day; ?></strong> <?php _e('emails sent in the last 24 hours','sendpress'); ?>.</h2>
 		<h2><strong><?php  echo $hourly_emails; ?></strong> <?php _e('of a possible','sendpress'); ?> <strong><?php echo $emails_per_hour; ?></strong> <?php _e('emails sent in the last hour','sendpress'); ?>.</h2>
                 <?php if ((is_multisite() && is_super_admin()) || !is_multisite()) { ?>

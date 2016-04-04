@@ -88,7 +88,7 @@ $subject = SendPress_Option::get('current_send_subject_'.$post->ID ,true);
 ?>
 <div id="styler-menu">
     <div style="float:right;" class="btn-group">
-<a class="btn btn-primary btn-large " id="confirm-send" href="#"><i class="icon-white  icon-thumbs-up"></i> <?php _e('Confirm Send','sendpress'); ?></a>
+        <a class="btn btn-primary btn-large " id="confirm-send" href="#"><i class="icon-white  icon-thumbs-up"></i> <?php _e('Confirm Send','sendpress'); ?></a>
   </div>
 </div>
 <div id="sp-cancel-btn" style="float:right; ">
