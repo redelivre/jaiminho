@@ -235,7 +235,7 @@ echo $time;//11:09
                       else
                       {?>
                         <h2><?php echo $credits? __('Você tem', 'jaiminho'):""; ?>
-                          <strong><?php echo $result_credits?$result_cresdits:""; ?></strong> <?php echo $credits?__('créditos', 'jaiminho'):""; ?>.
+                          <strong><?php echo $result_credits?$result_credits:""; ?></strong> <?php echo $credits?__('créditos', 'jaiminho'):""; ?>.
                         </h2>
 	        <?php } ?>	
 		<h2><strong><?php echo $emails_so_far; ?></strong> <?php _e('of a possible','sendpress'); ?> <strong><?php echo $emails_per_day; ?></strong> <?php _e('emails sent in the last 24 hours','sendpress'); ?>.</h2>

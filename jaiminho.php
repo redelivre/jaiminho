@@ -92,7 +92,7 @@ class Jaiminho extends SendPress
 
 
  function jaiminho_notices() {
-                //XXX send_method != sendmethod isso vai dar problema
+                //XXX send_method != sendmethod isso vai dar problema para o entendimento de novos dev's
 	        if (!SendPress_Option::get('emails-credits')  &&  SendPress_Option::get( 'sendmethod' ) === 'Jaiminho_Sender_NetWork'  )
                 {
                         echo '<div class="error"><p>';
@@ -181,6 +181,7 @@ class Jaiminho extends SendPress
 		} 
 	}
 
+
 	public function jaiminho_network_settings()
 	{
 		add_submenu_page(
@@ -191,8 +192,83 @@ class Jaiminho extends SendPress
 				'jaiminho-network-settings',
 				array( $this , 'jaiminho_settings_network_html' )
 				);    
+
+		add_submenu_page(
+				'settings.php',
+				__('Configurações de Créditos do Jaiminho','jaiminho'),
+				__('Configurações de Créditos do Jaiminho','jaiminho'),
+				'manage_network_options',
+				'jaiminho-network-credits-settings',
+				array( $this , 'jaiminho_settings_network_html_credits' )
+				);    
 	}
 
+	public function jaiminho_settings_network_html_credits()
+	{
+
+
+		// get blogs
+		$args = array(
+				'network_id' => null,
+				'public'     => null,
+				'archived'   => null,
+				'mature'     => null,
+				'spam'       => null,
+				'deleted'    => null,
+				'limit'      => null,
+				'offset'     => 0,
+			     ); 
+		$blogs = wp_get_sites( $args );
+
+
+		// receive post
+
+		if (isset( $_POST["emails-credits"] ) )
+		{
+			if(isset($_POST['blogs']))
+			{
+				foreach( $_POST['blogs'] as $blog )
+				{ 
+					switch_to_blog( $blog );
+                                        $this->jaiminho_settings_account_email($_POST["emails-credits"]);
+					//SendPress_Option::set('emails-credits' , $_POST["emails-credits"] );
+				}
+
+			}
+			else
+			{
+				foreach( $blogs as $blog )
+				{ 
+					switch_to_blog( $blog['blog_id'] );
+                                        $this->jaiminho_settings_account_email($_POST["emails-credits"]);
+					//SendPress_Option::set('emails-credits' , $_POST["emails-credits"] );
+				}
+			}
+			restore_current_blog();
+
+		}
+
+		//show page
+		$credits = SendPress_Option::get('emails-credits');
+		?>
+			<form method="post">
+			<select name="blogs[]" multiple >
+			<?php 
+			foreach ($blogs as $blog)
+			{
+				switch_to_blog(  $blog['blog_id'] );
+				echo '<option value="' . $blog['blog_id'] . '">' .get_bloginfo( 'name' ) . '</option>';
+			}
+		restore_current_blog();
+		?>
+			</select>	
+			<br>
+			<input type="text" size="6" name="emails-credits" value="<?php echo $credits; ?>" /> <?php _e('Créditos Disponiveis', 'jaiminho'); ?>
+			<br>
+			<?php
+			submit_button(__( 'Enviar' , 'jaiminho' )); ?>
+			</form><?php
+	}
 
 	public function jaiminho_settings_network_html()
 	{
@@ -233,11 +309,9 @@ class Jaiminho extends SendPress
 					foreach( $_POST['blogs'] as $blog )
 					{ 
 						//var_dump($blog );
-						echo "opa! pegamos i blog = " . $blog ;
 						foreach( $post as $key => $value ) 
 						{
 							switch_to_blog( $blog );
-							echo 'estamos no blog de numero = ' . get_current_blog_id() . '!';
 							$method = SendPress_Option::set($key,$value);
 						}
 					}
@@ -491,7 +565,7 @@ class Jaiminho extends SendPress
 		$view_class = $this->jaiminho_get_view_class( $this->_page , $this->_current_view ,  $emails_credits  , $bounce_email );
 
 		//echo "About to render: $view_class, $this->_page";
-		echo " nova: ".$view_class;  
+		//echo " nova: ".$view_class;  
 
 		$view_class = NEW $view_class;
 		$queue      = '<span id="queue-count-menu-tab">-</span>';

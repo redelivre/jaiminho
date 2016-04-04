@@ -26,7 +26,7 @@ if(!class_exists('Jaiminho_Sender_NetWork'))
 		function settings(){ ?>
 			<p><?php _e( 'Esta é a configuração padrão inserida pelo super admin da Rede Livre, ela pode ser utilizada também, basta selecionar o botão de rádio, no entanto se você quiser trocar você pode utilizar o Gmail ou pode personalizar sua configuração na aba Rede Livre', 'jaminho' ); ?>.</p>
 				<?php
-				var_dump(SendPress_Option::get('networkuser'));
+				//var_dump(SendPress_Option::get('networkuser'));
 
 		}
 
