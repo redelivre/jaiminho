@@ -86,54 +86,58 @@ class Jaiminho extends SendPress
 		add_action( 'tgmpa_register', array( $this , 'jaiminho_register_required_plugins' ) );
 		remove_action( 'init' , array( SPNL() , 'toplevel_page_sp-overview' ) );
 		//add_filter( 'sendpress_notices', '__return_empty_string' ); 
-                add_action( 'sendpress_notices', array( $this, 'jaiminho_notices' ) );
+		add_action( 'sendpress_notices', array( $this, 'jaiminho_notices' ) );
+		add_action('plugins_loaded',array( $this, 'jaiminho_load_translations' ) );
+	}
+
+	function jaiminho_load_translations() {
+		// load plugin translations
+		load_plugin_textdomain('jaiminho', false, dirname(plugin_basename( __FILE__ )).'/languages');
+	}
+
+	function jaiminho_notices() {
+		//XXX send_method != sendmethod isso vai dar problema para o entendimento de novos dev's
+		if (!SendPress_Option::get('emails-credits')  &&  SendPress_Option::get( 'sendmethod' ) === 'Jaiminho_Sender_NetWork'  )
+		{
+			echo '<div class="error"><p>';
+			echo "<strong>";
+			_e( 'Warning!', 'sendpress' );
+			echo "</strong>&nbsp;";
+			printf( __( '  Seus créditos acabaram, você deve esperar até o próximo mês para que seus créditos reiniciem.', 'jaiminho' ));
+			echo '</p></div>';
+		}
+
+
 	}
 
 
-
- function jaiminho_notices() {
-                //XXX send_method != sendmethod isso vai dar problema para o entendimento de novos dev's
-	        if (!SendPress_Option::get('emails-credits')  &&  SendPress_Option::get( 'sendmethod' ) === 'Jaiminho_Sender_NetWork'  )
-                {
-                        echo '<div class="error"><p>';
-                        echo "<strong>";
-                        _e( 'Warning!', 'sendpress' );
-                        echo "</strong>&nbsp;";
-                        printf( __( '  Seus créditos acabaram, você deve esperar até o próximo mês para que seus créditos reiniciem.', 'jaiminho' ));
-                        echo '</p></div>';
-                }
-
-
-        }
-
-
-       public static function jaiminho_define_opt_in_email(){
+	public static function jaiminho_define_opt_in_email(){
 
 		$optin = SendPress_Data::get_template_id_by_slug('double-optin');
-		 $my_post = array(
-	      'ID'           => $optin,
-	      'post_title' => "Por favor responda para entrar na lista de emails da *|SITE:TITLE|*",
-	      'post_content' => "Olá! 
+		$my_post = array(
+				'ID'           => $optin,
+				'post_title' => "Por favor responda para entrar na lista de emails da *|SITE:TITLE|*",
+				'post_content' => "Olá! 
 
-	Falta pouco para podermos enviar para você e-mail do site *|SITE:TITLE|*, mas antes disto precisamos que você confirme que você realmente quer receber nossas informações.
+				Falta pouco para podermos enviar para você e-mail do site *|SITE:TITLE|*, mas antes disto precisamos que você confirme que você realmente quer receber nossas informações.
 
-	Se você quer receber informações do *|SITE:TITLE|* no seu e-mail, você só precisa clicar no linque abaixo. Muito obrigado! 
-	———————————————————————————————————
-	CONFIRME UTILIZANDO O LINQUE ABAIXO: 
+				Se você quer receber informações do *|SITE:TITLE|* no seu e-mail, você só precisa clicar no linque abaixo. Muito obrigado! 
+				———————————————————————————————————
+				CONFIRME UTILIZANDO O LINQUE ABAIXO: 
 
-	*|SP:CONFIRMLINK|* 
+				*|SP:CONFIRMLINK|* 
 
-	Clique no linque acima para nos dar permissão de te enviar
-	informações. É rápido e fácil! Se você não conseguir clicar, 
-	copie e cole o linque o seu navegador. 
-	———————————————————————————————————
+				Clique no linque acima para nos dar permissão de te enviar
+				informações. É rápido e fácil! Se você não conseguir clicar, 
+				copie e cole o linque o seu navegador. 
+				———————————————————————————————————
 
-	Se você não quiser receber e-mails, simplesmente ignore esta mensagem."
-	  	);
+				Se você não quiser receber e-mails, simplesmente ignore esta mensagem."
+				);
 		wp_update_post($my_post);
 
 
-       }
+	}
 
 	public function jaiminho_register_required_plugins()
 	{
@@ -230,7 +234,7 @@ class Jaiminho extends SendPress
 				foreach( $_POST['blogs'] as $blog )
 				{ 
 					switch_to_blog( $blog );
-                                        $this->jaiminho_settings_account_email($_POST["emails-credits"]);
+					$this->jaiminho_settings_account_email($_POST["emails-credits"]);
 					//SendPress_Option::set('emails-credits' , $_POST["emails-credits"] );
 				}
 
@@ -240,7 +244,7 @@ class Jaiminho extends SendPress
 				foreach( $blogs as $blog )
 				{ 
 					switch_to_blog( $blog['blog_id'] );
-                                        $this->jaiminho_settings_account_email($_POST["emails-credits"]);
+					$this->jaiminho_settings_account_email($_POST["emails-credits"]);
 					//SendPress_Option::set('emails-credits' , $_POST["emails-credits"] );
 				}
 			}

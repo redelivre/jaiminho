@@ -1,0 +1,3005 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: SendPress\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-03-28 19:17-0300\n"
+"PO-Revision-Date: 2016-04-04 16:20-0300\n"
+"Last-Translator: Maurilio Atila Carvalho de Santana <cabelotaina@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/"
+"sendpress/language/pt_BR/)\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 1.5.4\n"
+
+#: inc/forms/email-style.2.0.php:205
+#: classes/class-sendpress-system-email-table.php:184
+#: classes/class-sendpress-reports-tests-table.php:332
+#: classes/views/class-sendpress-view-settings-activation.php:176
+#: classes/views/class-sendpress-view-emails-autoedit.php:94
+#: classes/views/class-sendpress-view-emails-createauto.php:99
+#: classes/views/class-sendpress-view-emails-createauto.php:101
+#: classes/views/class-sendpress-view-emails-send-cancel.php:48
+#: classes/views/class-sendpress-view-emails-systememailedit.php:100
+#: classes/views/class-sendpress-view-emails-send.php:104
+#: classes/views/class-sendpress-view-emails-create.php:99
+#: classes/views/class-sendpress-view-emails-create.php:101
+#: classes/views/class-sendpress-view-emails-send-confirm.php:102
+#: classes/views/class-sendpress-view-emails-edit.php:127
+#: classes/views/class-sendpress-view-emails-systememailcreate.php:107
+#: classes/views/class-sendpress-view-emails-systememailcreate.php:109
+#: classes/class-sendpress-queue-all-table.php:220
+#: classes/class-sendpress-emails-table.php:188
+#: classes/class-sendpress-autoresponder-table.php:187
+msgid "Subject"
+msgstr "Assunto"
+
+#: inc/forms/email-style.2.0.php:212
+msgid "Body Styles"
+msgstr "Estilo de Corpo"
+
+#: inc/forms/email-style.2.0.php:224
+msgid "Header Styles"
+msgstr "Estilos de Cabeçalho"
+
+#: inc/forms/email-style.2.0.php:235
+msgid "Content Styles"
+msgstr "Estilo do conteúdo"
+
+#: inc/forms/email-style.2.0.php:278 classes/class-sendpress-template.php:259
+#: classes/class-sendpress-template.php:471
+#: classes/tag/class-sendpress-tag-footer-page.php:60
+#: classes/tag/class-sendpress-tag-browser-link-html.php:25
+#: classes/views/class-sendpress-view-settings-styles.php:128
+msgid "Is this email not displaying correctly?"
+msgstr "Este email não está sendo exibido corretamente?"
+
+#: inc/forms/email-style.2.0.php:279 classes/class-sendpress-template.php:260
+#: classes/class-sendpress-template.php:472
+#: classes/tag/class-sendpress-tag-footer-page.php:61
+#: classes/tag/class-sendpress-tag-browser-link-html.php:26
+#: classes/views/class-sendpress-view-settings-styles.php:129
+msgid "View it in your browser"
+msgstr "Ver no seu navegador"
+
+#: inc/forms/email-style.2.0.php:280 classes/class-sendpress-template.php:261
+#: classes/class-sendpress-template.php:473
+#: classes/class-sendpress-email.php:261
+msgid "Not interested anymore?"
+msgstr "não está mais interessado?"
+
+#: inc/forms/email-style.2.0.php:281 classes/class-sendpress-template.php:262
+#: classes/class-sendpress-template.php:474
+#: classes/sc/class-sendpress-sc-unsubscribe-form.php:24
+#: classes/class-sendpress-email.php:262 classes/class-sendpress-email.php:284
+msgid "Unsubscribe"
+msgstr "Cancelar assinatura"
+
+#: inc/forms/email-style.2.0.php:282 classes/class-sendpress-template.php:263
+#: classes/class-sendpress-template.php:475
+#: classes/class-sendpress-email.php:263
+msgid "Instantly"
+msgstr "Imediatamente"
+
+#: inc/forms/email-style.2.0.php:370 classes/class-sendpress-template.php:264
+#: classes/class-sendpress-template.php:476
+#: classes/class-sendpress-email.php:285
+msgid "Manage Subscription"
+msgstr "Gerenciar Assinatura"
+
+#: sendpress.php:400
+msgid "Join our mailing List."
+msgstr "Entre na nossa Lista de Emails"
+
+#: sendpress.php:487 sendpress.php:498
+msgid "Warning!"
+msgstr "Atenção!"
+
+#: sendpress.php:489
+#, php-format
+msgid ""
+"  Before sending any emails please setup your <a href=\"%1s\">information</"
+"a>."
+msgstr ""
+"Antes de enviar qualquer email, por favor, configure as suas  <a href=\"%1s"
+"\">informações</a>."
+
+#: sendpress.php:500
+#, php-format
+msgid ""
+"  Sending has been paused. You can resume sending on the <a href=\"%1s"
+"\">Queue</a> page."
+msgstr ""
+"O envio foi pausado, Você pode retomar o envio na página de <a href=\"%1s"
+"\">Fila</a>."
+
+#: sendpress.php:571
+msgid "Once Every Minute"
+msgstr "A cada minuto"
+
+#: sendpress.php:727
+#, php-format
+msgid ""
+"<b>SendPress</b>: We have upgraded your lists to a new format. Please check "
+"your <a href=\"%1$s\">widget settings</a> to re-enable your list(s). | <a "
+"href=\"%2$s\">Hide Notice</a>"
+msgstr ""
+"<b>SendPress</b>: Nós atualizamos nossas listas para um novo formato. Por "
+"favor confira suas <a href=\"%1$s\">configurações de widgets</a> para "
+"reativar sua(s) lista(s). | <a href=\"%2$s\">Ocultar Nota</a>"
+
+#: sendpress.php:1026 sendpress.php:1027
+msgid "Please enter your e-mail address"
+msgstr "Por favor, digite seu e-mail"
+
+#: sendpress.php:1054
+msgid "Use this Image"
+msgstr "Use esta imagem"
+
+#: sendpress.php:1056
+#, php-format
+msgid "Use as %s"
+msgstr "Usar como %s"
+
+#: sendpress.php:1094 sendpress.php:1101 sendpress.php:1109
+#: classes/views/class-sendpress-view-emails-style.php:145
+#: classes/views/class-sendpress-view-emails-systememailedit.php:95
+#: classes/views/class-sendpress-view-emails-edit.php:115
+msgid "Update"
+msgstr "Atualizar"
+
+#: sendpress.php:1097 sendpress.php:1124
+#: classes/views/class-sendpress-view-emails-tempclone.php:40
+#: classes/views/class-sendpress-view-emails-createauto.php:68
+#: classes/views/class-sendpress-view-emails-create.php:68
+#: classes/views/class-sendpress-view-emails-systememailcreate.php:76
+msgid "Save & Next"
+msgstr "Salvar & Próximo"
+
+#: sendpress.php:1104 sendpress.php:1112 sendpress.php:1120
+#: classes/views/class-sendpress-view-emails-style.php:147
+#: classes/views/class-sendpress-view-settings-access.php:179
+#: classes/views/class-sendpress-view-emails-send.php:91
+#: classes/views/class-sendpress-view-emails-edit.php:118
+#: classes/class-sendpress-emails-table.php:107
+msgid "Send"
+msgstr "Enviar"
+
+#: sendpress.php:1117 classes/class-sendpress-subscribers-all-table.php:88
+#: classes/class-sendpress-settings-forms-table.php:92
+#: classes/class-sendpress-settings-forms-table.php:123
+#: classes/class-sendpress-lists-table.php:101
+#: classes/class-sendpress-lists-table.php:147
+#: classes/class-sendpress-system-email-table.php:101
+#: classes/class-sendpress-system-email-table.php:135
+#: classes/class-sendpress-email-templates-table.php:102
+#: classes/class-sendpress-email-templates-table.php:139
+#: classes/class-sendpress-email-local-table.php:154
+#: classes/views/class-sendpress-view-emails-send.php:90
+#: classes/class-sendpress-emails-table.php:104
+#: classes/class-sendpress-emails-table.php:139
+#: classes/class-sendpress-autoresponder-table.php:138
+msgid "Edit"
+msgstr "Editar"
+
+#: sendpress.php:1129
+#: classes/views/class-sendpress-view-emails-tempdelete.php:36
+#: classes/views/class-sendpress-view-emails-tempclone.php:43
+#: classes/views/class-sendpress-view-settings-styles.php:106
+#: classes/views/class-sendpress-view-settings-activation.php:55
+#: classes/views/class-sendpress-view-emails-style.php:142
+#: classes/views/class-sendpress-view-emails-autoedit.php:76
+#: classes/views/class-sendpress-view-emails-autoedit.php:80
+#: classes/views/class-sendpress-view-settings-access.php:121
+#: classes/views/class-sendpress-view-emails-createauto.php:71
+#: classes/views/class-sendpress-view-emails-send-cancel.php:51
+#: classes/views/class-sendpress-view-emails-systememailedit.php:94
+#: classes/views/class-sendpress-view-emails-send.php:84
+#: classes/views/class-sendpress-view-emails-create.php:71
+#: classes/views/class-sendpress-view-settings-account.php:103
+#: classes/views/class-sendpress-view-settings-account.php:377
+#: classes/views/class-sendpress-view-settings-advanced.php:97
+#: classes/views/class-sendpress-view-help.php:274
+#: classes/views/class-sendpress-view-emails-edit.php:105
+#: classes/views/class-sendpress-view-emails-edit.php:109
+#: classes/views/class-sendpress-view-emails-systememailcreate.php:79
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: sendpress.php:1201
+msgid "SendPress"
+msgstr "SendPress"
+
+#: sendpress.php:1203 sendpress.php:1242 sendpress.php:1267
+msgid "Pro"
+msgstr "Pro"
+
+#: sendpress.php:1210 sendpress.php:1259
+msgid "Overview"
+msgstr "Visão geral"
+
+#: sendpress.php:1214 sendpress.php:1260
+#: classes/views/class-sendpress-view-emails.php:42
+#: classes/views/class-sendpress-view-settings-access.php:129
+#: classes/views/class-sendpress-view-settings-advanced.php:198
+msgid "Emails"
+msgstr "Emails"
+
+#: sendpress.php:1219 sendpress.php:1261
+#: classes/views/class-sendpress-view-reports.php:40
+#: classes/views/class-sendpress-view-settings-access.php:130
+msgid "Reports"
+msgstr "Relatórios"
+
+#: sendpress.php:1223 sendpress.php:1262
+#: classes/class-sendpress-lists-table.php:230
+#: classes/views/class-sendpress-view-subscribers.php:45
+#: classes/views/class-sendpress-view-subscribers-subscribers.php:55
+#: classes/views/class-sendpress-view-settings-access.php:131
+#: classes/views/class-sendpress-view-overview.php:39
+#: classes/views/class-sendpress-view-subscribers-all.php:77
+msgid "Subscribers"
+msgstr "Assinantes"
+
+#: sendpress.php:1227 sendpress.php:1263
+#: classes/views/class-sendpress-view-settings-access.php:133
+msgid "Queue"
+msgstr "Fila"
+
+#: sendpress.php:1231 sendpress.php:1264
+#: classes/views/class-sendpress-view-settings.php:31
+#: classes/views/class-sendpress-view-queue-stuck.php:160
+#: classes/views/class-sendpress-view-queue-stuck.php:234
+#: classes/views/class-sendpress-view-settings-access.php:132
+#: classes/views/class-sendpress-view-emails-send.php:195
+#: classes/views/class-sendpress-view-queue.php:214
+#: classes/views/class-sendpress-view-queue.php:292
+#: classes/views/class-sendpress-view-queue-all.php:80
+msgid "Settings"
+msgstr "Configurações"
+
+#: sendpress.php:1237 sendpress.php:1266
+#: classes/views/class-sendpress-view-emails-temp.php:68
+msgid "Help"
+msgstr "Ajuda"
+
+#: sendpress.php:1755
+#, php-format
+msgid "SendPress requires WordPress version %s or later."
+msgstr "SendPress necessita do WordPres versão %s ou posterior."
+
+#: classes/class-sendpress-cron.php:147
+#, fuzzy
+msgid "Once every minutes"
+msgstr "Uma vez a cada dez minutos"
+
+#: classes/class-sendpress-cron.php:151
+msgid "Once every two minutes"
+msgstr "A cada dois minutos"
+
+#: classes/class-sendpress-cron.php:155
+msgid "Once every five minutes"
+msgstr "Uma vez a cada cinco minutos"
+
+#: classes/class-sendpress-cron.php:159
+msgid "Once every ten minutes"
+msgstr "Uma vez a cada dez minutos"
+
+#: classes/class-sendpress-cron.php:163
+msgid "Once every fifteen minutes"
+msgstr "Uma vez a cada quinze minutos"
+
+#: classes/class-sendpress-cron.php:167
+msgid "Once every thirty minutes"
+msgstr "Uma vez a cada trinta minutos"
+
+#: classes/class-sendpress-cron.php:171
+msgid "Once every two hours"
+msgstr "Uma vez a cada duas horas"
+
+#: classes/class-sendpress-cron.php:175
+msgid "Once a week"
+msgstr "Uma vez por Semana"
+
+#: classes/class-sendpress-cron.php:179
+msgid "Once every 28 days"
+msgstr "Uma vez a cada 28 dias"
+
+#: classes/class-sendpress-cron.php:183
+msgid "Once Monthly"
+msgstr "Uma vez por Mês"
+
+#: classes/class-sendpress-widget-forms.php:24
+#, fuzzy
+msgid "Displays a form so your users can interact with SendPress."
+msgstr ""
+"Exibir um form de assinatura permitindo aos seus usuários assinarem suas "
+"listas públicas."
+
+#: classes/class-sendpress-widget-forms.php:32
+msgid "SendPress Forms"
+msgstr "Formulários do SendPress"
+
+#: classes/class-sendpress-widget-forms.php:89
+#: classes/class-sendpress-widget-signup.php:204
+msgid "Title:"
+msgstr "Título:"
+
+#: classes/class-sendpress-widget-forms.php:101
+msgid "Form to Display:"
+msgstr ""
+
+#: classes/class-sendpress-template-tags.php:614
+msgid "Inserts Social Links."
+msgstr "Inserir links das Redes Sociais"
+
+#: classes/class-sendpress-template-tags.php:622
+msgid "Inserts view in browser html link."
+msgstr ""
+
+#: classes/class-sendpress-template-tags.php:630
+msgid "Inserts Site Name."
+msgstr "Inserir nome do Site"
+
+#: classes/class-sendpress-template-tags.php:637
+msgid "Inserts the CANSPAM text."
+msgstr ""
+
+#: classes/class-sendpress-template-tags.php:645
+msgid "Inserts an unsubscribe html link."
+msgstr "Inserir um linque para des-inscrição"
+
+#: classes/class-sendpress-template-tags.php:657
+#: classes/class-sendpress-template-tags.php:663
+msgid "Inserts the subscriber id."
+msgstr "Inserir o identificador (ID) do assinante"
+
+#: classes/class-sendpress-template-tags.php:673
+msgid "Body Color"
+msgstr "Cor do Corpo"
+
+#: classes/class-sendpress-template-tags.php:680
+#: classes/class-sendpress-template-tags.php:687
+msgid "Content Color"
+msgstr "Editar cores"
+
+#: classes/class-sendpress-template-tags.php:694
+msgid "Content Area"
+msgstr "Área do Conteúdo"
+
+#: classes/class-sendpress-template-tags.php:701
+#, fuzzy
+msgid "Header Content"
+msgstr "Conteúdo Principal"
+
+#: classes/class-sendpress-template-tags.php:708
+#, fuzzy
+msgid "Header Page"
+msgstr "Cabeçalho"
+
+#: classes/class-sendpress-template-tags.php:715
+#, fuzzy
+msgid "Footer Page"
+msgstr "Rodapé"
+
+#: classes/class-sendpress-template-tags.php:722
+#, fuzzy
+msgid "Footer Content"
+msgstr "Conteúdo"
+
+#: classes/class-sendpress-template-tags.php:729
+#, fuzzy
+msgid "Email Title"
+msgstr "Email"
+
+#: classes/class-sendpress-logging.php:155
+#, fuzzy
+msgid "SPNL Logs"
+msgstr "Históricos"
+
+#: classes/class-sendpress-sender-spnl.php:14
+msgid "WP Email Delivery ( API Sending )"
+msgstr ""
+
+#: classes/class-sendpress-sender-spnl.php:33
+msgid "<b>Setup</b>"
+msgstr ""
+
+#: classes/class-sendpress-sender-spnl.php:34
+msgid "License Key"
+msgstr "Chave da Licença"
+
+#: classes/class-sendpress-sender-spnl.php:37
+#, fuzzy
+msgid "Disable SSL Sending"
+msgstr "Pausar Envio"
+
+#: classes/class-sendpress-pro-manager.php:262
+msgid "Alert"
+msgstr "Alerta"
+
+#: classes/class-sendpress-pro-manager.php:264
+msgid ""
+"Your API key is either invalid or in use on another site. Need help? Visit "
+"login to <a href=\"http://sendpress.com/your-account/\">SendPress Support</a>"
+msgstr ""
+
+#: classes/class-sendpress-pro-manager.php:270
+msgid ""
+"There was a problem deactivating your API key.  Try again in a few minutes "
+"or visit <a href=\"http://sendpress.com/your-account/\">SendPress Support</a>"
+msgstr ""
+
+#: classes/class-sendpress-pro-manager.php:276
+msgid ""
+"There was a problem activating your API key.  Try again in a few minutes or "
+"visit <a href=\"http://sendpress.com/your-account/\">SendPress Support</a>"
+msgstr ""
+
+#: classes/tag/class-sendpress-tag-unsubscribe-link-html.php:25
+#, fuzzy
+msgid "Unsubscribe from this list."
+msgstr "O usuário não foi inscrito na lista."
+
+#: classes/tag/class-sendpress-tag-footer-page.php:62
+msgid "unsubscribe from this list"
+msgstr "desinscrever-se desta lista"
+
+#: classes/modules/class-sendpress-module.php:80
+#: classes/modules/class-sendpress-module.php:88
+#: classes/modules/class-sendpress-module-pro.php:84
+#: classes/views/class-sendpress-view-settings-account.php:231
+msgid "Activate"
+msgstr "Ativar"
+
+#: classes/modules/class-sendpress-module.php:102
+#: classes/modules/class-sendpress-module.php:126
+#: classes/modules/class-sendpress-module.php:148
+#: classes/modules/class-sendpress-module-pro.php:76
+msgid "Deactivate"
+msgstr "Desativar"
+
+#: classes/modules/class-sendpress-module-pro.php:27
+#, fuzzy
+msgid "SendPress API Key"
+msgstr "Página do SendPress"
+
+#: classes/modules/class-sendpress-module-pro.php:38
+msgid "Register Key"
+msgstr ""
+
+#: classes/modules/class-sendpress-module-pro.php:40
+#, fuzzy
+msgid "Deactivate Key"
+msgstr "Desativar"
+
+#: classes/modules/class-sendpress-module-pro.php:43
+#, php-format
+msgid ""
+"Enter your API key to enable premium support and automatic updates. Get your "
+"API key by logging into <a href=\"%s\">SendPress.com</a>."
+msgstr ""
+
+#: classes/modules/class-sendpress-module-pro.php:60
+#, fuzzy
+msgid "Install Pro"
+msgstr "Imediatamente"
+
+#: classes/modules/class-sendpress-module-pro.php:68
+msgid "Buy Now"
+msgstr "Comprar Agora"
+
+#: classes/modules/class-sendpress-module-empty.php:13
+msgid "More Coming Soon!"
+msgstr ""
+
+#: classes/modules/class-sendpress-module-empty.php:16
+msgid "Cool stuff is on the horizon, check back soon!"
+msgstr ""
+
+#: classes/modules/class-sendpress-module-empty.php:24
+msgid "Request a Feature"
+msgstr ""
+
+#: classes/modules/class-sendpress-module-spam-test.php:18
+#, fuzzy
+msgid "Spam Testing"
+msgstr "Configurações"
+
+#: classes/modules/class-sendpress-module-reports.php:18
+#: classes/views/class-sendpress-view-overview.php:279
+#, fuzzy
+msgid "Advanced Reports"
+msgstr "Avançado"
+
+#: classes/modules/class-sendpress-module-reports.php:21
+msgid ""
+"Add more details to your reports. See who clicked what and when. What device "
+"they used and where they were."
+msgstr ""
+
+#: classes/class-sendpress-subscribers-all-table.php:160
+#: classes/class-sendpress-queue-table.php:207
+#: classes/sc/class-sendpress-sc-unsubscribe-form.php:23
+#: classes/sc/class-sendpress-sc-forms.php:116
+#: classes/views/class-sendpress-view-subscribers-subscriber.php:131
+#: classes/views/class-sendpress-view-subscribers-add.php:65
+#: classes/views/class-sendpress-view-emails-systememailedit.php:340
+#: classes/views/class-sendpress-view-subscribers-csvprep.php:115
+#: classes/views/class-sendpress-view-emails-edit.php:367
+#: classes/class-sendpress-queue-all-table.php:217
+msgid "Email"
+msgstr "Email"
+
+#: classes/class-sendpress-subscribers-all-table.php:161
+#: classes/class-sendpress-widget-signup.php:171
+#: classes/views/class-sendpress-view-emails-systememailedit.php:330
+#: classes/views/class-sendpress-view-emails-edit.php:357
+msgid "First Name"
+msgstr "Nome"
+
+#: classes/class-sendpress-subscribers-all-table.php:162
+#: classes/class-sendpress-widget-signup.php:172
+#: classes/views/class-sendpress-view-emails-systememailedit.php:335
+#: classes/views/class-sendpress-view-emails-edit.php:362
+msgid "Last Name"
+msgstr "Sobrenome"
+
+#: classes/class-sendpress-subscribers-all-table.php:164
+msgid "Date Joined"
+msgstr ""
+
+#: classes/class-sendpress-subscribers-all-table.php:165
+#: classes/class-sendpress-queue-table.php:214
+msgid "Actions"
+msgstr "Ações"
+
+#: classes/class-sendpress-subscribers-all-table.php:219
+#: classes/class-sendpress-settings-forms-table.php:92
+#: classes/class-sendpress-settings-forms-table.php:124
+#: classes/class-sendpress-lists-table.php:279
+#: classes/class-sendpress-system-email-table.php:136
+#: classes/class-sendpress-email-templates-table.php:140
+#: classes/class-sendpress-email-templates-table.php:249
+#: classes/class-sendpress-reports-tests-table.php:395
+#: classes/class-sendpress-email-local-table.php:155
+#: classes/class-sendpress-emails-table.php:140
+#: classes/class-sendpress-emails-table.php:249
+#: classes/class-sendpress-autoresponder-table.php:139
+#: classes/class-sendpress-autoresponder-table.php:248
+msgid "Delete"
+msgstr "Deletar"
+
+#: classes/class-sendpress-subscribers-all-table.php:274
+#: classes/class-sendpress-queue-table.php:325
+#: classes/class-sendpress-queue-stuck-table.php:325
+#: classes/class-sendpress-subscribers-table.php:277
+#: classes/class-sendpress-queue-all-table.php:335
+msgid "Filter"
+msgstr "Filtrar"
+
+#: classes/class-sendpress-api.php:199
+msgid "You must specify both a token and API key!"
+msgstr "Você precisa especificar o token e a Chave API!"
+
+#: classes/class-sendpress-api.php:207
+msgid "Your request could not be authenticated!"
+msgstr "Sua requisição não pode ser autenticada!"
+
+#: classes/class-sendpress-api.php:215
+msgid "Invalid API key!"
+msgstr "Chave API inválida!"
+
+#: classes/class-sendpress-api.php:331
+#, fuzzy
+msgid "Invalid query!"
+msgstr "Chave API inválida!"
+
+#: classes/class-sendpress-queue-table.php:208
+#: classes/sc/class-sendpress-sc-forms.php:149
+#: classes/class-sendpress-queue-all-table.php:218
+#: classes/class-sendpress-shortcode-manage.php:33
+msgid "List"
+msgstr "Lista"
+
+#: classes/class-sendpress-queue-table.php:211
+msgid "Max&nbsp;Attempts"
+msgstr ""
+
+#: classes/class-sendpress-queue-table.php:212
+msgid "Attempted"
+msgstr ""
+
+#: classes/class-sendpress-queue-table.php:213
+msgid "Last&nbsp;Attempt"
+msgstr ""
+
+#: classes/class-sendpress-queue-table.php:280
+#: classes/class-sendpress-queue-all-table.php:290
+#, fuzzy
+msgid "All Lists"
+msgstr "Listas"
+
+#: classes/class-sendpress-settings-forms-table.php:92
+msgid "Clone"
+msgstr "Duplicar"
+
+#: classes/class-sendpress-settings-forms-table.php:165
+msgid "Name"
+msgstr "Nome"
+
+#: classes/class-sendpress-settings-forms-table.php:166
+#: classes/class-sendpress-system-email-table.php:186
+msgid "Type"
+msgstr "Tipo"
+
+#: classes/class-sendpress-settings-forms-table.php:167
+#: classes/views/class-sendpress-view-settings-widgets.php:297
+#: classes/views/class-sendpress-view-settings-widgets.php:396
+msgid "Shortcode"
+msgstr "Shortcode"
+
+#: classes/class-sendpress-sender.php:14
+msgid "Sender Missing Label"
+msgstr ""
+
+#: classes/class-sendpress-ajax-loader.php:166
+msgid "User was not subscribed to the list."
+msgstr "O usuário não foi inscrito na lista."
+
+#: classes/class-sendpress-tour.php:69
+msgid "Welcome to SendPress"
+msgstr "Bem-vindo a SendPress"
+
+#: classes/class-sendpress-tour.php:70
+msgid ""
+"You've just installed SendPress! Click &ldquo;Start Tour&rdquo; to view a "
+"quick introduction of this plugins core functionality."
+msgstr ""
+
+#: classes/class-sendpress-tour.php:75
+msgid "Start Tour"
+msgstr "Comece o Tour"
+
+#: classes/class-sendpress-tour.php:89
+#: classes/views/class-sendpress-view-queue-stuck.php:237
+#: classes/views/class-sendpress-view-emails-systememailedit.php:415
+#: classes/views/class-sendpress-view-settings-account.php:475
+#: classes/views/class-sendpress-view-queue.php:295
+#: classes/views/class-sendpress-view-emails-edit.php:442
+msgid "Close"
+msgstr "Fechar"
+
+#: classes/class-sendpress-tour.php:111
+msgid "Help Make SendPress Better"
+msgstr "Ajude-nos a melhorar o SendPress"
+
+#: classes/class-sendpress-tour.php:112
+msgid ""
+"You've just installed SendPres. Please helps us improve it by allowing us to "
+"gather anonymous usage stats so we know which configurations, plugins and "
+"themes to test with."
+msgstr ""
+"Você acabou de instalar o SendPress. Por favor nos ajude a melhorá-lo "
+"permitindo que coletemos informações anônimas sobre configurações, plugins e "
+"temas utilizados. Obrigado."
+
+#: classes/class-sendpress-tour.php:117
+msgid "Allow tracking"
+msgstr "Permitir rastreamento."
+
+#: classes/class-sendpress-tour.php:123
+msgid "Do not allow tracking"
+msgstr "Não permitir rastreamento."
+
+#: classes/public-views/class-sendpress-public-view-confirm.php:60
+msgid "Thank you for signing up!"
+msgstr "Obrigado por sua assinatura!"
+
+#: classes/public-views/class-sendpress-public-view-confirm.php:61
+msgid "You're all set, and should start receiving emails soon."
+msgstr ""
+"Você ativou sua conta com sucesso e deve começar a receber e-mails em breve."
+
+#: classes/public-views/class-sendpress-public-view-post.php:48
+#: classes/public-views/class-sendpress-public-view-form.php:38
+#, fuzzy
+msgid "Invalid Email"
+msgstr "Enviar Email"
+
+#: classes/public-views/class-sendpress-public-view-post.php:71
+#: classes/public-views/class-sendpress-public-view-form.php:60
+msgid "Problem with subscribing user."
+msgstr ""
+
+#: classes/public-views/class-sendpress-public-view-post.php:172
+msgid "You must provide a list ID for the post page to work"
+msgstr ""
+
+#: classes/public-views/class-sendpress-public-view-post.php:194
+#, fuzzy
+msgid "Thank You for subscribing"
+msgstr "Obrigado por sua assinatura!"
+
+#: classes/public-views/class-sendpress-public-view-post.php:197
+msgid "Sorry, We had a Problem adding your email"
+msgstr ""
+
+#: classes/public-views/class-sendpress-public-view-form.php:62
+#, fuzzy
+msgid "Thanks for subscribing."
+msgstr "Obrigado por sua assinatura!"
+
+#: classes/class-sendpress-shortcode-loader.php:72
+#, fuzzy
+msgid "Basic"
+msgstr "Configurações Básicas"
+
+#: classes/class-sendpress-shortcode-loader.php:84
+msgid "All Options with Defaults"
+msgstr ""
+
+#: classes/class-sendpress-shortcode-loader.php:89
+msgid "Your Content Here."
+msgstr ""
+
+#: classes/class-sendpress-shortcode-loader.php:93
+#, fuzzy
+msgid "Wrapping Content"
+msgstr "Conteúdo Principal"
+
+#: classes/class-sendpress-sender-website.php:20
+msgid "Your Website"
+msgstr "Seu Site"
+
+#: classes/class-sendpress-sender-website.php:253
+#: classes/class-sendpress-sender-gmail.php:175
+#: classes/class-sendpress-manager.php:529
+msgid "The result was: "
+msgstr "O resultado foi:"
+
+#: classes/class-sendpress-sender-website.php:254
+#: classes/class-sendpress-sender-gmail.php:176
+#: classes/class-sendpress-manager.php:530
+msgid "The mailer error info: "
+msgstr "Informação de erro:"
+
+#: classes/class-sendpress-sender-website.php:256
+#: classes/class-sendpress-sender-gmail.php:178
+#: classes/class-sendpress-manager.php:532
+msgid "The SMTP debugging output is shown below:\n"
+msgstr ""
+
+#: classes/sc/class-sendpress-sc-recent-posts-by-user.php:22
+msgid "Get Recent Posts By User"
+msgstr ""
+
+#: classes/sc/class-sendpress-sc-recent-posts-by-user.php:35
+#: classes/sc/class-sendpress-sc-recent-posts.php:49
+msgid "You can provide a Title. This is added before the post loop begins."
+msgstr ""
+
+#: classes/sc/class-sendpress-sc-recent-posts-by-user.php:57
+msgid "This shortcode creates a listing of Posts in emails or on pages."
+msgstr ""
+
+#: classes/sc/class-sendpress-sc-unsubscribe-form.php:18
+#, fuzzy
+msgid "Unsubscribe Form"
+msgstr "Cancelar assinatura"
+
+#: classes/sc/class-sendpress-sc-unsubscribe-form.php:29
+msgid ""
+"You can provide an alternate message to your users after they unsubscribe."
+msgstr ""
+
+#: classes/sc/class-sendpress-sc-unsubscribe-form.php:33
+#, fuzzy
+msgid "You have been unsubscribed from all lists."
+msgstr "Você está inscrito  nas seguintes listas:"
+
+#: classes/sc/class-sendpress-sc-unsubscribe-form.php:66
+msgid ""
+"This shortcode creates a form that allows a user to enter an email address "
+"and unsubscribe. The default message after unsubscribe is: "
+msgstr ""
+
+#: classes/sc/class-sendpress-sc-recent-posts.php:18
+msgid "Get Recent Posts"
+msgstr ""
+
+#: classes/sc/class-sendpress-sc-recent-posts.php:314
+msgid ""
+"This shortcode creates a listing of Posts in emails or on pages.  Use the "
+"following options to customize the output: <br><br><b>posts</b> - number of "
+"posts to display. (defaults to 1)<br><b>uid</b> - the user id of the author "
+"you would like to see.<br><b>imgalign</b> - Align images left or right. "
+"(defaults to left)<br><b>alternate</b> - when writing posts, alternate the "
+"thumbnail images. (defaults to false)<br><b>readmoretext</b> - the text for "
+"the readmore link (defaults to Read More)<br><b>columns</b> - the number of "
+"columns your posts should display in.  Max number of columns is 3."
+"<br><b>datespan</b> - number of days of posts to render.  Can be set to "
+"\"daily\", \"weekly\", or a number of days (datespan=3 for the last three "
+"days for exmaple) (defaults to daily.)<br><b>displayimages</b> - Set to true "
+"by default, set to false if you want no images to display."
+"<br><b>display_author</b> - Set to false by default, set to true the author "
+"link will display."
+msgstr ""
+
+#: classes/sc/class-sendpress-sc-forms.php:18
+#: classes/views/class-sendpress-view-settings.php:48
+#: classes/views/class-sendpress-view-settings-widgets.php:157
+msgid "Forms"
+msgstr "Formulários"
+
+#: classes/sc/class-sendpress-sc-forms.php:118
+msgid "Signup Date"
+msgstr "Data da Assinatura"
+
+#: classes/sc/class-sendpress-sc-forms.php:124
+msgid "Saved"
+msgstr "Salvo"
+
+#: classes/sc/class-sendpress-sc-forms.php:125
+msgid "Your subscriptions have been updated. Thanks."
+msgstr "Suas assinaturas foram atualizadas. Obrigado."
+
+#: classes/sc/class-sendpress-sc-forms.php:130
+msgid "You are subscribed to the following lists:"
+msgstr "Você está inscrito  nas seguintes listas:"
+
+#: classes/sc/class-sendpress-sc-forms.php:147
+#: classes/class-sendpress-shortcode-manage.php:31
+msgid "Subscribed"
+msgstr "Assinados"
+
+#: classes/sc/class-sendpress-sc-forms.php:148
+#: classes/class-sendpress-shortcode-manage.php:32
+msgid "Unsubscribed"
+msgstr "Cancelados"
+
+#: classes/sc/class-sendpress-sc-forms.php:182
+#: classes/class-sendpress-shortcode-manage.php:68
+msgid "Never Subscribed"
+msgstr "Nunca Inscritos"
+
+#: classes/sc/class-sendpress-sc-forms.php:204
+#: classes/class-sendpress-shortcode-manage.php:89
+msgid "Save My Settings"
+msgstr "Salvar Minhas Configurações"
+
+#: classes/sc/class-sendpress-sc-forms.php:216
+#: classes/sc/class-sendpress-sc-signup.php:51
+msgid "You've already signed up, Thanks!"
+msgstr ""
+
+#: classes/sc/class-sendpress-sc-forms.php:356
+msgid "This shortcode loads a form based on a form id."
+msgstr ""
+
+#: classes/sc/class-sendpress-sc-signup.php:18
+msgid "Signup"
+msgstr "Registrar"
+
+#: classes/sc/class-sendpress-sc-signup.php:170
+msgid ""
+"This shortcode creates a sign up form for users on your site.  This "
+"shortcode is not required for users to signup, you can also use our signup "
+"widget."
+msgstr ""
+
+#: classes/class-sendpress-lists-table.php:82
+#: classes/class-sendpress-lists-table.php:96
+#: classes/class-sendpress-lists-table.php:105
+msgid "Sync"
+msgstr "Sincronizar"
+
+#: classes/class-sendpress-lists-table.php:101
+#: classes/class-sendpress-emails-table.php:98
+msgid "View"
+msgstr "Ver"
+
+#: classes/class-sendpress-lists-table.php:108
+msgid "Import"
+msgstr "Importar"
+
+#: classes/class-sendpress-lists-table.php:111
+msgid "Add"
+msgstr "Adicionar"
+
+#: classes/class-sendpress-lists-table.php:112
+msgid "Export"
+msgstr "Exportar"
+
+#: classes/class-sendpress-lists-table.php:114
+#: classes/views/class-sendpress-view-settings-widgets.php:185
+msgid "Form"
+msgstr "Formulário"
+
+#: classes/class-sendpress-lists-table.php:161
+msgid "Test List"
+msgstr "Lista de Teste"
+
+#: classes/class-sendpress-lists-table.php:228
+#: classes/class-sendpress-emails-table.php:190
+#: classes/class-sendpress-autoresponder-table.php:189
+msgid "Last Send"
+msgstr "Último Envio"
+
+#: classes/class-sendpress-posts.php:222
+msgid "SendPress Internal Container"
+msgstr ""
+
+#: classes/class-sendpress-posts.php:239
+#, fuzzy
+msgid "SendPress Templates"
+msgstr "Página do SendPress"
+
+#: classes/class-sendpress-posts.php:254
+#, fuzzy
+msgid "SendPress Settings"
+msgstr "Cadastre-se no SendPress"
+
+#: classes/class-sendpress-posts.php:275
+#: classes/views/class-sendpress-view-subscribers-listcreate.php:62
+#: classes/views/class-sendpress-view-subscribers-listedit.php:76
+msgid "SendPress List"
+msgstr "Lista SendPress"
+
+#: classes/class-sendpress-posts.php:294
+#, fuzzy
+msgid "SendPress Jobs"
+msgstr "Lista SendPress"
+
+#: classes/class-sendpress-posts.php:318
+msgid "Sendpress Pages"
+msgstr "Páginas do SendPress"
+
+#: classes/class-sendpress-posts.php:319
+msgid "SendPress Page"
+msgstr "Página do SendPress"
+
+#: classes/class-sendpress-system-email-table.php:185
+#: classes/class-sendpress-email-templates-table.php:189
+#: classes/class-sendpress-emails-table.php:189
+#: classes/class-sendpress-autoresponder-table.php:188
+msgid "Created"
+msgstr "Criado"
+
+#: classes/class-sendpress-tracking.php:142
+msgid "You do not have sufficient permissions to access this page."
+msgstr "Sem permissões suficientes para acessar esta página."
+
+#: classes/class-sendpress-reports-tests-table.php:333
+msgid "Date Sent"
+msgstr "Data de Envio"
+
+#: classes/class-sendpress-reports-tests-table.php:334
+msgid "Info"
+msgstr "Info"
+
+#: classes/class-sendpress-reports-tests-table.php:336
+#: classes/views/class-sendpress-view-subscribers.php:50
+#: classes/views/class-sendpress-view-subscribers.php:101
+#: classes/views/class-sendpress-view-emails-send.php:163
+#: classes/views/class-sendpress-view-emails-send-confirm.php:115
+msgid "Lists"
+msgstr "Listas"
+
+#: classes/class-sendpress-reports-tests-table.php:337
+msgid "Opens "
+msgstr "Abertos"
+
+#: classes/class-sendpress-reports-tests-table.php:338
+#: classes/views/class-sendpress-view-overview.php:135
+msgid "Clicks"
+msgstr "Clicados"
+
+#: classes/class-sendpress-reports-tests-table.php:339
+msgid "Unsubscribes"
+msgstr "Des-inscritos"
+
+#: classes/class-sendpress-sender-gmail.php:14
+msgid "Gmail"
+msgstr "Gmail"
+
+#: classes/class-sendpress-sender-gmail.php:36
+msgid ""
+"Gmail is limited to 500 emails a day. We recommend that you open a dedicated "
+"Gmail account for this purpose"
+msgstr ""
+"Gmail é limitado a 500 e-mails por dia. Recomendamos que você abra uma conta "
+"do Gmail dedicada para esta finalidade"
+
+#: classes/class-sendpress-sender-gmail.php:37
+msgid "Username"
+msgstr "Nome de usuário"
+
+#: classes/class-sendpress-sender-gmail.php:39
+msgid "Password"
+msgstr "Senha"
+
+#: classes/class-sendpress-widget-signup.php:24
+msgid ""
+"Displays a signup form so your users can sign up for your public e-mail "
+"lists."
+msgstr ""
+"Exibir um form de assinatura permitindo aos seus usuários assinarem suas "
+"listas públicas."
+
+#: classes/class-sendpress-widget-signup.php:33
+msgid "SendPress Signup"
+msgstr "Cadastre-se no Jaiminho"
+
+#: classes/class-sendpress-widget-signup.php:76
+msgid "NO LIST HAS BEEN SELECTED IN SENDPRESS WIDGET SETTINGS"
+msgstr ""
+
+#: classes/class-sendpress-widget-signup.php:173
+msgid "E-Mail"
+msgstr "E-Mail"
+
+#: classes/class-sendpress-widget-signup.php:174
+#, fuzzy
+msgid "List Selection"
+msgstr "Nenhuma lista foi selecionada"
+
+#: classes/class-sendpress-widget-signup.php:177
+#: classes/views/class-sendpress-view-subscribers-add.php:85
+#: classes/views/class-sendpress-view-subscribers-add.php:103
+#: classes/views/class-sendpress-view-help.php:261
+msgid "Submit"
+msgstr "Enviar"
+
+#: classes/class-sendpress-widget-signup.php:178
+msgid "Check your inbox now to confirm your subscription."
+msgstr "Confira sua caixa de entrada para consfirmar a assinatura."
+
+#: classes/class-sendpress-widget-signup.php:209
+#: classes/views/class-sendpress-view-settings-widgets.php:260
+#: classes/views/class-sendpress-view-settings-widgets.php:389
+msgid "Description:"
+msgstr "Descrição:"
+
+#: classes/class-sendpress-widget-signup.php:216
+#: classes/views/class-sendpress-view-settings-widgets.php:306
+msgid "Collect First Name"
+msgstr "Coletar Nome"
+
+#: classes/class-sendpress-widget-signup.php:221
+#: classes/views/class-sendpress-view-settings-widgets.php:311
+msgid "Collect Last Name"
+msgstr "Coletar Sobrenome"
+
+#: classes/class-sendpress-widget-signup.php:225
+#: classes/views/class-sendpress-view-settings-widgets.php:315
+msgid "Display labels inside"
+msgstr ""
+
+#: classes/class-sendpress-widget-signup.php:226
+#: classes/views/class-sendpress-view-settings-widgets.php:316
+msgid "Yes"
+msgstr "Sim"
+
+#: classes/class-sendpress-widget-signup.php:227
+#: classes/views/class-sendpress-view-settings-activation.php:68
+#: classes/views/class-sendpress-view-settings-widgets.php:317
+msgid "No"
+msgstr "Não"
+
+#: classes/class-sendpress-widget-signup.php:232
+msgid "Check all lists by default"
+msgstr ""
+
+#: classes/class-sendpress-widget-signup.php:237
+#: classes/views/class-sendpress-view-settings-widgets.php:265
+msgid "First Name Label:"
+msgstr "Rótulo do Nome:"
+
+#: classes/class-sendpress-widget-signup.php:242
+#: classes/views/class-sendpress-view-settings-widgets.php:270
+msgid "Last Name Label:"
+msgstr "Rótulo do Sobrenome:"
+
+#: classes/class-sendpress-widget-signup.php:247
+#: classes/views/class-sendpress-view-settings-widgets.php:275
+msgid "E-Mail Label:"
+msgstr "Rótulo do Email:"
+
+#: classes/class-sendpress-widget-signup.php:252
+#: classes/views/class-sendpress-view-settings-widgets.php:280
+msgid "Button Text:"
+msgstr "Texto do Botão:"
+
+#: classes/class-sendpress-widget-signup.php:256
+#: classes/views/class-sendpress-view-settings-widgets.php:285
+msgid "Lists Label: multiple lists only"
+msgstr ""
+
+#: classes/class-sendpress-widget-signup.php:259
+msgid "Check off the lists you would like<br>users to subscribe to"
+msgstr ""
+
+#: classes/class-sendpress-widget-signup.php:263
+#: classes/views/class-sendpress-view-settings-widgets.php:352
+msgid "No public lists available"
+msgstr ""
+
+#: classes/class-sendpress-widget-signup.php:282
+#: classes/views/class-sendpress-view-settings-widgets.php:290
+msgid "Thank you message:"
+msgstr "Mensagem de agradecimento:"
+
+#: classes/class-sendpress-widget-signup.php:287
+#: classes/views/class-sendpress-view-settings-widgets.php:321
+msgid "Thank You Page (AJAX OFF ONLY):"
+msgstr ""
+
+#: classes/class-sendpress-widget-signup.php:292
+#: classes/views/class-sendpress-view-settings-advanced.php:189
+#: classes/views/class-sendpress-view-settings-advanced.php:191
+#: classes/views/class-sendpress-view-settings-advanced.php:194
+#: classes/views/class-sendpress-view-settings-advanced.php:196
+#: classes/views/class-sendpress-view-settings-advanced.php:198
+#: classes/views/class-sendpress-view-settings-widgets.php:326
+msgid "Default"
+msgstr "Padrão"
+
+#: classes/class-sendpress-manager.php:191
+msgid "This is text only alternative body."
+msgstr ""
+
+#: classes/class-sendpress-manager.php:192
+msgid "A Test Email from SendPress."
+msgstr "Email teste de SendPress"
+
+#: classes/class-sendpress-manager.php:193
+msgid "SendPress test email :)."
+msgstr "Email teste de SendPress :)."
+
+#: classes/views/class-sendpress-view-emails-tempdelete.php:32
+msgid "You are about to delete template"
+msgstr ""
+
+#: classes/views/class-sendpress-view-emails-tempdelete.php:34
+msgid "Delete Template"
+msgstr "Remover Tema"
+
+#: classes/views/class-sendpress-view-emails-tempclone.php:47
+msgid "Clone Template"
+msgstr "Duplicar Modelo"
+
+#: classes/views/class-sendpress-view-emails-tempclone.php:60
+msgid "Template Name"
+msgstr "Nome do template"
+
+#: classes/views/class-sendpress-view-emails.php:23
+#: classes/views/class-sendpress-view-queue-stuck.php:35
+#: classes/views/class-sendpress-view-emails-temp.php:39
+#: classes/views/class-sendpress-view-queue-jobs.php:28
+#: classes/views/class-sendpress-view-queue-errors.php:31
+#: classes/views/class-sendpress-view-queue.php:72
+#: classes/views/class-sendpress-view-queue-all.php:32
+#: classes/views/class-sendpress-view-emails-tempedit.php:41
+msgid "Emails per page"
+msgstr "Emails por página"
+
+#: classes/views/class-sendpress-view-emails.php:36
+#: classes/views/class-sendpress-view-subscribers.php:39
+#: classes/views/class-sendpress-view-settings.php:25
+#: classes/views/class-sendpress-view-reports.php:34
+msgid "Toggle navigation"
+msgstr ""
+
+#: classes/views/class-sendpress-view-emails.php:47
+#: classes/views/class-sendpress-view-reports.php:45
+msgid "Newsletters"
+msgstr ""
+
+#: classes/views/class-sendpress-view-emails.php:52
+msgid "Autoresponders"
+msgstr ""
+
+#: classes/views/class-sendpress-view-emails.php:58
+#: classes/views/class-sendpress-view-emails-temp.php:67
+msgid "Templates"
+msgstr "Modelos"
+
+#: classes/views/class-sendpress-view-emails.php:61
+msgid "Custom Templates"
+msgstr "Crie um Tema"
+
+#: classes/views/class-sendpress-view-emails.php:65
+#: classes/views/class-sendpress-view-settings-shared.php:40
+msgid "Social Icons"
+msgstr "Ícones Sociais"
+
+#: classes/views/class-sendpress-view-emails.php:68
+#: classes/views/class-sendpress-view-overview.php:281
+msgid "Post Notifications"
+msgstr ""
+
+#: classes/views/class-sendpress-view-emails.php:75
+#, fuzzy
+msgid "Automation"
+msgstr "Legenda"
+
+#: classes/views/class-sendpress-view-emails.php:81
+msgid "System Email"
+msgstr "Email de Sistema"
+
+#: classes/views/class-sendpress-view-emails.php:101
+#: classes/views/class-sendpress-view-emails-systememailedit.php:249
+#: classes/views/class-sendpress-view-emails-edit.php:276
+msgid "Single Post"
+msgstr "Post único"
+
+#: classes/views/class-sendpress-view-emails.php:102
+#: classes/views/class-sendpress-view-emails-systememailedit.php:250
+#: classes/views/class-sendpress-view-emails-edit.php:277
+msgid "Personalize"
+msgstr ""
+
+#: classes/views/class-sendpress-view-emails.php:116
+#: classes/views/class-sendpress-view-emails-systememailedit.php:264
+#: classes/views/class-sendpress-view-emails-edit.php:291
+msgid "Search Posts"
+msgstr "Pesquisar posts"
+
+#: classes/views/class-sendpress-view-emails.php:118
+#: classes/views/class-sendpress-view-emails-systememailedit.php:266
+#: classes/views/class-sendpress-view-emails-edit.php:293
+#, fuzzy
+msgid "No Post Selected"
+msgstr "Nenhuma lista foi selecionada"
+
+#: classes/views/class-sendpress-view-emails.php:296
+#: classes/views/class-sendpress-view-emails-create.php:75
+msgid "Create Email"
+msgstr "Criar Email"
+
+#: classes/views/class-sendpress-view-settings-styles.php:106
+#: classes/views/class-sendpress-view-settings-activation.php:55
+#: classes/views/class-sendpress-view-emails-header.php:35
+#: classes/views/class-sendpress-view-subscribers-subscriber.php:111
+#: classes/views/class-sendpress-view-emails-autoedit.php:86
+#: classes/views/class-sendpress-view-settings-access.php:121
+#: classes/views/class-sendpress-view-subscribers-listform.php:40
+#: classes/views/class-sendpress-view-settings-shared.php:36
+#: classes/views/class-sendpress-view-emails-footer.php:35
+#: classes/views/class-sendpress-view-settings-account.php:103
+#: classes/views/class-sendpress-view-emails-footerpage.php:34
+#: classes/views/class-sendpress-view-settings-advanced.php:97
+#: classes/views/class-sendpress-view-emails-social.php:36
+#: classes/views/class-sendpress-view-emails-headerpage.php:35
+msgid "Save"
+msgstr "Salvar"
+
+#: classes/views/class-sendpress-view-settings-styles.php:133
+msgid "Link to browser version"
+msgstr ""
+
+#: classes/views/class-sendpress-view-settings-styles.php:134
+msgid "Use default"
+msgstr "Use o padrão"
+
+#: classes/views/class-sendpress-view-settings-styles.php:134
+msgid "Use custom"
+msgstr ""
+
+#: classes/views/class-sendpress-view-settings-styles.php:134
+msgid "None"
+msgstr "Nenhum"
+
+#: classes/views/class-sendpress-view-settings-styles.php:144
+msgid "CAN-SPAM"
+msgstr "Aviso Anti-SPAM"
+
+#: classes/views/class-sendpress-view-settings-styles.php:144
+msgid "required in the US."
+msgstr "obrigatório nos EUA."
+
+#: classes/views/class-sendpress-view-settings-styles.php:144
+msgid "This area displays in Email Footer"
+msgstr "Esta área mostra o rodapé do e-mail"
+
+#: classes/views/class-sendpress-view-settings-styles.php:146
+msgid ""
+"Your message must include your valid physical postal address. This can be "
+"your current street address, a post office box youve registered with the U."
+"S. Postal Service, or a private mailbox youve registered with a commercial "
+"mail receiving agency established under Postal Service regulations."
+msgstr ""
+"Sua mensagem deve incluir seu endereço postal físico válido. Este pode ser o "
+"seu endereço atual rua, uma caixa postal youve registrado com o Serviço "
+"Postal dos EUA, ou uma caixa de correio privado youve registrado com uma "
+"agência de correio a receber comercial estabelecida nos termos da "
+"regulamentação do Serviço Postal."
+
+#: classes/views/class-sendpress-view-settings-styles.php:147
+msgid ""
+"This is dictated under the <a href=\"http://business.ftc.gov/documents/bus61-"
+"can-spam-act-compliance-guide-business\" target=\"_blank\">Federal CAN-SPAM "
+"Act of 2003</a>."
+msgstr ""
+"Isto obrigatório nos EUA de acordo com o <a href=\"http://business.ftc.gov/"
+"documents/bus61-can-spam-act-compliance-guide-business\" target=\"_blank"
+"\">Federal CAN-SPAM Act de 2003</a>."
+
+#: classes/views/class-sendpress-view-subscribers.php:54
+msgid "All Subscribers"
+msgstr "Todos os cadastrados"
+
+#: classes/views/class-sendpress-view-subscribers.php:58
+msgid "Custom Fields"
+msgstr "Campos personalizados"
+
+#: classes/views/class-sendpress-view-subscribers.php:76
+msgid "Lists per page"
+msgstr "Listas por página"
+
+#: classes/views/class-sendpress-view-subscribers.php:99
+#: classes/views/class-sendpress-view-subscribers-listcreate.php:40
+msgid "Create List"
+msgstr "Criar Lista"
+
+#: classes/views/class-sendpress-view-emails-postnotifications.php:33
+msgid "Introducing Post Notifcations"
+msgstr ""
+
+#: classes/views/class-sendpress-view-emails-postnotifications.php:35
+msgid "Post Notifcations Requires SendPress Pro v1.0+"
+msgstr ""
+
+#: classes/views/class-sendpress-view-emails-postnotifications.php:41
+#, fuzzy
+msgid "Custom Post Templates"
+msgstr "Crie um Tema"
+
+#: classes/views/class-sendpress-view-emails-postnotifications.php:42
+msgid ""
+"SendPress Post Notifications can be formatted using HTML and custom templae "
+"tags."
+msgstr ""
+
+#: classes/views/class-sendpress-view-emails-postnotifications.php:46
+msgid "Updates on your schedule"
+msgstr ""
+
+#: classes/views/class-sendpress-view-emails-postnotifications.php:47
+msgid ""
+"Send updates to your readers whenever you want.  Send instantly after you "
+"publish a post, or daily/weekly updates of all your posts."
+msgstr ""
+
+#: classes/views/class-sendpress-view-emails-postnotifications.php:51
+#: classes/views/class-sendpress-view-emails-templates.php:56
+msgid "Upgrade to Pro"
+msgstr "Torne-se Pro"
+
+#: classes/views/class-sendpress-view-emails-postnotifications.php:52
+#: classes/views/class-sendpress-view-emails-templates.php:57
+#, php-format
+msgid ""
+"Go to <a href=\"https://sendpress.com/purchase-pricing/\">SendPress.com</a> "
+"to get a liscense for SendPress Pro. Also if you enable AutoCron you should "
+"recive a 20% discount."
+msgstr ""
+
+#: classes/views/class-sendpress-view-settings.php:36
+msgid "Basic Setup"
+msgstr "Configurações Básicas"
+
+#: classes/views/class-sendpress-view-settings.php:40
+msgid "Shared Content"
+msgstr "Conteúdo Compartilhado"
+
+#: classes/views/class-sendpress-view-settings.php:43
+msgid "Sending"
+msgstr "Envio"
+
+#: classes/views/class-sendpress-view-settings.php:44
+msgid "Confirmation"
+msgstr "Confirmação"
+
+#: classes/views/class-sendpress-view-settings.php:46
+msgid "Permissions"
+msgstr "Permissões"
+
+#: classes/views/class-sendpress-view-settings.php:47
+msgid "Notifications"
+msgstr "Notificações"
+
+#: classes/views/class-sendpress-view-settings.php:49
+#: classes/views/class-sendpress-view-queue-all.php:80
+msgid "Advanced"
+msgstr "Avançado"
+
+#: classes/views/class-sendpress-view-settings.php:51
+msgid "Styles"
+msgstr "Estilo"
+
+#: classes/views/class-sendpress-view-subscribers-csvimport.php:93
+msgid "We had a problem saving your upload"
+msgstr ""
+
+#: classes/views/class-sendpress-view-subscribers-csvimport.php:97
+#: classes/views/class-sendpress-view-subscribers-csvprep.php:96
+msgid "Import CSV to "
+msgstr "Importar CSV para"
+
+#: classes/views/class-sendpress-view-emails-systememail.php:30
+#, fuzzy
+msgid "Create System E-mail"
+msgstr "Criar Email"
+
+#: classes/views/class-sendpress-view-settings-activation.php:62
+msgid "Public Page Settings"
+msgstr "Configuração de página pública"
+
+#: classes/views/class-sendpress-view-settings-activation.php:68
+msgid "Use theme styles"
+msgstr "Usar estilo do tema"
+
+#: classes/views/class-sendpress-view-settings-activation.php:69
+msgid "This will attempt to use the WordPress theme functions"
+msgstr "Isso irá tentar usar as funções do Wordpress"
+
+#: classes/views/class-sendpress-view-settings-activation.php:69
+msgid "and"
+msgstr "e"
+
+#: classes/views/class-sendpress-view-settings-activation.php:69
+msgid "to build the SendPress default public pages"
+msgstr "para construir a página pública padrão do Sendpress."
+
+#: classes/views/class-sendpress-view-settings-activation.php:72
+msgid "Manage Page"
+msgstr "Gerenciar Página"
+
+#: classes/views/class-sendpress-view-settings-activation.php:74
+msgid ""
+"This is the page subscribers are directed to to manage their subscriptions "
+"to your lists"
+msgstr ""
+"Esta é a página para onde os interessados na desinscrição são direcionados "
+"para editar as desinscrições de suas listas."
+
+#: classes/views/class-sendpress-view-settings-activation.php:77
+#: classes/views/class-sendpress-view-settings-activation.php:133
+msgid "Use Default SendPress Page"
+msgstr "Usar página padrão do Jaiminho"
+
+#: classes/views/class-sendpress-view-settings-activation.php:78
+#: classes/views/class-sendpress-view-settings-activation.php:105
+#: classes/views/class-sendpress-view-settings-activation.php:134
+msgid "Redirect to"
+msgstr "Redirecionar para"
+
+#: classes/views/class-sendpress-view-settings-activation.php:82
+#: classes/views/class-sendpress-view-settings-activation.php:109
+#: classes/views/class-sendpress-view-settings-activation.php:137
+#: classes/views/class-sendpress-view-settings-activation.php:285
+#: classes/views/class-sendpress-view-subscribers-listform.php:101
+msgid "Select page"
+msgstr "Selecione a página"
+
+#: classes/views/class-sendpress-view-settings-activation.php:97
+#: classes/views/class-sendpress-view-settings-activation.php:124
+#: classes/views/class-sendpress-view-settings-activation.php:150
+msgid "View Page"
+msgstr "Ver Página"
+
+#: classes/views/class-sendpress-view-settings-activation.php:99
+msgid "Unsubscribe Page"
+msgstr "Página de Des-inscrição"
+
+#: classes/views/class-sendpress-view-settings-activation.php:101
+#, fuzzy
+msgid ""
+"This is the page subscribers are directed to to unsubscribe from your list"
+msgstr ""
+"Esta é a página para onde os interessados na desinscrição são direcionados "
+"para editar as desinscrições de suas listas."
+
+#: classes/views/class-sendpress-view-settings-activation.php:104
+msgid "Use Default Manage description Page"
+msgstr "Usar página padrão de des-inscrição"
+
+#: classes/views/class-sendpress-view-settings-activation.php:129
+msgid "Confirmation Page"
+msgstr "Página de Confirmação"
+
+#: classes/views/class-sendpress-view-settings-activation.php:131
+msgid ""
+"Select the page a new subcriber will be redirected to after they click the "
+"confirmation link in the Double Opt-in Email"
+msgstr ""
+"Selecione a página para onde o novo inscrito será direcionado após clicar "
+"para confirmar seu email."
+
+#: classes/views/class-sendpress-view-settings-activation.php:153
+#: classes/views/class-sendpress-view-settings-activation.php:157
+msgid "Post Page"
+msgstr "Página de postagem"
+
+#: classes/views/class-sendpress-view-settings-activation.php:155
+msgid ""
+"This is the page shown by default if you are using a custom form to post "
+"subscriber data. This can also be set per list on each lists form page"
+msgstr ""
+"Essa é a página mostrada por padrão se você estiver usando um formulário "
+"personalizado de inscrição. Isso também pode ser definido para cada lista na "
+"montagem do formulário."
+
+#: classes/views/class-sendpress-view-settings-activation.php:170
+msgid "Double Opt-in Email"
+msgstr "Inscrição com confirmação"
+
+#: classes/views/class-sendpress-view-settings-activation.php:178
+msgid "Body"
+msgstr "Corpo"
+
+#: classes/views/class-sendpress-view-settings-activation.php:190
+msgid "Send Double Opt-in Email"
+msgstr "Inscrição com Confirmação"
+
+#: classes/views/class-sendpress-view-settings-activation.php:191
+msgid "Keep the spammers, robots and other riff-raff off your list"
+msgstr "Mantenha spammer e robôs fora da sua lista"
+
+#: classes/views/class-sendpress-view-settings-activation.php:191
+msgid "Read more about why to use double opt-in on our support site"
+msgstr ""
+"Leia mais sobre porque usar e-mails de confirmação em nosso site de suporte."
+
+#: classes/views/class-sendpress-view-settings-activation.php:197
+msgid "Quick Tags"
+msgstr "Tags Rápidas"
+
+#: classes/views/class-sendpress-view-settings-activation.php:197
+msgid "work in both subject and body"
+msgstr "funcionam tanto no assunto como no corpo da mensagem"
+
+#: classes/views/class-sendpress-view-settings-activation.php:199
+msgid "This is required to be in the body of the email"
+msgstr "Isso é necessário estar no corpo do e-mail"
+
+#: classes/views/class-sendpress-view-settings-activation.php:201
+msgid "Add Website title to the email"
+msgstr "Adicione o título do site no e-mail"
+
+#: classes/views/class-sendpress-view-settings-activation.php:203
+msgid "Add the email the user signed up with"
+msgstr "Adicionar o e-mail do usuário cadastrado"
+
+#: classes/views/class-sendpress-view-settings-activation.php:208
+#: classes/views/class-sendpress-view-emails-create.php:115
+msgid "Select your template"
+msgstr "Selecione o seu Tema"
+
+#: classes/views/class-sendpress-view-settings-activation.php:211
+msgid "Default Template"
+msgstr "Tema Padrão"
+
+#: classes/views/class-sendpress-view-emails-header.php:35
+#: classes/views/class-sendpress-view-emails-footer.php:35
+#: classes/views/class-sendpress-view-emails-headerpage.php:35
+#, fuzzy
+msgid "Back to Template"
+msgstr "Crie um Tema"
+
+#: classes/views/class-sendpress-view-emails-header.php:37
+#, fuzzy
+msgid "Template Header"
+msgstr "Nome do template"
+
+#: classes/views/class-sendpress-view-settings-dbfix.php:33
+msgid "1.0 Template Reset"
+msgstr "Reiniciar Temas 1.0"
+
+#: classes/views/class-sendpress-view-settings-dbfix.php:34
+msgid "This will remove all templates in the new template system"
+msgstr "Esta ação eliminará todos os temas no novo sistema de temas."
+
+#: classes/views/class-sendpress-view-settings-dbfix.php:39
+msgid "Reset Settings"
+msgstr "Reiniciar as Configurações"
+
+#: classes/views/class-sendpress-view-settings-dbfix.php:40
+msgid "This will reset all form settings and remove extra metadata"
+msgstr ""
+
+#: classes/views/class-sendpress-view-queue-stuck.php:131
+#: classes/views/class-sendpress-view-queue.php:185
+msgid "Pause Sending"
+msgstr "Pausar Envio"
+
+#: classes/views/class-sendpress-view-queue-stuck.php:134
+#: classes/views/class-sendpress-view-queue.php:188
+msgid "Resume Sending"
+msgstr ""
+
+#: classes/views/class-sendpress-view-queue-stuck.php:141
+#: classes/views/class-sendpress-view-queue.php:194
+msgid "Send Emails Now"
+msgstr "Enviar Emails Agora"
+
+#: classes/views/class-sendpress-view-queue-stuck.php:148
+#: classes/views/class-sendpress-view-queue.php:200
+msgid "Unlimited"
+msgstr "Ilimitados"
+
+#: classes/views/class-sendpress-view-queue-stuck.php:158
+#: classes/views/class-sendpress-view-queue-stuck.php:159
+#: classes/views/class-sendpress-view-queue.php:212
+#: classes/views/class-sendpress-view-queue.php:213
+msgid "of a possible"
+msgstr "de possiveis"
+
+#: classes/views/class-sendpress-view-queue-stuck.php:158
+#: classes/views/class-sendpress-view-queue.php:212
+msgid "emails sent in the last 24 hours"
+msgstr "emails enviados nas próximas 24 horas"
+
+#: classes/views/class-sendpress-view-queue-stuck.php:159
+#: classes/views/class-sendpress-view-queue.php:213
+msgid "emails sent in the last hour"
+msgstr "emais enviados na próxima hora"
+
+#: classes/views/class-sendpress-view-queue-stuck.php:160
+#: classes/views/class-sendpress-view-queue.php:214
+#: classes/views/class-sendpress-view-queue-all.php:80
+msgid "You can adjust these settings here"
+msgstr "Você pode ajustar as configurações em"
+
+#: classes/views/class-sendpress-view-queue-stuck.php:160
+#: classes/views/class-sendpress-view-queue-stuck.php:234
+#: classes/views/class-sendpress-view-queue.php:214
+#: classes/views/class-sendpress-view-queue.php:292
+msgid "Sending Account"
+msgstr "Conta para Envio"
+
+#: classes/views/class-sendpress-view-queue-stuck.php:166
+#: classes/views/class-sendpress-view-queue.php:228
+msgid "The cron will run again around"
+msgstr "O cron vai ser ativado novamente proximo de"
+
+#: classes/views/class-sendpress-view-queue-stuck.php:181
+#: classes/views/class-sendpress-view-queue.php:251
+#, fuzzy
+msgid "Re-queue All Emails"
+msgstr "Sim, delete todos os emails"
+
+#: classes/views/class-sendpress-view-queue-stuck.php:186
+#, fuzzy
+msgid "Delete All Stuck Emails"
+msgstr "Sim, delete todos os emails"
+
+#: classes/views/class-sendpress-view-queue-stuck.php:194
+#, fuzzy
+msgid "Really? Delete All Emails stuck in the Queue."
+msgstr "Você tem certeza? Deletar Todos os Emails da Fila."
+
+#: classes/views/class-sendpress-view-queue-stuck.php:197
+#, fuzzy
+msgid ""
+"This will remove all stuck emails from the queue without attempting to send "
+"them"
+msgstr "Esta ação eliminará todos os emails da fila sem tentar enviá-los."
+
+#: classes/views/class-sendpress-view-queue-stuck.php:200
+#: classes/views/class-sendpress-view-subscribers-subscribers.php:94
+#: classes/views/class-sendpress-view-subscribers-all.php:115
+#: classes/views/class-sendpress-view-queue.php:271
+msgid "No! I was Joking"
+msgstr "Não! Eu estava brincando."
+
+#: classes/views/class-sendpress-view-queue-stuck.php:200
+#: classes/views/class-sendpress-view-queue.php:271
+msgid "Yes! Delete All Emails"
+msgstr "Sim, delete todos os emails"
+
+#: classes/views/class-sendpress-view-queue-stuck.php:210
+#: classes/views/class-sendpress-view-queue.php:281
+msgid "Sending Emails"
+msgstr "Enviando Emails"
+
+#: classes/views/class-sendpress-view-queue-stuck.php:218
+#: classes/views/class-sendpress-view-queue.php:289
+msgid "of"
+msgstr "de"
+
+#: classes/views/class-sendpress-view-queue-stuck.php:218
+msgid "emails"
+msgstr "emails"
+
+#: classes/views/class-sendpress-view-queue-stuck.php:219
+msgid "You are currently sending 1 email approximately every"
+msgstr ""
+
+#: classes/views/class-sendpress-view-queue-stuck.php:232
+msgid "seconds"
+msgstr "segundos"
+
+#: classes/views/class-sendpress-view-queue-stuck.php:233
+#: classes/views/class-sendpress-view-queue.php:291
+msgid "You are also limited to"
+msgstr ""
+
+#: classes/views/class-sendpress-view-queue-stuck.php:233
+#: classes/views/class-sendpress-view-queue.php:291
+msgid "emails per hour"
+msgstr "emails por hora"
+
+#: classes/views/class-sendpress-view-queue-stuck.php:234
+#: classes/views/class-sendpress-view-queue.php:292
+msgid "To change these settings go to"
+msgstr "Para modificar essas configurações entre em"
+
+#: classes/views/class-sendpress-view-queue-stuck.php:237
+#: classes/views/class-sendpress-view-queue.php:295
+msgid "If you close this window sending will stop. "
+msgstr "Se vocêc fechar esta janela o envio de emails cessará."
+
+#: classes/views/class-sendpress-view-subscribers-listcreate.php:38
+#: classes/views/class-sendpress-view-subscribers-listedit.php:50
+msgid "Save List"
+msgstr "Salvar Lista"
+
+#: classes/views/class-sendpress-view-subscribers-listcreate.php:45
+#: classes/views/class-sendpress-view-subscribers-listedit.php:60
+msgid "Allow user to sign up to this list"
+msgstr "Permitir que os usuários assinem esta lista"
+
+#: classes/views/class-sendpress-view-subscribers-listcreate.php:45
+msgid "synced lists will be made private"
+msgstr ""
+
+#: classes/views/class-sendpress-view-subscribers-listcreate.php:46
+#: classes/views/class-sendpress-view-subscribers-listedit.php:61
+msgid ""
+"Mark list as test. Adds <span class=\"label label-info\">Test List</span> to "
+"list title every where."
+msgstr ""
+
+#: classes/views/class-sendpress-view-subscribers-listcreate.php:59
+#: classes/views/class-sendpress-view-subscribers-listedit.php:63
+msgid "Select List Type"
+msgstr "Selecione o tipo da Lista"
+
+#: classes/views/class-sendpress-view-subscribers-listcreate.php:60
+#: classes/views/class-sendpress-view-subscribers-listedit.php:64
+msgid ""
+"Pick SendPress list if you want to use SendPress to manage your subscribers. "
+"Pick a WordPress Role if you want to send emails to your users. <br>Synced "
+"lists can only have users that have a login to your WordPress site."
+msgstr ""
+
+#: classes/views/class-sendpress-view-subscribers-listcreate.php:62
+#: classes/views/class-sendpress-view-subscribers-listedit.php:76
+msgid "Use this to have subscribers sign up, import csv, etc."
+msgstr ""
+
+#: classes/views/class-sendpress-view-subscribers-listcreate.php:74
+#: classes/views/class-sendpress-view-subscribers-listedit.php:95
+msgid "User Meta Query - Advanced"
+msgstr ""
+
+#: classes/views/class-sendpress-view-subscribers-listcreate.php:74
+#: classes/views/class-sendpress-view-subscribers-listedit.php:95
+msgid "Use this to sync a list based on user meta data."
+msgstr ""
+
+#: classes/views/class-sendpress-view-reports.php:20
+#: classes/views/class-sendpress-view-reports-tests.php:20
+msgid "Reports per page"
+msgstr "Relatórios por página"
+
+#: classes/views/class-sendpress-view-reports.php:48
+msgid "Tests"
+msgstr "Testes"
+
+#: classes/views/class-sendpress-view-reports.php:79
+msgid "Information"
+msgstr "Legenda"
+
+#: classes/views/class-sendpress-view-reports.php:81
+#: classes/views/class-sendpress-view-reports-tests.php:46
+#: classes/views/class-sendpress-view-overview.php:178
+msgid "Unique"
+msgstr "Únicos"
+
+#: classes/views/class-sendpress-view-reports.php:81
+#: classes/views/class-sendpress-view-reports-tests.php:46
+msgid ""
+"The total number of different recipients that have clicked on a link or "
+"opened an email."
+msgstr ""
+"Número total de diferentes e-mails que clicaram em um linque ou abriram a "
+"newsletter"
+
+#: classes/views/class-sendpress-view-reports.php:83
+#: classes/views/class-sendpress-view-reports-tests.php:48
+#: classes/views/class-sendpress-view-overview.php:157
+msgid "Total"
+msgstr "Total"
+
+#: classes/views/class-sendpress-view-reports.php:83
+#: classes/views/class-sendpress-view-reports-tests.php:48
+msgid ""
+"The total number of clicks or opens that have happened. Regardless of who "
+"clicked or opened the email."
+msgstr ""
+"Total: Número total de cliques ou aberturas que ocorreram, independentemente "
+"de quem clicou ou abriu o e-mail. "
+
+#: classes/views/class-sendpress-view-emails-style.php:154
+#: classes/views/class-sendpress-view-emails-systememailedit.php:237
+#: classes/views/class-sendpress-view-emails-edit.php:264
+msgid "Test This Email"
+msgstr "Teste este email"
+
+#: classes/views/class-sendpress-view-emails-style.php:156
+#: classes/views/class-sendpress-view-emails-systememailedit.php:239
+#: classes/views/class-sendpress-view-emails-edit.php:266
+msgid "Send Test"
+msgstr "Enviar Teste"
+
+#: classes/views/class-sendpress-view-subscribers-subscriber.php:114
+msgid "Edit Subscriber"
+msgstr "Editar Assinante"
+
+#: classes/views/class-sendpress-view-subscribers-subscriber.php:132
+#: classes/views/class-sendpress-view-subscribers-add.php:66
+msgid "Firstname"
+msgstr "Nome"
+
+#: classes/views/class-sendpress-view-subscribers-subscriber.php:133
+#: classes/views/class-sendpress-view-subscribers-add.php:67
+msgid "Lastname"
+msgstr "Sobrenome"
+
+#: classes/views/class-sendpress-view-subscribers-subscriber.php:208
+msgid "This feature requires SendPress Pro."
+msgstr ""
+
+#: classes/views/class-sendpress-view-subscribers-subscribers.php:20
+#: classes/views/class-sendpress-view-subscribers-all.php:32
+msgid "Subscribers per page"
+msgstr "Inscritos por página"
+
+#: classes/views/class-sendpress-view-subscribers-subscribers.php:53
+#: classes/views/class-sendpress-view-subscribers-add.php:56
+#: classes/views/class-sendpress-view-subscribers-all.php:75
+msgid "Add Subscriber"
+msgstr "Incluir Assinante"
+
+#: classes/views/class-sendpress-view-subscribers-subscribers.php:79
+msgid "Remove All Subscribers from List"
+msgstr "Remover todos os inscritos da Lista"
+
+#: classes/views/class-sendpress-view-subscribers-subscribers.php:88
+#: classes/views/class-sendpress-view-subscribers-all.php:109
+msgid "Really? Remove All Subscribers from this list."
+msgstr "Tem certeza? Quer remover todos os Inscritos nesta lista"
+
+#: classes/views/class-sendpress-view-subscribers-subscribers.php:91
+#: classes/views/class-sendpress-view-subscribers-all.php:112
+#, fuzzy
+msgid "This will remove all subscribers from the list"
+msgstr "O usuário não foi inscrito na lista."
+
+#: classes/views/class-sendpress-view-subscribers-subscribers.php:94
+#: classes/views/class-sendpress-view-subscribers-all.php:115
+msgid "Yes! Remove All Subscribers"
+msgstr "Sim! Remover todos os inscritos"
+
+#: classes/views/class-sendpress-view-emails-autoedit.php:92
+#, fuzzy
+msgid "Autoresponder Settings"
+msgstr "Reiniciar as Configurações"
+
+#: classes/views/class-sendpress-view-emails-autoedit.php:100
+#, fuzzy
+msgid "When someone subscribes to the list"
+msgstr "O usuário não foi inscrito na lista."
+
+#: classes/views/class-sendpress-view-emails-autoedit.php:101
+msgid "When a new WordPress user is added to your site"
+msgstr "Quando um novo usuário do WordPress é adicionado no seu site"
+
+#: classes/views/class-sendpress-view-emails-autoedit.php:102
+#, fuzzy
+msgid "When a subscriber clicks a link"
+msgstr "O usuário não foi inscrito na lista."
+
+#: classes/views/class-sendpress-view-settings-access.php:128
+msgid "Role"
+msgstr "Função"
+
+#: classes/views/class-sendpress-view-settings-access.php:134
+msgid "Add-ons"
+msgstr "Extras"
+
+#: classes/views/class-sendpress-view-settings-access.php:174
+msgid "Create/Edit/Delete"
+msgstr "Criar/Editar/Deletar"
+
+#: classes/views/class-sendpress-view-settings-access.php:184
+#: classes/views/class-sendpress-view-settings-access.php:189
+#: classes/views/class-sendpress-view-settings-access.php:206
+#: classes/views/class-sendpress-view-settings-access.php:212
+msgid "Full Access"
+msgstr "Acesso Completo"
+
+#: classes/views/class-sendpress-view-settings-access.php:194
+msgid "Full Access (<small>No Permissions Access</small>)"
+msgstr "Acesso Total (<small>Sem Permissões de Acesso</small>)"
+
+#: classes/views/class-sendpress-view-subscribers-listform.php:40
+msgid "Back to Lists"
+msgstr "Voltar para as Listas"
+
+#: classes/views/class-sendpress-view-subscribers-listform.php:42
+msgid "Form Settings for List "
+msgstr "Formulário de Configurações para a Lista"
+
+#: classes/views/class-sendpress-view-subscribers-sync.php:67
+msgid "Syncing "
+msgstr "Sincronizando"
+
+#: classes/views/class-sendpress-view-subscribers-sync.php:67
+msgid " Role to List"
+msgstr ""
+
+#: classes/views/class-sendpress-view-emails-createauto.php:75
+#: classes/views/class-sendpress-view-emails-autoresponder.php:27
+msgid "Create Autoresponder"
+msgstr ""
+
+#: classes/views/class-sendpress-view-emails-createauto.php:109
+#: classes/views/class-sendpress-view-emails-systememailedit.php:182
+#: classes/views/class-sendpress-view-emails-edit.php:209
+#: classes/views/class-sendpress-view-emails-systememailcreate.php:117
+msgid "Template"
+msgstr "Modelo"
+
+#: classes/views/class-sendpress-view-emails-createauto.php:138
+#: classes/views/class-sendpress-view-emails-create.php:165
+msgid "Original Template"
+msgstr "Tema original"
+
+#: classes/views/class-sendpress-view-emails-send-cancel.php:43
+#, fuzzy
+msgid "Cancel Scheduled Email"
+msgstr "Cancelar Envio"
+
+#: classes/views/class-sendpress-view-emails-send-cancel.php:49
+msgid "Date"
+msgstr "Data"
+
+#: classes/views/class-sendpress-view-emails-send-cancel.php:52
+#, fuzzy
+msgid "Delete Scheduled Email"
+msgstr "Sim, delete todos os emails"
+
+#: classes/views/class-sendpress-view-overview.php:42
+msgid "Emails Actively Sending"
+msgstr ""
+
+#: classes/views/class-sendpress-view-overview.php:45
+msgid "Emails Stuck in Queue"
+msgstr ""
+
+#: classes/views/class-sendpress-view-overview.php:48
+msgid "Autocron last check"
+msgstr ""
+
+#: classes/views/class-sendpress-view-overview.php:69
+msgid "This email had"
+msgstr ""
+
+#: classes/views/class-sendpress-view-overview.php:69
+msgid "Recipients"
+msgstr ""
+
+#: classes/views/class-sendpress-view-overview.php:80
+msgid "Opens"
+msgstr ""
+
+#: classes/views/class-sendpress-view-overview.php:202
+#, fuzzy
+msgid "Recent Subscribers"
+msgstr "Assinantes"
+
+#: classes/views/class-sendpress-view-overview.php:249
+#, fuzzy
+msgid "Most Active Subscribers"
+msgstr "Incluir Assinantes"
+
+#: classes/views/class-sendpress-view-overview.php:275
+msgid "Go Pro!"
+msgstr ""
+
+#: classes/views/class-sendpress-view-overview.php:280
+msgid "Check Spam Scores"
+msgstr ""
+
+#: classes/views/class-sendpress-view-settings-shared.php:44
+#: classes/views/class-sendpress-view-emails-social.php:45
+msgid ""
+"Social Icons appear in emails in Alphabetical order. If you enter a url in "
+"the box below then that icon will show in your emails."
+msgstr ""
+"Ícones de redes socias aparecem nos boletins em ordem alfabética. Se você "
+"inserir as URL's nos campos abaixo, em seguida estes ícones serão exibidos "
+"em seus boletins."
+
+#: classes/views/class-sendpress-view-settings-shared.php:49
+#: classes/views/class-sendpress-view-emails-social.php:50
+msgid "Large"
+msgstr "Grande"
+
+#: classes/views/class-sendpress-view-settings-shared.php:53
+#: classes/views/class-sendpress-view-emails-social.php:54
+msgid "Small"
+msgstr "Pequeno"
+
+#: classes/views/class-sendpress-view-settings-shared.php:57
+#: classes/views/class-sendpress-view-emails-social.php:58
+#: classes/views/class-sendpress-view-emails-tempstyle.php:201
+#: classes/views/class-sendpress-view-emails-tempstyle.php:241
+#: classes/views/class-sendpress-view-emails-tempstyle.php:290
+#: classes/views/class-sendpress-view-emails-tempstyle.php:330
+msgid "Text"
+msgstr "do Texto"
+
+#: classes/views/class-sendpress-view-subscribers-listedit.php:52
+msgid "Edit List"
+msgstr "Editar Lista"
+
+#: classes/views/class-sendpress-view-subscribers-add.php:68
+#: classes/views/class-sendpress-view-subscribers-csvprep.php:119
+msgid "Status"
+msgstr "Status"
+
+#: classes/views/class-sendpress-view-subscribers-add.php:92
+msgid "Add Subscribers"
+msgstr "Incluir Assinantes"
+
+#: classes/views/class-sendpress-view-subscribers-add.php:108
+msgid ""
+"Emails shoud be written in separate lines. A line could also include a name, "
+"which is separated from the email by a comma"
+msgstr ""
+"E-mails devem ser escritos em linhas separadas. A linha pode também incluir "
+"um nome, o qual é separado do e-mail por uma vírgula."
+
+#: classes/views/class-sendpress-view-subscribers-add.php:109
+msgid "Correct formats"
+msgstr "Formatos Corretos"
+
+#: classes/views/class-sendpress-view-emails-systememailedit.php:108
+#: classes/views/class-sendpress-view-emails-edit.php:135
+msgid "Main Content"
+msgstr "Conteúdo Principal"
+
+#: classes/views/class-sendpress-view-emails-systememailedit.php:111
+#: classes/views/class-sendpress-view-emails-edit.php:138
+msgid "Header"
+msgstr "do Cabeçalho"
+
+#: classes/views/class-sendpress-view-emails-systememailedit.php:112
+#: classes/views/class-sendpress-view-emails-edit.php:139
+msgid "Footer"
+msgstr "Rodapé"
+
+#: classes/views/class-sendpress-view-emails-systememailedit.php:269
+#: classes/views/class-sendpress-view-emails-edit.php:296
+#, fuzzy
+msgid "Header HTML"
+msgstr "Cabeçalho"
+
+#: classes/views/class-sendpress-view-emails-systememailedit.php:295
+#: classes/views/class-sendpress-view-emails-edit.php:322
+#, fuzzy
+msgid "Header Link"
+msgstr "Cabeçalho"
+
+#: classes/views/class-sendpress-view-emails-systememailedit.php:298
+#: classes/views/class-sendpress-view-emails-edit.php:325
+msgid "Link Header to Post"
+msgstr ""
+
+#: classes/views/class-sendpress-view-emails-systememailedit.php:302
+#: classes/views/class-sendpress-view-emails-edit.php:329
+msgid "Don't Link Header to Post"
+msgstr ""
+
+#: classes/views/class-sendpress-view-emails-systememailedit.php:305
+#: classes/views/class-sendpress-view-emails-edit.php:332
+#, fuzzy
+msgid "Post Content"
+msgstr "Conteúdo"
+
+#: classes/views/class-sendpress-view-emails-systememailedit.php:308
+#: classes/views/class-sendpress-view-emails-edit.php:335
+msgid "Excerpt"
+msgstr "Resumo"
+
+#: classes/views/class-sendpress-view-emails-systememailedit.php:312
+#: classes/views/class-sendpress-view-emails-edit.php:339
+#, fuzzy
+msgid "Full Post"
+msgstr "Acesso Completo"
+
+#: classes/views/class-sendpress-view-emails-systememailedit.php:315
+#: classes/views/class-sendpress-view-emails-systememailedit.php:332
+#: classes/views/class-sendpress-view-emails-systememailedit.php:337
+#: classes/views/class-sendpress-view-emails-systememailedit.php:342
+#: classes/views/class-sendpress-view-emails-systememailedit.php:361
+#: classes/views/class-sendpress-view-emails-systememailedit.php:366
+#: classes/views/class-sendpress-view-emails-systememailedit.php:371
+#: classes/views/class-sendpress-view-emails-systememailedit.php:390
+#: classes/views/class-sendpress-view-emails-systememailedit.php:395
+#: classes/views/class-sendpress-view-emails-systememailedit.php:400
+#: classes/views/class-sendpress-view-emails-edit.php:342
+#: classes/views/class-sendpress-view-emails-edit.php:359
+#: classes/views/class-sendpress-view-emails-edit.php:364
+#: classes/views/class-sendpress-view-emails-edit.php:369
+#: classes/views/class-sendpress-view-emails-edit.php:388
+#: classes/views/class-sendpress-view-emails-edit.php:393
+#: classes/views/class-sendpress-view-emails-edit.php:398
+#: classes/views/class-sendpress-view-emails-edit.php:417
+#: classes/views/class-sendpress-view-emails-edit.php:422
+#: classes/views/class-sendpress-view-emails-edit.php:427
+msgid "Insert"
+msgstr "Inserir"
+
+#: classes/views/class-sendpress-view-emails-systememailedit.php:318
+#: classes/views/class-sendpress-view-emails-edit.php:345
+msgid "Subscriber specific content"
+msgstr ""
+
+#: classes/views/class-sendpress-view-emails-systememailedit.php:323
+#: classes/views/class-sendpress-view-emails-systememailedit.php:352
+#: classes/views/class-sendpress-view-emails-systememailedit.php:381
+#: classes/views/class-sendpress-view-emails-edit.php:350
+#: classes/views/class-sendpress-view-emails-edit.php:379
+#: classes/views/class-sendpress-view-emails-edit.php:408
+msgid "Description"
+msgstr "Descrição"
+
+#: classes/views/class-sendpress-view-emails-systememailedit.php:324
+#: classes/views/class-sendpress-view-emails-systememailedit.php:353
+#: classes/views/class-sendpress-view-emails-systememailedit.php:382
+#: classes/views/class-sendpress-view-emails-edit.php:351
+#: classes/views/class-sendpress-view-emails-edit.php:380
+#: classes/views/class-sendpress-view-emails-edit.php:409
+msgid "Code"
+msgstr "Código"
+
+#: classes/views/class-sendpress-view-emails-systememailedit.php:347
+#: classes/views/class-sendpress-view-emails-edit.php:374
+msgid "Site specific content"
+msgstr ""
+
+#: classes/views/class-sendpress-view-emails-systememailedit.php:359
+#: classes/views/class-sendpress-view-emails-edit.php:386
+msgid "Website URL"
+msgstr "URL do Website"
+
+#: classes/views/class-sendpress-view-emails-systememailedit.php:364
+#: classes/views/class-sendpress-view-emails-edit.php:391
+msgid "Website Title"
+msgstr "Titúlo do Website"
+
+#: classes/views/class-sendpress-view-emails-systememailedit.php:369
+#: classes/views/class-sendpress-view-emails-edit.php:396
+msgid "Website Description"
+msgstr "Descrição do Website"
+
+#: classes/views/class-sendpress-view-emails-systememailedit.php:376
+#: classes/views/class-sendpress-view-emails-edit.php:403
+msgid "Date and Time"
+msgstr "Data e Hora"
+
+#: classes/views/class-sendpress-view-emails-systememailedit.php:388
+#: classes/views/class-sendpress-view-emails-edit.php:415
+msgid "Current Date"
+msgstr "Data Atual"
+
+#: classes/views/class-sendpress-view-emails-systememailedit.php:388
+#: classes/views/class-sendpress-view-emails-edit.php:415
+msgid "Format based on WordPress settings"
+msgstr "Formato baseado nas configurações do WordPress"
+
+#: classes/views/class-sendpress-view-emails-systememailedit.php:393
+#: classes/views/class-sendpress-view-emails-edit.php:420
+msgid "Current Time"
+msgstr "Hora atual"
+
+#: classes/views/class-sendpress-view-emails-systememailedit.php:398
+#: classes/views/class-sendpress-view-emails-edit.php:425
+#, fuzzy
+msgid "Custom Date"
+msgstr "Campos personalizados"
+
+#: classes/views/class-sendpress-view-emails-footer.php:37
+#, fuzzy
+msgid "Template Footer"
+msgstr "Nome do template"
+
+#: classes/views/class-sendpress-view-emails-footer.php:41
+#: classes/views/class-sendpress-view-emails-footerpage.php:39
+#, fuzzy
+msgid "Default Content"
+msgstr "Conteúdo Principal"
+
+#: classes/views/class-sendpress-view-subscribers-all.php:98
+#, fuzzy
+msgid "Remove All Subscribers"
+msgstr "Incluir Assinantes"
+
+#: classes/views/class-sendpress-view-subscribers-all.php:99
+#, fuzzy
+msgid "Export All Subscribers"
+msgstr "Incluir Assinantes"
+
+#: classes/views/class-sendpress-view-emails-send.php:79
+msgid ""
+"<strong>Notice!</strong> You must select a list below before an email can be "
+"sent."
+msgstr ""
+
+#: classes/views/class-sendpress-view-emails-send.php:99
+msgid "Send Email"
+msgstr "Enviar Email"
+
+#: classes/views/class-sendpress-view-emails-send.php:108
+#: classes/views/class-sendpress-view-emails-send-confirm.php:106
+msgid "Date & Time"
+msgstr ""
+
+#: classes/views/class-sendpress-view-emails-send.php:109
+msgid "Start Sending Now"
+msgstr "Comece a enviar agora"
+
+#: classes/views/class-sendpress-view-emails-send.php:110
+#, fuzzy
+msgid "Send Later"
+msgstr "Enviar Email"
+
+#: classes/views/class-sendpress-view-emails-send.php:184
+#: classes/views/class-sendpress-view-emails-send-confirm.php:137
+msgid "Mark as Test"
+msgstr "Marque como teste"
+
+#: classes/views/class-sendpress-view-emails-send.php:186
+msgid "Test"
+msgstr "Teste"
+
+#: classes/views/class-sendpress-view-emails-send.php:187
+#: classes/views/class-sendpress-view-emails-send-confirm.php:143
+msgid "This puts the report into the Test tab on the Reports screen"
+msgstr ""
+
+#: classes/views/class-sendpress-view-emails-send.php:223
+#: classes/views/class-sendpress-view-emails-send-confirm.php:170
+msgid "Displaying a 404? Please try saving your permalinks"
+msgstr ""
+"Apresentando Erro 404? Por favor tente salvar os permalinks (Configurações > "
+"Permalinks >Salvar)"
+
+#: classes/views/class-sendpress-view-emails-send.php:223
+#: classes/views/class-sendpress-view-emails-send-confirm.php:170
+msgid "here"
+msgstr "aqui"
+
+#: classes/views/class-sendpress-view-settings-fixposts.php:23
+msgid "We see"
+msgstr ""
+
+#: classes/views/class-sendpress-view-settings-fixposts.php:23
+msgid "bad posts."
+msgstr ""
+
+#: classes/views/class-sendpress-view-settings-fixposts.php:25
+msgid "Attempt to Delete These"
+msgstr ""
+
+#: classes/views/class-sendpress-view-emails-create.php:109
+#, fuzzy
+msgid "1.0 Template"
+msgstr "Modelo"
+
+#: classes/views/class-sendpress-view-emails-create.php:111
+msgid "Use New System"
+msgstr "Usar Novo Sistema"
+
+#: classes/views/class-sendpress-view-emails-create.php:167
+msgid "Use Old Email System"
+msgstr "Usar o sistema de emails antigo"
+
+#: classes/views/class-sendpress-view-emails-create.php:168
+msgid ""
+"Currently emails cannot be upgraded directly to the new Template system."
+msgstr ""
+
+#: classes/views/class-sendpress-view-emails-send-confirm.php:89
+#: classes/views/class-sendpress-view-emails-send-confirm.php:95
+msgid "Confirm Send"
+msgstr "Confirmar Envio"
+
+#: classes/views/class-sendpress-view-emails-send-confirm.php:93
+msgid "Cancel Send"
+msgstr "Cancelar Envio"
+
+#: classes/views/class-sendpress-view-emails-send-confirm.php:129
+msgid "No Lists Selected"
+msgstr "Nenhuma lista foi selecionada"
+
+#: classes/views/class-sendpress-view-subscribers-custom.php:15
+msgid "You have SendPress Pro Version"
+msgstr ""
+
+#: classes/views/class-sendpress-view-subscribers-custom.php:15
+msgid ""
+"this version does not support custom fields. You will need to update to the "
+"latest version"
+msgstr ""
+
+#: classes/views/class-sendpress-view-subscribers-custom.php:19
+#, fuzzy
+msgid "Custom fields requires"
+msgstr "Campos personalizados"
+
+#: classes/views/class-sendpress-view-subscribers-custom.php:19
+#, fuzzy
+msgid "SendPress Pro"
+msgstr "SendPress"
+
+#: classes/views/class-sendpress-view-subscribers-custom.php:19
+msgid "Please upgrade or install Pro to start using this feature"
+msgstr ""
+
+#: classes/views/class-sendpress-view-settings-account.php:98
+#: classes/views/class-sendpress-view-settings-account.php:119
+msgid "From Email"
+msgstr "Email Remetente"
+
+#: classes/views/class-sendpress-view-settings-account.php:99
+#: classes/views/class-sendpress-view-settings-account.php:115
+msgid "From Name"
+msgstr "Nome do Remetente"
+
+#: classes/views/class-sendpress-view-settings-account.php:113
+msgid "Sending Email"
+msgstr "Email remetente"
+
+#: classes/views/class-sendpress-view-settings-account.php:126
+msgid "Test Email"
+msgstr "Email para teste"
+
+#: classes/views/class-sendpress-view-settings-account.php:129
+msgid "Where to send Test Email"
+msgstr "Para onde enviar o teste de email"
+
+#: classes/views/class-sendpress-view-settings-account.php:134
+msgid "Send Test!"
+msgstr "Enviar Teste!"
+
+#: classes/views/class-sendpress-view-settings-account.php:137
+msgid "Debug Info"
+msgstr "Informação de debug"
+
+#: classes/views/class-sendpress-view-settings-account.php:147
+msgid "Click to View Last Error"
+msgstr "Clique para visualizar o último erro"
+
+#: classes/views/class-sendpress-view-settings-account.php:178
+msgid "Sending Account Setup"
+msgstr "Configuração da conta de envio"
+
+#: classes/views/class-sendpress-view-settings-account.php:199
+msgid "Send Emails via"
+msgstr "Enviar Emails via"
+
+#: classes/views/class-sendpress-view-settings-account.php:244
+msgid "Currently Active"
+msgstr "Ativo Atualmente"
+
+#: classes/views/class-sendpress-view-settings-account.php:252
+msgid "Advanced Sending Options"
+msgstr "Opções Avançadas de Envio"
+
+#: classes/views/class-sendpress-view-settings-account.php:257
+msgid "Email Sending Limits"
+msgstr "Limite de envios de emails"
+
+#: classes/views/class-sendpress-view-settings-account.php:270
+#, php-format
+msgid "You have sent <strong>%d</strong> emails so far today."
+msgstr ""
+
+#: classes/views/class-sendpress-view-settings-account.php:271
+msgid "Emails Per Day"
+msgstr "Emails Por Dia"
+
+#: classes/views/class-sendpress-view-settings-account.php:272
+msgid "Emails Per Hour"
+msgstr "Emails Por Hora"
+
+#: classes/views/class-sendpress-view-settings-account.php:274
+msgid "Email Encoding"
+msgstr "Codificação de Email"
+
+#: classes/views/class-sendpress-view-settings-account.php:277
+msgid "Charset"
+msgstr ""
+
+#: classes/views/class-sendpress-view-settings-account.php:292
+msgid ""
+"Squares or weird characters displaying in your emails select the charset for "
+"your language"
+msgstr ""
+"Se há quadrados ou caracteres estranhos sendo exibidos em seus e-mails, "
+"selecione o conjunto de caracteres apropriado para o seu idioma"
+
+#: classes/views/class-sendpress-view-settings-account.php:294
+msgid "Encoding"
+msgstr "Codificação"
+
+#: classes/views/class-sendpress-view-settings-account.php:308
+msgid "Older versions of SendPress used"
+msgstr ""
+
+#: classes/views/class-sendpress-view-settings-account.php:310
+msgid "AutoCron Information"
+msgstr ""
+
+#: classes/views/class-sendpress-view-settings-account.php:341
+msgid "SendPress Pro Auto Cron"
+msgstr ""
+
+#: classes/views/class-sendpress-view-settings-account.php:420
+msgid "SMTP Debug Info"
+msgstr "Informações de Debug do SMTP"
+
+#: classes/views/class-sendpress-view-settings-account.php:438
+msgid "Port 25 seems to be blocked."
+msgstr "Porta 25 parece estar bloqueada."
+
+#: classes/views/class-sendpress-view-settings-account.php:444
+msgid "Port 465 seems to be blocked. Gmail may have trouble"
+msgstr "Porta 465 parece estar bloqueada. Gmail poderá ter problemas."
+
+#: classes/views/class-sendpress-view-settings-account.php:450
+msgid "Port 587 seems to be blocked."
+msgstr "Porta 587 parece estar bloqueada."
+
+#: classes/views/class-sendpress-view-settings-account.php:467
+msgid "No Debug info saved."
+msgstr "Nenhuma informação de debug salva."
+
+#: classes/views/class-sendpress-view-emails-temp.php:68
+msgid "Getting Started with Templates"
+msgstr ""
+
+#: classes/views/class-sendpress-view-settings-install.php:18
+msgid "Attempting to install or repair missing data"
+msgstr ""
+
+#: classes/views/class-sendpress-view-emails-footerpage.php:36
+#, fuzzy
+msgid "Template Page Footer"
+msgstr "Nome do template"
+
+#: classes/views/class-sendpress-view-settings-advanced.php:104
+msgid "Database Repair"
+msgstr "Correção do Banco de Dados"
+
+#: classes/views/class-sendpress-view-settings-advanced.php:105
+#, fuzzy
+msgid ""
+"Reset our new template system back to default and fix some postmeta issues"
+msgstr ""
+"Redefinir o nosso novo sistema de templates de volta ao padrão e corrigir "
+"alguns problemas"
+
+#: classes/views/class-sendpress-view-settings-advanced.php:106
+msgid "Data Fix Options"
+msgstr "Opções de Correção de Dados"
+
+#: classes/views/class-sendpress-view-settings-advanced.php:110
+msgid "Javascript"
+msgstr "Javascript"
+
+#: classes/views/class-sendpress-view-settings-advanced.php:110
+msgid "CSS"
+msgstr "CSS"
+
+#: classes/views/class-sendpress-view-settings-advanced.php:118
+msgid "Disable front end CSS"
+msgstr "Desabilitar CSS no fron end"
+
+#: classes/views/class-sendpress-view-settings-advanced.php:120
+msgid "Disable signup form ajax"
+msgstr "Desativar formulário de inscrição ajax"
+
+#: classes/views/class-sendpress-view-settings-advanced.php:123
+msgid "Load Javascript in Footer"
+msgstr "Carregar o Javascript no rodapé"
+
+#: classes/views/class-sendpress-view-settings-advanced.php:130
+msgid "Use Shortcodes in Widgets"
+msgstr "Usar Shortcodes nos Widgets"
+
+#: classes/views/class-sendpress-view-settings-advanced.php:133
+msgid "Want to use Shortcodes in your Widgets, but all you get is"
+msgstr "Quer usar Shortcodes em seus Widgets, mas tudo o que consegue é "
+
+#: classes/views/class-sendpress-view-settings-advanced.php:133
+msgid "Turn on this option and we'll make sure your shortcodes work in widgets"
+msgstr ""
+" Ative essa opção e vamos garantir que seus códigos de acesso funcionem nos "
+"widgets."
+
+#: classes/views/class-sendpress-view-settings-advanced.php:142
+msgid "Optional Settings"
+msgstr "Configurações Opicionais"
+
+#: classes/views/class-sendpress-view-settings-advanced.php:146
+msgid "Use old permalink with"
+msgstr "Usar antigo permalink com"
+
+#: classes/views/class-sendpress-view-settings-advanced.php:149
+msgid "Do not track mailto links in email"
+msgstr "Não adicionar link mailto no email"
+
+#: classes/views/class-sendpress-view-settings-advanced.php:152
+msgid "Override email template settings"
+msgstr "Substituir as configurações do modelo de e-mail"
+
+#: classes/views/class-sendpress-view-settings-advanced.php:155
+msgid "Show SPNL Logs"
+msgstr "Apresentar SPNL Logs "
+
+#: classes/views/class-sendpress-view-settings-advanced.php:158
+msgid "Enable WP Email Delivery Early Access"
+msgstr ""
+
+#: classes/views/class-sendpress-view-settings-advanced.php:164
+msgid "Table Info"
+msgstr "Tabelas"
+
+#: classes/views/class-sendpress-view-settings-advanced.php:166
+msgid "Install Missing Tables"
+msgstr ""
+
+#: classes/views/class-sendpress-view-settings-advanced.php:168
+msgid "Templates Check"
+msgstr "Checagem do Modelo"
+
+#: classes/views/class-sendpress-view-settings-advanced.php:174
+msgid "Tracking"
+msgstr "Rastreamento"
+
+#: classes/views/class-sendpress-view-settings-advanced.php:178
+msgid "Allow tracking of this WordPress installs anonymous data"
+msgstr "Permitir o envio de informações de uso anônimas"
+
+#: classes/views/class-sendpress-view-settings-advanced.php:180
+msgid ""
+"To maintain a plugin as big as SendPress, we need to know what we're "
+"dealing: what kinds of other plugins our users are using, what themes, etc. "
+"Please allow us to track that data from your install. It will add your email "
+"to our support system to assist in AutoCron problems."
+msgstr ""
+" Para manter o Jaiminho sempre atualizado, nós precisamos saber mais "
+"informações sobre o uso do seu WordPress e os recursos que você utiliza "
+"nele. Nós não vamos capturar nenhuma informação pessoal nesse processo."
+
+#: classes/views/class-sendpress-view-settings-advanced.php:184
+msgid "System Limits"
+msgstr "Limites do sistema"
+
+#: classes/views/class-sendpress-view-settings-advanced.php:187
+msgid ""
+"Please take care when changing these settings. We have attempted to set "
+"these to work on almost all servers. If you have a faster server you may be "
+"able to increase the limits below or if you are having troubles you may need "
+"to decrease the settings"
+msgstr ""
+"Por favor, tenha cuidado quando modificar essas configurações. As "
+"configurações padrão funcionam na maioria dos servidores. Se você tem um "
+"servidor mais rápido, você pode tentar aumentar esses limites, mas se tiver "
+"problema, tente reduzir esses números para ver se o problema é resolvido."
+
+#: classes/views/class-sendpress-view-settings-advanced.php:189
+msgid "Users to Sync per ajax call"
+msgstr "Usuários a sincronizar por chamada ajax"
+
+#: classes/views/class-sendpress-view-settings-advanced.php:191
+msgid "Emails sent per AutoCron execution"
+msgstr "E-mails enviados por chamada do AutoCron"
+
+#: classes/views/class-sendpress-view-settings-advanced.php:192
+msgid "If AutoCron errors it will shut itself off"
+msgstr "Se o AutoCron falhar, ele irá ser derrubado sozinho"
+
+#: classes/views/class-sendpress-view-settings-advanced.php:194
+msgid "WordPress cron emails sent per execution"
+msgstr " E-mails enviados por execução do cron do WordPress"
+
+#: classes/views/class-sendpress-view-settings-advanced.php:196
+msgid "Queue History"
+msgstr "Histórico de envios"
+
+#: classes/views/class-sendpress-view-settings-advanced.php:196
+#: classes/views/class-sendpress-view-queue-all.php:79
+msgid "Days"
+msgstr "Dias"
+
+#: classes/views/class-sendpress-view-settings-advanced.php:198
+msgid "Add Emails to Queue"
+msgstr "Adicionar E-mails Para a Fila:"
+
+#: classes/views/class-sendpress-view-help.php:111
+#: classes/views/class-sendpress-view-help.php:112
+msgid " MByte"
+msgstr "MByte"
+
+#: classes/views/class-sendpress-view-help.php:153
+msgid ""
+"To copy the system info, click below then press Ctrl + C (PC) or Cmd + C "
+"(Mac)."
+msgstr ""
+
+#: classes/views/class-sendpress-view-help.php:279
+msgid "Configure"
+msgstr "Configurar"
+
+#: classes/views/class-sendpress-view-settings-notifications.php:63
+msgid "E-mail Notifications"
+msgstr "Enviar Notificações de Subscrição"
+
+#: classes/views/class-sendpress-view-settings-notifications.php:68
+msgid "Send E-mail Notifications"
+msgstr "Enviar Notificações de E-mail"
+
+#: classes/views/class-sendpress-view-settings-notifications.php:71
+msgid "To E-mail"
+msgstr "Para o Email"
+
+#: classes/views/class-sendpress-view-settings-notifications.php:77
+msgid "Send Notifications to all WordPress Administrators"
+msgstr "Enviar notificações para todos os administradores do Site"
+
+#: classes/views/class-sendpress-view-settings-notifications.php:79
+msgid ""
+"Select the notifications you'd like to receive and how often you'd like to "
+"receive them"
+msgstr ""
+"Selecione as notificações que você gostaria de receber e qual a frequência "
+"que você gostaria de recebê-las"
+
+#: classes/views/class-sendpress-view-settings-notifications.php:80
+msgid "User Subscribed"
+msgstr "Inscrição de usuários"
+
+#: classes/views/class-sendpress-view-settings-notifications.php:82
+#: classes/views/class-sendpress-view-settings-notifications.php:92
+msgid "Instant"
+msgstr "Imediatamente"
+
+#: classes/views/class-sendpress-view-settings-notifications.php:84
+#: classes/views/class-sendpress-view-settings-notifications.php:94
+msgid "Daily"
+msgstr "Diário"
+
+#: classes/views/class-sendpress-view-settings-notifications.php:86
+#: classes/views/class-sendpress-view-settings-notifications.php:96
+msgid "Weekly"
+msgstr "Semanalmente"
+
+#: classes/views/class-sendpress-view-settings-notifications.php:88
+#: classes/views/class-sendpress-view-settings-notifications.php:98
+msgid "Monthly"
+msgstr "Mensal"
+
+#: classes/views/class-sendpress-view-settings-notifications.php:90
+#, fuzzy
+msgid "User Unsbscribed"
+msgstr "Cancelados"
+
+#: classes/views/class-sendpress-view-settings-notifications.php:104
+msgid "HipChat Notification"
+msgstr "Integração HipChat"
+
+#: classes/views/class-sendpress-view-settings-notifications.php:108
+msgid "Enable HipChat Notification"
+msgstr "Ativar Notificação HipChat"
+
+#: classes/views/class-sendpress-view-settings-notifications.php:110
+msgid "API Key"
+msgstr "Chave API"
+
+#: classes/views/class-sendpress-view-settings-notifications.php:110
+msgid "Where is my API key"
+msgstr "Onde esta minha Chave da API"
+
+#: classes/views/class-sendpress-view-settings-notifications.php:121
+msgid "Select the rooms to send notifications to:"
+msgstr ""
+
+#: classes/views/class-sendpress-view-settings-notifications.php:136
+#, fuzzy
+msgid "Room Name"
+msgstr "Nome do Remetente"
+
+#: classes/views/class-sendpress-view-settings-widgets.php:155
+msgid "Create Form"
+msgstr "Criar Formulário"
+
+#: classes/views/class-sendpress-view-settings-widgets.php:170
+msgid "Confirm Delete"
+msgstr "Confirmar Remoção"
+
+#: classes/views/class-sendpress-view-settings-widgets.php:190
+msgid "Form Name"
+msgstr "Nome do Formulário"
+
+#: classes/views/class-sendpress-view-settings-widgets.php:202
+#, fuzzy
+msgid "Form Type"
+msgstr "Nome do Formulário"
+
+#: classes/views/class-sendpress-view-settings-widgets.php:257
+#, fuzzy
+msgid "Signup Ui"
+msgstr "Registrar"
+
+#: classes/views/class-sendpress-view-settings-widgets.php:298
+#: classes/views/class-sendpress-view-settings-widgets.php:397
+msgid ""
+"Use the shortcode below to insert this signup form into your posts and pages"
+msgstr ""
+
+#: classes/views/class-sendpress-view-settings-widgets.php:302
+#, fuzzy
+msgid "Signup Settings"
+msgstr "Configurações"
+
+#: classes/views/class-sendpress-view-settings-widgets.php:344
+msgid "Select Lists by Default"
+msgstr ""
+
+#: classes/views/class-sendpress-view-settings-widgets.php:348
+msgid "Check off the lists you would like"
+msgstr ""
+
+#: classes/views/class-sendpress-view-settings-widgets.php:348
+#, fuzzy
+msgid "users to subscribe to"
+msgstr "O usuário não foi inscrito na lista."
+
+#: classes/views/class-sendpress-view-settings-widgets.php:386
+msgid "Manage Subscription Options"
+msgstr "Gerênciar opções de inscrição"
+
+#: classes/views/class-sendpress-view-queue-errors.php:63
+msgid "Error history for the last 2 Weeks"
+msgstr ""
+
+#: classes/views/class-sendpress-view-queue.php:49
+msgid "Stuck"
+msgstr "Travado"
+
+#: classes/views/class-sendpress-view-queue.php:52
+msgid "Send History"
+msgstr "Histórico de Envios"
+
+#: classes/views/class-sendpress-view-queue.php:55
+msgid "Send Errors"
+msgstr "Erros no Envio"
+
+#: classes/views/class-sendpress-view-queue.php:257
+msgid "Delete All Emails in the Queue"
+msgstr "Deletar todos os emails da fila"
+
+#: classes/views/class-sendpress-view-queue.php:265
+msgid "Really? Delete All Emails in the Queue."
+msgstr "Você tem certeza? Deletar Todos os Emails da Fila."
+
+#: classes/views/class-sendpress-view-queue.php:268
+msgid ""
+"This will remove all emails from the queue without attempting to send them"
+msgstr "Esta ação eliminará todos os emails da fila sem tentar enviá-los."
+
+#: classes/views/class-sendpress-view-queue.php:289
+msgid "emails left to send"
+msgstr ""
+
+#: classes/views/class-sendpress-view-emails-templates.php:39
+#, fuzzy
+msgid "Introducing Custom HTML Templates"
+msgstr "Crie um Tema"
+
+#: classes/views/class-sendpress-view-emails-templates.php:41
+msgid "Custom Templates Requires SendPress Pro v1.0+"
+msgstr ""
+
+#: classes/views/class-sendpress-view-emails-templates.php:46
+#, fuzzy
+msgid "Send Any Template"
+msgstr "Página do SendPress"
+
+#: classes/views/class-sendpress-view-emails-templates.php:47
+msgid "SendPress allows you to send any HTML email template you wish."
+msgstr ""
+
+#: classes/views/class-sendpress-view-emails-templates.php:51
+#, fuzzy
+msgid "Template Tags"
+msgstr "Modelos"
+
+#: classes/views/class-sendpress-view-emails-templates.php:52
+msgid ""
+"Quickly insert email content, subscriber information and social icons with "
+"our new tag system."
+msgstr ""
+
+#: classes/views/class-sendpress-view-emails-tempstyle.php:158
+msgid "Sorry the Styler does not support screens smaller then 768px."
+msgstr ""
+
+#: classes/views/class-sendpress-view-emails-tempstyle.php:179
+msgid "Page"
+msgstr "Estilo Geral"
+
+#: classes/views/class-sendpress-view-emails-tempstyle.php:185
+msgid "Edit Page Header HTML"
+msgstr "Editar mensagem do Topo"
+
+#: classes/views/class-sendpress-view-emails-tempstyle.php:193
+#: classes/views/class-sendpress-view-emails-tempstyle.php:234
+#: classes/views/class-sendpress-view-emails-tempstyle.php:274
+#: classes/views/class-sendpress-view-emails-tempstyle.php:323
+msgid "Background"
+msgstr "Fundo"
+
+#: classes/views/class-sendpress-view-emails-tempstyle.php:208
+#: classes/views/class-sendpress-view-emails-tempstyle.php:297
+#: classes/views/class-sendpress-view-emails-tempstyle.php:337
+msgid "Link"
+msgstr "Link"
+
+#: classes/views/class-sendpress-view-emails-tempstyle.php:212
+msgid "Edit Page Footer HTML"
+msgstr "Editar mensagem do rodapé"
+
+#: classes/views/class-sendpress-view-emails-tempstyle.php:221
+msgid "Content Header"
+msgstr "Editar Cabeçalho"
+
+#: classes/views/class-sendpress-view-emails-tempstyle.php:227
+msgid "Edit Header HTML"
+msgstr "Editar Cabeçalho HTML"
+
+#: classes/views/class-sendpress-view-emails-tempstyle.php:249
+#: classes/views/class-sendpress-view-emails-tempstyle.php:346
+msgid "Include Padding"
+msgstr "Incluir espaçamento"
+
+#: classes/views/class-sendpress-view-emails-tempstyle.php:310
+msgid "Content Footer"
+msgstr "Editar rodapé"
+
+#: classes/views/class-sendpress-view-emails-tempstyle.php:357
+msgid "Background Styles"
+msgstr "Estilos de Fundo"
+
+#: classes/views/class-sendpress-view-subscribers-csvprep.php:108
+msgid "We found"
+msgstr ""
+
+#: classes/views/class-sendpress-view-subscribers-csvprep.php:108
+#, fuzzy
+msgid "lines in your csv"
+msgstr "Ver no seu navegador"
+
+#: classes/views/class-sendpress-view-subscribers-csvprep.php:112
+#, fuzzy
+msgid "Import Fields:"
+msgstr "Importar"
+
+#: classes/views/class-sendpress-view-subscribers-csvprep.php:114
+#, fuzzy
+msgid "Don't Import"
+msgstr "Importar"
+
+#: classes/views/class-sendpress-view-subscribers-csvprep.php:116
+msgid "First name"
+msgstr "Primeiro Nome"
+
+#: classes/views/class-sendpress-view-subscribers-csvprep.php:117
+msgid "Last name"
+msgstr "Sobrenome"
+
+#: classes/views/class-sendpress-view-subscribers-csvprep.php:118
+msgid "IP address"
+msgstr "Endereço IP"
+
+#: classes/views/class-sendpress-view-subscribers-csvprep.php:188
+#, fuzzy
+msgid "Start Import"
+msgstr "Comece o Tour"
+
+#: classes/views/class-sendpress-view-emails-edit.php:125
+msgid "Edit Email Content"
+msgstr "Criar conteúdo de email"
+
+#: classes/views/class-sendpress-view-queue-all.php:79
+msgid "Queue history for the last "
+msgstr ""
+
+#: classes/views/class-sendpress-view-emails-systememailcreate.php:146
+msgid "Email Type"
+msgstr "Tipo de Email"
+
+#: classes/views/class-sendpress-view-emails-headerpage.php:37
+#, fuzzy
+msgid "Template Page Header"
+msgstr "Nome do template"
+
+#: classes/views/class-sendpress-view-emails-send-queue.php:57
+#, fuzzy
+msgid "Adding Subscribers to Queue"
+msgstr "Incluir Assinantes"
+
+#: classes/class-sendpress-queue-all-table.php:223
+msgid "Sent"
+msgstr ""
+
+#: classes/class-sendpress-autoresponder-table.php:104
+msgid "Content"
+msgstr "Editar Conteúdo"
+
+#: classes/class-sendpress-shortcode-manage.php:34
+msgid "Updated"
+msgstr "Atualizado"
+
+#: classes/class-sendpress-shortcode-manage.php:35
+msgid "Other Info"
+msgstr "Outras Informações"
+
+#~ msgid "Active"
+#~ msgstr "Ativos"
+
+#~ msgctxt "sendpress"
+#~ msgid "Standard"
+#~ msgstr "Padrão"
+
+#~ msgctxt "sendpress"
+#~ msgid "Form"
+#~ msgstr "Formulário"
+
+#, fuzzy
+#~ msgctxt "sendpress"
+#~ msgid "System Email"
+#~ msgstr "Enviar Email"
+
+#, fuzzy
+#~ msgid "Inserts a manage subscription html link."
+#~ msgstr "O usuário não foi inscrito na lista."
+
+#, fuzzy
+#~ msgid "SendPress Newsletters"
+#~ msgstr "Lista SendPress"
+
+#~ msgid "https://sendpress.com/"
+#~ msgstr "https://sendpress.com/"
