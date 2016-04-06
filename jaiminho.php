@@ -11,9 +11,9 @@
    Domain Path: /languages/
  */
 
-define( 'JAIMINHO_URL', plugin_dir_url( __FILE__ ) );
-define( 'JAIMINHO_VERSION', 0.0 );
-define( 'JAIMINHO_PATH', plugin_dir_path( __FILE__ ) );
+define( 'JAIMINHO_WP_URL', plugin_dir_url( __FILE__ ) );
+define( 'JAIMINHO_WP_VERSION', 0.0 );
+define( 'JAIMINHO_WP_PATH', plugin_dir_path( __FILE__ ) );
 define( 'SPNL_DISABLE_SENDING_DELIVERY',false);
 define( 'SPNL_DISABLE_SENDING_GMAIL',false);
 define( 'SPNL_DISABLE_SENDING_WP_MAIL',false);
@@ -69,7 +69,7 @@ class Jaiminho extends SendPress
 		sendpress_register_sender( 'Jaiminho_Sender_RedeLivre' );
 		sendpress_register_sender( 'Jaiminho_Sender_Gmail' );
 		remove_action( 'in_admin_footer',array(SendPress_View::get_instance(),'footer'),10);
-		wp_register_script('jaiminho_disable',JAIMINHO_URL .'js/disable.js' ,'',JAIMINHO_VERSION);
+		wp_register_script('jaiminho_disable',JAIMINHO_WP_URL .'js/disable.js' ,'',JAIMINHO_WP_VERSION);
 		add_action( 'admin_menu', array($this,'remove_menu'));
 		add_action( 'admin_menu', array($this,'admin_menu'));
 		add_action( 'toplevel_page_sp-overview', array($this,'render_view_jaiminho'));
@@ -445,7 +445,7 @@ class Jaiminho extends SendPress
 		if ( isset( $_GET['page'] ) && in_array( SPNL()->validate->page( $_GET['page'] ), $this->adminpages ) ) {
 			$queue = '(<span id="queue-count-menu">-</span>)';//SendPress_Data::emails_in_queue();
 		}
-		add_menu_page( __('Jaiminho','jaiminho'), __('Jaiminho','jaiminho'), $role, 'sp-emails', array( $this , 'render_view_jaiminho' ), JAIMINHO_URL.'img/jaiminho-bg-16.png' );
+		add_menu_page( __('Jaiminho','jaiminho'), __('Jaiminho','jaiminho'), $role, 'sp-emails', array( $this , 'render_view_jaiminho' ), JAIMINHO_WP_URL.'img/jaiminho-bg-16.png' );
 		// xxx: ainda não foi possivel descobrir onde esta o problema, simplesmente a página do overview repete o template - depois voltar de sp-emails para sp-overview
 		//add_submenu_page('sp-emails', __('Overview','sendpress'), __('Overview','sendpress'), $role, 'sp-overview', array($this,'render_view_jaiminho'));
 		$main = add_submenu_page('sp-emails', __('Emails','sendpress'), __('Emails','sendpress'), $role, 'sp-emails', array($this,'render_view_jaiminho'));
@@ -700,8 +700,8 @@ public static function autoload( $className ) {
 		}
 	}
 
-	if ( file_exists( JAIMINHO_PATH . "classes/class-" . $cls . ".php" ) ) {
-		include JAIMINHO_PATH . "classes/class-" . $cls . ".php";
+	if ( file_exists( JAIMINHO_WP_PATH . "classes/class-" . $cls . ".php" ) ) {
+		include JAIMINHO_WP_PATH . "classes/class-" . $cls . ".php";
 	}
 
 	return;
