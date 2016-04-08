@@ -107,7 +107,7 @@ if(!class_exists('Jaiminho_Sender_NetWork'))
 			// Set the other options
 			$phpmailer->Host = SendPress_Option::get('networkserver');
 			$phpmailer->SMTPAuth = true;  // authentication enabled
-			$phpmailer->SMTPSecure = 'tls'; // secure transfer enabled REQUIRED for GMail
+			//$phpmailer->SMTPSecure = 'tls'; // secure transfer enabled REQUIRED for GMail
 
 			$phpmailer->Port = SendPress_Option::get('networkport');
 			// If we're using smtp auth, set the username & password
