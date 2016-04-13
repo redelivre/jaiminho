@@ -87,13 +87,13 @@ class Jaiminho extends SendPress
 		remove_action( 'init' , array( SPNL() , 'toplevel_page_sp-overview' ) );
 		//add_filter( 'sendpress_notices', '__return_empty_string' ); 
 		add_action( 'sendpress_notices', array( $this, 'jaiminho_notices' ) );
-		add_action('plugins_loaded',array( $this, 'jaiminho_load_translations' ) );
+		//add_action('plugins_loaded',array( $this, 'jaiminho_load_translations' ) );
 	}
 
-	function jaiminho_load_translations() {
-		// load plugin translations
-		load_plugin_textdomain('jaiminho', false, dirname(plugin_basename( __FILE__ )).'/languages');
-	}
+//	function jaiminho_load_translations() {
+//		// load plugin translations
+//		load_plugin_textdomain('jaiminho', false, dirname(plugin_basename( __FILE__ )).'/languages');
+//	}
 
 	function jaiminho_notices() {
 		//XXX send_method != sendmethod isso vai dar problema para o entendimento de novos dev's
@@ -559,6 +559,8 @@ class Jaiminho extends SendPress
 	}
 
 	public function render_view_jaiminho() {
+                // XXX corrigindo tradução :( buscar solução melhor depois
+		load_plugin_textdomain('sendpress', false, dirname(plugin_basename( __FILE__ )).'/languages');
 		// começando a pensar em um sistema de páginas para i jaiminho
 		//if ($_GET['view'] != 'templates_edit')
 		//{
