@@ -219,8 +219,9 @@ echo $time;//11:09
 		//print_r(SendPress_Data::emails_stuck_in_queue());
                 global $wpdb;
                 $table = SendPress_Data::queue_table();
+                $date = getdate();
                 // Maurilio TODO: fazer com os créditos sejam contados a partir da 00:00:00 do primeiro dia do mês atual
-	  	$hour_ago = strtotime('-'.getdate()["mday"].' day');
+	  			$hour_ago = strtotime('-'.$date["mday"].' day');
                 //var_dump($hour_ago);
                 $time = date('Y-m-d H:i:s', $hour_ago);
                 //var_dump($time);
