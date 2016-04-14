@@ -124,11 +124,13 @@ class Jaiminho_Sender_RedeLivre extends SendPress_Sender
 		// If we're using smtp auth, set the username & password
 		
 		//only auth if needed
-		if( ! empty(trim(SendPress_Option::get('redelivreuser'))) && ! empty(trim(SendPress_Option::get('redelivrepass'))) )
+		$redelivreuser = trim(SendPress_Option::get('redelivreuser'));
+		$redelivrepass = trim(SendPress_Option::get('redelivrepass'));
+		if( ! empty($redelivreuser) && ! empty($redelivrepass) )
 		{
 			$phpmailer->SMTPAuth = true;  // authentication enabled
-			$phpmailer->Username = SendPress_Option::get('redelivreuser');
-			$phpmailer->Password = SendPress_Option::get('redelivrepass');
+			$phpmailer->Username = $redelivreuser;
+			$phpmailer->Password = $redelivrepass;
 		}
 		
 		

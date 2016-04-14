@@ -112,11 +112,13 @@ if(!class_exists('Jaiminho_Sender_NetWork'))
 			// If we're using smtp auth, set the username & password
 			
 			//only auth if needed
-			if( ! empty(trim(SendPress_Option::get('networkuser'))) && ! empty(trim(SendPress_Option::get('networkpass'))) )
+			$networkuser = trim(SendPress_Option::get('networkuser'));
+			$networkpass = trim(SendPress_Option::get('networkpass'));
+			if( ! empty($networkuser) && ! empty($networkpass) )
 			{
 				$phpmailer->SMTPAuth = true;  // authentication enabled
-				$phpmailer->Username = SendPress_Option::get('networkuser');
-				$phpmailer->Password = SendPress_Option::get('networkpass');
+				$phpmailer->Username = $networkuser;
+				$phpmailer->Password = $networkpass;
 			}
 
 
