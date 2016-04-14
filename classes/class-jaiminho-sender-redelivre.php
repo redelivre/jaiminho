@@ -74,8 +74,14 @@ class Jaiminho_Sender_RedeLivre extends SendPress_Sender
              $text = $this->change($text,'UTF-8',$charset);
              $subject = $this->change($subject,'UTF-8',$charset);
                     
-            }
+		}
 
+		/**
+		* We'll let php init mess with the message body and headers.  But then
+		* we stomp all over it.  Sorry, my plug-inis more important than yours :)
+		*/
+		do_action_ref_array( 'phpmailer_init', array( &$phpmailer ) );
+            
         $from_email = SendPress_Option::get('fromemail');
 		$phpmailer->From = $from_email;
 		$phpmailer->FromName = SendPress_Option::get('fromname');
@@ -106,13 +112,6 @@ class Jaiminho_Sender_RedeLivre extends SendPress_Sender
 
 		}
 
-		/**
-		* We'll let php init mess with the message body and headers.  But then
-		* we stomp all over it.  Sorry, my plug-inis more important than yours :)
-		*/
-		do_action_ref_array( 'phpmailer_init', array( &$phpmailer ) );
-		
-		
 		$phpmailer->Mailer = 'smtp';
 		// We are sending SMTP mail
 		$phpmailer->IsSMTP();
