@@ -118,14 +118,18 @@ class Jaiminho_Sender_RedeLivre extends SendPress_Sender
 		$phpmailer->IsSMTP();
 		// Set the other options
 		$phpmailer->Host = SendPress_Option::get('redelivreserver');
-		$phpmailer->SMTPAuth = true;  // authentication enabled
 		//$phpmailer->SMTPSecure = 'tls'; // secure transfer enabled REQUIRED for GMail
 
 		$phpmailer->Port = SendPress_Option::get('redelivreport');
 		// If we're using smtp auth, set the username & password
-		$phpmailer->SMTPAuth = TRUE;
-		$phpmailer->Username = SendPress_Option::get('redelivreuser');
-		$phpmailer->Password = SendPress_Option::get('redelivrepass');
+		
+		//only auth if needed
+		if( ! empty(trim(SendPress_Option::get('redelivreuser'))) && ! empty(trim(SendPress_Option::get('redelivrepass'))) )
+		{
+			$phpmailer->SMTPAuth = true;  // authentication enabled
+			$phpmailer->Username = SendPress_Option::get('redelivreuser');
+			$phpmailer->Password = SendPress_Option::get('redelivrepass');
+		}
 		
 		
 		$hdr = new SendPress_SendGrid_SMTP_API();
