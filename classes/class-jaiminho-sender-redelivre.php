@@ -25,6 +25,7 @@ class Jaiminho_Sender_RedeLivre extends SendPress_Sender
           $options['redelivrepass'] = $_POST['redelivrepass'];
           $options['redelivreserver'] = $_POST['redelivreserver'];
           $options['redelivreport'] = $_POST['redelivreport'];
+          $options['redelivretls'] = isset($_POST['redelivretls']) ? $_POST['redelivretls'] : '' ;
           SendPress_Option::set( $options );
 	}
 
@@ -38,6 +39,10 @@ class Jaiminho_Sender_RedeLivre extends SendPress_Sender
   <p><input name="redelivreserver" type="text" value="<?php echo SendPress_Option::get( 'redelivreserver' ); ?>" style="width:100%;" /></p>
   <?php _e( 'Porta' , 'jaiminho'); ?>
   <p><input name="redelivreport" type="text" value="<?php echo SendPress_Option::get( 'redelivreport' ); ?>" style="width:100%;" /></p>
+  <p><input name="redelivretls" type="checkbox" value="true" 
+              <?php echo SendPress_Option::get( 'redelivretls' ) == true ? 'checked' : ''; ?> >
+              <?php _e( 'Habilitar criptografia TLS' , 'jaiminho' ); ?>
+      </input></p>
 	<?php
 
 	}
@@ -117,8 +122,10 @@ class Jaiminho_Sender_RedeLivre extends SendPress_Sender
 		$phpmailer->IsSMTP();
 		// Set the other options
 		$phpmailer->Host = SendPress_Option::get('redelivreserver');
-		//$phpmailer->SMTPSecure = 'tls'; // secure transfer enabled REQUIRED for GMail
-
+                if ( SendPress_Option::get('redelivretls') )
+                {
+		  $phpmailer->SMTPSecure = 'tls'; // secure transfer enabled REQUIRED for GMail
+                }
 		$phpmailer->Port = SendPress_Option::get('redelivreport');
 		// If we're using smtp auth, set the username & password
 		
