@@ -205,7 +205,46 @@ class Jaiminho extends SendPress
 				'jaiminho-network-credits-settings',
 				array( $this , 'jaiminho_settings_network_html_credits' )
 				);    
+		add_submenu_page(
+				'settings.php',
+				__('Configurações de Limite de Envio do Jaiminho','jaiminho'),
+				__('Configurações de Limite de Envio Jaiminho','jaiminho'),
+				'manage_network_options',
+				'jaiminho-emails-limits-settings',
+				array( $this , 'jaiminho_emails_limits_html' )
+				);    
 	}
+
+
+        public function jaiminho_emails_limits_html()
+        {
+
+
+		$args = array(
+				'network_id' => null,
+				'public'     => null,
+				'archived'   => null,
+				'mature'     => null,
+				'spam'       => null,
+				'deleted'    => null,
+				'limit'      => null,
+				'offset'     => 0,
+			     );
+		$blogs = wp_get_sites( $args );
+		foreach( $blogs as $blog )
+		{
+			switch_to_blog( $blog );
+                        echo '<br>';
+                        echo get_bloginfo( 'name' );
+                        echo '<br>';
+			SendPress_DB_Tables::check_setup();
+			echo SendPress_Option::get('wpcron-per-call');
+                        echo '<br>';
+		}
+
+		restore_current_blog();
+
+        }
 
 	public function jaiminho_settings_network_html_credits()
 	{
