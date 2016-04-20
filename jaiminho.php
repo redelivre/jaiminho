@@ -231,9 +231,12 @@ class Jaiminho extends SendPress
 				'offset'     => 0,
 			     );
 		$blogs = wp_get_sites( $args );
+                echo '<pre>';
+                //var_dump($blogs);
+                echo '</pre>';
 		foreach( $blogs as $blog )
 		{
-			switch_to_blog( $blog );
+			switch_to_blog( $blog['blog_id'] );
                         echo '<br>';
                         echo get_bloginfo( 'name' );
                         echo '<br>';
