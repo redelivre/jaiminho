@@ -216,38 +216,47 @@ class Jaiminho extends SendPress
 	}
 
 
-        public function jaiminho_emails_limits_html()
-        {
+	public function jaiminho_emails_limits_html()
+	{
+		//show page
+		?>
+			<form method="post">
+			<br>
+			<input type="text" size="6" name="limits" value="1000" /> <?php _e('Defininir o limite base de emails por ativação do wp-cron', 'jaiminho'); ?>
+			<br>
+			<?php
+			submit_button(__( 'Enviar' , 'jaiminho' )); ?>
+			</form><?php
 
-
-		$args = array(
-				'network_id' => null,
-				'public'     => null,
-				'archived'   => null,
-				'mature'     => null,
-				'spam'       => null,
-				'deleted'    => null,
-				'limit'      => null,
-				'offset'     => 0,
-			     );
+			$args = array(
+					'network_id' => null,
+					'public'     => null,
+					'archived'   => null,
+					'mature'     => null,
+					'spam'       => null,
+					'deleted'    => null,
+					'limit'      => null,
+					'offset'     => 0,
+				     );
 		$blogs = wp_get_sites( $args );
-                echo '<pre>';
-                //var_dump($blogs);
-                echo '</pre>';
+		echo '<pre>';
+		//var_dump($blogs);
+		echo '</pre>';
 		foreach( $blogs as $blog )
 		{
 			switch_to_blog( $blog['blog_id'] );
-                        echo '<br>';
-                        echo get_bloginfo( 'name' );
-                        echo '<br>';
-			SendPress_DB_Tables::check_setup();
+			echo '<br>';
+			echo get_bloginfo( 'name' );
+			echo '<br>';
+			//SendPress_DB_Tables::check_setup();
+			if (isset($_POST['limits'])) SendPress_Option::set( 'wpcron-per-call' , $_POST['limits'] );
 			echo SendPress_Option::get('wpcron-per-call');
-                        echo '<br>';
+			echo '<br>';
 		}
 
 		restore_current_blog();
 
-        }
+	}
 
 	public function jaiminho_settings_network_html_credits()
 	{
@@ -531,6 +540,7 @@ class Jaiminho extends SendPress
 			if ( substr( $sitename, 0, 4 ) == 'www.' ) {
 				$sitename = substr( $sitename, 4 );
 			}
+                        //XXX argumento 1 nao é um array ... consertar isso
 			$sets['value'] = array_merge($sets['value'], get_option('plataform_defined_settings', array()));
 			$_bounce_email = 'bounce@' . $sitename;
 		}
