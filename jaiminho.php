@@ -11,6 +11,8 @@
    Domain Path: /languages/
  */
 
+require_once( WP_PLUGIN_DIR."/wordpress-mu-domain-mapping/domain_mapping.php" );
+
 define( 'JAIMINHO_URL', plugin_dir_url( __FILE__ ) );
 define( 'JAIMINHO_VERSION', 0.0 );
 define( 'JAIMINHO_PATH', plugin_dir_path( __FILE__ ) );
