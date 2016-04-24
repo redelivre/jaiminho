@@ -67,7 +67,8 @@ class Jaiminho extends SendPress
 		$sendpress_name = __( 'SendPress', 'sendpress' );
 		add_action( 'init' , array( $this , 'jaiminho_check_rewrite' ) );
 		sendpress_register_sender( 'Jaiminho_Sender_RedeLivre' );
-		sendpress_register_sender( 'Jaiminho_Sender_Gmail' );
+                //XXX Gmail esta sendo retirado pois o sendpress esta sem suporte a ele devido a modificações nas regras de codificação do Gmail.
+		//sendpress_register_sender( 'Jaiminho_Sender_Gmail' );
 		remove_action( 'in_admin_footer',array(SendPress_View::get_instance(),'footer'),10);
 		wp_register_script('jaiminho_disable',JAIMINHO_URL .'js/disable.js' ,'',JAIMINHO_VERSION);
 		add_action( 'admin_menu', array($this,'remove_menu'));
@@ -213,9 +214,162 @@ class Jaiminho extends SendPress
 				'jaiminho-emails-limits-settings',
 				array( $this , 'jaiminho_emails_limits_html' )
 				);    
+		add_submenu_page(
+				'settings.php',
+				__('Corrigir tabelas do Jaiminho','jaiminho'),
+				__('Corrigir tabelas do Jaiminho','jaiminho'),
+				'manage_network_options',
+				'jaiminho-fix-tables--settings',
+				array( $this , 'jaiminho_fix_tables_html' )
+				);    
 	}
 
+        public function jaiminho_fix_tables_html()
+        {
+		global $wpdb;
+            require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+          
+            //$wpdb->hide_errors();
 
+            $collate = '';
+
+            if ( $wpdb->has_cap( 'collation' ) ) {
+                if( ! empty($wpdb->charset ) ){
+                      $collate .= "DEFAULT CHARACTER SET $wpdb->charset";
+                }
+                  
+                if( ! empty($wpdb->collate ) ){
+                     $collate .= " COLLATE $wpdb->collate";
+                }
+                   
+            }
+		?>
+			<form method="post">
+			<input type="hidden" name="fix_tables" value="true" />
+			<?php
+			submit_button(__( 'Corrigir Tabelas' , 'jaiminho' ));
+		?>
+			</form><?php
+
+		$args = array(
+				'network_id' => null,
+				'public'     => null,
+				'archived'   => null,
+				'mature'     => null,
+				'spam'       => null,
+				'deleted'    => null,
+				'limit'      => null,
+				'offset'     => 0,
+			     );
+		$blogs = wp_get_sites( $args );
+		echo '<pre>';
+		//var_dump($blogs);
+		echo '</pre>';
+		foreach( $blogs as $blog )
+		{
+			switch_to_blog( $blog['blog_id'] );
+			echo '<br>';
+			echo get_bloginfo( 'name' );
+			echo '<br>';
+
+			echo "<b>Database Tables</b>: <br>";
+			$subscriber_events_table =  new SendPress_DB_Subscribers_Tracker();
+			$subscriber_events_table = $subscriber_events_table->table_name;
+			if($wpdb->get_var("show tables like '$subscriber_events_table'") != $subscriber_events_table) {
+				echo $subscriber_events_table . " Not Installed<br>";
+			} else {
+				echo $subscriber_events_table . " OK<br>";
+			}
+
+			$subscriber_events_table =  new SendPress_DB_Subscribers_Url();
+			$subscriber_events_table = $subscriber_events_table->table_name;
+			if($wpdb->get_var("show tables like '$subscriber_events_table'") != $subscriber_events_table) {
+				echo $subscriber_events_table . " Not Installed<br>";
+			} else {
+				echo $subscriber_events_table . " OK<br>";
+			}
+
+			$subscriber_events_table =  new SendPress_DB_Url();
+			$subscriber_events_table = $subscriber_events_table->table_name;
+			if($wpdb->get_var("show tables like '$subscriber_events_table'") != $subscriber_events_table) {
+				echo $subscriber_events_table . " Not Installed<br>";
+			} else {
+				echo $subscriber_events_table . " OK<br>";
+			}
+
+
+			$report_url_table =  SendPress_DB_Tables::report_url_table();
+			if($wpdb->get_var("show tables like '$report_url_table'") != $report_url_table) {
+				echo $report_url_table . " Not Installed<br>";
+			} else {
+				echo $report_url_table . " OK<br>";
+			}
+
+			$subscriber_status_table =  SendPress_DB_Tables::subscriber_status_table();
+			if($wpdb->get_var("show tables like '$subscriber_status_table'") != $subscriber_status_table) {
+				echo $subscriber_status_table . " Not Installed<br>";
+			} else {
+				echo $subscriber_status_table . " OK<br>";
+			}
+
+			$subscriber_table = SendPress_DB_Tables::subscriber_table();
+			if($wpdb->get_var("show tables like '$subscriber_table'") != $subscriber_table) {
+				echo $subscriber_table . " Not Installed<br>";
+                                
+				if(isset($_POST['fix_tables']))
+						{
+                                                  echo "Ola";
+            // Create Stats Table
+            //if($wpdb->get_var("show tables like '$subscriber_table'") != $subscriber_table) {
+            $command ='';
+$command .= " CREATE TABLE $subscriber_table (
+subscriberID bigint(20) unsigned NOT NULL AUTO_INCREMENT, 
+email varchar(100) NOT NULL DEFAULT '', 
+join_date datetime  NOT NULL DEFAULT '0000-00-00 00:00:00', 
+status int(1) NOT NULL DEFAULT '1', 
+registered datetime  NOT NULL DEFAULT '0000-00-00 00:00:00', 
+registered_ip varchar(20) NOT NULL DEFAULT '', 
+identity_key varchar(60) NOT NULL DEFAULT '', 
+bounced int(1) NOT NULL DEFAULT '0', 
+firstname varchar(250) NOT NULL DEFAULT '', 
+lastname varchar(250) NOT NULL DEFAULT '', 
+wp_user_id bigint(20) DEFAULT NULL, 
+phonenumber varchar(12) DEFAULT NULL, 
+salutation varchar(40) DEFAULT NULL
+PRIMARY KEY  (subscriberID), 
+UNIQUE KEY email (email) , 
+UNIQUE KEY identity_key (identity_key), 
+UNIQUE KEY wp_user_id (wp_user_id)
+) $collate;\n"; 
+		echo '<pre>';
+var_dump($command);
+		echo '</pre>';
+            dbDelta($command);  
+            //}
+						}
+			} else {
+				echo $subscriber_table . " OK<br>";
+			}
+
+			$subscriber_list_subscribers = SendPress_DB_Tables::list_subcribers_table();
+			if($wpdb->get_var("show tables like '$subscriber_list_subscribers'") != $subscriber_list_subscribers) {
+				echo $subscriber_list_subscribers . " Not Installed<br>";
+			} else {
+				echo $subscriber_list_subscribers . " OK<br>";
+			}
+
+			$subscriber_queue = SendPress_DB_Tables::queue_table();
+			if($wpdb->get_var("show tables like '$subscriber_queue'") != $subscriber_queue) {
+				echo $subscriber_queue . " Not Installed<br>";
+			} else {
+				echo $subscriber_queue . " OK<br>";
+			}
+			echo "<br>";
+			echo '<br>';
+		}
+
+		restore_current_blog();
+	}
 	public function jaiminho_emails_limits_html()
 	{
 		//show page
@@ -239,16 +393,12 @@ class Jaiminho extends SendPress
 					'offset'     => 0,
 				     );
 		$blogs = wp_get_sites( $args );
-		echo '<pre>';
-		//var_dump($blogs);
-		echo '</pre>';
 		foreach( $blogs as $blog )
 		{
 			switch_to_blog( $blog['blog_id'] );
 			echo '<br>';
 			echo get_bloginfo( 'name' );
 			echo '<br>';
-			//SendPress_DB_Tables::check_setup();
 			if (isset($_POST['limits'])) SendPress_Option::set( 'wpcron-per-call' , $_POST['limits'] );
 			echo SendPress_Option::get('wpcron-per-call');
 			echo '<br>';
