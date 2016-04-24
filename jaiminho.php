@@ -216,14 +216,14 @@ class Jaiminho extends SendPress
 				'jaiminho-emails-limits-settings',
 				array( $this , 'jaiminho_emails_limits_html' )
 				);    
-		add_submenu_page(
-				'settings.php',
-				__('Corrigir tabelas do Jaiminho','jaiminho'),
-				__('Corrigir tabelas do Jaiminho','jaiminho'),
-				'manage_network_options',
-				'jaiminho-fix-tables--settings',
-				array( $this , 'jaiminho_fix_tables_html' )
-				);    
+//		add_submenu_page(
+//				'settings.php',
+//				__('Corrigir tabelas do Jaiminho','jaiminho'),
+//				__('Corrigir tabelas do Jaiminho','jaiminho'),
+//				'manage_network_options',
+//				'jaiminho-fix-tables--settings',
+//				array( $this , 'jaiminho_fix_tables_html' )
+//				);    
 	}
 
         public function jaiminho_fix_tables_html()
