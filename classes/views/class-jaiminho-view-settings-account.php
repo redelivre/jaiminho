@@ -338,7 +338,7 @@ wp_nonce_field( $sp->_nonce_value );
 <?php
 $error=  SendPress_Option::get( 'phpmailer_error' );
 $hide = 'hide';
-if ( !empty( $error ) ) {
+if ( !empty( $error ) && isset($_POST['testemail'])) {
 	$hide = '';
 	$phpmailer_error = '<pre>'.$error.'</pre>';
 	?>
