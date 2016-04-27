@@ -118,6 +118,8 @@ class Jaiminho extends SendPress
         {
             switch_to_blog( $blog_id );
             SendPress_Option::set( 'wpcron-per-call' , 5000 );
+	    SendPress_Option::set( 'emails-per-day' , 5000);
+	    SendPress_Option::set( 'emails-per-hour' , 2500 );
             restore_current_blog();
         }
 	public static function jaiminho_define_opt_in_email(){
