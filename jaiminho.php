@@ -73,7 +73,7 @@ class Jaiminho extends SendPress
                 //XXX Gmail esta sendo retirado pois o sendpress esta sem suporte a ele devido a modificações nas regras de codificação do Gmail.
 		//sendpress_register_sender( 'Jaiminho_Sender_Gmail' );
 		remove_action( 'in_admin_footer',array(SendPress_View::get_instance(),'footer'),10);
-		wp_register_script('jaiminho_disable', 'JAIMINHO_URL' .'js/disable.js' ,'',JAIMINHO_VERSION);
+		wp_register_script('jaiminho_disable', JAIMINHO_URL .'js/disable.js' ,'',JAIMINHO_VERSION);
 		add_action( 'admin_menu', array($this,'remove_menu'));
 		add_action( 'admin_menu', array($this,'admin_menu'));
 		add_action( 'toplevel_page_sp-overview', array($this,'render_view_jaiminho'));
@@ -656,7 +656,7 @@ var_dump($command);
 		if ( isset( $_GET['page'] ) && in_array( SPNL()->validate->page( $_GET['page'] ), $this->adminpages ) ) {
 			$queue = '(<span id="queue-count-menu">-</span>)';//SendPress_Data::emails_in_queue();
 		}
-		add_menu_page( __('Jaiminho','jaiminho'), __('Jaiminho','jaiminho'), $role, 'sp-emails', array( $this , 'render_view_jaiminho' ), 'JAIMINHO_URL' . 'img/jaiminho-bg-16.png' );
+		add_menu_page( __('Jaiminho','jaiminho'), __('Jaiminho','jaiminho'), $role, 'sp-emails', array( $this , 'render_view_jaiminho' ), JAIMINHO_URL . 'img/jaiminho-bg-16.png' );
 		// xxx: ainda não foi possivel descobrir onde esta o problema, simplesmente a página do overview repete o template - depois voltar de sp-emails para sp-overview
 		//add_submenu_page('sp-emails', __('Overview','sendpress'), __('Overview','sendpress'), $role, 'sp-overview', array($this,'render_view_jaiminho'));
 		$main = add_submenu_page('sp-emails', __('Emails','sendpress'), __('Emails','sendpress'), $role, 'sp-emails', array($this,'render_view_jaiminho'));
