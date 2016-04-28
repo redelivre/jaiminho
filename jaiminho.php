@@ -68,7 +68,7 @@ class Jaiminho extends SendPress
 	public function Init()
 	{
 		$sendpress_name = __( 'SendPress', 'sendpress' );
-		//add_filter( 'rewrite_rules_array' , 'jaiminho_check_rewrite' );
+		add_action( 'init' , array( $this , 'jaiminho_check_rewrite' ) );
 		sendpress_register_sender( 'Jaiminho_Sender_RedeLivre' );
                 //XXX Gmail esta sendo retirado pois o sendpress esta sem suporte a ele devido a modificações nas regras de codificação do Gmail.
 		//sendpress_register_sender( 'Jaiminho_Sender_Gmail' );
@@ -174,27 +174,28 @@ class Jaiminho extends SendPress
 		tgmpa( $plugins, $config );
 	}
 
-	public function jaiminho_check_rewrite($rules) 
+	public function jaiminho_check_rewrite() 
 	{ 
-		$found = false; 
-                //var_dump($rules);
-		if(is_array($rules)) 
-		{ 
-			foreach ($rules as $rule) 
-			{ 
-				if(strpos($rule, 'sendpress') !== false) 
-				{ 
-					$found = true; 
-					break; 
-				} 
-			} 
-			if ( ! $found ) 
-			{ 
-				global $wp_rewrite; 
-				$wp_rewrite->flush_rules(); 
-			} 
-		} 
-                return $rules;
+		global $wp_rewrite;
+
+		$rules = $wp_rewrite->extra_rules_top;
+		$found = false;
+
+		if(is_array($rules))
+		{
+			foreach ($rules as $rule)
+			{
+				if(strpos($rule, 'sendpress') !== false)
+				{
+					$found = true;
+					break;
+				}
+			}
+			if ( ! $found )
+			{
+				$wp_rewrite->flush_rules();
+			}
+		}
 	}
 
 
