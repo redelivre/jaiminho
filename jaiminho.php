@@ -68,7 +68,7 @@ class Jaiminho extends SendPress
 	public function Init()
 	{
 		$sendpress_name = __( 'SendPress', 'sendpress' );
-		add_filter( 'rewrite_rules_array' , 'jaiminho_check_rewrite' );
+		//add_filter( 'rewrite_rules_array' , 'jaiminho_check_rewrite' );
 		sendpress_register_sender( 'Jaiminho_Sender_RedeLivre' );
                 //XXX Gmail esta sendo retirado pois o sendpress esta sem suporte a ele devido a modificações nas regras de codificação do Gmail.
 		//sendpress_register_sender( 'Jaiminho_Sender_Gmail' );
