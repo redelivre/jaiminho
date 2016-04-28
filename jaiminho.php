@@ -12,7 +12,7 @@
  */
 // xxx colocar o SUNRISE == on ver se isso vai ser funcional no servidor da redelivre ...
 if ( is_multisite() )
-  //require_once( WP_PLUGIN_DIR."/wordpress-mu-domain-mapping/domain_mapping.php" );
+  require_once( WP_PLUGIN_DIR."/wordpress-mu-domain-mapping/domain_mapping.php" );
 
 define( 'JAIMINHO_URL', plugin_dir_url( __FILE__ ) );
 define( 'JAIMINHO_VERSION', 0.0 );
