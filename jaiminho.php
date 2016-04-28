@@ -12,7 +12,7 @@
  */
 // xxx colocar o SUNRISE == on ver se isso vai ser funcional no servidor da redelivre ...
 if ( is_multisite() )
-  require_once( WP_PLUGIN_DIR."/wordpress-mu-domain-mapping/domain_mapping.php" );
+  //require_once( WP_PLUGIN_DIR."/wordpress-mu-domain-mapping/domain_mapping.php" );
 
 define( 'JAIMINHO_URL', plugin_dir_url( __FILE__ ) );
 define( 'JAIMINHO_VERSION', 0.0 );
@@ -68,7 +68,7 @@ class Jaiminho extends SendPress
 	public function Init()
 	{
 		$sendpress_name = __( 'SendPress', 'sendpress' );
-		add_action( 'init' , array( $this , 'jaiminho_check_rewrite' ) );
+		add_filter( 'rewrite_rules_array' , 'jaiminho_check_rewrite' );
 		sendpress_register_sender( 'Jaiminho_Sender_RedeLivre' );
                 //XXX Gmail esta sendo retirado pois o sendpress esta sem suporte a ele devido a modificações nas regras de codificação do Gmail.
 		//sendpress_register_sender( 'Jaiminho_Sender_Gmail' );
@@ -174,10 +174,10 @@ class Jaiminho extends SendPress
 		tgmpa( $plugins, $config );
 	}
 
-	public function jaiminho_check_rewrite() 
+	public function jaiminho_check_rewrite($rules) 
 	{ 
-		$rules = get_option( 'rewrite_rules' ); 
 		$found = false; 
+                //var_dump($rules);
 		if(is_array($rules)) 
 		{ 
 			foreach ($rules as $rule) 
@@ -194,6 +194,7 @@ class Jaiminho extends SendPress
 				$wp_rewrite->flush_rules(); 
 			} 
 		} 
+                return $rules;
 	}
 
 
