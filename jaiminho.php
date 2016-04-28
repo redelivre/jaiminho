@@ -226,25 +226,26 @@ class Jaiminho extends SendPress
 				'jaiminho-emails-limits-settings',
 				array( $this , 'jaiminho_emails_limits_html' )
 				);    
-//		add_submenu_page(
-//				'settings.php',
-//				__('Corrigir tabelas do Jaiminho','jaiminho'),
-//				__('Corrigir tabelas do Jaiminho','jaiminho'),
-//				'manage_network_options',
-//				'jaiminho-fix-tables--settings',
-//				array( $this , 'jaiminho_fix_tables_html' )
-//				);    
+		add_submenu_page(
+				'settings.php',
+				__('Corrigir tabelas do Jaiminho','jaiminho'),
+				__('Corrigir tabelas do Jaiminho','jaiminho'),
+				'manage_network_options',
+				'jaiminho-fix-tables--settings',
+				array( $this , 'jaiminho_fix_tables_html' )
+				);    
 	}
 
         public function jaiminho_fix_tables_html()
         {
+
+        	var_dump(isset($_POST['fix_tables']));
 		global $wpdb;
             require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
           
             //$wpdb->hide_errors();
 
             $collate = '';
-
             if ( $wpdb->has_cap( 'collation' ) ) {
                 if( ! empty($wpdb->charset ) ){
                       $collate .= "DEFAULT CHARACTER SET $wpdb->charset";
@@ -285,56 +286,126 @@ class Jaiminho extends SendPress
 			echo '<br>';
 
 			echo "<b>Database Tables</b>: <br>";
+// primera tabela
 			$subscriber_events_table =  new SendPress_DB_Subscribers_Tracker();
 			$subscriber_events_table = $subscriber_events_table->table_name;
 			if($wpdb->get_var("show tables like '$subscriber_events_table'") != $subscriber_events_table) {
 				echo $subscriber_events_table . " Not Installed<br>";
+                                
+				if(isset($_POST['fix_tables']))
+						{
+$command = " CREATE TABLE $subscriber_events_table (
+subscriberID int(11) unsigned NOT NULL,
+emailID int(11) unsigned NOT NULL,
+sent_at datetime NOT NULL DEFAULT '0000-00-00 00:00:00', 
+opened_at datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+status tinyint(4) NOT NULL DEFAULT '0',
+PRIMARY KEY  (subscriberID,emailID)
+)  $collate;\n"; 
+
+$return = dbDelta($command);
+
+echo $return["wp_sendpress_report_url"];
+				}
+
 			} else {
 				echo $subscriber_events_table . " OK<br>";
 			}
-
+// segunda tabela
 			$subscriber_events_table =  new SendPress_DB_Subscribers_Url();
 			$subscriber_events_table = $subscriber_events_table->table_name;
 			if($wpdb->get_var("show tables like '$subscriber_events_table'") != $subscriber_events_table) {
 				echo $subscriber_events_table . " Not Installed<br>";
+                                
+				if(isset($_POST['fix_tables']))
+						{
+$command = " CREATE TABLE $subscriber_events_table (
+subscriberID int(11) unsigned NOT NULL,
+emailID int(11) unsigned NOT NULL,
+urlID int(11) unsigned NOT NULL,
+clicked_at datetime NOT NULL DEFAULT '0000-00-00 00:00:00', 
+click_count int(11) unsigned NOT NULL,
+PRIMARY KEY  ( subscriberID , emailID , urlID )
+)  $collate;\n"; 
+
+$return = dbDelta($command);
+
+echo $return["wp_sendpress_report_url"];
+				}
+
+
 			} else {
 				echo $subscriber_events_table . " OK<br>";
 			}
-
+//terceira tabela
 			$subscriber_events_table =  new SendPress_DB_Url();
 			$subscriber_events_table = $subscriber_events_table->table_name;
 			if($wpdb->get_var("show tables like '$subscriber_events_table'") != $subscriber_events_table) {
 				echo $subscriber_events_table . " Not Installed<br>";
+                                
+				if(isset($_POST['fix_tables']))
+						{
+$command = " CREATE TABLE $subscriber_events_table (urlID int(11) unsigned NOT NULL AUTO_INCREMENT, url text,hash varchar(255) DEFAULT NULL, PRIMARY KEY  (urlID), KEY hash (hash))  $collate;\n"; 
+$return = dbDelta($command);
+
+echo $return["wp_sendpress_report_url"];
+				}
+
 			} else {
 				echo $subscriber_events_table . " OK<br>";
 			}
 
-
+// quarta tabela
 			$report_url_table =  SendPress_DB_Tables::report_url_table();
 			if($wpdb->get_var("show tables like '$report_url_table'") != $report_url_table) {
 				echo $report_url_table . " Not Installed<br>";
-			} else {
-				echo $report_url_table . " OK<br>";
-			}
-
-			$subscriber_status_table =  SendPress_DB_Tables::subscriber_status_table();
-			if($wpdb->get_var("show tables like '$subscriber_status_table'") != $subscriber_status_table) {
-				echo $subscriber_status_table . " Not Installed<br>";
-			} else {
-				echo $subscriber_status_table . " OK<br>";
-			}
-
-			$subscriber_table = SendPress_DB_Tables::subscriber_table();
-			if($wpdb->get_var("show tables like '$subscriber_table'") != $subscriber_table) {
-				echo $subscriber_table . " Not Installed<br>";
                                 
 				if(isset($_POST['fix_tables']))
 						{
-                                                  echo "Ola";
-            // Create Stats Table
-            //if($wpdb->get_var("show tables like '$subscriber_table'") != $subscriber_table) {
-            $command ='';
-$command .= " CREATE TABLE $subscriber_table (
+$command = " CREATE TABLE $report_url_table (
+urlID int(11) unsigned NOT NULL AUTO_INCREMENT,
+url varchar(2000) DEFAULT NULL,
+reportID int(11) DEFAULT NULL,
+PRIMARY KEY  (urlID),
+KEY reportID (reportID),
+KEY url (url(255))
+) $collate;\n"; 
+
+$return = dbDelta($command);
+
+echo $return["wp_sendpress_report_url"];
+				}
+			} else {
+				echo $report_url_table . " OK<br>";
+			}
+// quinta tabela
+			$subscriber_status_table =  SendPress_DB_Tables::subscriber_status_table();
+			if($wpdb->get_var("show tables like '$subscriber_status_table'") != $subscriber_status_table) {
+				echo $subscriber_status_table . " Not Installed<br>";
+                               
+				if(isset($_POST['fix_tables']))
+						{
+$command = " CREATE TABLE $subscriber_status_table (
+statusid int(11) unsigned NOT NULL AUTO_INCREMENT, 
+status varchar(255) DEFAULT NULL, 
+PRIMARY KEY  (statusid)
+) $collate;\n"; 
+
+$return = dbDelta($command);
+
+echo $return["wp_sendpress_report_url"];
+				}
+			} else {
+				echo $subscriber_status_table . " OK<br>";
+			}
+// sexta tabela
+			$subscriber_table = SendPress_DB_Tables::subscriber_table();
+			if($wpdb->get_var("show tables like '$subscriber_table'") != $subscriber_table) {
+				echo $subscriber_table . " Not Installed<br>";
+                                              
+				if(isset($_POST['fix_tables']))
+						{                 
+$command = " CREATE TABLE $subscriber_table (
 subscriberID bigint(20) unsigned NOT NULL AUTO_INCREMENT, 
 email varchar(100) NOT NULL DEFAULT '', 
 join_date datetime  NOT NULL DEFAULT '0000-00-00 00:00:00', 
@@ -347,32 +418,88 @@ firstname varchar(250) NOT NULL DEFAULT '',
 lastname varchar(250) NOT NULL DEFAULT '', 
 wp_user_id bigint(20) DEFAULT NULL, 
 phonenumber varchar(12) DEFAULT NULL, 
-salutation varchar(40) DEFAULT NULL
+salutation varchar(40) DEFAULT NULL,
 PRIMARY KEY  (subscriberID), 
 UNIQUE KEY email (email) , 
 UNIQUE KEY identity_key (identity_key), 
 UNIQUE KEY wp_user_id (wp_user_id)
 ) $collate;\n"; 
-		echo '<pre>';
-var_dump($command);
-		echo '</pre>';
-            dbDelta($command);  
-            //}
-						}
+
+$return = dbDelta($command);
+
+echo $return["wp_sendpress_report_url"];
+				}          
 			} else {
 				echo $subscriber_table . " OK<br>";
 			}
-
+//setima tabela
 			$subscriber_list_subscribers = SendPress_DB_Tables::list_subcribers_table();
 			if($wpdb->get_var("show tables like '$subscriber_list_subscribers'") != $subscriber_list_subscribers) {
 				echo $subscriber_list_subscribers . " Not Installed<br>";
+                                             
+				if(isset($_POST['fix_tables']))
+						{     
+$command .= " CREATE TABLE $subscriber_list_subscribers (
+id int(11) unsigned NOT NULL AUTO_INCREMENT, 
+listID int(11) DEFAULT NULL, 
+subscriberID int(11) DEFAULT NULL, 
+status int(1) DEFAULT NULL, 
+updated datetime NOT NULL DEFAULT '0000-00-00 00:00:00', 
+PRIMARY KEY  (id), 
+KEY listID (listID) , 
+KEY subscriberID (subscriberID) , 
+KEY status (status), 
+UNIQUE KEY listsub (subscriberID,listID)
+) $collate;\n";
+
+$return = dbDelta($command);
+
+echo $return["wp_sendpress_report_url"];
+				} 	
 			} else {
 				echo $subscriber_list_subscribers . " OK<br>";
 			}
-
+//oitava tabela
 			$subscriber_queue = SendPress_DB_Tables::queue_table();
 			if($wpdb->get_var("show tables like '$subscriber_queue'") != $subscriber_queue) {
 				echo $subscriber_queue . " Not Installed<br>";
+                                             
+				if(isset($_POST['fix_tables']))
+						{    
+$command .=" CREATE TABLE $subscriber_queue (
+id int(11) NOT NULL AUTO_INCREMENT, 
+subscriberID int(11) DEFAULT NULL, 
+listID int(11) DEFAULT NULL, 
+from_name varchar(64) DEFAULT NULL, 
+from_email varchar(128) NOT NULL, 
+to_email varchar(128) NOT NULL, 
+subject varchar(255) NOT NULL, 
+messageID varchar(400) NOT NULL, 
+emailID int(11) NOT NULL, 
+max_attempts int(11) NOT NULL DEFAULT '3', 
+attempts int(11) NOT NULL DEFAULT '0', 
+success tinyint(1) NOT NULL DEFAULT '0', 
+date_published datetime  NOT NULL DEFAULT '0000-00-00 00:00:00', 
+inprocess int(1) DEFAULT '0', 
+last_attempt datetime  NOT NULL DEFAULT '0000-00-00 00:00:00', 
+date_sent datetime  NOT NULL DEFAULT '0000-00-00 00:00:00', 
+PRIMARY KEY  (id), 
+KEY to_email (to_email), 
+KEY subscriberID (subscriberID), 
+KEY listID (listID), 
+KEY inprocess (inprocess), 
+KEY success (success), 
+KEY max_attempts (max_attempts), 
+KEY attempts (attempts), 
+KEY last_attempt (last_attempt),
+KEY date_sent (date_sent),
+KEY success_date (success,last_attempt,max_attempts,attempts,inprocess,date_sent)
+) $collate;\n";
+
+$return = dbDelta($command);
+
+echo $return["wp_sendpress_report_url"];
+				} 				
 			} else {
 				echo $subscriber_queue . " OK<br>";
 			}
