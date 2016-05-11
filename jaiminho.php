@@ -12,7 +12,7 @@
  */
 // xxx colocar o SUNRISE == on ver se isso vai ser funcional no servidor da redelivre ...
 if ( is_multisite() )
-  require_once( WP_PLUGIN_DIR."/wordpress-mu-domain-mapping/domain_mapping.php" );
+  //require_once( WP_PLUGIN_DIR."/wordpress-mu-domain-mapping/domain_mapping.php" );
 
 define( 'JAIMINHO_URL', plugin_dir_url( __FILE__ ) );
 define( 'JAIMINHO_VERSION', 0.0 );
@@ -28,6 +28,8 @@ require_once( ABSPATH . '/wp-content/plugins/sendpress/sendpress.php' );
 require_once( ABSPATH . '/wp-content/plugins/sendpress/classes/class-sendpress-option.php' );
 //require_once( ABSPATH . '/wp-content/plugins/sendpress/classes/views/class-sendpress-view.php' );
 // jaiminho classes
+if (wp_get_theme() == 'Divi')
+// require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-divi-email-optin.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-settings-account.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-send.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-overview.php' );
@@ -201,35 +203,37 @@ class Jaiminho extends SendPress
 
 	public function jaiminho_network_settings()
 	{
-		add_submenu_page(
-				'settings.php',
-				__('Configurações do Jaiminho','jaiminho'),
-				__('Configurações do Jaiminho','jaiminho'),
-				'manage_network_options',
-				'jaiminho-network-settings',
-				array( $this , 'jaiminho_settings_network_html' )
-				);    
+                $basename = 'jaiminho-network-settings';
+		add_menu_page( __('Jaiminho','jaiminho'), __('Jaiminho','jaiminho'), 'manage_network_options', $basename, array( $this , 'jaiminho_settings_network_html' ), JAIMINHO_URL . 'img/jaiminho-bg-16.png' );
 
 		add_submenu_page(
-				'settings.php',
-				__('Configurações de Créditos do Jaiminho','jaiminho'),
-				__('Configurações de Créditos do Jaiminho','jaiminho'),
+				$basename,
+				__('Configurar Contas','jaiminho'),
+				__('Configurar Contas','jaiminho'),
+				'manage_network_options',
+				$basename,
+				array( $this , 'jaiminho_settings_network_html' )
+				);    
+		add_submenu_page(
+				$basename,
+				__('Configurar Créditos','jaiminho'),
+				__('Configurar Créditos','jaiminho'),
 				'manage_network_options',
 				'jaiminho-network-credits-settings',
 				array( $this , 'jaiminho_settings_network_html_credits' )
 				);    
 		add_submenu_page(
-				'settings.php',
-				__('Configurações de Limite de Envio do Jaiminho','jaiminho'),
-				__('Configurações de Limite de Envio Jaiminho','jaiminho'),
+				$basename,
+				__('Configurar Limite de Envio','jaiminho'),
+				__('Configurar Limite de Envio','jaiminho'),
 				'manage_network_options',
 				'jaiminho-emails-limits-settings',
 				array( $this , 'jaiminho_emails_limits_html' )
 				);    
 		add_submenu_page(
-				'settings.php',
-				__('Corrigir tabelas do Jaiminho','jaiminho'),
-				__('Corrigir tabelas do Jaiminho','jaiminho'),
+				$basename,
+				__('Corrigir tabelas','jaiminho'),
+				__('Corrigir tabelas','jaiminho'),
 				'manage_network_options',
 				'jaiminho-fix-tables--settings',
 				array( $this , 'jaiminho_fix_tables_html' )
