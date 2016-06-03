@@ -116,7 +116,7 @@ class Jaiminho extends SendPress
 
 
 	}
-        public function jaiminho_set_settings_for_new_site($blog_id, $user_id)
+        public function jaiminho_set_settings_for_new_site($blog_id)
         {
             switch_to_blog( $blog_id );
             SendPress_Option::set( 'wpcron-per-call' , 5000 );
