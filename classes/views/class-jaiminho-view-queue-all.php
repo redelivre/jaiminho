@@ -36,22 +36,25 @@ class Jaiminho_View_Queue_All extends SendPress_View_Queue {
 		add_screen_option( 'per_page', $args );
 	}
 	
-	function empty_queue( $get, $sp ){
+	function empty_queue(  ){
+		//$this->security_check();
 		SendPress_Data::delete_queue_emails();
 		SendPress_Admin::redirect('Queue');
 	}
 
 	function reset_queue(){
+		//$this->security_check();
 		SendPress_Data::requeue_emails();
 		SendPress_Admin::redirect('Queue');
 	}
 
 	function reset_counters(){
+		//$this->security_check();
 		SendPress_Manager::reset_counters();
 		SendPress_Admin::redirect('Queue');
 	}
 
-	function html($sp) {
+	function html() {
 
 		 SendPress_Tracking::event('Queue Tab');
 	
@@ -61,10 +64,9 @@ class Jaiminho_View_Queue_All extends SendPress_View_Queue {
 	//Fetch, prepare, sort, and filter our data...
 	$testListTable->prepare_items();
 	SendPress_Option::set('no_cron_send', 'false');
-        //Maurilio - Aparentemente a opção $sp->fetch_mail_from_queue(); não existe mais, por isso não coloquei ela aqui, acho melhor conversar antes com Jac e Amarelo e ver o que eles pensam sobre isso. 	
-	$sp->cron_start();
-	//echo $sp->get_key(). "<br>";
-        // Maurilio - ver se temos que retirar o código abaixo, qual seria o motivo? $open_info...
+	
+	SPNL()->cron_start();
+
 	$open_info = array(
 				"id"=>13,
 				"report"=> 10,
@@ -74,29 +76,27 @@ class Jaiminho_View_Queue_All extends SendPress_View_Queue {
 
 	?>
 <h2><?php _e('Queue history for the last ','sendpress'); ?> <strong><?php echo SendPress_Option::get('queue-history',7); ?></strong> <?php _e('Days','sendpress'); ?>.</h2>
-                <?php if ((is_multisite() && is_super_admin()) || !is_multisite()) { ?>
-		  <small><?php _e('You can adjust these settings here','sendpress'); ?>: <a href="<?php echo SendPress_Admin::link('Settings_Advanced'); ?>"><?php _e('Settings','sendpress'); ?> > <?php _e('Advanced','sendpress'); ?></a>.</small>
- 		  <br><br>
-                <?php } ?>
+		<small><?php _e('You can adjust these settings here','sendpress'); ?>: <a href="<?php echo SendPress_Admin::link('Settings_Advanced'); ?>"><?php _e('Settings','sendpress'); ?> > <?php _e('Advanced','sendpress'); ?></a>.</small>
+ 		<br><br>
 	<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
 	<form id="email-filter" action="<?php echo SendPress_Admin::link('Queue_All'); ?>" method="get">
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
-	     <input type="hidden" name="page" value="<?php echo SPNL()->validate->page($_REQUEST['page']) ?>" /> 
-	       <?php if(isset($_GET['listID']) && $_GET['listID'] > 0 ){ ?>
-	    <input type="hidden" name="listID" value="<?php echo SPNL()->validate->int( $_POST['listID'] ); ?>" />
+	     <input type="hidden" name="page" value="<?php echo SPNL()->validate->page() ?>" /> 
+	       <?php if(SPNL()->validate->_int('listID') > 0 ){ ?>
+	    <input type="hidden" name="listID" value="<?php echo SPNL()->validate->_int('listID'); ?>" />
 	    <?php  } ?>
-	    <input type="hidden" name="view" value="<?php echo esc_html($_GET['view']); ?>" />
+	    <input type="hidden" name="view" value="<?php echo esc_html( SPNL()->validate->_int('view') ); ?>" />
 	    <!-- Now we can render the completed list table -->
 	    <?php $testListTable->display() ?>
-	    <?php wp_nonce_field($sp->_nonce_value); ?>
+	    <?php wp_nonce_field($this->_nonce_value); ?>
 	</form>
 	<br>
 	
 	<form  method='get'>
-		<input type='hidden' value="<?php echo SPNL()->validate->page($_GET['page']); ?>" name="page" />
+		<input type='hidden' value="<?php echo SPNL()->validate->page(); ?>" name="page" />
 		
 		
-		<?php wp_nonce_field($sp->_nonce_value); ?>
+		<?php wp_nonce_field($this->_nonce_value); ?>
 	</form>
 
 <?php
