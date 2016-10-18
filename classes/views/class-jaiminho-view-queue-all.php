@@ -7,7 +7,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 }
 
 /**
-* SendPress_View_Queue
+* Jaiminho_View_Queue_All
 *
 * @uses     SendPress_View
 *
