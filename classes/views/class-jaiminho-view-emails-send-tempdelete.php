@@ -1,5 +1,7 @@
 <?php
 
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails.php' );
+
 // Prevent loading this file directly
 if ( !defined('SENDPRESS_VERSION') ) {
 	header('HTTP/1.0 403 Forbidden');
@@ -7,22 +9,20 @@ if ( !defined('SENDPRESS_VERSION') ) {
 }
 
 /**
-* SendPress_View_Emails_Create
+* Jaiminho_View_Emails_Tempdelete
 *
-* @uses     SendPress_View
+* @uses     Jaiminho_View_Emails
 *
-* @package  SendPress
-* @since 0.8.7
+* @package  Jaiminho
+* @since 1.1
 *
 */
-
-require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails.php' );
 
 class Jaiminho_View_Emails_Tempdelete extends Jaiminho_View_Emails {
 
 	
 	
-	function html($sp) {
+	function html() {
 		
 		?>
 		<?php 
@@ -43,7 +43,7 @@ class Jaiminho_View_Emails_Tempdelete extends Jaiminho_View_Emails {
 		
 		<?php //wp_editor($post->post_content,'textversion'); ?>
 
-		 <?php wp_nonce_field($sp->_nonce_value); ?><br><br>
+		 <?php wp_nonce_field($this->_nonce_value); ?><br><br>
 		 </form>
 		 
 		<?php

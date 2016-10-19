@@ -1,16 +1,17 @@
 <?php
-// Prevent loading this file directly
-if ( !defined('SENDPRESS_VERSION') ) {
-	header('HTTP/1.0 403 Forbidden');
-	die;
-}
 
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails.php' );
 
+// Prevent loading this file directly
+if ( !defined('SENDPRESS_VERSION') ) {
+    header('HTTP/1.0 403 Forbidden');
+    die;
+}
+
 class Jaiminho_View_Emails_Send extends Jaiminho_View_Emails {
 
-	function save(){
-        $this->security_check();
+    function save(){
+        //$this->security_check();
         $post_info_id =  SPNL()->validate->int( $_POST['post_ID']);
         if($post_info_id > 0){
             if(isset($_POST['send-date']) && $_POST['send-date'] == 'later'){
@@ -19,9 +20,9 @@ class Jaiminho_View_Emails_Send extends Jaiminho_View_Emails {
                 $send_at = '0000-00-00 00:00:00';
             }   
             if(isset($_POST['test-add'])){
-    		$csvadd ="email,firstname,lastname\n" . sanitize_text_field( trim($_POST['test-add']) ) ;
+            $csvadd ="email,firstname,lastname\n" . sanitize_text_field( trim($_POST['test-add']) ) ;
 
-        	$data=  SendPress_Data::subscriber_csv_post_to_array($csvadd);
+            $data=  SendPress_Data::subscriber_csv_post_to_array($csvadd);
             } else {
                 $data = false;
             }
@@ -43,38 +44,37 @@ class Jaiminho_View_Emails_Send extends Jaiminho_View_Emails {
             }
 
             if(isset($_POST['submit']) && $_POST['submit'] == 'save-next'){
-            	 SendPress_Admin::redirect('Emails_Send_Confirm', array('emailID'=>SPNL()->validate->int($_GET['emailID']) ));
+                 SendPress_Admin::redirect('Emails_Send_Confirm', array('emailID'=>SPNL()->validate->_int('emailID') ));
             } else {
-            	SendPress_Admin::redirect('Emails_Style', array('emailID'=>SPNL()->validate->int($_GET['emailID']) ));
+                SendPress_Admin::redirect('Emails_Style', array('emailID'=>SPNL()->validate->_int('emailID') ));
             }
         }
        
-	}
-	
-	function admin_init(){
-		wp_enqueue_script('jquery-ui-datepicker');
-		wp_register_style( 'sendpress_css_jquery-ui', SENDPRESS_URL . 'css/smoothness/jquery-ui-1.10.3.custom.min.css', false, SENDPRESS_VERSION );
-    	wp_enqueue_style( 'sendpress_css_jquery-ui' );
-	}
+    }
+    
+    function admin_init(){
+        wp_enqueue_script('jquery-ui-datepicker');
+        wp_register_style( 'sendpress_css_jquery-ui', SENDPRESS_URL . 'css/smoothness/jquery-ui-1.10.3.custom.min.css', false, SENDPRESS_VERSION );
+        wp_enqueue_style( 'sendpress_css_jquery-ui' );
+    }
 
-	function html($sp) {
+    function html() {
 
 global $current_user;
 global $post_ID, $post;
 
-$view = isset($_GET['view']) ? $_GET['view'] : '' ;
+
 
 $list ='';
-
-if(isset($_GET['emailID'])){
-	$emailID = $_GET['emailID'];
-	$post = get_post( $_GET['emailID'] );
-	$post_ID = $post->ID;
+$emailID = SPNL()->validate->_int('emailID');
+if($emailID  > 0){
+    $post = get_post( $emailID );
+    $post_ID = $post->ID;
 }
 
 
-$post_type = $sp->_email_post_type;
-$post_type_object = get_post_type_object($sp->_email_post_type);
+$post_type = SPNL()->_email_post_type;
+$post_type_object = get_post_type_object( $post_type );
 
 ?>
 <div class="alert alert-danger fade hide">
@@ -83,7 +83,7 @@ $post_type_object = get_post_type_object($sp->_email_post_type);
 <form method="POST" name="sendpress_post" id="sendpress_post">
 <div style="float:right;"  class="btn-toolbar">
 <div id="sp-cancel-btn" class="btn-group">
-<a href="?page=<?php echo SPNL()->validate->page($_GET['page']); ?>"  class="btn btn-default "><?php echo __('Cancel','sendpress'); ?></a>
+<a href="?page=<?php echo SPNL()->validate->page(); ?>"  class="btn btn-default "><?php echo __('Cancel','sendpress'); ?></a>
 </div> 
 
 <div class="btn-group">
@@ -111,7 +111,7 @@ $post_type_object = get_post_type_object($sp->_email_post_type);
 <input type="radio" name="send-date" value="now" checked/> <?php _e('Start Sending Now','sendpress'); ?><br>
 <input type="radio" name="send-date" value="later"/> <?php _e('Send Later','sendpress'); ?><br>
 <div class="date-holder" style="display:none">
-	<br>
+    <br>
 <input type="text" name="date-pickit" id="date-pickit" class=" fifty float-left" value="<?php echo date_i18n('Y/m/d'); ?>"/>&nbsp;at
 <script type="text/javascript">
 jQuery(document).ready(function($) {
@@ -164,10 +164,10 @@ do_action('spnl_add_to_sending' , $this);
 
 $this->panel_start('<span class="glyphicon glyphicon-list"></span> '. __('Lists','sendpress'));
 $post_args = array( 'post_type' => 'sendpress_list','numberposts'     => -1,
-    	'offset'          => 0,
-    	'orderby'         => 'post_title',
-    	'order'           => 'DESC', );
-		
+        'offset'          => 0,
+        'orderby'         => 'post_title',
+        'order'           => 'DESC', );
+        
 $current_lists = get_posts( $post_args );
 foreach($current_lists as $list){
 
@@ -177,7 +177,7 @@ foreach($current_lists as $list){
            $t = '  <span class="label label-info">Test List</span>';
            $tlist = ' test-list-add';
         } 
-	echo "<input name='listIDS[]' type='checkbox' id='listIDS' class='sp-send-lists ". $tlist ."' value=" . $list->ID. "> ".$list->post_title . " <small>(".SendPress_Data::get_count_subscribers($list->ID). ")</small>$t<br>";
+    echo "<input name='listIDS[]' type='checkbox' id='listIDS' class='sp-send-lists ". $tlist ."' value=" . $list->ID. "> ".$list->post_title . " <small>(".SendPress_Data::get_count_subscribers($list->ID). ")</small>$t<br>";
 }
 
 $this->panel_end();
@@ -202,7 +202,7 @@ $this->panel_end();
 
 </div>
 -->
-<?php wp_nonce_field($sp->_nonce_value); ?>
+<?php wp_nonce_field($this->_nonce_value); ?>
 </div>
 <div style="margin-left: 250px;">
 <div class="widerightcol">
@@ -210,9 +210,9 @@ $this->panel_end();
 $url = get_site_url();
 //$link =  get_permalink( $post->ID ); 
 $open_info = array(
-	"id"=>$post->ID,
+    "id"=>$post->ID,
 
-	"view"=>"email"
+    "view"=>"email"
 );
 $code = SendPress_Data::encrypt( $open_info );
 $url = SendPress_Manager::public_url($code);
@@ -230,7 +230,7 @@ $link = $url . $sep . 'inline=true';
 </div>
 </form>
 <?php
-	}
+    }
 
 }
 SendPress_Admin::add_cap('Emails_Send','sendpress_email_send');

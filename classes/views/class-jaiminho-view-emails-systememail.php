@@ -1,5 +1,7 @@
 <?php
 
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails.php' );
+
 // Prevent loading this file directly
 if ( !defined('SENDPRESS_VERSION') ) {
 	header('HTTP/1.0 403 Forbidden');
@@ -7,11 +9,10 @@ if ( !defined('SENDPRESS_VERSION') ) {
 }
 
 
-require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails.php' );
 
 class Jaiminho_View_Emails_Systememail extends Jaiminho_View_Emails{
 
-	function html($sp){
+	function html(){
 		 SendPress_Tracking::event('Emails Tab');
 	//Create an instance of our package class...
 	$testListTable = new SendPress_System_Email_Table();
@@ -28,7 +29,7 @@ class Jaiminho_View_Emails_Systememail extends Jaiminho_View_Emails{
 			if($form_types){
 			?>
 				<div id="button-area">
-					<a class="btn btn-primary btn-large" href="?page=<?php echo SPNL()->validate->page($_REQUEST['page']); ?>&view=systememailcreate"><?php _e('Create System E-mail','sendpress'); ?></a>
+					<a class="btn btn-primary btn-large" href="?page=<?php echo SPNL()->validate->page(); ?>&view=systememailcreate"><?php _e('Create System E-mail','sendpress'); ?></a>
 				</div>
 			<?php
 			}
@@ -36,7 +37,7 @@ class Jaiminho_View_Emails_Systememail extends Jaiminho_View_Emails{
 
 	</div>
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
-	    <input type="hidden" name="page" value="<?php echo SPNL()->validate->page($_REQUEST['page']) ?>" />
+	    <input type="hidden" name="page" value="<?php echo SPNL()->validate->page() ?>" />
 	    <!-- Now we can render the completed list table -->
 	    <?php $testListTable->display(); ?>
 	    <?php wp_nonce_field($this->_nonce_value); ?>

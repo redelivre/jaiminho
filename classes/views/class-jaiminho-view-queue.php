@@ -7,7 +7,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 }
 
 /**
-* SendPress_View_Queue
+* Jaiminho_View_Queue
 *
 * @uses     SendPress_View
 *
@@ -25,7 +25,7 @@ class Jaiminho_View_Queue extends SendPress_View {
 	}
 
 
-	function sub_menu($sp = false){
+	function sub_menu(){
 
 
 		?>
@@ -42,16 +42,16 @@ class Jaiminho_View_Queue extends SendPress_View {
 </div>
 		 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		<ul class="nav navbar-nav">
-					<li <?php if(!isset($_GET['view']) ){ ?>class="active"<?php } ?> >
-				    	<a href="<?php echo SendPress_Admin::link('Queue'); ?>"><span class="glyphicon glyphicon-open"></span>  <?php _e('Active','sendpress'); ?> (<?php echo SendPress_Data::emails_active_in_queue(); ?>)</a>
+					<li <?php if(!SPNL()->validate->_isset('view') ){ ?>class="active"<?php } ?> >
+				    	<a href="<?php echo SendPress_Admin::link('Queue'); ?>"><span class="glyphicon glyphicon-open"></span>  <?php echo _x('Active','Active queues','sendpress'); ?> (<?php echo SendPress_Data::emails_active_in_queue(); ?>)</a>
 				  	</li>
-				  	<li <?php if(isset($_GET['view']) && $_GET['view'] === 'stuck'){ ?>class="active"<?php } ?> >
+				  	<li <?php if( SPNL()->validate->_string('view') === 'stuck'){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Queue_Stuck'); ?>"><span class="glyphicon glyphicon-exclamation-sign"></span>  <?php _e('Stuck','sendpress'); ?> (<?php echo  SendPress_Data::emails_maxed_in_queue(); ?>)</a>
 				  	</li>
-				  	<li <?php if(isset($_GET['view']) && $_GET['view'] === 'all'){ ?>class="active"<?php } ?> >
+				  	<li <?php if( SPNL()->validate->_string('view') === 'all'){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Queue_All'); ?>"><span class="glyphicon glyphicon-time"></span>  <?php _e('Send History','sendpress'); ?></a>
 				  	</li>
-				  	<li <?php if(isset($_GET['view']) && $_GET['view'] === 'errors'){ ?>class="active"<?php } ?> >
+				  	<li <?php if( SPNL()->validate->_string('view') === 'errors'){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Queue_Errors'); ?>"><span class="glyphicon glyphicon-warning-sign"></span>  <?php _e('Send Errors','sendpress'); ?></a>
 				  	</li>
 				</ul>
@@ -76,17 +76,20 @@ class Jaiminho_View_Queue extends SendPress_View {
 		add_screen_option( 'per_page', $args );
 	}
 	
-	function empty_queue( $get, $sp ){
+	function empty_queue(  ){
+		//$this->security_check();
 		SendPress_Data::delete_queue_emails();
 		SendPress_Admin::redirect('Queue');
 	}
 
 	function reset_queue(){
+		//$this->security_check();
 		SendPress_Data::requeue_emails();
 		SendPress_Admin::redirect('Queue');
 	}
 
 	function pause_queue(){
+		//$this->security_check();
 		$pause_sending = SendPress_Option::get('pause-sending','no');
 		//Stop Sending for now
 		if($pause_sending == 'yes'){
@@ -98,30 +101,31 @@ class Jaiminho_View_Queue extends SendPress_View {
 	}
 
 	function reset_counters(){
+		//$this->security_check();
 		SendPress_Manager::reset_counters();
 		SendPress_Admin::redirect('Queue');
 	}
 
 	function html() {
 
-	SendPress_Tracking::event('Queue Tab');
-	
+		 SendPress_Tracking::event('Queue Tab');
 	if( SPNL()->validate->_isset('cron') ){
 		SPNL()->fetch_mail_from_queue();
-	}
+	}	
 
-	//Create an instance of our package class...
+		//Create an instance of our package class...
 	$testListTable = new SendPress_Queue_Table();
 	//Fetch, prepare, sort, and filter our data...
 	$testListTable->prepare_items();
 	SendPress_Option::set('no_cron_send', 'false');
 	SPNL()->cron_start();
-	
-    $open_info = array(
+
+	$open_info = array(
 				"id"=>13,
 				"report"=> 10,
 				"view"=>"open"
 				);
+	 $autocron = SendPress_Option::get('autocron','no');
 	?>
 
 <br>
@@ -138,86 +142,99 @@ class Jaiminho_View_Queue extends SendPress_View {
 	?>
 	<div class="btn-group">
 
-	<?php if (SendPress_Option::get('emails-credits') &&  SendPress_Option::get( 'sendmethod' ) === 'Jaiminho_Sender_NetWork' || SendPress_Option::get( 'sendmethod' ) != 'Jaiminho_Sender_NetWork' ){
+       <?php if (SendPress_Option::get('emails-credits') &&  SendPress_Option::get( 'sendmethod' ) === 'Jaiminho_Sender_NetWork' || SendPress_Option::get( 'sendmethod' ) != 'Jaiminho_Sender_NetWork' ){
           SendPress_Option::set('pause-sending','no');
-          echo  '<a class="btn btn-large btn-default " href="' . SendPress_Admin::link('Queue') . '&action=pause-queue" <i class="icon-repeat icon-white "></i>' . $txt  . '</a>';
-          echo '<a id="send-now" class="btn btn-primary btn-large " data-toggle="modal" href="#sendpress-sending"   ><i class="icon-white icon-refresh"></i>' . __('Send Emails Now','sendpress') . '</a>'; ?>
+          ?>
+          <a class="btn btn-large btn-default " href="<?php echo SendPress_Admin::link('Queue'); ?>&action=pause-queue" ><i class="icon-repeat icon-white "></i> <?php echo $txt; ?></a>
+          <a id="send-now" class="btn btn-primary btn-large " data-toggle="modal" href="#sendpress-sending"   ><i class="icon-white icon-refresh"></i> <?php _e('Send Emails Now','sendpress');?></a>
 	</div>
 	</div>
-	<?php }
+	<?php
+	          }
+              else 
+              {
+		        SendPress_Option::set('pause-sending','yes');
+              }
+        $emails_per_day = SendPress_Option::get('emails-per-day');
+		if($emails_per_day == 0){
+			$emails_per_day = __('Unlimited','sendpress');
+		}
+	  $emails_per_hour =  SendPress_Option::get('emails-per-hour');
+	  $hourly_emails = SendPress_Data::emails_sent_in_queue("hour");
+	  $emails_so_far = SendPress_Data::emails_sent_in_queue("day");
+	  $credits = SendPress_Option::get('emails-credits');
+	 
+		//print_r(SendPress_Data::emails_stuck_in_queue());
 
-    else 
-    {
-      SendPress_Option::set('pause-sending','yes');
-    }
-    $emails_per_day = SendPress_Option::get('emails-per-day');
-
-	if($emails_per_day == 0){
-	  $emails_per_day = __('Unlimited','sendpress');
-	}
-
-	$emails_per_hour =  SendPress_Option::get('emails-per-hour');
-	$hourly_emails = SendPress_Data::emails_sent_in_queue("hour");
-	$emails_so_far = SendPress_Data::emails_sent_in_queue("day");
-    $credits = SendPress_Option::get('emails-credits');
-
-	global $wpdb;
-    $table = SendPress_Data::queue_table();
-    $date = getdate();
-    // Maurilio TODO: fazer com os créditos sejam contados a partir da 00:00:00 do primeiro dia do mês atual
-	$hour_ago = strtotime('-'.$date["mday"].' day');
-    $time = date('Y-m-d H:i:s', $hour_ago);
-    $query = $wpdb->prepare("SELECT COUNT(*) FROM $table where last_attempt > %s and success = %d", $time, 1 );
-    $credits_so_far =  $wpdb->get_var( $query );
-    $result_credits = $credits-$credits_so_far;
-	if ($credits <= 0) 
-    {
-      echo "<p class='alert alert-danger' style='width:70%;'>" . __("Vixe! Você não tem créditos. Para enviar emails em sua fila ou enviar novos emails, você precisa obter mais créditos.", "jaiminho") . "</p>"; 
-    } 
-    else
-    {?>
-      <h2><?php echo $credits? __('Você tem', 'jaiminho'):""; ?>
-      <strong><?php echo $result_credits?$result_credits:""; ?></strong> <?php echo $credits?__('créditos', 'jaiminho'):""; ?>.
-      </h2>
-	  <?php 
-    } ?>	
-	<h2><strong><?php echo $emails_so_far; ?></strong> <?php _e('of a possible','sendpress'); ?> <strong><?php echo $emails_per_day; ?></strong> <?php _e('emails sent in the last 24 hours','sendpress'); ?>.</h2>
-	<h2><strong><?php  echo $hourly_emails; ?></strong> <?php _e('of a possible','sendpress'); ?> <strong><?php echo $emails_per_hour; ?></strong> <?php _e('emails sent in the last hour','sendpress'); ?>.</h2>
-                <?php if ((is_multisite() && is_super_admin()) || !is_multisite()) { ?>
-	<small><?php _e('You can adjust these settings here','sendpress'); ?>: <a href="<?php echo SendPress_Admin::link('Settings_Account'); ?>"><?php _e('Settings','sendpress'); ?> > <?php _e('Sending Account','sendpress'); ?></a>.</small>
-                <?php } ?>
+	  global $wpdb;
+      $table = SendPress_Data::queue_table();
+      $date = getdate();
+      // Maurilio TODO: fazer com os créditos sejam contados a partir da 00:00:00 do primeiro dia do mês atual
+      $hour_ago = strtotime('-'.$date["mday"].' day');
+      $time = date('Y-m-d H:i:s', $hour_ago);
+      $query = $wpdb->prepare("SELECT COUNT(*) FROM $table where last_attempt > %s and success = %d", $time, 1 );
+      $credits_so_far =  $wpdb->get_var( $query );
+      $result_credits = $credits-$credits_so_far;
+      if ($credits <= 0) 
+      {
+        echo "<p class='alert alert-danger' style='width:70%;'>" . __("Vixe! Você não tem créditos. Para enviar emails em sua fila ou enviar novos emails, você precisa obter mais créditos.", "jaiminho") . "</p>"; 
+      } 
+      else
+      {?>
+        <h2><?php echo $credits? __('Você tem', 'jaiminho'):""; ?>
+        <strong><?php echo $result_credits?$result_credits:""; ?></strong> <?php echo $credits?__('créditos', 'jaiminho'):""; ?>.
+        </h2>
+        <?php 
+      } ?>       
+      <h2><strong><?php echo $emails_so_far; ?></strong> <?php _e('of a possible','sendpress'); ?> <strong><?php echo $emails_per_day; ?></strong> <?php _e('emails sent in the last 24 hours','sendpress'); ?>.</h2>
+      <h2><strong><?php  echo $hourly_emails; ?></strong> <?php _e('of a possible','sendpress'); ?> <strong><?php echo $emails_per_hour; ?></strong> <?php _e('emails sent in the last hour','sendpress'); ?>.</h2>
+      <?php if ((is_multisite() && is_super_admin()) || !is_multisite()) { ?>
+      <small><?php _e('You can adjust these settings here','sendpress'); ?>: <a href="<?php echo SendPress_Admin::link('Settings_Account'); ?>"><?php _e('Settings','sendpress'); ?> > <?php _e('Sending Account','sendpress'); ?></a>.</small>
+                 <?php } ?>
  		<?php
-    $offset = get_option( 'gmt_offset' ) * 60 * 60; // Time offset in seconds
-    $local_timestamp = wp_next_scheduled('sendpress_cron_action') + $offset;
+ 		if(  $autocron == 'no'){
+$offset = get_option( 'gmt_offset' ) * 60 * 60; // Time offset in seconds
+$local_timestamp = wp_next_scheduled('sendpress_cron_action') + $offset;
 
 
-    ?><br><small><?php _e('The cron will run again around','sendpress'); ?>: <?php
-    echo date_i18n( get_option('date_format') .' '. get_option('time_format'), $local_timestamp);
-    ?></small>
-    <?php  
 
 
-    ?>
+
+
+
+
+
+?><br><small><?php _e('The cron will run again around','sendpress'); ?>: <?php
+echo date_i18n( get_option('date_format') .' '. get_option('time_format'), $local_timestamp);
+?></small>
+<?php } 
+
+
+
+
+
+
+ ?>
  		<br><br>
 		</div>
 	<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
 	<form id="email-filter" action="<?php echo SendPress_Admin::link('Queue'); ?>" method="get">
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
-	     <input type="hidden" name="page" value="<?php echo SPNL()->validate->page($_REQUEST['page']); ?>" /> 
+	     <input type="hidden" name="page" value="<?php echo SPNL()->validate->page(); ?>" /> 
 	    <!-- Now we can render the completed list table -->
 	    <?php $testListTable->display(); ?>
-	    <?php wp_nonce_field($sp->_nonce_value); ?>
+	    <?php wp_nonce_field($this->_nonce_value); ?>
 	</form>
 	<br>
 	<!--
 		<a class="btn btn-large btn-success " href="<?php echo SendPress_Admin::link('Queue'); ?>&action=reset-queue" ><i class="icon-repeat icon-white "></i> <?php _e('Re-queue All Emails','sendpress'); ?></a><br><br>
 	-->
 	<form  method='get'>
-		<input type='hidden' value="<?php echo SPNL()->validate->page($_GET['page']); ?>" name="page" />
+		<input type='hidden' value="<?php echo SPNL()->validate->page(); ?>" name="page" />
 		
 		<input type='hidden' value="empty-queue" name="action" />
 		<a class="btn btn-large  btn-danger" data-toggle="modal" href="#sendpress-empty-queue" ><i class="icon-warning-sign "></i> <?php _e('Delete All Emails in the Queue','sendpress'); ?></a>
-		<?php wp_nonce_field($sp->_nonce_value); ?>
+		<?php wp_nonce_field($this->_nonce_value); ?>
 	</form>
 <div class="modal fade" id="sendpress-empty-queue" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -250,7 +267,7 @@ class Jaiminho_View_Queue extends SendPress_View {
 </div>
 	<span id="queue-sent">-</span> <?php _e('of','sendpress');?> <span id="queue-total">-</span> <?php _e('emails left to send','sendpress'); ?>.<br>
 	<br>
-	<?php _e('You are also limited to','sendpress'); ?> <?php echo $hour; ?> <?php _e('emails per hour','sendpress'); ?>.<br>
+	<?php _e('You are also limited to','sendpress'); ?> <?php echo $emails_per_hour; ?> <?php _e('emails per hour','sendpress'); ?>.<br>
 	<?php _e('To change these settings go to','sendpress'); ?> <a href="<?php echo SendPress_Admin::link('Settings_Account'); ?>"> <?php _e('Settings','sendpress'); ?> > <?php _e('Sending Account','sendpress'); ?></a>.
   </div>
   <div class="modal-footer">

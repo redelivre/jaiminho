@@ -1,139 +1,46 @@
 <?php
 
-// Prevent loading this file directly
-if ( !defined('SENDPRESS_VERSION') ) {
-	header('HTTP/1.0 403 Forbidden');
-	die;
-}
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails.php' );
 
+// Prevent loading this file directly
+if ( !defined('SENDPRESS_VERSION') ) {
+    header('HTTP/1.0 403 Forbidden');
+    die;
+}
+
 class Jaiminho_View_Emails_Tempstyle extends Jaiminho_View_Emails {
-	
-	function save(){
-        $this->security_check();
-		$saveid = $_POST['post_ID'];
-        /*
-        $bodybg = $_POST['body_bg'];
-        $bodytext = $_POST['body_text'];
-        $bodylink = $_POST['body_link'];
-        $contentbg = $_POST['content_bg'];
-        $contenttext = $_POST['content_text'];
-        $contentlink = $_POST['sp_content_link_color'];
-        $contentborder = $_POST['content_border'];
-        $upload_image = $_POST['upload_image'];
+    
+    function save(){
+        //$this->security_check();
+        $saveid = SPNL()->validate->_int('post_ID');
+     
+         update_post_meta($saveid ,'_header_page_text_color', SPNL()->validate->_hex('pagetxt-color-select') );
+          update_post_meta($saveid ,'_header_page_link_color', SPNL()->validate->_hex('pagelink-color-select') );
         
-        $headerbg = $_POST['header_bg'];
-        $headertextcolor = $_POST['header_text_color'];
-        $headertext = $_POST['header_text'];
-
-        $headerlink = $_POST['header_link'];
-        $imageheaderurl = $_POST['image_header_url'];
-        $subheadertext = $_POST['sub_header_text'];
-
-        $activeHeader = $_POST['active_header'];
-
-        $_POST['post_type'] = 'sp_newsletters';
-        // Update post 37
-    */
-        //$my_post = _wp_translate_postdata(true);
-        /*            
-        $my_post['ID'] = $_POST['post_ID'];
-        $my_post['post_content'] = $_POST['content'];
-        $my_post['post_title'] = $_POST['post_title'];
-        */
-       /*
-        $str = $my_post['post_content'];
-        $DOM = new DOMDocument;
-        $DOM->loadHTML($str);
-           //get all H1
-        $aTags = $DOM->getElementsByTagName('a');
-
-        foreach ($aTags as $aElement) {
-            $style = $aElement->getAttribute('style');
-
-                if($style == ""){
-                    $aElement->setAttribute('style', 'color: '. $contentlink);
-                }
-        }
-
-        $body_html = $DOM->saveHtml();
-        $my_post['post_content']  = $body_html;
-    */
-        //$my_post['post_status'] = 'publish';
-        // Update the post into the database
-        //wp_update_post( $my_post );
-       // update_post_meta( $my_post['ID'], '_sendpress_subject', $_POST['post_subject'] );
-        //update_post_meta( $my_post['ID'], '_sendpress_template', $_POST['template'] );
-        //update_post_meta( $my_post['ID'], '_sendpress_status', 'private');
-
-        //SendPress_Email::set_default_style($my_post['ID']);
-        //clear the cached file.
-        //delete_transient( 'sendpress_email_html_'. $my_post['ID'] );
-         update_post_meta($saveid ,'_header_page_text_color', $_POST['pagetxt-color-select'] );
-          update_post_meta($saveid ,'_header_page_link_color', $_POST['pagelink-color-select'] );
-        
-        update_post_meta($saveid ,'_header_text_color', $_POST['htxt-color-select'] );
-        update_post_meta($saveid ,'_header_bg_color', $_POST['bg-color-select'] );
-        if(isset( $_POST['padding-heading'])){
-            update_post_meta($saveid ,'_header_padding', $_POST['padding-heading'] );
+        update_post_meta($saveid ,'_header_text_color', SPNL()->validate->_hex('htxt-color-select') );
+        update_post_meta($saveid ,'_header_bg_color', SPNL()->validate->_hex('bg-color-select') );
+        if(SPNL()->validate->_isset('padding-heading')){
+            update_post_meta($saveid ,'_header_padding', SPNL()->validate->_string('padding-heading') );
         } else {
              update_post_meta($saveid ,'_header_padding', false );
         }
          
-          update_post_meta($saveid ,'_body_color', $_POST['bg-page-color-select'] );
-          update_post_meta($saveid ,'_content_color', $_POST['content-color-select'] );
+          update_post_meta($saveid ,'_body_color', SPNL()->validate->_hex('bg-page-color-select') );
+          update_post_meta($saveid ,'_content_color', SPNL()->validate->_hex('content-color-select') );
 
-        update_post_meta($saveid ,'_content_text_color', $_POST['content-text-color-select'] );
-         update_post_meta($saveid ,'_content_link_color', $_POST['content-link-color-select'] );
-          update_post_meta($saveid ,'_footer_link_color', $_POST['footer-link-color-select'] );
+        update_post_meta($saveid ,'_content_text_color', SPNL()->validate->_hex('content-text-color-select') );
+         update_post_meta($saveid ,'_content_link_color', SPNL()->validate->_hex('content-link-color-select') );
+          update_post_meta($saveid ,'_footer_link_color', SPNL()->validate->_hex('footer-link-color-select') );
 
-        update_post_meta($saveid ,'_footer_text_color', $_POST['footer-txt-color-select'] );
-        update_post_meta($saveid ,'_footer_bg_color', $_POST['footer-bg-color-select'] );
+        update_post_meta($saveid ,'_footer_text_color', SPNL()->validate->_hex('footer-txt-color-select') );
+        update_post_meta($saveid ,'_footer_bg_color', SPNL()->validate->_hex('footer-bg-color-select') );
        
-        if(isset( $_POST['padding-footer'])){
-            update_post_meta($saveid ,'_footer_padding', $_POST['padding-footer'] );
+        if(SPNL()->validate->_isset('padding-footer')){
+            update_post_meta($saveid ,'_footer_padding', SPNL()->validate->_string('padding-footer') );
         } else {
              update_post_meta($saveid ,'_footer_padding', false );
         }
-        /*padding-heading
-
-
-
-        update_post_meta($saveid ,'body_bg', $bodybg);
-        update_post_meta($saveid ,'body_text', $bodytext );
-        update_post_meta($saveid ,'body_link', $bodylink );
-        update_post_meta($saveid ,'content_bg', $contentbg );
-        update_post_meta($saveid ,'content_text', $contenttext );
-        update_post_meta($saveid ,'sp_content_link_color', $contentlink );
-        update_post_meta($saveid ,'content_border', $contentborder );
-        update_post_meta($saveid ,'upload_image', $upload_image );
-
-        update_post_meta($saveid ,'footer_bg', $headerbg );
-        update_post_meta($saveid ,'header_text_color', $headertextcolor );
-        update_post_meta($saveid ,'header_text', $headertext );
-
-        update_post_meta($saveid ,'header_link', $headerlink );
-        update_post_meta($saveid ,'image_header_url', $imageheaderurl );
-        update_post_meta($saveid ,'sub_header_text', $subheadertext );
-
-        update_post_meta($saveid ,'active_header', $activeHeader );
-        */
-        /*
-        if(isset($_POST['submit']) && $_POST['submit'] == 'save-next'){
-            SendPress_Admin::redirect('Emails_Send', array('emailID'=>$_GET['emailID'] ));
-        } else if (isset($_POST['submit']) && $_POST['submit'] == 'send-test'){
-            $email = new stdClass;
-            $email->emailID  = $my_post['ID'];
-            $email->subscriberID = 0;
-            $email->listID = 0;
-            $email->to_email = $_POST['test-email'];
-            $d =SendPress_Manager::send_test_email( $email );
-            //print_r($d);
-            SendPress_Admin::redirect('Emails_Tempstyle', array('templateID'=>$_GET['templateID'] ));
-        } else {
-            SendPress_Admin::redirect('Emails_Tempstyle', array('templateID'=>$_GET['templateID'] ));
-        }
-        */
+     
 
 
     }
@@ -142,13 +49,12 @@ class Jaiminho_View_Emails_Tempstyle extends Jaiminho_View_Emails {
        wp_enqueue_script( 'wp-color-picker' );
    }
 
-   function html($sp) { 
+   function html() { 
    
     global $sendpress_html_templates;
 
-        //print_r($sendpress_html_templates[$_GET['templateID']]);
 
-    $postdata = get_post( $_GET['templateID'] );
+    $postdata = get_post( SPNL()->validate->_int('templateID'));
 
 
         //print_r( $postdata );
@@ -183,7 +89,7 @@ class Jaiminho_View_Emails_Tempstyle extends Jaiminho_View_Emails {
          </div>
          <div id="collapseOne" class="panel-collapse collapse">
           <div class="panel-body">
-            <a class="btn btn-default btn-block" href="<?php echo SendPress_Admin::link('Emails_Headerpage', array('templateID' => $_GET['templateID'] )); ?>" class="btn"><?php _e('Edit Page Header HTML','sendpress'); ?></a>
+            <a class="btn btn-default btn-block" href="<?php echo SendPress_Admin::link('Emails_Headerpage', array('templateID' => SPNL()->validate->_int('templateID') )); ?>" class="btn"><?php _e('Edit Page Header HTML','sendpress'); ?></a>
             <br>
            
             <?php
@@ -210,7 +116,7 @@ class Jaiminho_View_Emails_Tempstyle extends Jaiminho_View_Emails {
           
 
             <br><br>
-            <a class="btn btn-default btn-block" href="<?php echo SendPress_Admin::link('Emails_Footerpage', array('templateID' => $_GET['templateID'] )); ?>" class="btn"><?php _e('Edit Page Footer HTML','sendpress'); ?></a>
+            <a class="btn btn-default btn-block" href="<?php echo SendPress_Admin::link('Emails_Footerpage', array('templateID' =>SPNL()->validate->_int('templateID') )); ?>" class="btn"><?php _e('Edit Page Footer HTML','sendpress'); ?></a>
             
          </div>
     </div>
@@ -225,7 +131,7 @@ class Jaiminho_View_Emails_Tempstyle extends Jaiminho_View_Emails {
 </div>
 <div id="collapseTwo" class="panel-collapse collapse">
   <div class="panel-body">
-    <a class="btn btn-default btn-block" href="<?php echo SendPress_Admin::link('Emails_Header', array('templateID' => $_GET['templateID'] )); ?>" class="btn"><?php _e('Edit Header HTML','sendpress'); ?></a>
+    <a class="btn btn-default btn-block" href="<?php echo SendPress_Admin::link('Emails_Header', array('templateID' => SPNL()->validate->_int('templateID') )); ?>" class="btn"><?php _e('Edit Header HTML','sendpress'); ?></a>
     <br>
     <?php 
     $bgtext = get_post_meta( $postdata->ID ,'_header_bg_color',true );
@@ -314,7 +220,7 @@ class Jaiminho_View_Emails_Tempstyle extends Jaiminho_View_Emails {
 </div>
 <div id="collapseFour" class="panel-collapse collapse">
   <div class="panel-body">
-    <a class="btn btn-default btn-block" href="<?php echo SendPress_Admin::link('Emails_Footer', array('templateID' => $_GET['templateID'] )); ?>" class="btn">Edit Footer HTML</a>
+    <a class="btn btn-default btn-block" href="<?php echo SendPress_Admin::link('Emails_Footer', array('templateID' => SPNL()->validate->_int('templateID') )); ?>" class="btn">Edit Footer HTML</a>
     <br>
      <?php 
     $bgtext = get_post_meta( $postdata->ID ,'_footer_bg_color',true );
@@ -352,31 +258,7 @@ class Jaiminho_View_Emails_Tempstyle extends Jaiminho_View_Emails {
 <br><BR><BR>
 <?php wp_nonce_field($this->_nonce_value); ?>
 </form>
-<!--
 
-
-<?php $this->panel_start( '<span class=" glyphicon glyphicon-tint"></span> '. __('Background Styles','sendpress') ); ?>
-
-Body<br>
-
-<br>
-footer<br>
-<input type="text" value="#bada55" id="bg-color-select" class="my-color-field2" data-default-color="#effeff" />
-
-<br>
-Footer<br>
-<input type="text" value="#bada55" id="bg-color-select" class="my-color-field3" data-default-color="#effeff" />
-
-<?php // $sp->create_color_picker( array('id'=>'body_bg','value'=>$body_bg['value'],'std'=>$body_bg['std'], 'link'=>'#html-view' ,'css'=>'background-color' ) ); ?>
-<br><br>
-Body Text Color<br>
-<?php // $sp->create_color_picker( array('id'=>'body_text','value'=>$body_text['value'],'std'=>$body_text['std'], 'link'=>'.html-view-outer-text' ,'css'=>'color' ) ); ?>
-<br><br>
-Body Link Color<br>
-<?php // $sp->create_color_picker( array('id'=>'body_link','value'=>$body_link['value'],'std'=>$body_link['std'], 'link'=>'.html-view-outer-text a' ,'css'=>'color' ) ); ?>
-
-<?php $this->panel_end(); ?>
--->
 <?php
 echo spnl_get_emails_tags_list();
 ?>
@@ -397,7 +279,7 @@ else {
 </div>
 <div class="sp-screen">
     <div class="sp-screen-holder">
-        <iframe id="iframe1" class="hidden-xs" width="100%" style="border: solid 1px #999; border-radius: 5px;" src="<?php echo $home_url; ?>?sendpress=render&spemail=<?php echo $_GET['templateID']; ?>" ></iframe>
+        <iframe id="iframe1" class="hidden-xs" width="100%" style="border: solid 1px #999; border-radius: 5px;" src="<?php echo $home_url; ?>?sendpress=render&spemail=<?php echo SPNL()->validate->_int('templateID'); ?>" ></iframe>
     </div>
 </div>
 <!--

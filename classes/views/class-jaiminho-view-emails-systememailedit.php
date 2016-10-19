@@ -1,19 +1,19 @@
 <?php
 
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails.php' );
+
 // Prevent loading this file directly
 if ( !defined('SENDPRESS_VERSION') ) {
 	header('HTTP/1.0 403 Forbidden');
 	die;
 }
 
-require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails.php' );
-
 class Jaiminho_View_Emails_Systememailedit extends Jaiminho_View_Emails {
 	
 	
 
 	function save_email(){
-		$this->security_check();
+		//$this->security_check();
 		$clean_post_id = SPNL()->validate->int( $_POST['post_ID']);
 		if($clean_post_id > 0 ){
 	 	$post_update = array(
@@ -31,7 +31,7 @@ class Jaiminho_View_Emails_Systememailedit extends Jaiminho_View_Emails {
 		
 
 	        if(isset($_POST['submit']) && $_POST['submit'] == 'save-next'){
-	            SendPress_Admin::redirect('Emails_Systememail', array('emailID'=>SPNL()->validate->int($_GET['emailID']) ));
+	            SendPress_Admin::redirect('Emails_Systememail', array('emailID'=>SPNL()->validate->_int('emailID') ));
 	        } else if (isset($_POST['submit']) && $_POST['submit'] == 'send-test'){
 	            $email = new stdClass;
 	            $email->emailID  = $clean_post_id;
@@ -40,9 +40,9 @@ class Jaiminho_View_Emails_Systememailedit extends Jaiminho_View_Emails {
 	            $email->to_email = $_POST['test-email'];
 	            $d =SendPress_Manager::send_test_email( $email );
 	            //print_r($d);
-	           SendPress_Admin::redirect('Emails_Systememail', array('emailID'=>SPNL()->validate->int($_GET['emailID']) ));
+	           SendPress_Admin::redirect('Emails_Systememail', array('emailID'=>SPNL()->validate->_int('emailID') ));
 	        } else {
-	            SendPress_Admin::redirect('Emails_Systememail', array('emailID'=>SPNL()->validate->int($_GET['emailID']) ));
+	            SendPress_Admin::redirect('Emails_Systememail', array('emailID'=>SPNL()->validate->_int('emailID') ));
 	        }
 	    }
 
@@ -61,7 +61,7 @@ class Jaiminho_View_Emails_Systememailedit extends Jaiminho_View_Emails {
 		*/
 	}
 
-	function html($sp) {
+	function html() {
 		global $is_IE;
 		global $post_ID, $post;
 		/*
@@ -72,10 +72,9 @@ class Jaiminho_View_Emails_Systememailedit extends Jaiminho_View_Emails {
 			$_wp_autoresize_on = true;
 		}
 		*/
-		$view = isset($_GET['view']) ? $_GET['view'] : '' ;
-
-		if(isset($_GET['emailID'])){
-			$emailID = SPNL()->validate->int($_GET['emailID']);
+		
+		$emailID = SPNL()->validate->_int('emailID');
+		if($emailID  > 0){
 			$post = get_post( $emailID );
 			$post_ID = $post->ID;
 		}
@@ -93,7 +92,7 @@ class Jaiminho_View_Emails_Systememailedit extends Jaiminho_View_Emails {
        
        <div style="float:right;" class="btn-toolbar">
             <div class="btn-group">
-             	<a href="?page=<?php echo SPNL()->validate->page($_GET['page']); ?>&view=systememail" id="cancel-update" class="btn btn-default"><?php echo __('Cancel','sendpress'); ?></a>
+             	<a href="?page=<?php echo SPNL()->validate->page(); ?>&view=systememail" id="cancel-update" class="btn btn-default"><?php echo __('Cancel','sendpress'); ?></a>
              	<button class="btn btn-primary " type="submit" value="save" name="submit"><i class="icon-white icon-ok"></i> <?php echo __('Update','sendpress'); ?></button>
             </div>
         </div>

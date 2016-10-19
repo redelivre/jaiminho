@@ -1,5 +1,7 @@
 <?php
 
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails.php' );
+
 // Prevent loading this file directly
 if ( !defined('SENDPRESS_VERSION') ) {
 	header('HTTP/1.0 403 Forbidden');
@@ -7,7 +9,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 }
 
 /**
-* SendPress_View_Emails_Create
+* Jaiminho_View_Emails_Create
 *
 * @uses     SendPress_View
 *
@@ -15,13 +17,10 @@ if ( !defined('SENDPRESS_VERSION') ) {
 * @since 0.8.7
 *
 */
-
-require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails.php' );
-
 class Jaiminho_View_Emails_Create extends Jaiminho_View_Emails {
 
 	function save(){
-		$this->security_check();
+		//$this->security_check();
 		$_POST['post_type'] = SendPress_Data::email_post_type();
         // Update post 37 (37!)
 
@@ -52,9 +51,9 @@ class Jaiminho_View_Emails_Create extends Jaiminho_View_Emails {
 
 	}
 	
-	function html($sp) {
+	function html() {
 		do_action('sendpress_event','Create Email');
-		$post = get_default_post_to_edit( $sp->_email_post_type, true );
+		$post = get_default_post_to_edit( SPNL()->_email_post_type, true );
 		$post_ID = $post->ID;
 	
 		global $current_user;
@@ -82,7 +81,7 @@ class Jaiminho_View_Emails_Create extends Jaiminho_View_Emails {
 		<div id="side-info-column" class="inner-sidebar">
 			
 			<div class="clear"><br>
-			<?php echo do_action('do_meta_boxes', $sp->_email_post_type, 'side', $post); 
+			<?php echo do_action('do_meta_boxes', SPNL()->_email_post_type, 'side', $post); 
 			do_meta_boxes($post_type, 'side', $post);?>
 			</div>
 		</div>
@@ -123,6 +122,7 @@ class Jaiminho_View_Emails_Create extends Jaiminho_View_Emails {
 			'post_status' => array('sp-standard'),
 			'orderby' => 'title',
 			'order' => 'ASC',
+			'posts_per_page' => -1,
 			);
 
 			$the_query = new WP_Query( $args );
@@ -144,6 +144,7 @@ class Jaiminho_View_Emails_Create extends Jaiminho_View_Emails {
 			'post_status' => array('sp-custom'),
 			'orderby' => 'title',
 			'order' => 'ASC',
+			'posts_per_page' => -1,
 			);
 
 			$the_query = new WP_Query( $args );
@@ -178,7 +179,7 @@ class Jaiminho_View_Emails_Create extends Jaiminho_View_Emails {
 		<br><br>
 		<?php //wp_editor($post->post_content,'textversion'); ?>
 
-		 <?php wp_nonce_field($sp->_nonce_value); ?><br><br>
+		 <?php wp_nonce_field($this->_nonce_value); ?><br><br>
 		 </form>
 		 
 		<?php

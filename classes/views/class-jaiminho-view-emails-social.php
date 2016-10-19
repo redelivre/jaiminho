@@ -1,16 +1,17 @@
 <?php
 
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails.php' );
+
 // Prevent loading this file directly
 if ( !defined('SENDPRESS_VERSION') ) {
 	header('HTTP/1.0 403 Forbidden');
 	die;
 }
 
-require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails.php' );
-
 class Jaiminho_View_Emails_Social extends Jaiminho_View_Emails {
 	
-	function save($post, $sp){
+	function save(){
+		//$this->security_check();
 		$icon_list = SendPress_Data::social_icons();
 		$links = array();
 		foreach ($icon_list as $key => $value) {
@@ -27,7 +28,7 @@ class Jaiminho_View_Emails_Social extends Jaiminho_View_Emails {
 
 
 
-	function html($sp) { 
+	function html() { 
 		$icon_list = SendPress_Data::social_icons();
 		$socialsize = SendPress_Option::get('socialsize','large');
 ?>
@@ -70,8 +71,8 @@ class Jaiminho_View_Emails_Social extends Jaiminho_View_Emails {
 	$firsthalf = array_slice($icon_list, 0, $icons / 2);
 	$secondhalf = array_slice($icon_list, $icons / 2);
 
-        $firsthalf = array_merge( array_flip( array ( 'Facebook' , 'LinkedIn' , 'GitHub' , 'Instagram' ) ) , $firsthalf); 
-        $secondhalf = array_merge( array_flip( array( 'Twitter', 'Skype' , 'Vimeo' , 'YouTube' , 'WordPress') ) , $secondhalf); 
+	$firsthalf = array_merge( array_flip( array ( 'Facebook' , 'LinkedIn' , 'GitHub' , 'Instagram' ) ) , $firsthalf); 
+    $secondhalf = array_merge( array_flip( array( 'Twitter', 'Skype' , 'Vimeo' , 'YouTube' , 'WordPress') ) , $secondhalf); 
 
 	foreach ($firsthalf as $key => $value) {
 		$class = "";
@@ -79,6 +80,9 @@ class Jaiminho_View_Emails_Social extends Jaiminho_View_Emails {
 			$class =  "bg-success";
 		}
 		?>
+	
+   
+   		
       
 		<div class="well <?php echo $class; ?>">
 			<div class="form-group">
@@ -130,7 +134,8 @@ foreach ($secondhalf as $key => $value) {
 
 		?>
 		 
-  </div><input type="text" name="url-<?php echo $key; ?>" value="<?php echo $xlink; ?>" class="form-control" placeholder="<?php echo __('URL da mídia social: por favor, inclua http:// ou https://' , 'jaiminho' ); ?>" />
+    </div><input type="text" name="url-<?php echo $key; ?>" value="<?php echo $xlink; ?>" class="form-control" placeholder="<?php echo __('URL da mídia social: por favor, inclua http:// ou https://' , 'jaiminho' ); ?>" />
+
     </div>
 		<?php
 	}
@@ -141,7 +146,7 @@ foreach ($secondhalf as $key => $value) {
 <?php $this->panel_end(); ?>
 		
 
-<?php wp_nonce_field($sp->_nonce_value); ?>
+<?php wp_nonce_field($this->_nonce_value); ?>
 </form>
 <?php
 	}

@@ -63,8 +63,6 @@ class Jaiminho_View_Settings extends SendPress_View {
 	}
 
 
-
-
 	function prerender(){
 		if(  SPNL()->_current_view == '' ){
 			SendPress_Admin::redirect('Settings_Account');

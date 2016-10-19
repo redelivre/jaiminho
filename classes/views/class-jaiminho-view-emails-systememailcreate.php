@@ -1,5 +1,7 @@
 <?php
 
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails.php' );
+
 // Prevent loading this file directly
 if ( !defined('SENDPRESS_VERSION') ) {
 	header('HTTP/1.0 403 Forbidden');
@@ -15,13 +17,10 @@ if ( !defined('SENDPRESS_VERSION') ) {
 * @since 1.0
 *
 */
-
-require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails.php' );
-
 class Jaiminho_View_Emails_Systememailcreate extends Jaiminho_View_Emails {
 
 	function save(){
-		$this->security_check();
+		//$this->security_check();
 		$_POST['post_type'] = SendPress_Data::email_post_type();
         // Update post 37 (37!)
 
@@ -38,9 +37,10 @@ class Jaiminho_View_Emails_Systememailcreate extends Jaiminho_View_Emails {
  		
        	update_post_meta( $my_post['ID'], '_sendpress_system',  'new');
        	update_post_meta( $my_post['ID'], '_system_email_type',  $_POST['email_type'] );
-       	update_post_meta( $my_post['ID'], '_system_default', $_POST['default'] );
+       	
 
-       	if($_POST['default']){
+       	if(isset($_POST['default'])){
+       		update_post_meta( $my_post['ID'], '_system_default', $_POST['default'] );
        		//set default system e-mail for this type
        		SendPress_Data::set_system_email_default($my_post['ID'], $_POST['email_type']);
        	}
@@ -60,9 +60,9 @@ class Jaiminho_View_Emails_Systememailcreate extends Jaiminho_View_Emails {
 
 	}
 	
-	function html($sp) {
+	function html() {
 		do_action('sendpress_event','Create System Email');
-		$post = get_default_post_to_edit( $sp->_email_post_type, true );
+		$post = get_default_post_to_edit( SPNL()->_email_post_type, true );
 		$post_ID = $post->ID;
 	
 		global $current_user;
@@ -90,7 +90,7 @@ class Jaiminho_View_Emails_Systememailcreate extends Jaiminho_View_Emails {
 		<div id="side-info-column" class="inner-sidebar">
 			
 			<div class="clear"><br>
-			<?php echo do_action('do_meta_boxes', $sp->_email_post_type, 'side', $post); 
+			<?php echo do_action('do_meta_boxes', SPNL()->_email_post_type, 'side', $post); 
 			do_meta_boxes($post_type, 'side', $post);?>
 			</div>
 		</div>
@@ -121,6 +121,7 @@ class Jaiminho_View_Emails_Systememailcreate extends Jaiminho_View_Emails {
 			
 			<select class="form-control" name="template">
 			<?php
+			$template_id = 0;
 					$args = array(
 					'post_type' => 'sp_template' ,
 					'post_status' => array('sp-standard'),
@@ -167,14 +168,11 @@ class Jaiminho_View_Emails_Systememailcreate extends Jaiminho_View_Emails {
 				$this->panel_end(  ); ?>
 			</div>
 			</div>
-			<!--
-			<input class="checkbox" type="checkbox" id="make_default" name="make_default" value="<?php echo $options['default']; ?>" <?php checked( $options['default'], true ); ?>/> 
-			<label for="make_default">Send This E-Mail by Default</label>
-			-->			
+				
 		<br><br>
 		<?php //wp_editor($post->post_content,'textversion'); ?>
 
-		 <?php wp_nonce_field($sp->_nonce_value); ?><br><br>
+		 <?php wp_nonce_field($this->_nonce_value); ?><br><br>
 		 </form>
 		 
 		<?php

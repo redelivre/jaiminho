@@ -1,30 +1,27 @@
 <?php
 
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails.php' );
+
 // Prevent loading this file directly
 if (!defined('SENDPRESS_VERSION')) {
     header('HTTP/1.0 403 Forbidden');
     die;
 }
 
-require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails.php' );
-
 class Jaiminho_View_Emails_Send_Queue extends Jaiminho_View_Emails
 {
     
-    function save($post, $sp) {
-        $this->security_check();
-    }
-    
-    function html($sp) {
+   
+    function html() {
         global $post_ID, $post;
         $list = '';
-        
-        if (isset($_GET['emailID'])) {
-            $emailID = SPNL()->validate->int($_GET['emailID']);
+        $emailID = SPNL()->validate->_int('emailID');
+        if ($emailID > 0) {
+            
             $post = get_post($emailID);
             $post_ID = $post->ID;
         }
-?><?php
+
         update_post_meta($post->ID, '_send_last', 0);
         
         $info = get_post_meta($post->ID, '_send_data', true);
@@ -33,8 +30,7 @@ class Jaiminho_View_Emails_Send_Queue extends Jaiminho_View_Emails
         
         $list = explode(",", $lists);
         
-        $view = isset($_GET['view']) ? $_GET['view'] : '';
-        if (isset($_GET['finished'])) {
+        if ( SPNL()->validate->_isset('finished') ) {
             $time = get_post_meta($post->ID, '_send_time', true);
             if ($time == '0000-00-00 00:00:00') {
                 SendPress_Admin::redirect('Queue');
@@ -49,7 +45,11 @@ class Jaiminho_View_Emails_Send_Queue extends Jaiminho_View_Emails
         
         update_post_meta($post->ID, '_send_last_count', $subs);
         update_post_meta($post->ID, '_sendpress_report', 'new');
-?>
+        
+
+
+
+        ?>
         <div id="taskbar" class="lists-dashboard rounded group"> 
 
     
@@ -65,7 +65,6 @@ class Jaiminho_View_Emails_Send_Queue extends Jaiminho_View_Emails
     <span id="queue-total">0</span> of <span id="list-total"><?php
         echo $subs; ?></span>
 </div>
-
         <?php
     }
 }

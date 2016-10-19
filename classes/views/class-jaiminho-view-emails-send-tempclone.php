@@ -1,5 +1,7 @@
 <?php
 
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails.php' );
+
 // Prevent loading this file directly
 if ( !defined('SENDPRESS_VERSION') ) {
 	header('HTTP/1.0 403 Forbidden');
@@ -7,16 +9,14 @@ if ( !defined('SENDPRESS_VERSION') ) {
 }
 
 /**
-* SendPress_View_Emails_Create
+* Jaiminho_View_Emails_Tempclone
 *
-* @uses     SendPress_View
+* @uses     Jaiminho_View_Emails
 *
-* @package  SendPress
-* @since 0.8.7
+* @package  Jaiminho
+* @since 1.1
 *
 */
-
-require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails.php' );
 
 class Jaiminho_View_Emails_Tempclone extends Jaiminho_View_Emails {
 
@@ -30,7 +30,7 @@ class Jaiminho_View_Emails_Tempclone extends Jaiminho_View_Emails {
   		SendPress_Admin::redirect('Emails_Tempstyle', array('templateID' => $new_post ) );
 	}
 	
-	function html($sp) {
+	function html() {
 		  global $sendpress_html_templates;
 
         //print_r($sendpress_html_templates[$_GET['templateID']]);
@@ -54,7 +54,7 @@ class Jaiminho_View_Emails_Tempclone extends Jaiminho_View_Emails {
 		<div id="side-info-column" class="inner-sidebar">
 			
 			<div class="clear"><br>
-			<?php echo do_action('do_meta_boxes', $sp->_email_post_type, 'side', $post); 
+			<?php echo do_action('do_meta_boxes', SPNL()->_email_post_type, 'side', $post); 
 			do_meta_boxes($post_type, 'side', $post);?>
 			</div>
 		</div>
@@ -93,7 +93,7 @@ $this->panel_end();
 		
 		<?php //wp_editor($post->post_content,'textversion'); ?>
 
-		 <?php wp_nonce_field($sp->_nonce_value); ?><br><br>
+		 <?php wp_nonce_field($this->_nonce_value); ?><br><br>
 		 </form>
 		 
 		<?php

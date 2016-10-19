@@ -1,18 +1,18 @@
 <?php
 
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails.php' );
+
 // Prevent loading this file directly
 if ( !defined('SENDPRESS_VERSION') ) {
     header('HTTP/1.0 403 Forbidden');
     die;
 }
 
-require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails.php' );
-
 class Jaiminho_View_Emails_Send_Confirm extends Jaiminho_View_Emails {
-	
-  function save($post, $sp){
-        $this->security_check();
-        $saveid = SPNL()->validate->int($_POST['post_ID']);
+    
+  function save(){
+        //$this->security_check();
+        $saveid = SPNL()->validate->_int('post_ID');
 
         update_post_meta( $saveid, 'send_date', date('Y-m-d H:i:s') );
 
@@ -23,7 +23,7 @@ class Jaiminho_View_Emails_Send_Confirm extends Jaiminho_View_Emails {
         $info = SendPress_Option::get('current_send_'.$saveid);
         $slug = SendPress_Data::random_code();
 
-        $new_id = SendPress_Posts::copy($email_post, $subject, $slug, $sp->_report_post_type );
+        $new_id = SendPress_Posts::copy($email_post, $subject, $slug, SPNL()->_report_post_type );
         SendPress_Posts::copy_meta_info($new_id, $saveid);
         $lists = implode(',', $info['listIDS']);
         update_post_meta($new_id,'_send_time',  $info['send_at'] );
@@ -51,7 +51,7 @@ class Jaiminho_View_Emails_Send_Confirm extends Jaiminho_View_Emails {
                         'listID' => 0
                         );
                    
-                    $sp->add_email_to_queue($go);
+                    SPNL()->add_email_to_queue($go);
                     $count++;
 
             }
@@ -67,32 +67,31 @@ class Jaiminho_View_Emails_Send_Confirm extends Jaiminho_View_Emails {
 
 
 
-	function html($sp) {
-		global $post_ID, $post;
+    function html() {
+        global $post_ID, $post;
 
-$view = isset($_GET['view']) ? $_GET['view'] : '' ;
 
 $list ='';
-
-if(isset($_GET['emailID'])){
-	$emailID = SPNL()->validate->int($_GET['emailID']);
-	$post = get_post( $emailID );
-	$post_ID = $post->ID;
+$emailID = SPNL()->validate->_int('emailID');
+if($emailID > 0){
+    
+    $post = get_post( $emailID );
+    $post_ID = $post->ID;
 }
 
-		?>
-		<form  method="POST" name="post" id="post">
+        ?>
+        <form  method="POST" name="post" id="post">
 <?php
 $info = SendPress_Option::get('current_send_'.$post->ID );
 $subject = SendPress_Option::get('current_send_subject_'.$post->ID ,true);
 ?>
 <div id="styler-menu">
     <div style="float:right;" class="btn-group">
-        <a class="btn btn-primary btn-large " id="confirm-send" href="#"><i class="icon-white  icon-thumbs-up"></i> <?php _e('Confirm Send','sendpress'); ?></a>
+<a class="btn btn-primary btn-large " id="confirm-send" href="#"><i class="icon-white  icon-thumbs-up"></i> <?php _e('Confirm Send','sendpress'); ?></a>
   </div>
 </div>
 <div id="sp-cancel-btn" style="float:right; ">
-<a class="btn btn-default" href="<?php echo '?page='.SPNL()->validate->page($_GET['page']). '&view=send&emailID='. $emailID ; ?>"><?php _e('Cancel Send','sendpress'); ?></a>&nbsp;
+<a class="btn btn-default" href="<?php echo '?page='.SPNL()->validate->page(). '&view=send&emailID='. $emailID ; ?>"><?php _e('Cancel Send','sendpress'); ?></a>&nbsp;
 </div>
 <h2><?php _e('Confirm Send','sendpress'); ?></h2>
 <br>
@@ -128,8 +127,8 @@ if( !empty($info['listIDS']) ){
 
     } 
 } else {
-   	_e('No Lists Selected','sendpress');
-   	echo "<br>";
+    _e('No Lists Selected','sendpress');
+    echo "<br>";
 }
 
 
@@ -171,14 +170,14 @@ $link = $url.$sep.'inline=true';
 
 <small><?php _e('Displaying a 404? Please try saving your permalinks','sendpress'); ?> <a href="<?php echo admin_url('options-permalink.php'); ?>"><?php _e('here','sendpress'); ?></a>.</small>
 </div>
-<?php wp_nonce_field($sp->_nonce_value); ?><br><br>
+<?php wp_nonce_field($this->_nonce_value); ?><br><br>
 </div>
 </div>
 <br class="clear" />
-	</div>
-	</form>
-	<?php	
-	} 
+    </div>
+    </form>
+    <?php   
+    } 
 
 }
 SendPress_Admin::add_cap('Emails_Send_Confirm','sendpress_email_send');
