@@ -83,7 +83,7 @@ class Jaiminho extends SendPress
 		{
 			add_action( 'network_admin_menu' , array( $this , 'jaiminho_network_settings' ) );
 			sendpress_register_sender( 'Jaiminho_Sender_NetWork' );
-                        //add_action( 'wpmu_new_blog', array( $this , 'jaiminho_set_settings_for_new_site' ) );
+                        add_action( 'wpmu_new_blog', array( $this , 'jaiminho_set_settings_for_new_site' ) );
 		}
 		add_action( 'tgmpa_register', array( $this , 'jaiminho_register_required_plugins' ) );
 		remove_action( 'init' , array( SPNL() , 'toplevel_page_sp-overview' ) );
@@ -102,14 +102,38 @@ class Jaiminho extends SendPress
 			echo '</p></div>';
 		}
 	}
-        public function jaiminho_set_settings_for_new_site($blog_id)
+
+        function jaiminho_set_settings_for_new_site($blog_id)
         {
-            switch_to_blog( $blog_id );
-            SendPress_Option::set( 'wpcron-per-call' , 5000 );
-	    SendPress_Option::set( 'emails-per-day' , 5000);
-	    SendPress_Option::set( 'emails-per-hour' , 2500 );
-            restore_current_blog();
+          switch_to_blog( $blog_id );
+
+          activate_plugin('sendpress/sendpress.php');
+          activate_plugin('jaiminho/jaiminho.php');
+          SendPress_Option::set( 'wpcron-per-call' , 5000 );
+          SendPress_Option::set( 'emails-per-day' , 5000);
+          SendPress_Option::set( 'emails-per-hour' , 2500 );
+
+          switch_to_blog( 1 );
+          $args = array (
+                         'networkuser'     => get_option('networkuser'), 
+                         'networkpass'     => get_option('networkpass'),
+                         'networkserver'   => get_option('networkserver'),
+                         'networkport'     => get_option('networkport'),
+                         'bounce_email'    => get_option('bounce_email'),
+                         'sendmethod'      => 'Jaiminho_Sender_NetWork',
+                       );
+          switch_to_blog( $blog_id );
+          foreach( $args as $key => $value ) 
+          {
+            $method = SendPress_Option::set($key,$value);
+          }
+
+          $this->jaiminho_define_opt_in_email();
+          $this->create_templates();
+
+          restore_current_blog();
         }
+
 	public static function jaiminho_define_opt_in_email(){
 
 		$optin = SendPress_Data::get_template_id_by_slug('double-optin');
@@ -606,69 +630,71 @@ echo $return["wp_sendpress_report_url"];
 
 	public function jaiminho_settings_network_html()
 	{
-		if (isset( $_POST["sendpress-sender"] ) )
+		if (isset( $_POST ) )
 		{
-			if($_POST["sendpress-sender"] === "Jaiminho_Sender_NetWork" )
+			$args = array(
+					'network_id' => null,
+					'public'     => null,
+					'archived'   => null,
+					'mature'     => null,
+					'spam'       => null,
+					'deleted'    => null,
+					'limit'      => null,
+					'offset'     => 0,
+				     ); 
+			$blogs = wp_get_sites( $args );
+
+                        if (isset($_POST['networkuser'])) update_option('networkuser', $_POST['networkuser'] );
+                        if (isset($_POST['networkpass'])) update_option('networkpass', $_POST['networkpass'] );
+                        if (isset($_POST['networkserver'])) update_option('networkserver', $_POST['networkserver'] );
+                        if (isset($_POST['networkport'])) update_option('networkport', $_POST['networkport'] );
+                        if (isset($_POST['bounce_email'])) update_option('bounce_email', $_POST['bounce_email'] );
+
+			$post = array (
+					'networkuser'   => get_option('networkuser'), 
+					'networkpass'   => get_option('networkpass'),
+					'networkserver' => get_option('networkserver'), 
+					'networkport'   => get_option('networkport'),
+					'bounce_email'    => get_option('bounce_email'),
+					'sendmethod'      => 'Jaiminho_Sender_NetWork',
+				      );
+
+			//create back up of options
+			switch_to_blog( 1 );
+
+			foreach($post as $key => $value )
+				update_option( $key , $value);
+
+			restore_current_blog();
+			//add conf on selected blogs
+			if(isset($_POST['blogs']))
 			{
-				$args = array(
-						'network_id' => null,
-						'public'     => null,
-						'archived'   => null,
-						'mature'     => null,
-						'spam'       => null,
-						'deleted'    => null,
-						'limit'      => null,
-						'offset'     => 0,
-					     ); 
-				$blogs = wp_get_sites( $args );
-				$post = array (
-						'networkuser'   => $_POST['networkuser'] , 
-						'networkpass'   => $_POST['networkpass'] ,
-						'networkserver' => $_POST['networkserver'], 
-						'networkport'   => $_POST['networkport'] ,
-						'bounce_email'    => $_POST['bounce_email'] ,
-						'sendmethod'      => $_POST['sendpress-sender']
-					      );
-
-				//create back up of options
-				switch_to_blog( 1 );
-
-				foreach($post as $key => $value )
-					update_option( $key , $value);
-
-				restore_current_blog();
-				//add conf on all blogs
-				if(isset($_POST['blogs']))
-				{
-					foreach( $_POST['blogs'] as $blog )
-					{ 
-						//var_dump($blog );
-						foreach( $post as $key => $value ) 
-						{
-							switch_to_blog( $blog );
-							$method = SendPress_Option::set($key,$value);
-						}
-					}
-
-				}
-				else
-				{
-					foreach( $blogs as $blog )
-					{ 
-						foreach( $post as $key => $value ) 
-						{
-							switch_to_blog( $blog['blog_id'] );
-							$method = SendPress_Option::set($key,$value);
-						}
+				foreach( $_POST['blogs'] as $blog )
+				{ 
+					foreach( $post as $key => $value ) 
+					{
+						switch_to_blog( $blog );
+						$method = SendPress_Option::set($key,$value);
 					}
 				}
-				restore_current_blog();
+
+			}// add conf on all blogs
+			else
+			{
+				foreach( $blogs as $blog )
+				{ 
+					foreach( $post as $key => $value ) 
+					{
+						switch_to_blog( $blog['blog_id'] );
+						$method = SendPress_Option::set($key,$value);
+					}
+				}
 			}
+			restore_current_blog();
 		}
 		global  $sendpress_sender_factory;
 		$sender = $sendpress_sender_factory->get_sender('Jaiminho_Sender_NetWork');
 		$method = SendPress_Option::get( 'sendmethod' );
-		$key = 'Jaiminho_Sender_NetWork'; 
 		?>
 			<form method="post" id="post" >
 
@@ -679,7 +705,6 @@ echo $return["wp_sendpress_report_url"];
 			<div class="panel-body">
 
 			<input type="hidden" name="action" value="account-setup" />
-			<p>&nbsp;<input name="sendpress-sender" type="radio"  <?php if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { ?>checked="checked"<?php } ?> id="website" value="<?php echo $key; ?>" /> <?php _e('Send Emails via','sendpress'); ?>
 			<?php
 			echo $sender->label();
 		echo "</p><div class='well'>";
@@ -819,8 +844,7 @@ echo $return["wp_sendpress_report_url"];
 			if ( substr( $sitename, 0, 4 ) == 'www.' ) {
 				$sitename = substr( $sitename, 4 );
 			}
-                        //XXX argumento 1 nao é um array ... consertar isso
-			$sets['value'] = array_merge($sets['value'], get_option('plataform_defined_settings', array()));
+			$sets['value'] = array_merge(array($sets['value']), get_option('plataform_defined_settings', array()));
 			$_bounce_email = 'bounce@' . $sitename;
 		}
 		SendPress_Option::set('bounce_email', $_bounce_email );
