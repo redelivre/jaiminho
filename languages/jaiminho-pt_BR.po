@@ -1,0 +1,22 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Jaiminho\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-03-28 19:17-0300\n"
+"PO-Revision-Date: 2016-04-04 16:20-0300\n"
+"Last-Translator: Maurilio Atila Carvalho de Santana <cabelotaina@gmail.com>\n"
+"Language-Team: Portuguese Br (Rede Livre) \n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 1.5.4\n"
+
+#: classes/views/class-jaiminho-view-emails-templates.php:102
+msgid "Create Template"
+msgstr "Criar Tema"
+
+#: classes/class-jaiminho-email-local-table.php:88
+msgid "Edit Style"
+msgstr "Editar Estilo"

@@ -10,9 +10,6 @@
    Text Domain: jaiminho
    Domain Path: /languages/
  */
-// xxx colocar o SUNRISE == on ver se isso vai ser funcional no servidor da redelivre ...
-if ( is_multisite() )
-  //require_once( WP_PLUGIN_DIR."/wordpress-mu-domain-mapping/domain_mapping.php" );
 
 define( 'JAIMINHO_URL', plugin_dir_url( __FILE__ ) );
 define( 'JAIMINHO_VERSION', 0.0 );
@@ -26,7 +23,6 @@ define( 'SPNL_DISABLE_SENDING_WP_MAIL',false);
 // sendpress classes
 require_once( ABSPATH . '/wp-content/plugins/sendpress/sendpress.php' );
 require_once( ABSPATH . '/wp-content/plugins/sendpress/classes/class-sendpress-option.php' );
-//require_once( ABSPATH . '/wp-content/plugins/sendpress/classes/views/class-sendpress-view.php' );
 // jaiminho classes
 if (wp_get_theme() == 'Divi')
 // require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-divi-email-optin.php' );
@@ -72,8 +68,7 @@ class Jaiminho extends SendPress
 		$sendpress_name = __( 'SendPress', 'sendpress' );
 		add_action( 'init' , array( $this , 'jaiminho_check_rewrite' ) );
 		sendpress_register_sender( 'Jaiminho_Sender_RedeLivre' );
-                //XXX Gmail esta sendo retirado pois o sendpress esta sem suporte a ele devido a modificações nas regras de codificação do Gmail.
-		//sendpress_register_sender( 'Jaiminho_Sender_Gmail' );
+		sendpress_register_sender( 'Jaiminho_Sender_Gmail' );
 		remove_action( 'in_admin_footer',array(SendPress_View::get_instance(),'footer'),10);
 		wp_register_script('jaiminho_disable', JAIMINHO_URL .'js/disable.js' ,'',JAIMINHO_VERSION);
 		add_action( 'admin_menu', array($this,'remove_menu'));
@@ -88,22 +83,15 @@ class Jaiminho extends SendPress
 		{
 			add_action( 'network_admin_menu' , array( $this , 'jaiminho_network_settings' ) );
 			sendpress_register_sender( 'Jaiminho_Sender_NetWork' );
-                        add_action( 'wpmu_new_blog', array( $this , 'jaiminho_set_settings_for_new_site' ) );
+                        //add_action( 'wpmu_new_blog', array( $this , 'jaiminho_set_settings_for_new_site' ) );
 		}
 		add_action( 'tgmpa_register', array( $this , 'jaiminho_register_required_plugins' ) );
 		remove_action( 'init' , array( SPNL() , 'toplevel_page_sp-overview' ) );
 		//add_filter( 'sendpress_notices', '__return_empty_string' ); 
 		add_action( 'sendpress_notices', array( $this, 'jaiminho_notices' ) );
-		//add_action('plugins_loaded',array( $this, 'jaiminho_load_translations' ) );
 	}
 
-//	function jaiminho_load_translations() {
-//		// load plugin translations
-//		load_plugin_textdomain('jaiminho', false, dirname(plugin_basename( __FILE__ )).'/languages');
-//	}
-
 	function jaiminho_notices() {
-		//XXX send_method != sendmethod isso vai dar problema para o entendimento de novos dev's
 		if (!SendPress_Option::get('emails-credits')  &&  SendPress_Option::get( 'sendmethod' ) === 'Jaiminho_Sender_NetWork'  )
 		{
 			echo '<div class="error"><p>';
@@ -113,8 +101,6 @@ class Jaiminho extends SendPress
 			printf( __( '  Seus créditos acabaram, você deve esperar até o próximo mês para que seus créditos reiniciem.', 'jaiminho' ));
 			echo '</p></div>';
 		}
-
-
 	}
         public function jaiminho_set_settings_for_new_site($blog_id)
         {
@@ -904,26 +890,25 @@ echo $return["wp_sendpress_report_url"];
 	}
 
 	public function render_view_jaiminho() {
-                // XXX corrigindo tradução :( buscar solução melhor depois
 		load_plugin_textdomain('sendpress', false, dirname(plugin_basename( __FILE__ )).'/languages');
-		// começando a pensar em um sistema de páginas para i jaiminho
-		//if ($_GET['view'] != 'templates_edit')
-		//{
+		load_plugin_textdomain('jaiminho', false, dirname(plugin_basename( __FILE__ )).'/languages');
 		$this->_page = SPNL()->validate->page( $_GET['page'] );
 		$this->_current_view = isset( $_GET['view'] ) ? sanitize_text_field( $_GET['view'] ) : '';
 		$emails_credits = isset (  $_POST['emails-credits'] ) ?  $_POST['emails-credits'] : SendPress_Option::get( 'emails-credits' );
 		$bounce_email = isset (  $_POST['bounceemail'] ) ?  $_POST['bounceemail'] : null;
 		$view_class = $this->jaiminho_get_view_class( $this->_page , $this->_current_view ,  $emails_credits  , $bounce_email );
-
+                
+                // debug
 		//echo "About to render: $view_class, $this->_page";
 		//echo " nova: ".$view_class;  
 
 		$view_class = NEW $view_class;
 		$queue      = '<span id="queue-count-menu-tab">-</span>';
-		//$queue = //SendPress_Data::emails_in_queue();
-		//add tabs
+
 		// xxx: ainda não foi possivel descobrir onde esta o problema, simplesmente a página do overview repete o template - depois reativar a aba
-		// $view_class->add_tab( __( 'Overview', 'sendpress' ), 'sp-overview', ( $this->_page === 'sp-overview' ) );
+		//$view_class->add_tab( __( 'Overview', 'sendpress' ), 'sp-overview', ( $this->_page === 'sp-overview' ) );
+
+		//add tabs
 		$view_class->add_tab( __( 'Emails', 'sendpress' ), 'sp-emails', ( $this->_page === 'sp-emails' ) );
 		$view_class->add_tab( __( 'Reports', 'sendpress' ), 'sp-reports', ( $this->_page === 'sp-reports' ) );
 		$view_class->add_tab( __( 'Subscribers', 'sendpress' ), 'sp-subscribers', ( $this->_page === 'sp-subscribers' ) );
@@ -934,15 +919,14 @@ echo $return["wp_sendpress_report_url"];
 		//}
 	}
 	public function jaiminho_admin_footer_css_hide(){
-		?>
-			<style type="text/css">
-#wpfooter{
-	display: none !important;
-}
-</style>
-<?php
-
-}
+	  ?>
+	    <style type="text/css">
+              #wpfooter{
+	        display: none !important;
+              }
+            </style>
+          <?php
+        }
 
 
 public function jaiminho_define_redelivre_default_smtp()

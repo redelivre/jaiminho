@@ -74,7 +74,6 @@ class Jaiminho_View_Emails_Temp extends Jaiminho_View_Emails{
 	    <?php $testListTable->display(); ?>
 	    <?php wp_nonce_field($this->_nonce_value); ?>
 	</form><br>
-	<!-- XXXX -->
 	<!--a href="<?php echo SendPress_Admin::link('Emails_Temp',array('action'=>'install')); ?>" class="btn btn-primary">Install Starter Templates</a-->
 	<a href="<?php echo SendPress_Admin::link('Emails_Temp',array('action'=>'install')); ?>" class="btn btn-primary">Install Starter Templates</a>
 	<?php

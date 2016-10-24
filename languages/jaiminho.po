@@ -1,0 +1,1337 @@
+# Jaiminho.
+# Copyright (C) 2016
+# This file is distributed under the same license as the GNU package.
+# Maurilio Atila <cabelotaina@gmail.com>, 2016.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-10-24 12:17-0200\n"
+"PO-Revision-Date: 2016-10-24 12:17-0200\n"
+"Last-Translator: Maurilio Atila <cabelotaina@gmail.com>\n"
+"Language-Team: Rede Livre\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: jaiminho.php:72
+msgid "SendPress"
+msgstr ""
+
+#: jaiminho.php:111
+msgid "Warning!"
+msgstr ""
+
+#: jaiminho.php:113
+msgid ""
+"  Seus créditos acabaram, você deve esperar até o próximo mês para que seus "
+"créditos reiniciem."
+msgstr ""
+
+#: jaiminho.php:207 jaiminho.php:792
+msgid "Jaiminho"
+msgstr ""
+
+#: jaiminho.php:211 jaiminho.php:212
+msgid "Configurar Contas"
+msgstr ""
+
+#: jaiminho.php:219 jaiminho.php:220
+msgid "Configurar Créditos"
+msgstr ""
+
+#: jaiminho.php:227 jaiminho.php:228
+msgid "Configurar Limite de Envio"
+msgstr ""
+
+#: jaiminho.php:235 jaiminho.php:236
+msgid "Corrigir tabelas"
+msgstr ""
+
+#: jaiminho.php:267
+msgid "Corrigir Tabelas"
+msgstr ""
+
+#: jaiminho.php:522
+msgid "Defininir o limite base de emails por ativação do wp-cron"
+msgstr ""
+
+#: jaiminho.php:525 jaiminho.php:617
+msgid "Enviar"
+msgstr ""
+
+#: jaiminho.php:614
+msgid "Créditos Disponiveis"
+msgstr ""
+
+#: jaiminho.php:691 classes/views/class-jaiminho-view-settings-account.php:183
+msgid "Sending Account Setup"
+msgstr ""
+
+#: jaiminho.php:696 classes/views/class-jaiminho-view-settings-account.php:205
+msgid "Send Emails via"
+msgstr ""
+
+#: jaiminho.php:701
+msgid ""
+"Selecione os blogs que devem receber a configuração ou não selecione nenhum "
+"e todos os blogs serão configurados"
+msgstr ""
+
+#: jaiminho.php:720 classes/class-jaiminho-sender-gmail.php:26
+#: classes/class-jaiminho-sender-redelivre.php:34
+msgid "Username"
+msgstr ""
+
+#: jaiminho.php:721
+msgid "Insira o seu nome de usuário"
+msgstr ""
+
+#: jaiminho.php:722 classes/class-jaiminho-sender-gmail.php:28
+#: classes/class-jaiminho-sender-redelivre.php:36
+msgid "Password"
+msgstr ""
+
+#: jaiminho.php:723
+msgid "Insira sua Senha"
+msgstr ""
+
+#: jaiminho.php:724 classes/class-jaiminho-sender-redelivre.php:38
+msgid "Servidor"
+msgstr ""
+
+#: jaiminho.php:725
+msgid "Insira o ip ou o dns do seu servidor sem o http://"
+msgstr ""
+
+#: jaiminho.php:726 classes/class-jaiminho-sender-redelivre.php:40
+msgid "Porta"
+msgstr ""
+
+#: jaiminho.php:727
+msgid "Insira o numero da porta do serviço smtp do seu servidor"
+msgstr ""
+
+#: jaiminho.php:728 classes/views/class-jaiminho-view-settings-account.php:124
+msgid "Email de Retorno"
+msgstr ""
+
+#: jaiminho.php:729
+msgid "Insira o E-mail de retorno das mensagens"
+msgstr ""
+
+#: jaiminho.php:795 jaiminho.php:928
+#: classes/views/class-jaiminho-view-emails.php:44
+msgid "Emails"
+msgstr ""
+
+#: jaiminho.php:796 jaiminho.php:929
+msgid "Reports"
+msgstr ""
+
+#: jaiminho.php:797 jaiminho.php:930
+#: classes/views/class-jaiminho-view-overview.php:39
+msgid "Subscribers"
+msgstr ""
+
+#: jaiminho.php:798 jaiminho.php:931
+msgid "Queue"
+msgstr ""
+
+#: jaiminho.php:799 jaiminho.php:932
+#: classes/views/class-jaiminho-view-settings.php:31
+#: classes/views/class-jaiminho-view-queue-all.php:79
+#: classes/views/class-jaiminho-view-emails-send.php:197
+#: classes/views/class-jaiminho-view-queue.php:192
+#: classes/views/class-jaiminho-view-queue.php:271
+msgid "Settings"
+msgstr ""
+
+#: classes/class-jaiminho-emails-table.php:98
+msgid "View"
+msgstr ""
+
+#: classes/class-jaiminho-emails-table.php:104
+#: classes/class-jaiminho-emails-table.php:139
+#: classes/class-jaiminho-email-local-table.php:154
+#: classes/views/class-jaiminho-view-emails-send.php:92
+msgid "Edit"
+msgstr ""
+
+#: classes/class-jaiminho-emails-table.php:107
+#: classes/views/class-jaiminho-view-emails-edit.php:126
+#: classes/views/class-jaiminho-view-emails-send.php:93
+msgid "Send"
+msgstr ""
+
+#: classes/class-jaiminho-emails-table.php:140
+#: classes/class-jaiminho-emails-table.php:249
+#: classes/class-jaiminho-email-local-table.php:155
+msgid "Delete"
+msgstr ""
+
+#: classes/class-jaiminho-emails-table.php:188
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:101
+#: classes/views/class-jaiminho-view-emails-systememailcreate.php:110
+#: classes/views/class-jaiminho-view-emails-systememailcreate.php:112
+#: classes/views/class-jaiminho-view-emails-create.php:101
+#: classes/views/class-jaiminho-view-emails-create.php:103
+#: classes/views/class-jaiminho-view-emails-send-confirm.php:103
+#: classes/views/class-jaiminho-view-emails-edit.php:135
+#: classes/views/class-jaiminho-view-emails-send.php:106
+msgid "Subject"
+msgstr ""
+
+#: classes/class-jaiminho-emails-table.php:189
+msgid "Created"
+msgstr ""
+
+#: classes/class-jaiminho-emails-table.php:190
+msgid "Last Send"
+msgstr ""
+
+#: classes/class-jaiminho-email-local-table.php:88
+msgid "Edit Style"
+msgstr ""
+
+#: classes/class-jaiminho-sender-gmail.php:14
+msgid "Gmail"
+msgstr ""
+
+#: classes/class-jaiminho-sender-gmail.php:25
+msgid ""
+"Gmail is limited to 500 emails a day. We recommend that you open a dedicated "
+"Gmail account for this purpose"
+msgstr ""
+
+#: classes/class-jaiminho-sender-gmail.php:148
+#: classes/class-jaiminho-sender-redelivre.php:173
+#: classes/class-jaiminho-sender-network.php:154
+msgid "Nenhum erro encontrado"
+msgstr ""
+
+#: classes/class-jaiminho-sender-gmail.php:164
+#: classes/class-jaiminho-sender-redelivre.php:189
+#: classes/class-jaiminho-sender-network.php:170
+msgid "The result was: "
+msgstr ""
+
+#: classes/class-jaiminho-sender-gmail.php:165
+#: classes/class-jaiminho-sender-redelivre.php:190
+#: classes/class-jaiminho-sender-network.php:171
+msgid "The mailer error info: "
+msgstr ""
+
+#: classes/class-jaiminho-sender-gmail.php:167
+#: classes/class-jaiminho-sender-redelivre.php:192
+#: classes/class-jaiminho-sender-network.php:173
+msgid "The SMTP debugging output is shown below:\n"
+msgstr ""
+
+#: classes/class-jaiminho-sender-redelivre.php:18
+msgid "RedeLivre"
+msgstr ""
+
+#: classes/class-jaiminho-sender-redelivre.php:33
+msgid ""
+"Insira abaixo a configuração pessoal da rede livre ou uma configuração para "
+"outro serviço, que inclui usuário, senha, servidor  smtp (ex.: smtp."
+"redelivre.org) e  porta (ex.: 25, 486, 587)"
+msgstr ""
+
+#: classes/class-jaiminho-sender-redelivre.php:44
+msgid "Habilitar criptografia TLS"
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:333
+msgid "Install Required Plugins"
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:334
+msgid "Install Plugins"
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:335
+#, php-format
+msgid "Installing Plugin: %s"
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:336
+msgid "Something went wrong with the plugin API."
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:397
+msgid "Return to Required Plugins Installer"
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:398
+msgid "Return to the dashboard"
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:399
+#: classes/class-tgm-plugin-activation.php:3029
+msgid "Plugin activated successfully."
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:400
+msgid "The following plugin was activated successfully:"
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:401
+#, php-format
+msgid "No action taken. Plugin %1$s was already active."
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:402
+#, php-format
+msgid ""
+"Plugin not activated. A higher version of %s is needed for this theme. "
+"Please update the plugin."
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:403
+#, php-format
+msgid "All plugins installed and activated successfully. %1$s"
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:404
+msgid "Dismiss this notice"
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:405
+msgid "Please contact the administrator of this site for help."
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:2167
+msgid "Required"
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:2170
+msgid "Recommended"
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:2186
+msgid "WordPress Repository"
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:2189
+msgid "External Source"
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:2192
+msgid "Pre-Packaged"
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:2209
+msgid "Not Installed"
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:2213
+msgid "Installed But Not Activated"
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:2215
+msgid "Active"
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:2221
+msgid "Required Update not Available"
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:2224
+msgid "Requires Update"
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:2227
+msgid "Update recommended"
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:2379
+msgid "Installed version:"
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:2387
+msgid "Minimum required version:"
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:2399
+msgid "Available version:"
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:2422
+#, php-format
+msgid ""
+"No plugins to install, update or activate. <a href=\"%1$s\">Return to the "
+"Dashboard</a>"
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:2436
+msgid "Plugin"
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:2437
+msgid "Source"
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:2438
+msgid "Type"
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:2442
+msgid "Version"
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:2443
+msgid "Status"
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:2603
+msgid "Install"
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:2609
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:96
+#: classes/views/class-jaiminho-view-emails-edit.php:123
+msgid "Update"
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:2612
+#: classes/views/class-jaiminho-view-settings-account.php:238
+msgid "Activate"
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:2643
+msgid "No plugins were selected to be installed. No action taken."
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:2645
+msgid "No plugins were selected to be updated. No action taken."
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:2681
+msgid "No plugins are available to be installed at this time."
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:2683
+msgid "No plugins are available to be updated at this time."
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:3028
+msgid "Plugin activation failed."
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:3362
+#, php-format
+msgid "Updating Plugin %1$s (%2$d/%3$d)"
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:3364
+#, php-format
+msgid "An error occurred while installing %1$s: <strong>%2$s</strong>."
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:3365
+#, php-format
+msgid "The installation of %1$s failed."
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:3369
+msgid ""
+"The installation and activation process is starting. This process may take a "
+"while on some hosts, so please be patient."
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:3370
+#, php-format
+msgid "%1$s installed and activated successfully."
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:3371
+msgid "All installations and activations have been completed."
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:3372
+#, php-format
+msgid "Installing and Activating Plugin %1$s (%2$d/%3$d)"
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:3375
+msgid ""
+"The installation process is starting. This process may take a while on some "
+"hosts, so please be patient."
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:3377
+msgid "All installations have been completed."
+msgstr ""
+
+#: classes/class-tgm-plugin-activation.php:3378
+#, php-format
+msgid "Installing Plugin %1$s (%2$d/%3$d)"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-send-queue.php:59
+msgid "Adding Subscribers to Queue"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-settings.php:25
+#: classes/views/class-jaiminho-view-emails.php:38
+msgid "Toggle navigation"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-settings.php:36
+msgid "Basic Setup"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-settings.php:40
+msgid "Shared Content"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-settings.php:44
+msgid "Sending"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-settings.php:46
+msgid "Confirmation"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-settings.php:48
+msgid "Permissions"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-settings.php:49
+msgid "Notifications"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-settings.php:50
+msgid "Forms"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-settings.php:51
+#: classes/views/class-jaiminho-view-queue-all.php:79
+msgid "Advanced"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-settings.php:53
+msgid "Styles"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-settings-account.php:98
+#: classes/views/class-jaiminho-view-settings-account.php:119
+msgid "From Email"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-settings-account.php:99
+#: classes/views/class-jaiminho-view-settings-account.php:115
+msgid "From Name"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-settings-account.php:103
+#: classes/views/class-jaiminho-view-settings-account.php:329
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:95
+#: classes/views/class-jaiminho-view-emails-templates.php:94
+#: classes/views/class-jaiminho-view-emails-systememailcreate.php:82
+#: classes/views/class-jaiminho-view-emails-create.php:73
+#: classes/views/class-jaiminho-view-emails-send-tempclone.php:46
+#: classes/views/class-jaiminho-view-emails-send-tempdelete.php:39
+#: classes/views/class-jaiminho-view-emails-edit.php:113
+#: classes/views/class-jaiminho-view-emails-edit.php:117
+#: classes/views/class-jaiminho-view-emails-send.php:86
+msgid "Cancel"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-settings-account.php:103
+#: classes/views/class-jaiminho-view-emails-templates.php:97
+#: classes/views/class-jaiminho-view-emails-social.php:38
+msgid "Save"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-settings-account.php:113
+msgid "Sending Email"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-settings-account.php:131
+msgid "Test Email"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-settings-account.php:134
+msgid "Where to send Test Email"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-settings-account.php:139
+msgid "Send Test!"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-settings-account.php:142
+msgid "Debug Info"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-settings-account.php:152
+msgid "Click to View Last Error"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-settings-account.php:251
+msgid "Currently Active"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-settings-account.php:259
+msgid "Advanced Sending Options"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-settings-account.php:264
+msgid "Email Sending Limits"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-settings-account.php:278
+#, php-format
+msgid ""
+"You have sent <strong>%s</strong> emails so far today and you have <strong>"
+"%s</strong> credits remaining."
+msgstr ""
+
+#: classes/views/class-jaiminho-view-settings-account.php:279
+msgid "Emails Per Day"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-settings-account.php:280
+msgid "Emails Per Hour"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-settings-account.php:282
+msgid "Email Encoding"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-settings-account.php:300
+msgid ""
+"Squares or weird characters displaying in your emails select the charset for "
+"your language"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-settings-account.php:302
+msgid "Encoding"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-settings-account.php:372
+msgid "SMTP Debug Info"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-settings-account.php:390
+msgid "Port 25 seems to be blocked."
+msgstr ""
+
+#: classes/views/class-jaiminho-view-settings-account.php:396
+msgid "Port 465 seems to be blocked. Gmail may have trouble"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-settings-account.php:402
+msgid "Port 587 seems to be blocked."
+msgstr ""
+
+#: classes/views/class-jaiminho-view-settings-account.php:419
+msgid "No Debug info saved."
+msgstr ""
+
+#: classes/views/class-jaiminho-view-settings-account.php:427
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:416
+#: classes/views/class-jaiminho-view-emails-templates.php:357
+#: classes/views/class-jaiminho-view-emails-edit.php:452
+#: classes/views/class-jaiminho-view-queue.php:274
+msgid "Close"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-tempstyle.php:65
+msgid "Sorry the Styler does not support screens smaller then 768px."
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-tempstyle.php:86
+msgid "Page"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-tempstyle.php:92
+msgid "Edit Page Header HTML"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-tempstyle.php:100
+#: classes/views/class-jaiminho-view-emails-tempstyle.php:141
+#: classes/views/class-jaiminho-view-emails-tempstyle.php:181
+#: classes/views/class-jaiminho-view-emails-tempstyle.php:230
+msgid "Background"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-tempstyle.php:108
+#: classes/views/class-jaiminho-view-emails-tempstyle.php:148
+#: classes/views/class-jaiminho-view-emails-tempstyle.php:197
+#: classes/views/class-jaiminho-view-emails-tempstyle.php:237
+#: classes/views/class-jaiminho-view-emails-social.php:60
+msgid "Text"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-tempstyle.php:115
+#: classes/views/class-jaiminho-view-emails-tempstyle.php:204
+#: classes/views/class-jaiminho-view-emails-tempstyle.php:244
+msgid "Link"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-tempstyle.php:119
+msgid "Edit Page Footer HTML"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-tempstyle.php:128
+msgid "Content Header"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-tempstyle.php:134
+msgid "Edit Header HTML"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-tempstyle.php:156
+#: classes/views/class-jaiminho-view-emails-tempstyle.php:253
+msgid "Include Padding"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-tempstyle.php:217
+msgid "Content Footer"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:109
+#: classes/views/class-jaiminho-view-emails-templates.php:109
+#: classes/views/class-jaiminho-view-emails-edit.php:143
+msgid "Main Content"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:112
+#: classes/views/class-jaiminho-view-emails-templates.php:112
+#: classes/views/class-jaiminho-view-emails-edit.php:146
+msgid "Header"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:113
+#: classes/views/class-jaiminho-view-emails-templates.php:113
+#: classes/views/class-jaiminho-view-emails-edit.php:147
+msgid "Footer"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:183
+#: classes/views/class-jaiminho-view-emails-systememailcreate.php:120
+#: classes/views/class-jaiminho-view-emails-edit.php:217
+msgid "Template"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:238
+#: classes/views/class-jaiminho-view-emails-edit.php:274
+msgid "Test This Email"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:240
+#: classes/views/class-jaiminho-view-emails-edit.php:276
+msgid "Send Test"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:250
+#: classes/views/class-jaiminho-view-emails-templates.php:191
+#: classes/views/class-jaiminho-view-emails.php:104
+#: classes/views/class-jaiminho-view-emails-edit.php:286
+msgid "Single Post"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:251
+#: classes/views/class-jaiminho-view-emails-templates.php:192
+#: classes/views/class-jaiminho-view-emails.php:105
+#: classes/views/class-jaiminho-view-emails-edit.php:287
+msgid "Personalize"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:265
+#: classes/views/class-jaiminho-view-emails-templates.php:206
+#: classes/views/class-jaiminho-view-emails.php:119
+#: classes/views/class-jaiminho-view-emails-edit.php:301
+msgid "Search Posts"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:267
+#: classes/views/class-jaiminho-view-emails-templates.php:208
+#: classes/views/class-jaiminho-view-emails.php:121
+#: classes/views/class-jaiminho-view-emails-edit.php:303
+msgid "No Post Selected"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:270
+#: classes/views/class-jaiminho-view-emails-templates.php:211
+#: classes/views/class-jaiminho-view-emails-edit.php:306
+msgid "Header HTML"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:296
+#: classes/views/class-jaiminho-view-emails-templates.php:237
+#: classes/views/class-jaiminho-view-emails-edit.php:332
+msgid "Header Link"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:299
+#: classes/views/class-jaiminho-view-emails-templates.php:240
+#: classes/views/class-jaiminho-view-emails-edit.php:335
+msgid "Link Header to Post"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:303
+#: classes/views/class-jaiminho-view-emails-templates.php:244
+#: classes/views/class-jaiminho-view-emails-edit.php:339
+msgid "Don't Link Header to Post"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:306
+#: classes/views/class-jaiminho-view-emails-templates.php:247
+#: classes/views/class-jaiminho-view-emails-edit.php:342
+msgid "Post Content"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:309
+#: classes/views/class-jaiminho-view-emails-templates.php:250
+#: classes/views/class-jaiminho-view-emails-edit.php:345
+msgid "Excerpt"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:313
+#: classes/views/class-jaiminho-view-emails-templates.php:254
+#: classes/views/class-jaiminho-view-emails-edit.php:349
+msgid "Full Post"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:316
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:333
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:338
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:343
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:362
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:367
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:372
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:391
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:396
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:401
+#: classes/views/class-jaiminho-view-emails-templates.php:257
+#: classes/views/class-jaiminho-view-emails-templates.php:274
+#: classes/views/class-jaiminho-view-emails-templates.php:279
+#: classes/views/class-jaiminho-view-emails-templates.php:284
+#: classes/views/class-jaiminho-view-emails-templates.php:303
+#: classes/views/class-jaiminho-view-emails-templates.php:308
+#: classes/views/class-jaiminho-view-emails-templates.php:313
+#: classes/views/class-jaiminho-view-emails-templates.php:332
+#: classes/views/class-jaiminho-view-emails-templates.php:337
+#: classes/views/class-jaiminho-view-emails-templates.php:342
+#: classes/views/class-jaiminho-view-emails-edit.php:352
+#: classes/views/class-jaiminho-view-emails-edit.php:369
+#: classes/views/class-jaiminho-view-emails-edit.php:374
+#: classes/views/class-jaiminho-view-emails-edit.php:379
+#: classes/views/class-jaiminho-view-emails-edit.php:398
+#: classes/views/class-jaiminho-view-emails-edit.php:403
+#: classes/views/class-jaiminho-view-emails-edit.php:408
+#: classes/views/class-jaiminho-view-emails-edit.php:427
+#: classes/views/class-jaiminho-view-emails-edit.php:432
+#: classes/views/class-jaiminho-view-emails-edit.php:437
+msgid "Insert"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:319
+#: classes/views/class-jaiminho-view-emails-templates.php:260
+#: classes/views/class-jaiminho-view-emails-edit.php:355
+msgid "Subscriber specific content"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:324
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:353
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:382
+#: classes/views/class-jaiminho-view-emails-templates.php:265
+#: classes/views/class-jaiminho-view-emails-templates.php:294
+#: classes/views/class-jaiminho-view-emails-templates.php:323
+#: classes/views/class-jaiminho-view-emails-edit.php:360
+#: classes/views/class-jaiminho-view-emails-edit.php:389
+#: classes/views/class-jaiminho-view-emails-edit.php:418
+msgid "Description"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:325
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:354
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:383
+#: classes/views/class-jaiminho-view-emails-templates.php:266
+#: classes/views/class-jaiminho-view-emails-templates.php:295
+#: classes/views/class-jaiminho-view-emails-templates.php:324
+#: classes/views/class-jaiminho-view-emails-edit.php:361
+#: classes/views/class-jaiminho-view-emails-edit.php:390
+#: classes/views/class-jaiminho-view-emails-edit.php:419
+msgid "Code"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:331
+#: classes/views/class-jaiminho-view-emails-templates.php:272
+#: classes/views/class-jaiminho-view-emails-edit.php:367
+msgid "First Name"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:336
+#: classes/views/class-jaiminho-view-emails-templates.php:277
+#: classes/views/class-jaiminho-view-emails-edit.php:372
+msgid "Last Name"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:341
+#: classes/views/class-jaiminho-view-emails-templates.php:282
+#: classes/views/class-jaiminho-view-emails-edit.php:377
+msgid "Email"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:348
+#: classes/views/class-jaiminho-view-emails-templates.php:289
+#: classes/views/class-jaiminho-view-emails-edit.php:384
+msgid "Site specific content"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:360
+#: classes/views/class-jaiminho-view-emails-templates.php:301
+#: classes/views/class-jaiminho-view-emails-edit.php:396
+msgid "Website URL"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:365
+#: classes/views/class-jaiminho-view-emails-templates.php:306
+#: classes/views/class-jaiminho-view-emails-edit.php:401
+msgid "Website Title"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:370
+#: classes/views/class-jaiminho-view-emails-templates.php:311
+#: classes/views/class-jaiminho-view-emails-edit.php:406
+msgid "Website Description"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:377
+#: classes/views/class-jaiminho-view-emails-templates.php:318
+#: classes/views/class-jaiminho-view-emails-edit.php:413
+msgid "Date and Time"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:389
+#: classes/views/class-jaiminho-view-emails-templates.php:330
+#: classes/views/class-jaiminho-view-emails-edit.php:425
+msgid "Current Date"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:389
+#: classes/views/class-jaiminho-view-emails-templates.php:330
+#: classes/views/class-jaiminho-view-emails-edit.php:425
+msgid "Format based on WordPress settings"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:394
+#: classes/views/class-jaiminho-view-emails-templates.php:335
+#: classes/views/class-jaiminho-view-emails-edit.php:430
+msgid "Current Time"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-systememailedit.php:399
+#: classes/views/class-jaiminho-view-emails-templates.php:340
+#: classes/views/class-jaiminho-view-emails-edit.php:435
+msgid "Custom Date"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-temp.php:40
+#: classes/views/class-jaiminho-view-queue-all.php:32
+#: classes/views/class-jaiminho-view-emails.php:25
+#: classes/views/class-jaiminho-view-queue.php:72
+msgid "Emails per page"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-temp.php:68
+#: classes/views/class-jaiminho-view-emails.php:61
+msgid "Templates"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-temp.php:69
+msgid "Help"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-temp.php:69
+msgid "Getting Started with Templates"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-templates.php:31
+msgid ""
+"ACF is not necessary for this plugin, but it will make your experience "
+"better, install it now!"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-templates.php:96
+msgid "Back"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-templates.php:102
+msgid "Create Template"
+msgstr "Criar Modelo"
+
+#: classes/views/class-jaiminho-view-emails-templates.php:178
+#: classes/views/class-jaiminho-view-emails-send-tempclone.php:63
+msgid "Template Name"
+msgstr "Nome do Modelo"
+
+#: classes/views/class-jaiminho-view-emails-systememailcreate.php:79
+#: classes/views/class-jaiminho-view-emails-create.php:70
+#: classes/views/class-jaiminho-view-emails-send-tempclone.php:43
+msgid "Save & Next"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-systememailcreate.php:150
+msgid "Email Type"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-create.php:77
+#: classes/views/class-jaiminho-view-emails.php:299
+msgid "Create Email"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-create.php:111
+msgid "1.0 Template"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-create.php:113
+msgid "Use New System"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-create.php:117
+msgid "Select your template"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-create.php:169
+msgid "Original Template"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-create.php:171
+msgid "Use Old Email System"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-create.php:172
+msgid ""
+"Currently emails cannot be upgraded directly to the new Template system."
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-send-confirm.php:90
+#: classes/views/class-jaiminho-view-emails-send-confirm.php:96
+msgid "Confirm Send"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-send-confirm.php:94
+msgid "Cancel Send"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-send-confirm.php:107
+#: classes/views/class-jaiminho-view-emails-send.php:110
+msgid "Date & Time"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-send-confirm.php:116
+#: classes/views/class-jaiminho-view-emails-send.php:165
+msgid "Lists"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-send-confirm.php:130
+msgid "No Lists Selected"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-send-confirm.php:138
+#: classes/views/class-jaiminho-view-emails-send.php:186
+msgid "Mark as Test"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-send-confirm.php:144
+#: classes/views/class-jaiminho-view-emails-send.php:189
+msgid "This puts the report into the Test tab on the Reports screen"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-send-confirm.php:171
+#: classes/views/class-jaiminho-view-emails-send.php:225
+msgid "Displaying a 404? Please try saving your permalinks"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-send-confirm.php:171
+#: classes/views/class-jaiminho-view-emails-send.php:225
+msgid "here"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-overview.php:42
+msgid "Emails Actively Sending"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-overview.php:45
+msgid "Emails Stuck in Queue"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-overview.php:48
+msgid "Autocron last check"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-overview.php:69
+msgid "This email had"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-overview.php:69
+msgid "Recipients"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-overview.php:80
+msgid "Opens"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-overview.php:138
+msgid "Clicks"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-overview.php:160
+msgid "Total"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-overview.php:181
+msgid "Unique"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-overview.php:205
+msgid "Recent Subscribers"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-overview.php:252
+msgid "Most Active Subscribers"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-systememail.php:32
+msgid "Create System E-mail"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-social.php:47
+msgid ""
+"Social Icons appear in emails in Alphabetical order. If you enter a url in "
+"the box below then that icon will show in your emails."
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-social.php:52
+msgid "Large"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-social.php:56
+msgid "Small"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-social.php:102
+#: classes/views/class-jaiminho-view-emails-social.php:137
+msgid "URL da mídia social: por favor, inclua http:// ou https://"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-send-tempclone.php:50
+msgid "Clone Template"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-queue-all.php:78
+msgid "Queue history for the last "
+msgstr ""
+
+#: classes/views/class-jaiminho-view-queue-all.php:78
+msgid "Days"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-queue-all.php:79
+#: classes/views/class-jaiminho-view-queue.php:192
+msgid "You can adjust these settings here"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-send-tempdelete.php:35
+msgid "You are about to delete template"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-send-tempdelete.php:37
+msgid "Delete Template"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails.php:50
+msgid "Newsletters"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails.php:55
+msgid "Autoresponders"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails.php:64
+msgid "Custom Templates"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails.php:68
+msgid "Social Icons"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails.php:71
+msgid "Post Notifications"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails.php:78
+msgid "Automation"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails.php:84
+msgid "System Email"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-edit.php:133
+msgid "Edit Email Content"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-edit.php:275
+msgid "Insira um email para o envio de teste."
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-send.php:81
+msgid ""
+"<strong>Notice!</strong> You must select a list below before an email can be "
+"sent."
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-send.php:101
+msgid "Send Email"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-send.php:111
+msgid "Start Sending Now"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-send.php:112
+msgid "Send Later"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-emails-send.php:188
+msgid "Test"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-queue.php:49
+msgid "Stuck"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-queue.php:52
+msgid "Send History"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-queue.php:55
+msgid "Send Errors"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-queue.php:137
+msgid "Pause Sending"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-queue.php:140
+msgid "Resume Sending"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-queue.php:149
+msgid "Send Emails Now"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-queue.php:160
+msgid "Unlimited"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-queue.php:180
+msgid ""
+"Vixe! Você não tem créditos. Para enviar emails em sua fila ou enviar novos "
+"emails, você precisa obter mais créditos."
+msgstr ""
+
+#: classes/views/class-jaiminho-view-queue.php:184
+msgid "Você tem"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-queue.php:185
+msgid "créditos"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-queue.php:189
+#: classes/views/class-jaiminho-view-queue.php:190
+msgid "of a possible"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-queue.php:189
+msgid "emails sent in the last 24 hours"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-queue.php:190
+msgid "emails sent in the last hour"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-queue.php:192
+#: classes/views/class-jaiminho-view-queue.php:271
+msgid "Sending Account"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-queue.php:207
+msgid "The cron will run again around"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-queue.php:230
+msgid "Re-queue All Emails"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-queue.php:236
+msgid "Delete All Emails in the Queue"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-queue.php:244
+msgid "Really? Delete All Emails in the Queue."
+msgstr ""
+
+#: classes/views/class-jaiminho-view-queue.php:247
+msgid ""
+"This will remove all emails from the queue without attempting to send them"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-queue.php:250
+msgid "No! I was Joking"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-queue.php:250
+msgid "Yes! Delete All Emails"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-queue.php:260
+msgid "Sending Emails"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-queue.php:268
+msgid "of"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-queue.php:268
+msgid "emails left to send"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-queue.php:270
+msgid "You are also limited to"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-queue.php:270
+msgid "emails per hour"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-queue.php:271
+msgid "To change these settings go to"
+msgstr ""
+
+#: classes/views/class-jaiminho-view-queue.php:274
+msgid "If you close this window sending will stop. "
+msgstr ""
+
+#: classes/class-jaiminho-sender-network.php:18
+msgid "Configuração do Super Admin Rede Livre"
+msgstr ""
+
+#: classes/class-jaiminho-sender-network.php:27
+msgid ""
+"Esta é a configuração padrão inserida pelo super admin da Rede Livre, ela "
+"pode ser utilizada também, basta selecionar o botão de rádio, no entanto se "
+"você quiser trocar você pode utilizar o Gmail ou pode personalizar sua "
+"configuração na aba Rede Livre"
+msgstr ""

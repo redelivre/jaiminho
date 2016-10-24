@@ -2,130 +2,368 @@
 
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails.php' );
 
-// Prevent loading this file directly
 if ( !defined('SENDPRESS_VERSION') ) {
 	header('HTTP/1.0 403 Forbidden');
 	die;
 }
 
+
 class Jaiminho_View_Emails_Templates extends Jaiminho_View_Emails{
-	function prerender(){
+
+
+
+	public function prerender()
+	{
 		wp_enqueue_script( 'dashboard' );
 		/*
-		sp_add_help_widget( 'help_support', 'Support Information', array(&$this,'help_support'));
-		sp_add_help_widget( 'help_knowledge', 'Recent Knowledge Base Articles', array(&$this,'help_knowledge'),'side' );
-		sp_add_help_widget( 'help_debug', 'Debug Information', array(&$this,'help_debug'), 'side');
-		
-		sp_add_help_widget( 'help_blog', 'Recent Blog Posts', array(&$this,'help_blog'),'normal',  array(&$this,'help_blog_control') );
-		sp_add_help_widget( 'help_shortcodes', 'Shortcode Cheat Sheet', array(&$this,'help_shortcodes') ,'normal');
-		sp_add_help_widget( 'help_editemail', 'Customizing Emails', array(&$this,'help_editemail') ,'normal');
-		*/
+		   sp_add_help_widget( 'help_support', 'Support Information', array(&$this,'help_support'));
+		   sp_add_help_widget( 'help_knowledge', 'Recent Knowledge Base Articles', array(&$this,'help_knowledge'),'side' );
+		   sp_add_help_widget( 'help_debug', 'Debug Information', array(&$this,'help_debug'), 'side');
+
+		   sp_add_help_widget( 'help_blog', 'Recent Blog Posts', array(&$this,'help_blog'),'normal',  array(&$this,'help_blog_control') );
+		   sp_add_help_widget( 'help_shortcodes', 'Shortcode Cheat Sheet', array(&$this,'help_shortcodes') ,'normal');
+		   sp_add_help_widget( 'help_editemail', 'Customizing Emails', array(&$this,'help_editemail') ,'normal');
+		 */
+	}
+	public function my_acf_admin_notice() {
+		?>
+			<div class="notice error my-acf-notice is-dismissible" >
+			<p><?php _e( 'ACF is not necessary for this plugin, but it will make your experience better, install it now!', 'my-text-domain' ); ?></p>
+			</div>
+			<?php
 	}
 
-	
-
-	function html(){
-			?>
-			
-		<div class="wrap about-wrap">
-<!--
-<h1>Welcome to SendPress <?php echo SENDPRESS_VERSION; ?></h1>
-
-<div class="about-text">Thank you for helping us reach 100K+ downloads and using SendPress.</div>
-<div class="changelog point-releases">
-	<h3>Maintenance & Bug Fix Release</h3>
-	<p><strong>Version <?php echo SENDPRESS_VERSION; ?></strong> addressed several bugs. For more information, see <a href="http://wordpress.org/plugins/sendpress/changelog/">the changelog</a>.</p>
-</div>
--->
-<div class="changelog">
-	<h2 class="about-headline-callout"><?php _e('Introducing Custom HTML Templates','sendpress'); ?></h2>
-
-<p style="text-align:center;"><?php _e('Custom Templates Requires SendPress Pro v1.0+','sendpress'); ?></p>
-	<img class="about-overview-img" src="<?php echo SENDPRESS_URL; ?>img/customedit.png">
-	<div class="feature-section col three-col about-updates">
-		<div class="col-1">
-			<!--<img src="<?php echo SENDPRESS_URL;?>/img/sending-errors.png?1">-->
-			<h3><?php _e('Send Any Template','sendpress'); ?></h3>
-			<p><?php _e('SendPress allows you to send any HTML email template you wish.','sendpress'); ?></p>
-		</div>
-		<div class="col-2">
-			<!--<img src="<?php echo SENDPRESS_URL;?>/img/sendhistory.png?1">-->
-			<h3><?php _e('Template Tags','sendpress'); ?></h3>
-			<p><?php _e('Quickly insert email content, subscriber information and social icons with our new tag system.','sendpress'); ?></p>
-		</div>
-		<div class="col-3 last-feature">
-			<!--<img src="<?php echo SENDPRESS_URL;?>/img/autocron.png?1">-->
-			<h3><?php _e('Upgrade to Pro','sendpress'); ?></h3>
-			<p><?php _e('Go to <a href="https://sendpress.com/purchase-pricing/">SendPress.com</a> to get a license for SendPress Pro. Also if you enable AutoCron you should recive a 20% discount.','sendpress'); ?></p>
-		</div>
-	</div>
-</div>
-<!--
-<hr>
-
-<div class="changelog">
-	<div class="feature-section col two-col">
-		<div>
-			<h3>Give us a Review</h3>
-			<p>We love feedback so please let us know how we are doing.<br>Add your <a target="_blank" href="http://wordpress.org/support/view/plugin-reviews/sendpress">★★★★★</a> on <a target="_blank" href="http://wordpress.org/support/view/plugin-reviews/sendpress">wordpress.org</a></p>
-			<h4>Help Translate</h4>
-			<p>You can help translate on <a href="https://www.transifex.com/projects/p/sendpress/">Transifex</a>.</p>
-			<h4>Report and Fix bugs</h4>
-			<p>SendPress is on <a href="http://wordpress.org/support/plugin/sendpress">GitHub</a> feel free to patch bugs you find or please report them on the <a href="http://wordpress.org/support/plugin/sendpress">forum</a>.</p>
-		
-		</div>
-		<div class="last-feature about-colors-img">
-			<a href="http://wordpress.org/support/view/plugin-reviews/sendpress" target="_blank"><img class="about-overview-img" src="<?php echo SENDPRESS_URL;?>/img/review-us.png"></a>
-		</div>
-	</div>
-</div>
-
-<hr>
-
-
-
-<div class="changelog">
-
-	<div class="feature-section col three-col">
-	<h3>Whats Ahead</h3>
-		<div>
-			<h4>Post Notifications</h4>
-			<p>Subscribers will be able to get your new post's via email. Post Notifications will only be available with SendPress Pro.</p>
-		</div>
-		<div>
-			<h4>Autoresponders</h4>
-			<p>Automatically send emails to subscribers based on actions like link clicks, subscribe to list or email opens.</p>
-		</div>
-		<div class="last-feature">
-			<h4>Custom fields</h4>
-			<p>Add your own information to subscribers and collect the data you need.</p>
-	
-		</div>
-	</div>
-
-	
-</div>
-
-
-<div class="return-to-dashboard">
-		SendPress: <a href="<?php echo SendPress_Admin::link('Emails'); ?>">Emails</a> |
-		<a href="<?php echo SendPress_Admin::link('Reports'); ?>">Reports</a> |
-		<a href="<?php echo SendPress_Admin::link('Subscribers'); ?>">Subscribers</a> |
-		<a href="<?php echo SendPress_Admin::link('Queue'); ?>">Queue</a> |
-		<a href="<?php echo SendPress_Admin::link('Settings'); ?>">Settings</a> 
-		
-		|
-		<a href="<?php echo SendPress_Admin::link('Pro'); ?>">Pro</a>
-</div>
-<br>
-</div>
--->
-		<?php
-				
+	public function save_new_template()
+	{
+		$post_id = wp_insert_post(
+				array(
+					'post_name'             =>      sanitize_title($_POST['post_title']),
+					'post_title'            =>      $_POST['post_title'],
+					'post_content'          =>      $_POST['content_area_one_edit'],
+					'post_status'           =>      'sp-standard',
+					'post_type'             =>      'sp_template',
+				     )
+				);
+		update_post_meta( $post_id, '_guid',  'cd8ab467-e236-49d3-bd6c-e84db055ae9a');
+		update_post_meta( $post_id, '_footer_page', $_POST["footer_content_edit"] );
+		update_post_meta( $post_id, '_header_content', $_POST["header_content_edit"] );
+		update_post_meta( $post_id, '_header_padding', 'pad-header' );
+		SendPress_Admin::redirect('emails&view=temp');
 	}
 
+	public function update_template()
+	{
+		$templateID = SPNL()->validate->int($_GET['templateID']);
+		$post = get_post( $templateID );
+		$post_ID = $post->ID;
+		$post_id = wp_update_post(
+				array(
+					'ID'                    =>      $post_ID,
+					'post_title'            =>      $_POST['post_title'],
+					'post_content'          =>      $_POST['content_area_one_edit']
+				     )
+				);
+		update_post_meta( $post_id, '_guid',  'cd8ab467-e236-49d3-bd6c-e84db055ae9a');
+		update_post_meta( $post_id, '_footer_page', $_POST["footer_content_edit"] );
+		update_post_meta( $post_id, '_header_content', $_POST["header_content_edit"] );
+		update_post_meta( $post_id, '_header_padding', 'pad-header' );
+		SendPress_Admin::redirect('emails&view=temp');
+
+
+	}
+	public function html(){
+		if(isset($_POST['submit'] ) && isset($_GET['templateID'])) 
+		{
+			$this->update_template();
+		} 
+		if(isset($_POST['submit'] ) && !isset($_GET['templateID'])) {
+			$this->save_new_template();
+		}
+		if(isset($_GET['templateID'])){
+			$templateID = SPNL()->validate->int($_GET['templateID']);
+			$post = get_post( $templateID );
+			$post_ID = $post->ID;
+		}
+		?>
+			<form method="post" id="post" role="form">
+			<input type="hidden" name="action" id="action" value="save" />
+			<div  >
+			<div style="float:right;" class="btn-toolbar">
+			<div id="sp-cancel-btn" class="btn-group">
+			<a href="<?php echo SendPress_Admin::link('Emails_Temp'); ?>" id="cancel-update" class="btn btn-default"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
+		</div>
+			<button class="btn btn-primary " type="submit" value="save" name="submit"><i class="icon-white icon-ok"></i> <?php echo __('Save','sendpress'); ?></button>
+			</div>
+
+
+			</div>
+			<h2><?php _e('Create Template','jaiminho'); ?></h2>
+			<br>
+			<div class="sp-row">
+			<div class="sp-75 sp-first">
+			<!-- Nav tabs -->
+			<?php $enable_edits = true;?>
+			<ul class="nav nav-tabs">
+			<li class="active"><a href="#content-area-one-tab" data-toggle="tab"><?php _e('Main Content','sendpress'); ?></a></li>
+			<?php if($enable_edits){
+				?>
+					<li><a href="#header-content" data-toggle="tab"><?php _e('Header','sendpress'); ?></a></li>
+					<li><a href="#footer-content" data-toggle="tab"><?php _e('Footer','sendpress'); ?></a></li>
+					<?php
+			}
+
+		?>
+			</ul>
+
+			<div class="tab-content" style="display:block;">
+			<div class="tab-pane in active" id="content-area-one-tab">
+			<?php wp_editor( isset( $post ) ? $post->post_content : '' , 'content_area_one_edit', array(
+						'dfw' => true,
+						'drag_drop_upload' => true,
+						'tabfocus_elements' => 'insert-media-button-1,save-post',
+						'editor_height' => 360,
+						'tinymce' => array(
+							'resize' => false,
+							'wp_autoresize_on' => ( ! empty( $_wp_autoresize_on ) && get_user_setting( 'editor_expand', 'on' ) === 'on' ),
+							'add_unload_trigger' => false,
+							),
+						) ); ?><?php //wp_editor($post->post_content,'content_area_one_edit'); ?></div>
+
+			<?php 
+			if($enable_edits){
+				?>
+					<div class="tab-pane" id="header-content">
+					<?php wp_editor( SendPress_Tag_Header_Content::content() , 'header_content_edit', array(
+								'dfw' => true,
+								'drag_drop_upload' => true,
+								'tabfocus_elements' => 'insert-media-button-1,save-post',
+								'editor_height' => 360,
+								'tinymce' => array(
+									'resize' => false,
+									'wp_autoresize_on' => ( ! empty( $_wp_autoresize_on ) && get_user_setting( 'editor_expand', 'on' ) === 'on' ),
+									'add_unload_trigger' => false,
+									),
+								) ); ?>
+
+					</div>
+					<div class="tab-pane" id="footer-content">
+					<?php wp_editor(  SendPress_Tag_Footer_Page::content() , 'footer_content_edit', array(
+								'dfw' => true,
+								'drag_drop_upload' => true,
+								'tabfocus_elements' => 'insert-media-button-1,save-post',
+								'editor_height' => 360,
+								'tinymce' => array(
+									'resize' => false,
+									'wp_autoresize_on' => ( ! empty( $_wp_autoresize_on ) && get_user_setting( 'editor_expand', 'on' ) === 'on' ),
+									'add_unload_trigger' => false,
+									),
+								) ); ?>
+
+					</div>
+					<?php
+			}
+		?>
+			<!--
+			<div class="tab-pane fade" id="messages"><?php wp_editor($post->post_content,'content-3'); ?></div>
+			<div class="tab-pane fade" id="settings"><?php wp_editor($post->post_content,'content-4'); ?></div>
+			-->
+			</div>
+
+			</div>
+			<div class="sp-25">
+			<br><br>
+
+			<?php $this->panel_start( __('Template Name','sendpress') ); ?>
+			<input type="text" name="post_title" value="<?php echo isset ( $post ) ? $post->post_title : '' ;?>"/>
+			<?php $this->panel_end(  ); ?>
+			</div>
+			</div>
+
+
+			<div class="modal fade bs-modal-lg" id="sendpress-helper" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+			<div class="modal-content">
+			<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">×</button>
+			<ul class="nav nav-tabs" id="myTab">
+			<li class="active tabs-first"><a href="#posts"><?php _e('Single Post','sendpress'); ?></a></li>
+			<li ><a href="#merge"><?php _e('Personalize','sendpress'); ?></a></li>
+
+			<!--
+			<li><a href="#messages">Messages</a></li>
+			<li><a href="#settings">Settings</a></li>
+			-->
+			</ul>
+			</div>
+			<div class="modal-body">
+
+
+			<div class="tab-content">
+			<div class="tab-pane active" id="posts">
+
+			<div id="search-header"><?php _e('Search Posts','sendpress'); ?>: <input type="text" name="q" id="sp-single-query"></div>
+			<div  id="sp-post-preview" class="well">
+			<?php _e('No Post Selected','sendpress'); ?>
+			</div>
+
+			<p><?php _e('Header HTML','sendpress'); ?>:&nbsp;
+		<label class="radio">
+			<input type="radio" name="headerOptions" id="optionsRadios1" value="h1" >
+			H1
+			</label>
+			<label class="radio">
+			<input type="radio" name="headerOptions" id="optionsRadios2" value="h2">
+			H2
+			</label>
+			<label class="radio">
+			<input type="radio" name="headerOptions" id="optionsRadios2" value="h3" checked>
+			H3
+			</label>
+			<label class="radio">
+			<input type="radio" name="headerOptions" id="optionsRadios2" value="h4">
+			H4
+			</label>
+			<label class="radio">
+			<input type="radio" name="headerOptions" id="optionsRadios2" value="h5">
+			H5
+			</label>
+			<label class="radio">
+			<input type="radio" name="headerOptions" id="optionsRadios2" value="h6">
+			H6
+			</label>
+			</p>
+			<p><?php _e('Header Link','sendpress'); ?>:&nbsp;
+		<label class="radio">
+			<input type="radio" name="headerlinkOptions" id="optionsRadios2" value="link" checked>
+			<?php _e('Link Header to Post','sendpress'); ?>
+			</label>
+			<label class="radio">
+			<input type="radio" name="headerlinkOptions" id="optionsRadios2" value="nolink">
+			<?php _e('Don\'t Link Header to Post','sendpress'); ?>
+			</label>
+			</p>
+			<p><?php _e('Post Content','sendpress'); ?>:&nbsp;
+		<label class="radio">
+			<input type="radio" name="optionsRadios" id="optionsRadios1" value="excerpt" checked>
+			<?php _e('Excerpt','sendpress'); ?>
+			</label>
+			<label class="radio">
+			<input type="radio" name="optionsRadios" id="optionsRadios2" value="full">
+			<?php _e('Full Post','sendpress'); ?>
+			</label>
+			</p>
+			<button class="btn btn-mini btn-success sp-insert-code" id="sp-post-preview-insert" data-code=""><?php _e('Insert','sendpress'); ?></button>
+			</div>
+			<div class="tab-pane " id="merge">
+			<h3><?php _e('Subscriber specific content','sendpress'); ?></h3>
+			<table class="table table-condensed table-striped">
+
+			<thead>
+			<tr>
+			<th><?php _e('Description','sendpress'); ?></th>
+			<th><?php _e('Code','sendpress'); ?></th>
+			<th></th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+			<td><?php _e('First Name','sendpress'); ?></td>
+			<td>*|FNAME|*</td>
+			<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code" data-code="*|FNAME|*"><?php _e('Insert','sendpress'); ?></button></td>
+			</tr>
+			<tr>
+			<td><?php _e('Last Name','sendpress'); ?></td>
+			<td>*|LNAME|*</td>
+			<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code" data-code="*|LNAME|*"><?php _e('Insert','sendpress'); ?></button></td>
+			</tr>
+			<tr>
+			<td><?php _e('Email','sendpress'); ?></td>
+			<td>*|EMAIL|*</td>
+			<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code"  data-code="*|EMAIL|*"><?php _e('Insert','sendpress'); ?></button></td>
+			</tr>
+
+			</tbody>
+			</table>
+			<h3><?php _e('Site specific content','sendpress'); ?></h3>
+			<table class="table table-condensed table-striped">
+
+			<thead>
+			<tr>
+			<th><?php _e('Description','sendpress'); ?></th>
+			<th><?php _e('Code','sendpress'); ?></th>
+			<th></th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+			<td><?php _e('Website URL','sendpress'); ?></td>
+			<td>*|SITE:URL|*</td>
+			<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code" data-code="*|SITE:URL|*"><?php _e('Insert','sendpress'); ?></button></td>
+			</tr>
+			<tr>
+			<td><?php _e('Website Title','sendpress'); ?></td>
+			<td>*|SITE:TITLE|*</td>
+			<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code" data-code="*|SITE:TITLE|*"><?php _e('Insert','sendpress'); ?></button></td>
+			</tr>
+			<tr>
+			<td><?php _e('Website Description','sendpress'); ?></td>
+			<td>*|SITE:DECRIPTION|*</td>
+			<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code"  data-code="*|SITE:DESCRIPTION|*"><?php _e('Insert','sendpress'); ?></button></td>
+			</tr>
+
+			</tbody>
+			</table>
+			<h3><?php _e('Date and Time','sendpress'); ?></h3>
+			<table class="table table-condensed table-striped">
+
+			<thead>
+			<tr>
+			<th><?php _e('Description','sendpress'); ?></th>
+			<th><?php _e('Code','sendpress'); ?></th>
+			<th></th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+			<td><?php _e('Current Date','sendpress'); ?><br><small><?php _e('Format based on WordPress settings','sendpress'); ?>.</small></td>
+			<td>*|DATE|*</td>
+			<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code" data-code="*|DATE|*"><?php _e('Insert','sendpress'); ?></button></td>
+			</tr>
+			<tr>
+			<td><?php _e('Current Time','sendpress'); ?><br><small>5:16 pm</small></td>
+			<td>*|DATE:g:i a|*</td>
+			<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code" data-code="*|DATE:g:i a|*"><?php _e('Insert','sendpress'); ?></button></td>
+			</tr>
+			<tr>
+			<td><?php _e('Custom Date','sendpress'); ?><br><small>March 10, 2001, 5:16 pm</small></td>
+			<td>*|DATE:F j, Y, g:i a|*</td>
+			<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code" data-code="*|DATE:F j, Y, g:i a|*"><?php _e('Insert','sendpress'); ?></button></td>
+			</tr>
+
+
+			</tbody>
+			</table>
+
+			</div>
+
+			<div class="tab-pane" id="messages">...</div>
+			<div class="tab-pane" id="settings">...</div>
+			</div>
+
+			</div>
+			<div class="modal-footer">
+			<a href="#" class="btn btn-primary" data-dismiss="modal"><?php _e('Close','sendpress'); ?></a>
+			</div>
+			</div>
+			</div>
+			<?php SendPress_Data::nonce_field(); ?>
+			</form>
+			<?php
+
+	}
 }
 // Add Access Controll!
-SendPress_Admin::add_cap('Emails_Templates','sendpress_email');
+//SendPress_Admin::add_cap('Emails_Templates','sendpress_email');
 //SendPress_View_Overview::cap('sendpress_access');
+
 
