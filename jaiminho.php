@@ -89,6 +89,7 @@ class Jaiminho extends SendPress
 		remove_action( 'init' , array( SPNL() , 'toplevel_page_sp-overview' ) );
 		//add_filter( 'sendpress_notices', '__return_empty_string' ); 
 		add_action( 'sendpress_notices', array( $this, 'jaiminho_notices' ) );
+		add_action('admin_enqueue_scripts', array( $this, 'load_admin_script') );
 	}
 
 	function jaiminho_notices() {
@@ -524,17 +525,20 @@ echo $return["wp_sendpress_report_url"];
 		restore_current_blog();
 	}
 	public function jaiminho_emails_limits_html()
-	{
-		//show page
-		?>
-			<form method="post">
-			<br>
-			<input type="text" size="6" name="limits" value="1000" /> <?php _e('Defininir o limite base de emails por ativação do wp-cron', 'jaiminho'); ?>
-			<br>
-			<?php
-			submit_button(__( 'Enviar' , 'jaiminho' )); ?>
-			</form><?php
-
+	{?>
+	<!-- //show page -->
+	  <h1><?php _e('Limite WP-Cron', 'jaiminho'); ?></h1>
+	  <p><?php _e('Defininir o limite base de emails por ativação do wp-cron, insira o valor no campo abaixo e redefina este valor para todos os sites', 'jaiminho' ); ?></p>
+	  <form method="post">
+	    <p>
+	      <label><?php _e('Limite' , 'jaiminho'); ?></label>:
+	    </p>
+	    <p>
+	  	  <input type="text" size="6" name="limits" value="1000" />
+	  	</p>
+	    <?php submit_button(__( 'Enviar' , 'jaiminho' )); ?>
+	  </form>
+	  <?php
 			$args = array(
 					'network_id' => null,
 					'public'     => null,
@@ -563,8 +567,14 @@ echo $return["wp_sendpress_report_url"];
 
 	public function jaiminho_settings_network_html_credits()
 	{
-
-
+		?>
+		<h1><?php _e("Configurar créditos"); ?></h1>
+		
+		<p>
+		<input id="filter" type="text">
+		<label><?php _e( 'Filtro' , 'jaiminho' ); ?></label>
+		<p>
+		<?php
 		// get blogs
 		$args = array(
 				'network_id' => null,
@@ -609,23 +619,25 @@ echo $return["wp_sendpress_report_url"];
 		//show page
 		$credits = SendPress_Option::get('emails-credits');
 		?>
-			<form method="post">
+	    <form method="post">
 			<select name="blogs[]" multiple >
 			<?php 
 			foreach ($blogs as $blog)
 			{
-				switch_to_blog(  $blog['blog_id'] );
-				echo '<option value="' . $blog['blog_id'] . '">' .get_bloginfo( 'name' ) . '</option>';
+			  switch_to_blog(  $blog['blog_id'] );
+			  echo '<option value="' . $blog['blog_id'] . '">' .get_bloginfo( 'name' ) . '</option>';
 			}
-		restore_current_blog();
-		?>
+		    restore_current_blog();
+		    ?>
 			</select>	
-			<br>
-			<input type="text" size="6" name="emails-credits" value="<?php echo $credits; ?>" /> <?php _e('Créditos Disponiveis', 'jaiminho'); ?>
-			<br>
+			<p>
+			<input type="text" name="emails-credits" value="<?php echo $credits; ?>" placeholder="<?php _e('Insira um valor, ex.: 5000', 'jaiminho' ); ?>" />
+			<label><?php _e('Créditos Disponiveis', 'jaiminho'); ?></label>
+			</p>
 			<?php
 			submit_button(__( 'Enviar' , 'jaiminho' )); ?>
-			</form><?php
+		</form>
+	<?php
 	}
 
 	public function jaiminho_settings_network_html()
@@ -666,6 +678,7 @@ echo $return["wp_sendpress_report_url"];
 				update_option( $key , $value);
 
 			restore_current_blog();
+
 			//add conf on selected blogs
 			if(isset($_POST['blogs']))
 			{
@@ -692,24 +705,28 @@ echo $return["wp_sendpress_report_url"];
 			}
 			restore_current_blog();
 		}
+
 		global  $sendpress_sender_factory;
 		$sender = $sendpress_sender_factory->get_sender('Jaiminho_Sender_NetWork');
 		$method = SendPress_Option::get( 'sendmethod' );
 		?>
-			<form method="post" id="post" >
+		<h1><?= $sender->label(); ?></h1>
+		<p><?php _e( 'Selecione os blogs que devem receber a configuração ou não selecione nenhum e todos os blogs serão configurados' , 'jaiminho' ); ?>.</p>
+		
+		<p><label><?php _e( 'Filtro' , 'jaiminho' ); ?></label></p>
+		<p>
+		<input id="filter" type="text">
+		<p>
+	    
+	    <form method="post" id="post" >
 
 			<div class="panel panel-default">
-			<div class="panel-heading">
-			<h3 class="panel-title"><?php _e('Sending Account Setup','sendpress'); ?></h3>
-			</div>
 			<div class="panel-body">
 
 			<input type="hidden" name="action" value="account-setup" />
 			<?php
-			echo $sender->label();
 		echo "</p><div class='well'>";
 		?>
-			<p><?php echo __( 'Selecione os blogs que devem receber a configuração ou não selecione nenhum e todos os blogs serão configurados' , 'jaiminho' ); ?></p>
 			<select name="blogs[]" multiple >
 			<?php 
 			$blogs = wp_get_sites( $args );
@@ -719,9 +736,6 @@ echo $return["wp_sendpress_report_url"];
 			echo '<option value="' . $blog['blog_id'] . '">' .get_bloginfo( 'name' ) . '</option>';
 		}
 		switch_to_blog( 1 );
-
-
-
 		?>
 			</select>
 			<br><br>
@@ -744,9 +758,17 @@ echo $return["wp_sendpress_report_url"];
 			</div>
 			</div>
 			<?php submit_button(); ?>
-			</form>
-			<?php
-			restore_current_blog();
+		</form>
+		<?php
+		restore_current_blog();
+	}
+
+	function load_admin_script( $hook ){
+	    wp_enqueue_script( 
+	        'wptuts53021_script', //unique handle
+	        plugin_dir_url( __FILE__ ) . '/admin-scripts.js', //location
+	        array('jquery')  //dependencies
+	     );
 	}
 
 	public function myformatTinyMCE( $in ) 
