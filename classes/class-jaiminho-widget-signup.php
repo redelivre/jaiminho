@@ -222,10 +222,10 @@ class Jaiminho_Widget_Signup extends WP_Widget {
 			<label for="<?php echo $this->get_field_id( 'show_first' ); ?>"><?php _e('Collect First Name', 'sendpress'); ?></label>
 		</p> 
 
-		<p>
+		<!--p>
 			<input class="checkbox" type="checkbox" <?php checked( $instance['show_last'], 'on' ); ?> id="<?php echo $this->get_field_id( 'show_last' ); ?>" name="<?php echo $this->get_field_name( 'show_last' ); ?>" /> 
 			<label for="<?php echo $this->get_field_id( 'show_last' ); ?>"><?php _e('Collect Last Name', 'sendpress'); ?></label>
-		</p> 
+		</p--> 
 
 		<p>
 			<input class="checkbox" type="checkbox" <?php checked( $instance['show_job'], 'on' ); ?> id="<?php echo $this->get_field_id( 'show_job' ); ?>" name="<?php echo $this->get_field_name( 'show_job' ); ?>" /> 
@@ -249,10 +249,10 @@ class Jaiminho_Widget_Signup extends WP_Widget {
 			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'first_label' ); ?>" name="<?php echo $this->get_field_name( 'first_label' ); ?>" value="<?php echo $instance['first_label']; ?>" style="width:100%;" />
 		</p>
 
-		<p>
+		<!--p>
 			<label for="<?php echo $this->get_field_id( 'last_label' ); ?>"><?php _e('Last Name Label:', 'sendpress'); ?></label>
 			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'last_label' ); ?>" name="<?php echo $this->get_field_name( 'last_label' ); ?>" value="<?php echo $instance['last_label']; ?>" style="width:100%;" />
-		</p>
+		</p-->
 
 		<p>
 			<label for="<?php echo $this->get_field_id( 'job_label' ); ?>"><?php _e('Rótulo da Profissão:', 'jaiminho'); ?></label>
