@@ -27,6 +27,7 @@ require_once( ABSPATH . '/wp-content/plugins/sendpress/classes/class-sendpress-o
 if (wp_get_theme() == 'Divi')
 // require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-divi-email-optin.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-send.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-signup-shortcode-old.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-overview.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-queue-all.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-queue.php' );
@@ -51,6 +52,7 @@ require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-sen
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-sender-network.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-sender-gmail.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-tgm-plugin-activation.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-widget-signup.php' );
 
 class Jaiminho extends SendPress
 {
@@ -60,7 +62,9 @@ class Jaiminho extends SendPress
 	public function __construct()
 	{
 		add_action('init', array( $this , 'Init' ) );
-		spl_autoload_register( array( 'Jaiminho', 'autoload' ) );
+                add_action('widgets_init', create_function( '' , 'return register_widget("Jaiminho_Widget_Signup");'));
+		//spl_autoload_register( array( 'Jaiminho', 'autoload' ) );
+                Jaiminho_Signup_Shortcode::init();
 	}
 
 	public function Init()
