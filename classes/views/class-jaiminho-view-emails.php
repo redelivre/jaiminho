@@ -186,11 +186,11 @@ class Jaiminho_View_Emails extends SendPress_View{
         <td>*|FNAME|*</td>
         <td class="text-right"><button class="btn btn-xs btn-success sp-insert-code" data-code="*|FNAME|*">Insert</button></td>
     </tr>
-    <tr>
+    <!--tr>
       <td>Last Name</td>
         <td>*|LNAME|*</td>
         <td class="text-right"><button class="btn btn-xs btn-success sp-insert-code" data-code="*|LNAME|*">Insert</button></td>
-    </tr>
+    </tr-->
     <tr>
       <td>Email</td>
         <td>*|EMAIL|*</td>

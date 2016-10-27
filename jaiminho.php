@@ -27,7 +27,10 @@ require_once( ABSPATH . '/wp-content/plugins/sendpress/classes/class-sendpress-o
 if (wp_get_theme() == 'Divi')
 // require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-divi-email-optin.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-send.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-subscribers-subscribers.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-subscribers-subscriber.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-signup-shortcode-old.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-subscribers-table.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-overview.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-queue-all.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-queue.php' );
@@ -927,6 +930,10 @@ echo $return["wp_sendpress_report_url"];
 				return "Jaiminho_View_Emails_Tempdelete";
 			case "SendPress_View_Emails_Tempclone":
 				return "Jaiminho_View_Emails_Tempclone";
+			case "SendPress_View_Subscribers_Subscriber":
+				return "Jaiminho_View_Subscribers_Subscriber";
+			case "SendPress_View_Subscribers_Subscribers":
+				return "Jaiminho_View_Subscribers_Subscribers";
 			case "SendPress_View_Subscribers_Listcreate":
 				wp_enqueue_script('jaiminho_disable');
 				return $view_class;
@@ -949,8 +956,8 @@ echo $return["wp_sendpress_report_url"];
 		$view_class = $this->jaiminho_get_view_class( $this->_page , $this->_current_view ,  $emails_credits  , $bounce_email );
                 
                 // debug
-		//echo "About to render: $view_class, $this->_page";
-		//echo " nova: ".$view_class;  
+		echo "About to render: $view_class, $this->_page";
+		echo " nova: ".$view_class;  
 
 		$view_class = NEW $view_class;
 		$queue      = '<span id="queue-count-menu-tab">-</span>';

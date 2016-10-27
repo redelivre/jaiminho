@@ -368,11 +368,11 @@ class Jaiminho_View_Emails_Edit extends Jaiminho_View_Emails {
       	<td>*|FNAME|*</td>
       	<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code" data-code="*|FNAME|*"><?php _e('Insert','sendpress'); ?></button></td>
     </tr>
-    <tr>
+    <!--tr>
     	<td><?php _e('Last Name','sendpress'); ?></td>
       	<td>*|LNAME|*</td>
       	<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code" data-code="*|LNAME|*"><?php _e('Insert','sendpress'); ?></button></td>
-    </tr>
+    </tr-->
     <tr>
     	<td><?php _e('Email','sendpress'); ?></td>
       	<td>*|EMAIL|*</td>
