@@ -65,7 +65,11 @@ class Jaiminho extends SendPress
 	public function __construct()
 	{
 		add_action('init', array( $this , 'Init' ) );
-                add_action('widgets_init', create_function( '' , 'return register_widget("Jaiminho_Widget_Signup");'));
+        add_action('widgets_init', create_function( '' , '
+        		unregister_widget("SendPress_Widget_Signup");
+        		return register_widget("Jaiminho_Widget_Signup");
+        '));
+        
 		//spl_autoload_register( array( 'Jaiminho', 'autoload' ) );
                 Jaiminho_Signup_Shortcode::init();
 	}
