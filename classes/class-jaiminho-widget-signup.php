@@ -24,12 +24,12 @@ class Jaiminho_Widget_Signup extends WP_Widget {
 		$widget_ops = array( 'classname' => 'sendpress', 'description' => __('Displays a signup form so your users can sign up for your public e-mail lists.', 'sendpress') );
 
 		/* Widget control settings. */
-		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'sendpress-widget' );
+		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'jaiminho-widget' );
 
 		/* Create the widget. */
 
 		parent::__construct(
-	            'sendpress-widget', // Base ID
+	            'jaiminho-widget', // Base ID
         	    __('Cadastre-se no Jaiminho', 'jaiminho'), // Name
  	           	$widget_ops,
  	           	$control_ops 
