@@ -127,7 +127,10 @@ class Jaiminho_Signup_Shortcode{
 						<label for="list"><?php echo $list_label; ?>:</label>
 						<?php
 						foreach ($list_ids as $id) { ?>
-							<input type="checkbox" name="sp_list[]" class="sp_list" id="list<?php echo $id; ?>" value="<?php echo $id; ?>" <?php if($lists_checked){ echo 'checked'; }?> /> <?php echo get_the_title($id); ?><br>
+							<span class="sp_list_item">
+								<input type="checkbox" name="sp_list[]" class="sp_list" id="list<?php echo $id; ?>" value="<?php echo $id; ?>" <?php if($lists_checked){ echo 'checked'; }?> />
+								<label for="list<?php echo $id; ?>" class="sp_list_label"><?php echo get_the_title($id); ?></label><br>
+							</span>
 						<?php
 						} ?>	
 						</p>
