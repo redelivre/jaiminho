@@ -23,6 +23,7 @@ class Jaiminho_Sender_Gmail extends SendPress_Sender {
 
 	function settings(){ ?>
 	 <p><?php _e( 'Gmail is limited to 500 emails a day. We recommend that you open a dedicated Gmail account for this purpose', 'sendpress' ); ?>.</p>
+	 <p><?php _e( 'Habilite o seu Gmail para permitir que aplicativos <a href="https://support.google.com/accounts/answer/6010255?hl=pt-BR">menos seguros</a> acessem sua conta', 'jaiminho' ); ?>.</p>
   <?php _e( 'Username' , 'sendpress'); ?>
   <p><input name="gmailuser" type="text" value="<?php echo SendPress_Option::get( 'gmailuser' ); ?>" style="width:100%;" /></p>
   <?php _e( 'Password' , 'sendpress'); ?>
