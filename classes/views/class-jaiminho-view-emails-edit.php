@@ -138,7 +138,8 @@ class Jaiminho_View_Emails_Edit extends Jaiminho_View_Emails {
         <div class="sp-row">
 <div class="sp-75 sp-first">
 <!-- Nav tabs -->
-<?php $enable_edits = SendPress_Option::get('enable_email_template_edit');?>
+<?php //$enable_edits = SendPress_Option::get('enable_email_template_edit');?>
+<?php $enable_edits = true ?>
 <ul class="nav nav-tabs">
   <li class="active"><a href="#content-area-one-tab" data-toggle="tab"><?php _e('Main Content','sendpress'); ?></a></li>
   <?php if($enable_edits){
@@ -203,6 +204,7 @@ class Jaiminho_View_Emails_Edit extends Jaiminho_View_Emails {
 		</div>
 		<?php
 	}
+        //var_dump(SendPress_Data::build_social());
 	?>
    <!--
   <div class="tab-pane fade" id="messages"><?php wp_editor($post->post_content,'content-3'); ?></div>

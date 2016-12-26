@@ -147,7 +147,7 @@ class Jaiminho_View_Emails_Templates extends Jaiminho_View_Emails{
 
 					</div>
 					<div class="tab-pane" id="footer-content">
-					<?php wp_editor(  SendPress_Tag_Footer_Page::content() , 'footer_content_edit', array(
+					<?php wp_editor(  SendPress_Data::build_social(  ) . SendPress_Tag_Footer_Page::content() , 'footer_content_edit', array(
 								'dfw' => true,
 								'drag_drop_upload' => true,
 								'tabfocus_elements' => 'insert-media-button-1,save-post',
