@@ -93,8 +93,25 @@ class Jaiminho extends SendPress
 		remove_action( 'init' , array( SPNL() , 'toplevel_page_sp-overview' ) );
 		//add_filter( 'sendpress_notices', '__return_empty_string' ); 
 		add_action( 'sendpress_notices', array( $this, 'jaiminho_notices' ) );
+                add_action( 'init', array( $this, 'frame_it_up' ), 20 );
 		add_action('admin_enqueue_scripts', array( $this, 'load_admin_script') );
 	}
+
+        public function frame_it_up( $init_array ){
+          global $allowedtags, $allowedposttags;
+          $allowedposttags['iframe'] = $allowedtags['iframe'] = array(
+            'name' => true,
+            'id' => true,
+            'class' => true,
+            'style' => true,
+            'src' => true,
+            'width' => true,
+            'height' => true,
+            'allowtransparency' => true,
+            'frameborder' => true,
+          );
+        }
+
 
 	function jaiminho_notices() {
 		if (!SendPress_Option::get('emails-credits')  &&  SendPress_Option::get( 'sendmethod' ) === 'Jaiminho_Sender_NetWork'  )
@@ -258,7 +275,7 @@ class Jaiminho extends SendPress
         public function jaiminho_fix_tables_html()
         {
 
-        	var_dump(isset($_POST['fix_tables']));
+        	//var_dump(isset($_POST['fix_tables']));
 		global $wpdb;
             require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
           
@@ -777,6 +794,16 @@ echo $return["wp_sendpress_report_url"];
 
 	public function myformatTinyMCE( $in ) 
 	{
+
+                $ext = 'pre[id|name|class|style],iframe[align|longdesc|name|width|height|frameborder|scrolling|marginheight|marginwidth|src]';
+
+                if ( isset( $in['extended_valid_elements'] ) ) {
+                    $in['extended_valid_elements'] .= ',' . $ext;
+                } else {
+                    $in['extended_valid_elements'] = $ext;
+                }
+
+
 		if ( isset( $in['plugins'] ) ) {
 			$in['plugins'] .= ' , wpeditimage';
 		}
