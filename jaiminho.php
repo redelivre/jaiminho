@@ -116,6 +116,9 @@ class Jaiminho extends SendPress
 
                 $query = new WP_Query( $args );
                 if($query->have_posts()){
+                    header("Content-type:text/octect-stream");
+                    header("Content-Disposition:attachment;filename=sendpress.csv");
+                    print "Titulo,Destinatarios,Enviados,Na Fila,Lista,Unique,Total,Inscritos via URL Unique,Inscritos via URL Total,Desinscritos,Data \n";
                     while($query->have_posts()){
                         $query->the_post();
                     $item = get_post();
@@ -185,10 +188,7 @@ class Jaiminho extends SendPress
                         $date = get_post_meta($item->ID, "send_date", true);
 
                         $date_final = !empty( $date )? date_i18n(get_option('date_format') ,strtotime($date) ) : 'sem data';
-                header("Content-type:text/octect-stream");
-                header("Content-Disposition:attachment;filename=sendpress.csv");
-                print "Titulo,Destinatarios,Enviados,Na Fila,Lista,Unique,Total,Inscritos via URL Unique,Inscritos via URL Total,Desinscritos,Data \n";
-                print  get_the_title() . "," .$rec .",". $sent .",". $queue ."," . $display . ',' . $opens .",". $opens_total . "," . $clicks . "," . $clicks_total . "," . $clicks . "" . $date_final."\n";
+                print  get_the_title() . "," .$rec .",". $sent .",". $queue ."," . $display . "," . $opens .",". $opens_total . "," . $clicks . "," . $clicks_total . "," . $clicks . "," . $date_final."\n";
                   }
               }
         }
