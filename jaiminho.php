@@ -184,21 +184,6 @@ class Jaiminho extends SendPress
                   
                           $date = get_post_meta($item->ID, "send_date", true);
 
-                          //$string = "Destinatários: ". $rec ."<br>";
-                          //$string .= "Enviados: ". $sent ."<br>";
-                          //$string .= "Na Fila: ". $queue ."<br>";
-                  
-                          //echo $string;
-                          //echo "Lista: " . $display;
-                          //echo  "Unique: " . $opens ."<br>Total: ". $opens_total . "<br>";
-                          //echo  "Inscritos via URL Unique: " . $clicks . "<br> Inscritos via URL Total: " . $clicks_total . "<br>" ;
-                          //echo  "Desinscritos: " . $clicks . "<br>";
-                      
-                          //if(!empty( $date ) ){
-                          //    echo "Data de envio: " . date_i18n(get_option('date_format') ,strtotime($date) );
-                          //}else{
-                          //echo 'sem data';
-                          //}
                           $date_final = !empty( $date )? date_i18n(get_option('date_format') ,strtotime($date) ) : 'sem data';
                   header("Content-type:text/octect-stream");
                   header("Content-Disposition:attachment;filename=sendpress.csv");
