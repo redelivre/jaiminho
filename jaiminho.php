@@ -188,7 +188,7 @@ class Jaiminho extends SendPress
                         $date = get_post_meta($item->ID, "send_date", true);
 
                         $date_final = !empty( $date )? date_i18n(get_option('date_format') ,strtotime($date) ) : 'sem data';
-                print  get_the_title() . "," .$rec .",". $sent .",". $queue ."," . $display . "," . $opens .",". $opens_total . "," . $clicks . "," . $clicks_total . "," . $clicks . "," . $date_final."\n";
+                print  get_the_title() . "," .$rec .",". $sent .",". $queue ."," . strip_tags($display) . "," . $opens .",". $opens_total . "," . $clicks . "," . $clicks_total . "," . $clicks . "," . $date_final."\n";
                   }
               }
         }
