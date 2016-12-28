@@ -97,7 +97,16 @@ class Jaiminho extends SendPress
                 add_action( 'init', array( $this, 'frame_it_up' ), 20 );
 		add_action('admin_enqueue_scripts', array( $this, 'load_admin_script') );
                 add_action( 'admin_action_export', array($this,'export_report') );
+                add_filter( 'mce_buttons_2', array($this,'mce_buttons') );
 	}
+
+        function mce_buttons( $buttons ) {
+                array_unshift( $buttons, 'fontselect' );
+                array_unshift( $buttons, 'fontsizeselect' ); 
+                return $buttons;
+        }
+        
+
 
         function export_report(){
                 $args = array(
