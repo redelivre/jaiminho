@@ -49,6 +49,8 @@ require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaimin
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-send-tempclone.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-settings-account.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-reports.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-subscribers.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-subscribers-csvimport.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-sender-redelivre.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-sender-network.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-sender-gmail.php' );
@@ -92,14 +94,70 @@ class Jaiminho extends SendPress
 		}
 		add_action( 'tgmpa_register', array( $this , 'jaiminho_register_required_plugins' ) );
 		remove_action( 'init' , array( SPNL() , 'toplevel_page_sp-overview' ) );
-		//add_filter( 'sendpress_notices', '__return_empty_string' ); 
 		add_action( 'sendpress_notices', array( $this, 'jaiminho_notices' ) );
                 add_action( 'init', array( $this, 'frame_it_up' ), 20 );
 		add_action('admin_enqueue_scripts', array( $this, 'load_admin_script') );
                 add_action( 'admin_action_export', array($this,'export_report') );
+                add_action( 'admin_action_import', array($this,'save_import') );
                 add_filter( 'mce_buttons_2', array($this,'mce_buttons') );
 	}
 
+	function save_import(){
+        $uploadfiles = $_FILES['uploadfiles'];
+	if (is_array($uploadfiles)) {
+        
+        if ($uploadfiles['error']== 0) {
+
+        $filetmp = $uploadfiles['tmp_name'];
+
+        $filename = $uploadfiles['name'];
+
+        // @fixme: wp checks the file extension....
+        $filetype = wp_check_filetype( $filename, array('csv' => 'text/csv') );
+        $filetitle = preg_replace('/\.[^.]+$/', '', basename( $filename ) );
+        $filename = $filetitle . '.' . $filetype['ext'];
+        var_dump($filetype);
+        var_dump(basename( $filename ));
+        $upload_dir = wp_upload_dir();
+        if( $filetype['ext'] != 'csv' ){
+          SendPress_Admin::redirect('Subscribers_Csvimport',array('listID'=> SPNL()->validate->_int( 'listID' )));
+        }
+
+        /**
+         * Check if the filename already exist in the directory and rename the
+         * file if necessary
+         */
+        $i = 0;
+        while ( file_exists( $upload_dir['path'] .'/' . $filename ) ) {
+          $filename = $filetitle . '_' . $i . '.' . $filetype['ext'];
+          $i++;
+        }
+        $filedest = $upload_dir['path'] . '/' . $filename;
+
+        $filedest = str_replace('\\','/', $filedest);
+        /**
+         * Check write permissions
+         */
+        if ( !is_writeable( $upload_dir['path'] ) ) {
+          SendPress_Option::set('import_error', true);  
+        }
+
+        /**
+         * Save temporary file to uploads dir
+         */
+        if ( !@move_uploaded_file($filetmp, $filedest) ){
+          SendPress_Option::set('import_error', true);
+          var_dump("Aqui não entra");
+        }
+        var_dump(SPNL()->validate->_int( 'listID' ));
+        var_dump($filedest);
+        update_post_meta(SPNL()->validate->_int( 'listID' ),'csv_import',$filedest);
+        if(SendPress_Option::get('import_error', false) == false  ){
+		      SendPress_Admin::redirect('Subscribers_Csvprep',array('listID'=> SPNL()->validate->_int( 'listID' )));
+        }
+    }
+  }
+	}
         function mce_buttons( $buttons ) {
                 array_unshift( $buttons, 'fontselect' );
                 array_unshift( $buttons, 'fontsizeselect' ); 
@@ -379,11 +437,9 @@ class Jaiminho extends SendPress
         public function jaiminho_fix_tables_html()
         {
 
-        	//var_dump(isset($_POST['fix_tables']));
-		global $wpdb;
+	    global $wpdb;
             require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
           
-            //$wpdb->hide_errors();
 
             $collate = '';
             if ( $wpdb->has_cap( 'collation' ) ) {
@@ -1060,6 +1116,10 @@ echo $return["wp_sendpress_report_url"];
 				return "Jaiminho_View_Emails_Tempclone";
 			case "SendPress_View_Reports":
 				return "Jaiminho_View_Reports";
+			case "SendPress_View_Subscribers":
+				return "Jaiminho_View_Subscribers";
+			case "SendPress_View_Subscribers_Csvimport":
+				return "Jaiminho_View_Subscribers_Csvimport";
 			case "SendPress_View_Subscribers_Listcreate":
 				wp_enqueue_script('jaiminho_disable');
 				return $view_class;
