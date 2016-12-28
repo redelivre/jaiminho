@@ -61,6 +61,15 @@ class Jaiminho_View_Reports extends SendPress_View{
 	}	
 
 	function html(){
+                ?>
+                <form action="<?php echo esc_url( admin_url('admin.php') ); ?>" method="POST">
+                <input type="hidden" name="action" value="export">
+                <button class="btn btn-primary" type="submit" >
+                  <?= __("Export", "sendpress") ?>
+                  <span class="glyphicon glyphicon-download"></span>
+                </button>
+                </form>
+                <?php
 		 SendPress_Tracking::event('Reports Tab');
 		//Create an instance of our package class...
 		$sp_reports_table = new SendPress_Reports_Table();
@@ -82,10 +91,6 @@ class Jaiminho_View_Reports extends SendPress_View{
 
 		<span class="label label-info"><?php _e('Total','sendpress');?></span> <?php _e('The total number of clicks or opens that have happened. Regardless of who clicked or opened the email.','sendpress');?>
 		</div>
-                <form action="<?php echo esc_url( admin_url('admin.php') ); ?>" method="POST">
-                <input type="hidden" name="action" value="export">
-                <input type="submit" value="Exportar">
-                </form>
 		<?php
 	}
 }
