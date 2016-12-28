@@ -1073,8 +1073,8 @@ echo $return["wp_sendpress_report_url"];
 		$view_class = $this->jaiminho_get_view_class( $this->_page , $this->_current_view ,  $emails_credits  , $bounce_email );
                 
                 // debug
-		echo "About to render: $view_class, $this->_page";
-		echo " nova: ".$view_class;  
+		//echo "About to render: $view_class, $this->_page";
+		//echo " nova: ".$view_class;  
 
 		$view_class = NEW $view_class;
 		$queue      = '<span id="queue-count-menu-tab">-</span>';
