@@ -145,6 +145,7 @@ class Jaiminho_View_Queue extends SendPress_View {
        <?php if (SendPress_Option::get('emails-credits') &&  SendPress_Option::get( 'sendmethod' ) === 'Jaiminho_Sender_NetWork' || SendPress_Option::get( 'sendmethod' ) != 'Jaiminho_Sender_NetWork' ){
           SendPress_Option::set('pause-sending','no');
           ?>
+          <a class="btn btn-large btn-danger " href="<?php echo esc_url( admin_url('admin.php') ); ?>?action=send_message" ><i class="icon-repeat icon-white "></i>Pedir Créditos</a>
           <a class="btn btn-large btn-default " href="<?php echo SendPress_Admin::link('Queue'); ?>&action=pause-queue" ><i class="icon-repeat icon-white "></i> <?php echo $txt; ?></a>
           <a id="send-now" class="btn btn-primary btn-large " data-toggle="modal" href="#sendpress-sending"   ><i class="icon-white icon-refresh"></i> <?php _e('Send Emails Now','sendpress');?></a>
 	</div>

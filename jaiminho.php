@@ -98,10 +98,18 @@ class Jaiminho extends SendPress
                 add_action( 'init', array( $this, 'frame_it_up' ), 20 );
 		add_action('admin_enqueue_scripts', array( $this, 'load_admin_script') );
                 add_action( 'admin_action_export', array($this,'export_report') );
+                add_action( 'admin_action_send_message', array($this,'send_message') );
                 add_action( 'admin_action_export_all_lists', array($this,'export_all_lists') );
                 add_action( 'admin_action_import', array($this,'save_import') );
                 add_filter( 'mce_buttons_2', array($this,'mce_buttons') );
 	}
+
+        function send_message(){
+          //var_dump(get_bloginfo("name"));
+          $result = wp_mail( "cabelotaina@gmail.com", "Créditos no blog".get_bloginfo(), 'Olá, <br> O blog <a href="' . network_site_url( '/' ) . '">' . get_bloginfo() . "</a> necessita de mais créditos.");
+          var_dump($result);
+        }
+
 
 	function save_import(){
         $uploadfiles = $_FILES['uploadfiles'];
