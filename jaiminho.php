@@ -106,8 +106,9 @@ class Jaiminho extends SendPress
 
         function send_message(){
           //var_dump(get_bloginfo("name"));
-          $result = wp_mail( "cabelotaina@gmail.com", "Créditos no blog".get_bloginfo(), 'Olá, <br> O blog <a href="' . network_site_url( '/' ) . '">' . get_bloginfo() . "</a> necessita de mais créditos.");
-          var_dump($result);
+          $result = wp_mail( "cabelotaina@gmail.com", "Créditos no blog".get_bloginfo(), 'Olá, \n O blog ' . network_site_url( '/' ) . ' - ' . get_bloginfo() . "necessita de mais créditos.");
+          //var_dump($result);
+          SendPress_Admin::redirect('Queue', array('result' => $result));
         }
 
 
