@@ -125,8 +125,16 @@ class Jaiminho_View_Queue extends SendPress_View {
 				"report"=> 10,
 				"view"=>"open"
 				);
-	 $autocron = SendPress_Option::get('autocron','no');
+	$autocron = SendPress_Option::get('autocron','no');
+        $message = isset($_GET['result'])?$_GET['result']:"";
+        if( $message ) {
 	?>
+        <div class="notice notice-success is-dismissible">
+        <p><?php _e( 'Mensagem Enviada com sucesso', 'jaiminho' ); ?></p>
+        </div>
+        <?php
+        }
+        ?>
 
 <br>
 	<div id="taskbar" class="lists-dashboard rounded group"> 
