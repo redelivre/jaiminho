@@ -113,7 +113,6 @@ class Jaiminho extends SendPress
 
         $filename = $uploadfiles['name'];
 
-        // @fixme: wp checks the file extension....
         $filetype = wp_check_filetype( $filename, array('csv' => 'text/csv') );
         $filetitle = preg_replace('/\.[^.]+$/', '', basename( $filename ) );
         $filename = $filetitle . '.' . $filetype['ext'];
@@ -124,10 +123,6 @@ class Jaiminho extends SendPress
           SendPress_Admin::redirect('Subscribers_Csvimport',array('listID'=> SPNL()->validate->_int( 'listID' )));
         }
 
-        /**
-         * Check if the filename already exist in the directory and rename the
-         * file if necessary
-         */
         $i = 0;
         while ( file_exists( $upload_dir['path'] .'/' . $filename ) ) {
           $filename = $filetitle . '_' . $i . '.' . $filetype['ext'];
@@ -136,22 +131,13 @@ class Jaiminho extends SendPress
         $filedest = $upload_dir['path'] . '/' . $filename;
 
         $filedest = str_replace('\\','/', $filedest);
-        /**
-         * Check write permissions
-         */
         if ( !is_writeable( $upload_dir['path'] ) ) {
           SendPress_Option::set('import_error', true);  
         }
 
-        /**
-         * Save temporary file to uploads dir
-         */
         if ( !@move_uploaded_file($filetmp, $filedest) ){
           SendPress_Option::set('import_error', true);
-          var_dump("Aqui não entra");
         }
-        var_dump(SPNL()->validate->_int( 'listID' ));
-        var_dump($filedest);
         update_post_meta(SPNL()->validate->_int( 'listID' ),'csv_import',$filedest);
         if(SendPress_Option::get('import_error', false) == false  ){
 		      SendPress_Admin::redirect('Subscribers_Csvprep',array('listID'=> SPNL()->validate->_int( 'listID' )));
@@ -1163,8 +1149,8 @@ echo $return["wp_sendpress_report_url"];
 		$view_class = $this->jaiminho_get_view_class( $this->_page , $this->_current_view ,  $emails_credits  , $bounce_email );
                 
                 // debug
-		echo "About to render: $view_class, $this->_page";
-		echo " nova: ".$view_class;  
+		//echo "About to render: $view_class, $this->_page";
+		//echo " nova: ".$view_class;  
 
 		$view_class = NEW $view_class;
 		$queue      = '<span id="queue-count-menu-tab">-</span>';
