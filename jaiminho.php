@@ -98,6 +98,7 @@ class Jaiminho extends SendPress
                 add_action( 'init', array( $this, 'frame_it_up' ), 20 );
 		add_action('admin_enqueue_scripts', array( $this, 'load_admin_script') );
                 add_action( 'admin_action_export', array($this,'export_report') );
+                add_action( 'admin_action_export_all_lists', array($this,'export_all_lists') );
                 add_action( 'admin_action_import', array($this,'save_import') );
                 add_filter( 'mce_buttons_2', array($this,'mce_buttons') );
 	}
@@ -165,6 +166,26 @@ class Jaiminho extends SendPress
         }
         
 
+        function export_all_lists(){
+                $query = SendPress_Data::get_lists();
+                header("Content-type:text/octect-stream");
+                header("Content-Disposition:attachment;filename=sendpress.csv");
+                echo "email, firstname, lastname, status, phone, list \n";
+                while($query->have_posts()){
+                    $query->the_post();
+                    $item = get_post();
+                    $subscribers = SendPress_Data::export_subscirbers($item->ID);
+                    foreach($subscribers as $sb){
+                      echo $sb->email . "," .
+                           $sb->firstname . "," .
+                           $sb->lastname . "," .
+                           $sb->status . "," .
+                           $sb->phonenumber . "," .
+                           $item->post_title . "\n";
+                    }
+                }
+
+        }
 
         function export_report(){
                 $args = array(
@@ -1142,8 +1163,8 @@ echo $return["wp_sendpress_report_url"];
 		$view_class = $this->jaiminho_get_view_class( $this->_page , $this->_current_view ,  $emails_credits  , $bounce_email );
                 
                 // debug
-		//echo "About to render: $view_class, $this->_page";
-		//echo " nova: ".$view_class;  
+		echo "About to render: $view_class, $this->_page";
+		echo " nova: ".$view_class;  
 
 		$view_class = NEW $view_class;
 		$queue      = '<span id="queue-count-menu-tab">-</span>';

@@ -101,6 +101,15 @@ class Jaiminho_View_Subscribers extends SendPress_View {
 	}
 	
 	function html() {
+         ?>
+         <form action="<?php echo esc_url( admin_url('admin.php') ); ?>" method="POST">
+         <input type="hidden" name="action" value="export_all_lists">
+         <button class="btn btn-primary" type="submit" >
+           <?= __("Exportar todas as Listas", "sendpress") ?>
+           <span class="glyphicon glyphicon-download"></span>
+         </button>
+         </form>
+         <?php
 	 SendPress_Tracking::event('Lists Tab');
 		//Create an instance of our package class...
 		$testListTable = new SendPress_Lists_Table();
