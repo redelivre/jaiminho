@@ -159,9 +159,18 @@ class Jaiminho extends SendPress
           $c = true;
           
         endwhile;
+
+
+        $subscriber_info=array(
+        'email' => SPNL()->validate->_email('email'),
+        'firstname' => SPNL()->validate->_string('firstname'),
+        'lastname' => SPNL()->validate->_string('lastname'),
+        'phonenumber' => SPNL()->validate->_string('phonenumber'),
+        );
+        SendPress_Data::update_subscriber(SPNL()->validate->_int('subscriberid'), $subscriber_info);
+
       }
 
-      //do_action('sendpress_public_view_manage_save', $_POST);
     }
     wp_reset_query();
 
@@ -213,7 +222,7 @@ class Jaiminho extends SendPress
                     $sub->join_date = date("F j, Y, g:i a");
                   }
 
-                  // print_r($sub);
+                  //print_r($sub);
 
                   if(self::handle_unsubscribes()){
                       
@@ -224,7 +233,6 @@ class Jaiminho extends SendPress
                       
                   } 
                     
-                  $string .= '<p>' . __('You are subscribed to the following lists:','sendpress') .  '</p>';
 
 
                   $info->action = "update";
@@ -239,8 +247,26 @@ class Jaiminho extends SendPress
 
                   $string .= '<form action="' . $query_var .'" method="post">';
                   $string .= wp_nonce_field( SendPress_Data::nonce() );
+                  $string .= '<label>' . __('Email', 'sendpress') . ':</label>';
+                  $string .= "<br>";
+                  $string .= '<input type="text" value="' . $sub->email . '" name="email" />';
+                  $string .= "<br>";
+                  $string .= '<label>' . __('First Name', 'sendpress') . ':</label>';
+                  $string .= "<br>";
+                  $string .= '<input type="text" value="' . $sub->firstname . '" name="firstname" />';
+                  $string .= "<br>";
+                  $string .= '<label>' . __('Last Name', 'sendpress') . ':</label>';
+                  $string .= "<br>";
+                  $string .= '<input type="text" value="' . $sub->lastname . '" name="lastname" />';
+                  $string .= "<br>";
+                  $string .= '<label>' . __('Telefone', 'jaiminho') . ':</label>';
+                  $string .= "<br>";
+                  $string .= '<input type="text" value="' . $sub->phonenumber . '" name="phonenumber" />';
+                  $string .= "<br>";
+                  $string .= "<br>";
                   $string .= '<input type="hidden" name="subscriberid" id="subscriberid" value="' . $s . '" />';
-                        $string .= '<table cellpadding="0" cellspacing="0" class="table table-condensed table-striped table-bordered">';
+                  $string .= '<p>' . __('You are subscribed to the following lists:','sendpress') .  '</p>';
+                  $string .= '<table cellpadding="0" cellspacing="0" class="table table-condensed table-striped table-bordered">';
                   $string .= '<tr>';
                   $string .= '<th>' . __('Subscribed','sendpress') .  '</th>';
                   $string .= '<th>' . __('Unsubscribed','sendpress') . '</th>';
