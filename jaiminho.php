@@ -26,6 +26,7 @@ require_once( ABSPATH . '/wp-content/plugins/sendpress/classes/class-sendpress-o
 // jaiminho classes
 if (wp_get_theme() == 'Divi')
 // require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-divi-email-optin.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/sc/class-jaiminho-sc-forms.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-send.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/plugins/mce-table-buttons/mce_table_buttons.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-signup-shortcode-old.php' );
@@ -103,8 +104,190 @@ class Jaiminho extends SendPress
                 add_action( 'admin_action_export_all_lists', array($this,'export_all_lists') );
                 add_action( 'admin_action_import', array($this,'save_import') );
                 add_filter( 'mce_buttons_2', array($this,'mce_buttons') );
+                add_shortcode('jaiminho_manage_subscription', array($this,'manage_subscription'));
 	}
 
+  static function data(){
+    $data = '';
+    if( (get_query_var( 'spms' ) || get_query_var( 'sendpress' )) ){
+        $action = (get_query_var( 'spms' )) ? get_query_var( 'spms' ) : get_query_var( 'sendpress' );
+      }else{
+        $parsed = explode('/',$_SERVER['REQUEST_URI']);
+        $action = $parsed[count($parsed)-2];
+      }
+
+      //SendPress_Error::log($action);
+
+      $data = SendPress_Data::decrypt( $action );
+
+      //print_r($data);
+
+      return $data;
+  }
+
+
+  private static function handle_unsubscribes(){
+
+    $_nonce_value = 'sendpress-is-awesome';
+    $c = false;
+
+    if ( !empty($_POST) && check_admin_referer($_nonce_value) ){
+      $args = array(
+        'meta_key'=>'public',
+        'meta_value'=> 1,
+        'post_type' => 'sendpress_list',
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'ignore_sticky_posts'=> 1
+      );
+
+      $my_query = new WP_Query($args);
+      if( $my_query->have_posts() ) {
+
+          while ($my_query->have_posts()) : $my_query->the_post();  
+
+          $list_id = $my_query->post->ID;
+
+          if(isset($_POST['subscribe_'.$list_id ])){
+            $list_status = SendPress_Data::get_subscriber_list_status( $list_id , $_POST['subscriberid'] );
+            if(isset($list_status->status)){
+              SendPress_Data::update_subscriber_status( $list_id , $_POST['subscriberid'] , $_POST[ 'subscribe_'.$list_id ] );
+            } elseif( $_POST['subscribe_'. $list_id ] == '2' ){
+              SendPress_Data::update_subscriber_status( $list_id , $_POST['subscriberid'], $_POST[ 'subscribe_'.$list_id ] );
+            }
+          } 
+          $c = true;
+          
+        endwhile;
+      }
+
+      //do_action('sendpress_public_view_manage_save', $_POST);
+    }
+    wp_reset_query();
+
+    return $c;
+  }
+
+
+        function manage_subscription( $atts ){
+	        $options = SendPress_Data::get_default_settings_for_type('manage_subscriptions',true);
+                $string = "";
+                //debug
+                
+                // $link_data = array(
+                //  "id"=>23,
+                //  "report"=>0,
+                //  "urlID"=> '0',
+                //  "view"=>"manage",
+                //  "listID"=>"0",
+                //  "action"=>""
+                // );
+                // $code = SendPress_Data::encrypt( $link_data );
+                // $link =  SendPress_Manager::public_url($code);
+
+                // print_r($link);
+
+                $_nonce_value = 'sendpress-is-awesome';
+                $info = self::data();
+
+                //SendPress_Error::log($info->id);
+                //print_r($info);
+
+                if(!isset($info->id)){
+                  $info = NEW stdClass();
+                  $info->id = '';
+                }
+
+                $s = $info->id;
+
+                //SendPress_Error::log($s);
+
+                extract($options);
+
+                if(is_numeric($s)){
+                  $sub = SendPress_Data::get_subscriber($s);
+
+                  if($sub == false){
+                    $sub = NEW stdClass();
+                    $sub->email = 'example@sendpress.com';
+                    $sub->join_date = date("F j, Y, g:i a");
+                  }
+
+                  // print_r($sub);
+
+                  if(self::handle_unsubscribes()){
+                      
+                      $string .= '<div class="alert alert-block alert-info">';
+                      $string .= '<h4 class="alert-heading">' . __('Saved','sendpress') . '!</h4>';
+                      $string .= __('Your subscriptions have been updated. Thanks.','sendpress');
+                      $string .= '</div>';
+                      
+                  } 
+                    
+                  $string .= '<p>' . __('You are subscribed to the following lists:','sendpress') .  '</p>';
+
+
+                  $info->action = "update";
+                  $key = SendPress_Data::encrypt( $info );
+                  $query_var = '';
+                  if(get_query_var( 'spms' )){
+                    $query_var = "?spms=".$key;
+                  }elseif(get_query_var( 'sendpress' )){
+                    $query_var = "?sendpress=".$key;
+                  }
+                  //var_dump(SendPress_Data::decrypt($key));
+
+                  $string .= '<form action="' . $query_var .'" method="post">';
+                  $string .= wp_nonce_field( SendPress_Data::nonce() );
+                  $string .= '<input type="hidden" name="subscriberid" id="subscriberid" value="' . $s . '" />';
+                        $string .= '<table cellpadding="0" cellspacing="0" class="table table-condensed table-striped table-bordered">';
+                  $string .= '<tr>';
+                  $string .= '<th>' . __('Subscribed','sendpress') .  '</th>';
+                  $string .= '<th>' . __('Unsubscribed','sendpress') . '</th>';
+                  $string .= '<th>' . __('List','sendpress') . '</th>';
+                  $string .= '</tr>';
+
+                    $lists = SendPress_Data::get_lists(
+                      apply_filters( 'sendpress_modify_manage_lists', 
+                        array('meta_query' => array(
+                          array(
+                            'key' => 'public',
+                            'value' => true
+                            )
+                          )
+                        ) 
+                      ),
+                      false
+                    );
+
+                    foreach($lists as $list){
+                      $subscriber = SendPress_Data::get_subscriber_list_status($list->ID, $s);
+                      $string .= '<tr>';
+                        
+                          $checked = (isset($subscriber->statusid) && $subscriber->statusid == 2) ? 'checked' : '';
+                        $string .= '<td><input type="radio" class="xbutton" data-list="'.$list->ID.'" name="subscribe_'.$list->ID.'" '.$checked.' value="2"></td>';
+                        $checked = (isset($subscriber->statusid) && $subscriber->statusid == 3) ? 'checked' : '';
+                        $string .= '<td><input type="radio" class="xbutton" data-list="'.$list->ID.'" name="subscribe_'.$list->ID.'" '.$checked.' value="3"></td>';
+                        
+                        $string .= '<td>' . $list->post_title . '</td>';
+                        $string .= '<tr>';  
+                        
+                    }
+                      
+
+                    $string .= '</table>';
+                    $string .= '<br>';
+                    do_action( 'sendpress_manage_notifications', $info );
+
+                    $string .= '<input type="submit" class="btn btn-primary" value="' . __('Save My Settings','sendpress') . '"/>';
+                    $string .= '</form>';
+                  $string .= '</div>';
+                }else{
+                  $string .= "No e-mail found, please try again.<br><br>";
+                }
+                return $string;
+
+	}
         function send_message(){
           $result = wp_mail( get_option('admin_email'), "Créditos no blog ".get_bloginfo(), 'O blog ' . network_site_url( '/' ) . ' - ' . get_bloginfo() . " necessita de mais créditos.");
           //SendPress_Admin::redirect('Queue', array('result' => $result));
@@ -1157,8 +1340,8 @@ echo $return["wp_sendpress_report_url"];
 		$view_class = $this->jaiminho_get_view_class( $this->_page , $this->_current_view ,  $emails_credits  , $bounce_email );
                 
                 // debug
-		//echo "About to render: $view_class, $this->_page";
-		//echo " nova: ".$view_class;  
+		echo "About to render: $view_class, $this->_page";
+		echo " nova: ".$view_class;  
 
 		$view_class = NEW $view_class;
 		$queue      = '<span id="queue-count-menu-tab">-</span>';
