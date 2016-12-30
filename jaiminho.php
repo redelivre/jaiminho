@@ -24,8 +24,12 @@ define( 'SPNL_DISABLE_SENDING_WP_MAIL',false);
 require_once( ABSPATH . '/wp-content/plugins/sendpress/sendpress.php' );
 require_once( ABSPATH . '/wp-content/plugins/sendpress/classes/class-sendpress-option.php' );
 // jaiminho classes
-if (wp_get_theme()->headers["Name"] == 'Divi'){
-  require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-divi-email-optin.php' );
+
+$theme = wp_get_theme();
+$theme_name = esc_html( $theme->get( 'Name' ));
+//var_dump($theme_name);
+if ($theme_name == 'Divi'){
+  //require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-divi-email-optin.php' );
 }
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-send.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/plugins/mce-table-buttons/mce_table_buttons.php' );
