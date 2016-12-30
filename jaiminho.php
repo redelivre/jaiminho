@@ -24,9 +24,9 @@ define( 'SPNL_DISABLE_SENDING_WP_MAIL',false);
 require_once( ABSPATH . '/wp-content/plugins/sendpress/sendpress.php' );
 require_once( ABSPATH . '/wp-content/plugins/sendpress/classes/class-sendpress-option.php' );
 // jaiminho classes
-//var_dump(wp_get_theme());
-//if (wp_get_theme() == 'Divi')
-//  require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-divi-email-optin.php' );
+if (wp_get_theme()->headers["Name"] == 'Divi'){
+  require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-divi-email-optin.php' );
+}
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-send.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/plugins/mce-table-buttons/mce_table_buttons.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-signup-shortcode-old.php' );
@@ -1366,8 +1366,8 @@ echo $return["wp_sendpress_report_url"];
 		$view_class = $this->jaiminho_get_view_class( $this->_page , $this->_current_view ,  $emails_credits  , $bounce_email );
                 
                 // debug
-		echo "About to render: $view_class, $this->_page";
-		echo " nova: ".$view_class;  
+		//echo "About to render: $view_class, $this->_page";
+		//echo " nova: ".$view_class;  
 
 		$view_class = NEW $view_class;
 		$queue      = '<span id="queue-count-menu-tab">-</span>';
