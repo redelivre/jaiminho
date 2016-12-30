@@ -3,7 +3,7 @@
 class ET_Builder_Module_Jaiminho_Signup extends ET_Builder_Module {
 	function init() {
 		$this->name = esc_html__( 'Jaiminho Email Optin', 'et_builder' );
-		$this->slug = 'et_pb_signup';
+		$this->slug = 'et_pb_jaiminho_signup';
 
 		$this->whitelisted_fields = array(
 			'provider',
@@ -84,7 +84,7 @@ class ET_Builder_Module_Jaiminho_Signup extends ET_Builder_Module {
 			),
 		);
 	}
-}/*
+}
 	function get_fields() {
 		$et_pb_jaiminho_lists_options = array( 'none' => esc_html__( 'Select the list', 'et_builder' ) );
 
@@ -109,7 +109,6 @@ class ET_Builder_Module_Jaiminho_Signup extends ET_Builder_Module {
 					'#et_pb_jaiminho_list',
 				),
 				'description'       => esc_html__( 'Here you can choose a service provider.', 'et_builder' ),
-			),
 			),
 			'jaiminho_list' => array(
 				'label'           => esc_html__( 'Jaiminho lists', 'et_builder' ),
@@ -249,7 +248,6 @@ class ET_Builder_Module_Jaiminho_Signup extends ET_Builder_Module {
 		);
 		return $fields;
 	}
-}/*
 	function shortcode_callback( $atts, $content = null, $function_name ) {
 		$module_id                   = $this->shortcode_atts['module_id'];
 		$module_class                = $this->shortcode_atts['module_class'];
@@ -458,5 +456,4 @@ class ET_Builder_Module_Jaiminho_Signup extends ET_Builder_Module {
 
 		return $output;
 	}
-}
 new ET_Builder_Module_Jaiminho_Signup;

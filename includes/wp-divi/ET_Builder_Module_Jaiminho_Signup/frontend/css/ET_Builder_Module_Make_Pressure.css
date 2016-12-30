@@ -1,0 +1,353 @@
+
+.makepressure_facebook{
+	margin:5px;
+	color:gray;
+}
+
+.makepressure_facebook:hover{
+	margin:5px;
+	color:#3b5998;
+}
+
+.makepressure_twitter{
+	margin:5px;
+	color:grey;
+}
+
+.makepressure_twitter:hover{
+	margin:5px;
+	color:#1dcaff;
+}
+
+.makepressure_email{
+	margin:5px;
+	color:gray;
+}
+
+.makepressure_email:hover{
+	margin:5px;
+	color:red;
+}
+
+.makepressure_gmail{
+	margin:5px;
+	color:gray;
+}
+
+.makepressure_gmail:hover{
+	margin:5px;
+	color:#4285f4;
+}
+
+.makepressure_whatsapp{
+	margin:10px;
+	color:gray;
+}
+
+.makepressure_whatsapp:hover{
+	margin:10px;
+	color:green;
+}
+
+.makepressure_upper{
+	text-transform: uppercase;
+}
+
+.makepressure_grid{
+	border: 1px solid black;
+	float: left;
+    position: relative;
+}
+
+.makepressure_title{
+	text-transform: capitalize;
+	width: 200px;
+	max-height: 50px;
+	overflow: hidden;
+  	max-height: 3.8ch;
+  	min-height: 60px;
+}
+
+.makepressure_portfolio_item {
+    margin: 0 8% 8% 0;
+    width: 19%;
+}
+
+.makepressure_label{
+	margin: 10px;
+	position: relative;
+    float:left;
+
+}
+
+.makepressure_clipboard{
+	padding:10px; 
+	width: 100%;
+}
+
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+ 
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.makepressure_search_button{
+	padding: 10px;
+	margin-left: 20px;
+}
+
+.makepressure_search_button_gmail{
+  padding: 10px;
+}
+
+@media all and (min-width: 1232px) {
+	.et_pb_column_1_2 .makepressure_grid_item {
+	    margin-right: 5px;
+	    width: 48%;
+	}
+	
+	.et_pb_column_4_4 .makepressure_grid_item {
+	    height: 155px;
+	    margin-bottom: 5px;
+	    margin-right: 5px;
+	    width: 32.5%;
+	}
+	.et_pb_column_1_3 .makepressure_grid_item {
+		width: 100%;
+	}
+	.et_pb_column_1_4 .makepressure_grid_item {
+		width: 100%;
+	}
+	.et_pb_column_2_3 .makepressure_grid_item {
+		margin-right: 5px;
+		width: 48%;
+	}
+	.et_pb_column_3_4 .makepressure_grid_item {
+		margin-right: 5px;
+		width: 48%;
+	}
+
+	.makepressure_post_main_image{
+        position: absolute;
+        right: 0px;
+    }
+
+    .makepressure_senador {
+    	width: 122px;
+	}
+   .makepressure_action{
+       position: absolute;
+       top: 95px;
+   }
+
+  .makepressure_search_button{
+      position: absolute;
+      right: 73px;
+      top: -6px;
+  }
+
+  .makepressure_search_button_gmail{
+      position: absolute;
+      right: 305px;
+      top: -6px;
+  }
+}
+@media all and (min-width: 768px) and (max-width: 1232px) {
+	.et_pb_column_1_2 .makepressure_grid_item {
+	    margin-right: 5px;
+	    width: 32%;
+	}
+	
+	.et_pb_column_4_4 .makepressure_grid_item {
+	    margin-right: 5px;
+	    width: 32%;
+	}
+	.et_pb_column_1_3 .makepressure_grid_item {
+		margin-right: 5px;
+	    width: 32%;
+	}
+	.et_pb_column_1_4 .makepressure_grid_item {
+	    width: 100%;
+	}
+	.et_pb_column_2_3 .makepressure_grid_item {
+		margin-right: 5px;
+	    width: 32%;
+	}
+	.et_pb_column_3_4 .makepressure_grid_item {
+		margin-right: 5px;
+	    width: 32%;
+	}
+
+	.makepressure_post_main_image{
+		width: 100%;
+    }
+
+   .makepressure_action{
+   		text-align: center;
+   }
+}
+@media all and (max-width: 767px) {
+	.et_pb_column_1_2 .makepressure_grid_item {
+	    margin-right: 5px;
+	    width: 48%;
+	}
+	
+	.et_pb_column_4_4 .makepressure_grid_item {
+	    margin-bottom: 5px;
+    	margin-right: 5px;
+    	width: 48%;
+	}
+	.et_pb_column_1_3 .makepressure_grid_item {
+		margin-right: 5px;
+	    width: 48%;
+	}
+	.et_pb_column_1_4 .makepressure_grid_item {
+	    width: 100%;
+	}
+	.et_pb_column_2_3 .makepressure_grid_item {
+		margin-right: 5px;
+	    width: 48%;
+	}
+	.et_pb_column_3_4 .makepressure_grid_item {
+		margin-right: 5px;
+	    width: 48%;
+	}
+	.makepressure_post_main_image{
+		width: 100%;
+    }
+   .makepressure_action{
+   	    text-align: center;
+   }
+}
+@media all and (max-width: 579px) {
+	.et_pb_column_1_2 .makepressure_grid_item {
+	    margin-right: 5px;
+	    width: 100%;
+	}
+	
+	.et_pb_column_4_4 .makepressure_grid_item {
+	    margin-bottom: 5px;
+    	width: 100%
+	}
+	.et_pb_column_1_3 .makepressure_grid_item {
+		margin-right: 5px;
+	    width: 100%;
+	}
+	.et_pb_column_1_4 .makepressure_grid_item {
+	    width: 100%;
+	}
+	.et_pb_column_2_3 .makepressure_grid_item {
+		margin-right: 5px;
+	    width: 100%;
+	}
+	.et_pb_column_3_4 .makepressure_grid_item {
+		margin-right: 5px;
+	    width: 100%;
+	}
+	.makepressure_post_main_image{
+		width: 100%;
+    }
+}
+
+#tooltip_TO:hover{
+	opacity:0.5;
+}
+#tooltip_BA:hover{
+	opacity:0.5;
+}
+#tooltip_SE:hover{
+	opacity:0.5;
+}
+#tooltip_PE:hover{
+	opacity:0.5;
+}
+#tooltip_AL:hover{
+	opacity:0.5;
+}
+#tooltip_RN:hover{
+	opacity:0.5;
+}
+#tooltip_CE:hover{
+	opacity:0.5;
+}
+#tooltip_PI:hover{
+	opacity:0.5;
+}
+#tooltip_MA:hover{
+	opacity:0.5;
+}
+#tooltip_AP:hover{
+	opacity:0.5;
+}
+#tooltip_PA:hover{
+	opacity:0.5;
+}
+#tooltip_RR:hover{
+	opacity:0.5;
+}
+#tooltip_AM:hover{
+	opacity:0.5;
+}
+#tooltip_AC:hover{
+	opacity:0.5;
+}
+#tooltip_RO:hover{
+	opacity:0.5;
+}
+#tooltip_MT:hover{
+	opacity:0.5;
+}
+#tooltip_MS:hover{
+	opacity:0.5;
+}
+#tooltip_GO:hover{
+	opacity:0.5;
+}
+#tooltip_PR:hover{
+	opacity:0.5;
+}
+#tooltip_SC:hover{
+	opacity:0.5;
+}
+#tooltip_RS:hover{
+	opacity:0.5;
+}
+#tooltip_SP:hover{
+	opacity:0.5;
+}
+#tooltip_MG:hover{
+	opacity:0.5;
+}
+#tooltip_RJ:hover{
+	opacity:0.5;
+}
+#tooltip_ES:hover{
+	opacity:0.5;
+}
+#tooltip_DF:hover{
+	opacity:0.5;
+}
+#tooltip_PB:hover{
+	opacity:0.5;
+}
