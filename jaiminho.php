@@ -27,6 +27,7 @@ require_once( ABSPATH . '/wp-content/plugins/sendpress/classes/class-sendpress-o
 if (wp_get_theme() == 'Divi')
 // require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-divi-email-optin.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-send.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/plugins/mce-table-buttons/mce_table_buttons.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-signup-shortcode-old.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-overview.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-queue-all.php' );
