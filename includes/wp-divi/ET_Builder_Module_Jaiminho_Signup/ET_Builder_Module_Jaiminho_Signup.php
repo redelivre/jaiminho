@@ -207,7 +207,7 @@ class ET_Builder_Module_Jaiminho extends ET_Builder_Module {
 
 		if (isset($_GET) and isset($_GET['result'])) {
 			if ($_GET['result'] == 1) {
-				$output .= "<p>Assinante adicinado com sucesso</p><p>Algo esta errado?</p><p>Envie novamente as informações</p><br>";
+				$output .= "<p>Assinante adicionado com sucesso</p><p>Algo esta errado?</p><p>Envie novamente as informações</p><br>";
 			}
 		}
 
