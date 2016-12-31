@@ -6,6 +6,7 @@ class ET_Builder_Module_Jaiminho extends ET_Builder_Module {
 		$this->slug = 'et_pb_Jaiminho';
 
 		$this->whitelisted_fields = array(
+			'select_background_layout',
 			'background_layout',
 			'text_orientation',
 			'content_new',
@@ -58,7 +59,32 @@ class ET_Builder_Module_Jaiminho extends ET_Builder_Module {
 	}
 
 	function get_fields() {
+
+		$args = array(
+			'numberposts'     => -1,
+	    	'orderby'         => 'post_title',
+	    	'order'           => 'DESC'
+	    );
+	   
+		//set the post type after filter so our function name always makes sense ;)
+	    $args['post_type'] = 'sendpress_list';
+
+		$query = new WP_Query( $args );
+		$lists = array();
+		while($query->have_posts()){
+            $query->the_post();
+            $item = get_post();
+			$lists[$item->ID] = esc_html__( get_the_title() . " id: " . $item->ID, 'et_builder' );
+		}
+
 		$fields = array(
+			'select_background_layout' => array(
+				'label'             => esc_html__( 'Lista', 'et_builder' ),
+				'type'              => 'select',
+				'option_category'   => 'configuration',
+				'options'           => $lists,
+				'description'       => esc_html__( 'Selecione uma das listas em que será feito o cadastro do assinante.', 'et_builder' ),
+			),
 			'background_layout' => array(
 				'label'             => esc_html__( 'Text Color', 'et_builder' ),
 				'type'              => 'select',
@@ -138,6 +164,7 @@ class ET_Builder_Module_Jaiminho extends ET_Builder_Module {
 	}
 
 	function shortcode_callback( $atts, $content = null, $function_name ) {
+		$select_list          = $this->shortcode_atts['select_background_layout'];
 		$module_id            = $this->shortcode_atts['module_id'];
 		$module_class         = $this->shortcode_atts['module_class'];
 		$background_layout    = $this->shortcode_atts['background_layout'];
@@ -177,7 +204,15 @@ class ET_Builder_Module_Jaiminho extends ET_Builder_Module {
 			( '' !== $module_class ? sprintf( ' %1$s', esc_attr( $module_class ) ) : '' )
 		);
 
+
+		if (isset($_GET) and isset($_GET['result'])) {
+			if ($_GET['result'] == 1) {
+				$output .= "<p>Assinante adicinado com sucesso</p><p>Algo esta errado?</p><p>Envie novamente as informações</p><br>";
+			}
+		}
+
 		$output .= '<form method="post" action="' . esc_url( admin_url('admin.php') ) . '">';
+
 		 	$output .= '<p>';
 			$output .= '<input type="text" name="email" placeholder="Email">';
 			$output .= '</p>';
@@ -195,6 +230,8 @@ class ET_Builder_Module_Jaiminho extends ET_Builder_Module {
 			$output .= '</p>';
 
 			$output .= '<input type="hidden" name="action" value="addsubscriber">';
+			$output .= '<input type="hidden" name="link" value="' . get_page_link()	 . '">';
+			$output .=  '<input type="hidden" name="list" value="' . $select_list . '">';
 			
 	 		$output .= '<button class="et_pb_button" style="background-color:#545454; color: white ">' . ('' !== $button_text ? esc_html( $button_text ) : 'Assinar Newsletter') . '</button>';
 	 		$output .= '</p>';

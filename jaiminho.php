@@ -94,7 +94,7 @@ class Jaiminho extends SendPress
 		{
 			add_action( 'network_admin_menu' , array( $this , 'jaiminho_network_settings' ) );
 			sendpress_register_sender( 'Jaiminho_Sender_NetWork' );
-                        add_action( 'wpmu_new_blog', array( $this , 'jaiminho_set_settings_for_new_site' ) );
+      add_action( 'wpmu_new_blog', array( $this , 'jaiminho_set_settings_for_new_site' ) );
 		}
 		add_action( 'tgmpa_register', array( $this , 'jaiminho_register_required_plugins' ) );
 		remove_action( 'init' , array( SPNL() , 'toplevel_page_sp-overview' ) );
@@ -106,18 +106,45 @@ class Jaiminho extends SendPress
     add_action( 'admin_action_export_all_lists', array($this,'export_all_lists') );
     add_action( 'admin_action_import', array($this,'save_import') );
     add_filter( 'mce_buttons_2', array($this,'mce_buttons') );
-    
     add_action( 'admin_action_addsubscriber', array($this,'addsubscriber') );
 
 	}
 
   function addsubscriber(){
-    var_dump($_POST);
+    if (isset($_POST)) {
+      $values = array();
+      $values['email'] = $_POST['email'] ? $_POST['email']:"";
+      $values['firstname'] = $_POST['firstname'] ? $_POST['firstname']:"";
+      $values['lastname'] = $_POST['lastname'] ? $_POST['lastname']:"";
+      $values['phonenumber'] = $_POST['phonenumber'] ? $_POST['phonenumber']:"";
+      $user = SendPress_Data::add_subscriber($values);
+
+      $list_values = array();
+      $listID = $_POST['list'] ? $_POST['list']:"";
+      $list_values['listID'] = $listID;
+      $list_values['subscriberID'] = $user;
+      $list_values['status'] = 2;
+      $list_values['updated'] = date('Y-m-d H:i:s');
+
+      $table = SendPress_Data::list_subcribers_table();
+      global $wpdb;
+      $result = $wpdb->insert($table,$list_values);
+
+      if (!$result) {
+        $id = $wpdb->get_var( 'select * from wp_sendpress_list_subscribers where listID = '.$list_values['listID'].' and subscriberID = '.$list_values['subscriberID']);
+        $wpdb->update($table,$list_values, array('id' => $id));
+      }
+
+      $link = isset($_POST['link'])?$_POST['link']:"";
+      if (isset($link)) {
+        wp_redirect($link."?result=1");
+      }
+    }
   }
 
   function send_message(){
     $result = wp_mail( get_option('admin_email'), "Créditos no blog ".get_bloginfo(), 'O blog ' . network_site_url( '/' ) . ' - ' . get_bloginfo() . " necessita de mais créditos.");
-    //SendPress_Admin::redirect('Queue', array('result' => $result));
+    SendPress_Admin::redirect('Queue', array('result' => $result));
   }
 
 	function save_import(){
@@ -133,8 +160,7 @@ class Jaiminho extends SendPress
         $filetype = wp_check_filetype( $filename, array('csv' => 'text/csv') );
         $filetitle = preg_replace('/\.[^.]+$/', '', basename( $filename ) );
         $filename = $filetitle . '.' . $filetype['ext'];
-        var_dump($filetype);
-        var_dump(basename( $filename ));
+
         $upload_dir = wp_upload_dir();
         if( $filetype['ext'] != 'csv' ){
           SendPress_Admin::redirect('Subscribers_Csvimport',array('listID'=> SPNL()->validate->_int( 'listID' )));
@@ -164,29 +190,29 @@ class Jaiminho extends SendPress
 	}
 
   function mce_buttons( $buttons ) {
-          array_unshift( $buttons, 'fontselect' );
-          array_unshift( $buttons, 'fontsizeselect' ); 
-          return $buttons;
+    array_unshift( $buttons, 'fontselect' );
+    array_unshift( $buttons, 'fontsizeselect' ); 
+    return $buttons;
   }
 
   function export_all_lists(){
-          $query = SendPress_Data::get_lists();
-          header("Content-type:text/octect-stream");
-          header("Content-Disposition:attachment;filename=sendpress.csv");
-          echo "email, firstname, lastname, status, phone, list \n";
-          while($query->have_posts()){
-              $query->the_post();
-              $item = get_post();
-              $subscribers = SendPress_Data::export_subscirbers($item->ID);
-              foreach($subscribers as $sb){
-                echo $sb->email . "," .
-                     $sb->firstname . "," .
-                     $sb->lastname . "," .
-                     $sb->status . "," .
-                     $sb->phonenumber . "," .
-                     $item->post_title . "\n";
-              }
-          }
+    $query = SendPress_Data::get_lists();
+    header("Content-type:text/octect-stream");
+    header("Content-Disposition:attachment;filename=sendpress.csv");
+    echo "email, firstname, lastname, status, phone, list \n";
+    while($query->have_posts()){
+        $query->the_post();
+        $item = get_post();
+        $subscribers = SendPress_Data::export_subscirbers($item->ID);
+        foreach($subscribers as $sb){
+          echo $sb->email . "," .
+               $sb->firstname . "," .
+               $sb->lastname . "," .
+               $sb->status . "," .
+               $sb->phonenumber . "," .
+               $item->post_title . "\n";
+        }
+    }
   }
 
   function export_report(){
