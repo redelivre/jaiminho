@@ -113,6 +113,12 @@ class Jaiminho extends SendPress
 	}
 
   function create_subscriber(){
+
+    //var_dump($_POST);
+
+
+
+
     //$this->security_check();
     $email = SPNL()->validate->_email('email');
         $fname = SPNL()->validate->_string('firstname');
@@ -121,14 +127,23 @@ class Jaiminho extends SendPress
         $salutation = SPNL()->validate->_string('salutation');
         $listID = SPNL()->validate->_int('listID');
         $status = SPNL()->validate->_string('status');
+        $subscriber_id = "";
 
         if( is_email($email) ){
-
             $result = SendPress_Data::add_subscriber( array('firstname'=> $fname ,'email'=> $email,'lastname'=>$lname, 'phonenumber'=>$phonenumber, 'salutation'=>$salutation) );
-
             SendPress_Data::update_subscriber_status($listID, $result, $status ,false);
-
+            $subscriber_id = $result;
         }
+
+        $state = SPNL()->validate->_string('state');
+        $city = SPNL()->validate->_string('city');
+        $genre = SPNL()->validate->_string('genre');
+        $category = SPNL()->validate->_string('category');
+
+        SendPress_Data::add_subscriber_meta($subscriber_id,'state',$state);
+        SendPress_Data::add_subscriber_meta($subscriber_id,'city',$city);
+        SendPress_Data::add_subscriber_meta($subscriber_id,'genre',$genre);
+        SendPress_Data::add_subscriber_meta($subscriber_id,'category',$category);
 
     SendPress_Admin::redirect( 'Subscribers_Subscribers' , array( 'listID' => $listID ) );
 
