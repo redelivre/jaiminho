@@ -55,6 +55,7 @@ require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaimin
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-reports.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-subscribers.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-subscribers-csvimport.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-subscribers-add.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-sender-redelivre.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-sender-network.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-sender-gmail.php' );
@@ -107,9 +108,9 @@ class Jaiminho extends SendPress
     add_action( 'admin_action_import', array($this,'save_import') );
     add_filter( 'mce_buttons_2', array($this,'mce_buttons') );
     add_action( 'admin_action_addsubscriber', array($this,'addsubscriber') );
-
+    add_action( 'admin_action_createsubscriber', array($this,'create_subscriber') );
+    add_action( 'admin_action_createsubscribers', array($this,'create_subscribers') );
 	}
-
 
 function role_base() {
 
@@ -136,6 +137,49 @@ function role_base() {
           
       $saverole->add_cap('sendpress_email');
   }
+
+  function create_subscriber(){
+    //$this->security_check();
+    $email = SPNL()->validate->_email('email');
+        $fname = SPNL()->validate->_string('firstname');
+        $lname = SPNL()->validate->_string('lastname');
+        $phonenumber = SPNL()->validate->_string('phonenumber');
+        $salutation = SPNL()->validate->_string('salutation');
+        $listID = SPNL()->validate->_int('listID');
+        $status = SPNL()->validate->_string('status');
+
+        if( is_email($email) ){
+
+            $result = SendPress_Data::add_subscriber( array('firstname'=> $fname ,'email'=> $email,'lastname'=>$lname, 'phonenumber'=>$phonenumber, 'salutation'=>$salutation) );
+
+            SendPress_Data::update_subscriber_status($listID, $result, $status ,false);
+
+        }
+
+    SendPress_Admin::redirect( 'Subscribers_Subscribers' , array( 'listID' => $listID ) );
+
+  }
+
+
+    function create_subscribers(){
+        //$this->security_check();
+        $csvadd = "email,firstname,lastname\n" . trim( SPNL()->validate->_string('csv-add') );
+        $listID = SPNL()->validate->_int('listID');
+        if($listID > 0 ){
+        $newsubscribers = SendPress_Data::subscriber_csv_post_to_array( $csvadd );
+
+        foreach( $newsubscribers as $subscriberx){
+            if( is_email( trim( $subscriberx['email'] ) ) ){
+          
+            $result = SendPress_Data::add_subscriber( array('firstname'=> trim($subscriberx['firstname']) ,'email'=> trim($subscriberx['email']),'lastname'=> trim($subscriberx['lastname']) ) );
+            SendPress_Data::update_subscriber_status($listID, $result, 2, false);
+            }
+        }
+      
+      }
+        wp_redirect( esc_url_raw(admin_url( 'admin.php?page='.SPNL()->validate->page(). "&view=subscribers&listID=".$listID )));
+        
+    }
 
 
   function addsubscriber(){
@@ -1201,6 +1245,8 @@ echo $return["wp_sendpress_report_url"];
 				return "Jaiminho_View_Subscribers";
 			case "SendPress_View_Subscribers_Csvimport":
 				return "Jaiminho_View_Subscribers_Csvimport";
+      case "SendPress_View_Subscribers_Add":
+        return "Jaiminho_View_Subscribers_Add";
 			case "SendPress_View_Subscribers_Listcreate":
 				wp_enqueue_script('jaiminho_disable');
 				return $view_class;
@@ -1223,8 +1269,8 @@ echo $return["wp_sendpress_report_url"];
 		$view_class = $this->jaiminho_get_view_class( $this->_page , $this->_current_view ,  $emails_credits  , $bounce_email );
                 
                 // debug
-		//echo "About to render: $view_class, $this->_page";
-		//echo " nova: ".$view_class;  
+		echo "About to render: $view_class, $this->_page";
+		echo " nova: ".$view_class;  
 
 		$view_class = NEW $view_class;
 		$queue      = '<span id="queue-count-menu-tab">-</span>';
