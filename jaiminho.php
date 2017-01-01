@@ -113,13 +113,6 @@ class Jaiminho extends SendPress
 	}
 
   function create_subscriber(){
-
-    //var_dump($_POST);
-
-
-
-
-    //$this->security_check();
     $email = SPNL()->validate->_email('email');
         $fname = SPNL()->validate->_string('firstname');
         $lname = SPNL()->validate->_string('lastname');
@@ -140,10 +133,10 @@ class Jaiminho extends SendPress
         $genre = SPNL()->validate->_string('genre');
         $category = SPNL()->validate->_string('category');
 
-        SendPress_Data::add_subscriber_meta($subscriber_id,'state',$state);
-        SendPress_Data::add_subscriber_meta($subscriber_id,'city',$city);
-        SendPress_Data::add_subscriber_meta($subscriber_id,'genre',$genre);
-        SendPress_Data::add_subscriber_meta($subscriber_id,'category',$category);
+        SendPress_Data::update_subscriber_meta($subscriber_id,'state',$state);
+        SendPress_Data::update_subscriber_meta($subscriber_id,'city',$city);
+        SendPress_Data::update_subscriber_meta($subscriber_id,'genre',$genre);
+        SendPress_Data::update_subscriber_meta($subscriber_id,'category',$category);
 
     SendPress_Admin::redirect( 'Subscribers_Subscribers' , array( 'listID' => $listID ) );
 
@@ -152,21 +145,25 @@ class Jaiminho extends SendPress
 
     function create_subscribers(){
         //$this->security_check();
-        $csvadd = "email,firstname,lastname\n" . trim( SPNL()->validate->_string('csv-add') );
+        $csvadd = "email,firstname,lastname,phonenumber,state,city,genre,category\n" . trim( SPNL()->validate->_string('csv-add') );
         $listID = SPNL()->validate->_int('listID');
         if($listID > 0 ){
-        $newsubscribers = SendPress_Data::subscriber_csv_post_to_array( $csvadd );
-
-        foreach( $newsubscribers as $subscriberx){
+          $newsubscribers = SendPress_Data::subscriber_csv_post_to_array( $csvadd );
+          foreach( $newsubscribers as $subscriberx){
             if( is_email( trim( $subscriberx['email'] ) ) ){
           
-            $result = SendPress_Data::add_subscriber( array('firstname'=> trim($subscriberx['firstname']) ,'email'=> trim($subscriberx['email']),'lastname'=> trim($subscriberx['lastname']) ) );
-            SendPress_Data::update_subscriber_status($listID, $result, 2, false);
+              $subscriber_id = SendPress_Data::add_subscriber( array('firstname'=> trim($subscriberx['firstname']) ,'email'=> trim($subscriberx['email']),'lastname'=> trim($subscriberx['lastname']) ) );
+              SendPress_Data::update_subscriber_status($listID, $subscriber_id, 2, false);
+
+              SendPress_Data::update_subscriber_meta($subscriber_id,'state',$subscriberx['state']);
+              SendPress_Data::update_subscriber_meta($subscriber_id,'city',$subscriberx['city']);
+              SendPress_Data::update_subscriber_meta($subscriber_id,'genre',$subscriberx['genre']);
+              SendPress_Data::update_subscriber_meta($subscriber_id,'category',$subscriberx['category']);
+
             }
-        }
-      
+          }
       }
-        wp_redirect( esc_url_raw(admin_url( 'admin.php?page='.SPNL()->validate->page(). "&view=subscribers&listID=".$listID )));
+        SendPress_Admin::redirect( 'Subscribers_Subscribers' , array( 'listID' => $listID ) );
         
     }
 
