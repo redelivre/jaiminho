@@ -9,84 +9,27 @@ if ( !defined('SENDPRESS_VERSION') ) {
 }
 
 class Jaiminho_View_Emails_Send_Confirm extends Jaiminho_View_Emails {
-    
-  function save(){
-        //$this->security_check();
-        $saveid = SPNL()->validate->_int('post_ID');
-
-        update_post_meta( $saveid, 'send_date', date('Y-m-d H:i:s') );
-
-        $email_post = get_post( $saveid );
-
-        $subject = SendPress_Option::get('current_send_subject_'. $saveid);
-
-        $info = SendPress_Option::get('current_send_'.$saveid);
-        $slug = SendPress_Data::random_code();
-
-        $new_id = SendPress_Posts::copy($email_post, $subject, $slug, SPNL()->_report_post_type );
-        SendPress_Posts::copy_meta_info($new_id, $saveid);
-        $lists = implode(',', $info['listIDS']);
-        update_post_meta($new_id,'_send_time',  $info['send_at'] );
-        update_post_meta($new_id,'_send_lists', $lists );
-        update_post_meta($new_id,'_stat_type', 'new' );
-        $count = 0;    
-        if(get_post_meta($saveid ,'istest',true) == true ){
-            update_post_meta($new_id,'_report_type', 'test' );
-        }
-
-         update_post_meta($new_id ,'_sendpress_subject', $subject );
-
-        
-
-        if(isset($info['testemails']) && $info['testemails'] != false ){
-            foreach($info['testemails'] as $email){
-                   
-                     $go = array(
-                        'from_name' => 'Josh',
-                        'from_email' => 'joshlyford@gmail.com',
-                        'to_email' => $email['email'],
-                        'emailID'=> $new_id,
-                        'subscriberID'=> 0,
-                        'subject' => $subject,
-                        'listID' => 0
-                        );
-                   
-                    SPNL()->add_email_to_queue($go);
-                    $count++;
-
-            }
-        }
-
-        update_post_meta($new_id,'_send_count', $count );
-       
-   
-        SendPress_Admin::redirect('Emails_Send_Queue',array('emailID'=> $new_id));
-        
-  }
-
-
-
 
     function html() {
         global $post_ID, $post;
 
-
-$list ='';
-$emailID = SPNL()->validate->_int('emailID');
-if($emailID > 0){
-    
-    $post = get_post( $emailID );
-    $post_ID = $post->ID;
-}
+        $list ='';
+        $emailID = SPNL()->validate->_int('emailID');
+        if($emailID > 0){
+            
+            $post = get_post( $emailID );
+            $post_ID = $post->ID;
+        }
 
         ?>
-        <form  method="POST" name="post" id="post">
+        <form  method="POST" name="post" id="post" action="<?php echo esc_url( admin_url('admin.php') ); ?>">
 <?php
 $info = SendPress_Option::get('current_send_'.$post->ID );
 $subject = SendPress_Option::get('current_send_subject_'.$post->ID ,true);
 ?>
 <div id="styler-menu">
     <div style="float:right;" class="btn-group">
+    <input type="hidden" name="action" value="sendemails">
 <a class="btn btn-primary btn-large " id="confirm-send" href="#"><i class="icon-white  icon-thumbs-up"></i> <?php _e('Confirm Send','sendpress'); ?></a>
   </div>
 </div>

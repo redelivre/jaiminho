@@ -110,7 +110,9 @@ class Jaiminho extends SendPress
     add_action( 'admin_action_addsubscriber', array($this,'addsubscriber') );
     add_action( 'admin_action_createsubscriber', array($this,'create_subscriber') );
     add_action( 'admin_action_createsubscribers', array($this,'create_subscribers') );
+    add_action( 'admin_action_sendemails', array($this,'send_emails') );
 	}
+
 
 function role_base() {
 
@@ -136,6 +138,56 @@ function role_base() {
       $saverole  = get_role( 'contributor' );
           
       $saverole->add_cap('sendpress_email');
+
+  function send_emails(){
+        //$this->security_check();
+        $saveid = SPNL()->validate->_int('post_ID');
+
+        update_post_meta( $saveid, 'send_date', date('Y-m-d H:i:s') );
+
+        $email_post = get_post( $saveid );
+
+        $subject = SendPress_Option::get('current_send_subject_'. $saveid);
+
+        $info = SendPress_Option::get('current_send_'.$saveid);
+        $slug = SendPress_Data::random_code();
+
+        $new_id = SendPress_Posts::copy($email_post, $subject, $slug, SPNL()->_report_post_type );
+        SendPress_Posts::copy_meta_info($new_id, $saveid);
+        $lists = implode(',', $info['listIDS']);
+      
+        update_post_meta($new_id,'_send_time',  $info['send_at'] );
+        update_post_meta($new_id,'_send_lists', $lists );
+        update_post_meta($new_id,'_stat_type', 'new' );
+        $count = 0;    
+        if(get_post_meta($saveid ,'istest',true) == true ){
+            update_post_meta($new_id,'_report_type', 'test' );
+        }
+
+        update_post_meta($new_id ,'_sendpress_subject', $subject );
+
+        if(isset($info['testemails']) && $info['testemails'] != false ){
+            foreach($info['testemails'] as $email){
+                   
+                     $go = array(
+                        'from_name' => 'Josh',
+                        'from_email' => 'joshlyford@gmail.com',
+                        'to_email' => $email['email'],
+                        'emailID'=> $new_id,
+                        'subscriberID'=> 0,
+                        'subject' => $subject,
+                        'listID' => 0
+                        );
+                   
+                    SPNL()->add_email_to_queue($go);
+                    $count++;
+
+            }
+        }
+
+        update_post_meta($new_id,'_send_count', $count );
+        
+        SendPress_Admin::redirect('Emails_Send_Queue',array('emailID'=> $new_id));
   }
 
   function create_subscriber(){
