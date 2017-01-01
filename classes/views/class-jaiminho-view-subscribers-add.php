@@ -24,6 +24,20 @@ class Jaiminho_View_Subscribers_Add extends Jaiminho_View_Subscribers {
 	    <span class="sublabel"><?php _e('Firstname','sendpress'); ?>:</span><input type="text" name="firstname" value="" class="regular-text sp-text" /><br>
 	    <span class="sublabel"><?php _e('Lastname','sendpress'); ?>:</span><input type="text" name="lastname" value="" class="regular-text sp-text" /><br>
 	    <span class="sublabel"><?php _e('Phone Number','sendpress'); ?>:</span><input type="text" name="phonenumber" value="" class="regular-text sp-text" /><br>
+	    <span class="sublabel"><?php _e('Estado','jaiminho'); ?>:</span><input type="text" name="state" value="" class="regular-text sp-text" /><br>
+	    <span class="sublabel"><?php _e('Cidade','jaiminho'); ?>:</span><input type="text" name="city" value="" class="regular-text sp-text" /><br>
+	    <span class="sublabel"><?php _e('Genêro','sendpress'); ?>:</span>
+	      <select name="genre">
+			<option value='masculino'>Masculino</option>
+			<option value='feminino'>Feminino</option>
+          </select><br>
+        <span class="sublabel"><?php _e('categoria','sendpress'); ?>:</span>
+	      <select name="category">
+			<option value='education'>Educação</option>
+			<option value='health'>Saúde</option>
+			<option value='culture'>Cultura</option>
+			<option value='human_rights'>Direitos Humanos</option>
+          </select><br>
 	    <span class="sublabel"><?php _e('Status','sendpress'); ?>:</span><select name="status">
 	    			<?php 
 	    				$results =  SendPress_Data::get_statuses();
