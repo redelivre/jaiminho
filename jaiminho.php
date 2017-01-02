@@ -138,56 +138,50 @@ function role_base() {
       $saverole  = get_role( 'contributor' );
           
       $saverole->add_cap('sendpress_email');
+  }
 
-  function send_emails(){
-        //$this->security_check();
-        $saveid = SPNL()->validate->_int('post_ID');
-
-        update_post_meta( $saveid, 'send_date', date('Y-m-d H:i:s') );
-
-        $email_post = get_post( $saveid );
-
-        $subject = SendPress_Option::get('current_send_subject_'. $saveid);
-
-        $info = SendPress_Option::get('current_send_'.$saveid);
-        $slug = SendPress_Data::random_code();
-
-        $new_id = SendPress_Posts::copy($email_post, $subject, $slug, SPNL()->_report_post_type );
-        SendPress_Posts::copy_meta_info($new_id, $saveid);
-        $lists = implode(',', $info['listIDS']);
-      
-        update_post_meta($new_id,'_send_time',  $info['send_at'] );
-        update_post_meta($new_id,'_send_lists', $lists );
-        update_post_meta($new_id,'_stat_type', 'new' );
-        $count = 0;    
-        if(get_post_meta($saveid ,'istest',true) == true ){
-            update_post_meta($new_id,'_report_type', 'test' );
-        }
-
-        update_post_meta($new_id ,'_sendpress_subject', $subject );
-
-        if(isset($info['testemails']) && $info['testemails'] != false ){
-            foreach($info['testemails'] as $email){
-                   
-                     $go = array(
-                        'from_name' => 'Josh',
-                        'from_email' => 'joshlyford@gmail.com',
-                        'to_email' => $email['email'],
-                        'emailID'=> $new_id,
-                        'subscriberID'=> 0,
-                        'subject' => $subject,
-                        'listID' => 0
-                        );
-                   
-                    SPNL()->add_email_to_queue($go);
-                    $count++;
-
-            }
-        }
-
-        update_post_meta($new_id,'_send_count', $count );
+    function send_emails(){
+      $saveid = SPNL()->validate->_int('post_ID');
+      update_post_meta( $saveid, 'send_date', date('Y-m-d H:i:s') );
+      $email_post = get_post( $saveid );
+      var_dump($email_post);
+      $subject = SendPress_Option::get('current_send_subject_'. $saveid);
+      $info = SendPress_Option::get('current_send_'.$saveid);
+      $slug = SendPress_Data::random_code();
+      $new_id = SendPress_Posts::copy($email_post, $subject, $slug, SPNL()->_report_post_type );
+      SendPress_Posts::copy_meta_info($new_id, $saveid);
+      $lists = implode(',', $info['listIDS']);
+    
+      update_post_meta($new_id,'_send_time',  $info['send_at'] );
+      update_post_meta($new_id,'_send_lists', $lists );
+      update_post_meta($new_id,'_stat_type', 'new' );
+      $count = 0;    
+      if(get_post_meta($saveid ,'istest',true) == true ){
+          update_post_meta($new_id,'_report_type', 'test' );
+      }
+      update_post_meta($new_id ,'_sendpress_subject', $subject );
+      var_dump("aqui ele chega");
+      if(isset($info['testemails']) && $info['testemails'] != false ){
+          foreach($info['testemails'] as $email){
+                 
+                   $go = array(
+                      'from_name' => 'Josh',
+                      'from_email' => 'joshlyford@gmail.com',
+                      'to_email' => $email['email'],
+                      'emailID'=> $new_id,
+                      'subscriberID'=> 0,
+                      'subject' => $subject,
+                      'listID' => 0
+                      );
+                 
+                  SPNL()->add_email_to_queue($go);
+                  $count++;
+          }
+      }
+      update_post_meta($new_id,'_send_count', $count );
+   
+      SendPress_Admin::redirect('Emails_Send_Queue',array('emailID'=> $new_id));
         
-        SendPress_Admin::redirect('Emails_Send_Queue',array('emailID'=> $new_id));
   }
 
   function create_subscriber(){
@@ -221,30 +215,29 @@ function role_base() {
   }
 
 
-    function create_subscribers(){
-        //$this->security_check();
-        $csvadd = "email,firstname,lastname,phonenumber,state,city,genre,category\n" . trim( SPNL()->validate->_string('csv-add') );
-        $listID = SPNL()->validate->_int('listID');
-        if($listID > 0 ){
-          $newsubscribers = SendPress_Data::subscriber_csv_post_to_array( $csvadd );
-          foreach( $newsubscribers as $subscriberx){
-            if( is_email( trim( $subscriberx['email'] ) ) ){
-          
-              $subscriber_id = SendPress_Data::add_subscriber( array('firstname'=> trim($subscriberx['firstname']) ,'email'=> trim($subscriberx['email']),'lastname'=> trim($subscriberx['lastname']) ) );
-              SendPress_Data::update_subscriber_status($listID, $subscriber_id, 2, false);
+  function create_subscribers(){
+    //$this->security_check();
+    $csvadd = "email,firstname,lastname,phonenumber,state,city,genre,category\n" . trim( SPNL()->validate->_string('csv-add') );
+    $listID = SPNL()->validate->_int('listID');
+    if($listID > 0 ){
+      $newsubscribers = SendPress_Data::subscriber_csv_post_to_array( $csvadd );
+      foreach( $newsubscribers as $subscriberx){
+        if( is_email( trim( $subscriberx['email'] ) ) ){
+      
+          $subscriber_id = SendPress_Data::add_subscriber( array('firstname'=> trim($subscriberx['firstname']) ,'email'=> trim($subscriberx['email']),'lastname'=> trim($subscriberx['lastname']) ) );
+          SendPress_Data::update_subscriber_status($listID, $subscriber_id, 2, false);
 
-              SendPress_Data::update_subscriber_meta($subscriber_id,'state',$subscriberx['state']);
-              SendPress_Data::update_subscriber_meta($subscriber_id,'city',$subscriberx['city']);
-              SendPress_Data::update_subscriber_meta($subscriber_id,'genre',$subscriberx['genre']);
-              SendPress_Data::update_subscriber_meta($subscriber_id,'category',$subscriberx['category']);
+          SendPress_Data::update_subscriber_meta($subscriber_id,'state',$subscriberx['state']);
+          SendPress_Data::update_subscriber_meta($subscriber_id,'city',$subscriberx['city']);
+          SendPress_Data::update_subscriber_meta($subscriber_id,'genre',$subscriberx['genre']);
+          SendPress_Data::update_subscriber_meta($subscriber_id,'category',$subscriberx['category']);
 
-            }
-          }
+        }
       }
-        SendPress_Admin::redirect( 'Subscribers_Subscribers' , array( 'listID' => $listID ) );
-        
     }
-
+    SendPress_Admin::redirect( 'Subscribers_Subscribers' , array( 'listID' => $listID ) );
+        
+  }
 
   function addsubscriber(){
     if (isset($_POST)) {
