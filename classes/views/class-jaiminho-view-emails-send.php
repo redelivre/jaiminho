@@ -113,6 +113,48 @@ $post_type_object = get_post_type_object( $post_type );
 <div class="date-holder" style="display:none">
     <br>
 <input type="text" name="date-pickit" id="date-pickit" class=" fifty float-left" value="<?php echo date_i18n('Y/m/d'); ?>"/>&nbsp;at
+
+<style>
+    .multiselect {
+        width: 200px;
+    }
+    .selectBox {
+        position: relative;
+    }
+    .selectBox select {
+        width: 100%;
+        font-weight: bold;
+    }
+    .overSelect {
+        position: absolute;
+        left: 0; right: 0; top: 0; bottom: 0;
+    }
+    #checkboxes {
+        display: none;
+        border: 1px #dadada solid;
+    }
+    #checkboxes label {
+        display: block;
+    }
+    #checkboxes label:hover {
+        background-color: #1e90ff;
+    }
+</style>
+
+<script>
+    var expanded = false;
+    function showCheckboxes() {
+        var checkboxes = document.getElementById("checkboxes");
+        if (!expanded) {
+            checkboxes.style.display = "block";
+            expanded = true;
+        } else {
+            checkboxes.style.display = "none";
+            expanded = false;
+        }
+    }
+</script>
+
 <script type="text/javascript">
 jQuery(document).ready(function($) {
 $(".date-holder").hide();
@@ -178,6 +220,48 @@ foreach($current_lists as $list){
            $tlist = ' test-list-add';
         } 
     echo "<input name='listIDS[]' type='checkbox' id='listIDS' class='sp-send-lists ". $tlist ."' value=" . $list->ID. "> ".$list->post_title . " <small>(".SendPress_Data::get_count_subscribers($list->ID). ")</small>$t<br>";
+    ?>
+
+    <div class="multiselect">
+        <div class="selectBox" onclick="showCheckboxes()">
+            <select>
+                <option>Selecione os Estados</option>
+            </select>
+            <div class="overSelect"></div>
+        </div>
+        <div id="checkboxes">
+            <label><input type='checkbox' value='AC'>Acre</label>
+            <label><input type='checkbox' value='AL'>Alagoas</label>
+            <label><input type='checkbox' value='AP'>Amapá</label>
+            <label><input type='checkbox' value='AM'>Amazonas</label>
+            <label><input type='checkbox' value='BA'>Bahia</label>
+            <label><input type='checkbox' value='CE'>Ceará</label>
+            <label><input type='checkbox' value='DF'>Distrito Federal</label>
+            <label><input type='checkbox' value='ES'>Espírito Santo</label>
+            <label><input type='checkbox' value='GO'>Goiás</label>
+            <label><input type='checkbox' value='MA'>Maranhão</label>
+            <label><input type='checkbox' value='MT'>Mato Grosso</label>
+            <label><input type='checkbox' value='MS'>Mato Grosso do Sul</label>
+            <label><input type='checkbox' value='MG'>Minas Gerais</label>
+            <label><input type='checkbox' value='PA'>Pará</label>
+            <label><input type='checkbox' value='PB'>Paraíba</label>
+            <label><input type='checkbox' value='PR'>Paraná</label>
+            <label><input type='checkbox' value='PE'>Pernambuco</label>
+            <label><input type='checkbox' value='PI'>Piauí</label>
+            <label><input type='checkbox' value='RJ'>Rio de Janeiro</label>
+            <label><input type='checkbox' value='RN'>Rio Grande do Norte</label>
+            <label><input type='checkbox' value='RS'>Rio Grande do Sul</label>
+            <label><input type='checkbox' value='RO'>Rondônia</label>
+            <label><input type='checkbox' value='RR'>Roraima</label>
+            <label><input type='checkbox' value='SC'>Santa Catarina</label>
+            <label><input type='checkbox' value='SP'>São Paulo</label>
+            <label><input type='checkbox' value='SE'>Sergipe</label>
+            <label><input type='checkbox' value='TO'>Tocantins</label>
+        </div>
+    </div>
+
+
+    <?php
 }
 
 $this->panel_end();

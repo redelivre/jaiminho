@@ -114,12 +114,18 @@ class Jaiminho extends SendPress
 	}
 
   function send_emails(){
+
+
+    var_dump($_POST);
+
         //$this->security_check();
-        $saveid = SPNL()->validate->_int('post_ID');
+        /*$saveid = SPNL()->validate->_int('post_ID');
 
         update_post_meta( $saveid, 'send_date', date('Y-m-d H:i:s') );
 
         $email_post = get_post( $saveid );
+
+        var_dump($email_post);
 
         $subject = SendPress_Option::get('current_send_subject_'. $saveid);
 
@@ -139,7 +145,7 @@ class Jaiminho extends SendPress
         }
 
         update_post_meta($new_id ,'_sendpress_subject', $subject );
-
+        var_dump("aqui ele chega");
         if(isset($info['testemails']) && $info['testemails'] != false ){
             foreach($info['testemails'] as $email){
                    
@@ -159,10 +165,10 @@ class Jaiminho extends SendPress
             }
         }
 
-        update_post_meta($new_id,'_send_count', $count );
+        update_post_meta($new_id,'_send_count', $count );*/
        
    
-        SendPress_Admin::redirect('Emails_Send_Queue',array('emailID'=> $new_id));
+        //SendPress_Admin::redirect('Emails_Send_Queue',array('emailID'=> $new_id));
         
   }
 
