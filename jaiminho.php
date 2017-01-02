@@ -110,6 +110,34 @@ class Jaiminho extends SendPress
 
 	}
 
+
+function role_base() {
+
+      $saverole  = get_role( 'editor' );
+          
+      $saverole->add_cap('sendpress_email');
+      $saverole->add_cap('sendpress_email_send');
+      $saverole->add_cap('sendpress_reports');
+      $saverole->add_cap('sendpress_subscribers');
+      $saverole->add_cap('sendpress_settings');
+      $saverole->add_cap('sendpress_settings_access');
+      $saverole->add_cap('sendpress_addons');
+      $saverole->add_cap('sendpress_queue');
+      $saverole->add_cap('sendpress_view');
+
+      $saverole  = get_role( 'author' );
+          
+      $saverole->add_cap('sendpress_email');
+      $saverole->add_cap('sendpress_email_send');
+      $saverole->add_cap('sendpress_reports');
+      $saverole->add_cap('sendpress_subscribers');
+
+      $saverole  = get_role( 'contributor' );
+          
+      $saverole->add_cap('sendpress_email');
+  }
+
+
   function addsubscriber(){
     if (isset($_POST)) {
       $values = array();
@@ -1336,6 +1364,7 @@ public static function autoload( $className ) {
 }
 }
 
+register_activation_hook( __FILE__, array( 'Jaiminho' , 'role_base' ) );
 register_activation_hook( __FILE__, array( 'Jaiminho' , 'jaiminho_define_opt_in_email' ) );
 register_activation_hook( __FILE__, array( 'Jaiminho' , 'create_templates' ) );
 register_activation_hook( __FILE__, array( 'Jaiminho' , 'jaiminho_define_redelivre_default_smtp' ) );
