@@ -205,10 +205,10 @@ function role_base() {
         $genre = SPNL()->validate->_string('genre');
         $category = SPNL()->validate->_string('category');
 
-        SendPress_Data::update_subscriber_meta($subscriber_id,'state',$state);
-        SendPress_Data::update_subscriber_meta($subscriber_id,'city',$city);
-        SendPress_Data::update_subscriber_meta($subscriber_id,'genre',$genre);
-        SendPress_Data::update_subscriber_meta($subscriber_id,'category',$category);
+        SendPress_Data::update_subscriber_meta($subscriber_id,'state',$state, $listID);
+        SendPress_Data::update_subscriber_meta($subscriber_id,'city',$city, $listID);
+        SendPress_Data::update_subscriber_meta($subscriber_id,'genre',$genre, $listID);
+        SendPress_Data::update_subscriber_meta($subscriber_id,'category',$category, $listID);
 
     SendPress_Admin::redirect( 'Subscribers_Subscribers' , array( 'listID' => $listID ) );
 
@@ -227,11 +227,11 @@ function role_base() {
           $subscriber_id = SendPress_Data::add_subscriber( array('firstname'=> trim($subscriberx['firstname']) ,'email'=> trim($subscriberx['email']),'lastname'=> trim($subscriberx['lastname']) ) );
           SendPress_Data::update_subscriber_status($listID, $subscriber_id, 2, false);
 
-          SendPress_Data::update_subscriber_meta($subscriber_id,'state',$subscriberx['state']);
-          SendPress_Data::update_subscriber_meta($subscriber_id,'city',$subscriberx['city']);
-          SendPress_Data::update_subscriber_meta($subscriber_id,'genre',$subscriberx['genre']);
-          SendPress_Data::update_subscriber_meta($subscriber_id,'category',$subscriberx['category']);
-
+          SendPress_Data::update_subscriber_meta($subscriber_id,'state',$subscriberx['state'], $listID);
+          SendPress_Data::update_subscriber_meta($subscriber_id,'city',$subscriberx['city'], $listID);
+          SendPress_Data::update_subscriber_meta($subscriber_id,'genre',$subscriberx['genre'], $listID);
+          SendPress_Data::update_subscriber_meta($subscriber_id,'category',$subscriberx['category'], $listID);
+          
         }
       }
     }
