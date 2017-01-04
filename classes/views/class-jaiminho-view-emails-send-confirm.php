@@ -12,8 +12,6 @@ class Jaiminho_View_Emails_Send_Confirm extends Jaiminho_View_Emails {
 
     function html() {
 
-        var_dump($_POST);
-
         global $post_ID, $post;
 
         $list ='';

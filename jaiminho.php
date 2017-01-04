@@ -56,6 +56,7 @@ require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaimin
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-subscribers.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-subscribers-csvimport.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-subscribers-add.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-list-filter.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-sender-redelivre.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-sender-network.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-sender-gmail.php' );
@@ -113,7 +114,6 @@ class Jaiminho extends SendPress
     add_action( 'admin_action_sendemails', array($this,'send_emails') );
     add_action( 'admin_action_saveemail', array($this,'save_email') );
 	}
-
 
 function role_base() {
 
@@ -179,6 +179,7 @@ function role_base() {
                   $count++;
           }
       }
+
       update_post_meta($new_id,'_send_count', $count );
    
       SendPress_Admin::redirect('Emails_Send_Queue',array('emailID'=> $new_id));
@@ -187,13 +188,9 @@ function role_base() {
 
 
   function save_email(){
-    //$this->security_check();
 
     $post_id =  SPNL()->validate->_int('post_ID');
     if($post_id > 0){
-
-
-      
 
       $html = SPNL()->validate->_html('content_area_one_edit');
       //SendPress_Error::Log($html);
@@ -221,7 +218,8 @@ function role_base() {
     }
   
         if( SPNL()->validate->_string('submit') == 'save-next'){
-            SendPress_Admin::redirect('Emails_Send', array('emailID'=> SPNL()->validate->_int('emailID') ) );
+          //SendPress_Admin::redirect('Emails_Send', array('emailID'=> SPNL()->validate->_int('post_ID') ) );
+          SendPress_Admin::redirect('', array('emailID'=> SPNL()->validate->_int('post_ID') ) );
         } else if (SPNL()->validate->_string('submit') == 'send-test'){
             $email = new stdClass;
             $email->emailID  = SPNL()->validate->_int('post_ID');
@@ -230,12 +228,12 @@ function role_base() {
             $email->to_email = SPNL()->validate->_email('test-email');
             $d =SendPress_Manager::send_test_email( $email );
             //print_r($d);
-            SendPress_Admin::redirect('Emails_Edit', array('emailID'=>SPNL()->validate->_int('emailID') ));
+            SendPress_Admin::redirect('List_Filter', array('emailID'=>SPNL()->validate->_int('emailID') ));
         } else {
             SendPress_Admin::redirect('Emails_Edit', array('emailID'=>SPNL()->validate->_int('emailID') ));
         }
 
-
+  }
   function create_subscriber(){
     $email = SPNL()->validate->_email('email');
         $fname = SPNL()->validate->_string('firstname');
