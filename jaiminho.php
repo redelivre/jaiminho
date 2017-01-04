@@ -111,6 +111,7 @@ class Jaiminho extends SendPress
     add_action( 'admin_action_createsubscriber', array($this,'create_subscriber') );
     add_action( 'admin_action_createsubscribers', array($this,'create_subscribers') );
     add_action( 'admin_action_sendemails', array($this,'send_emails') );
+    add_action( 'admin_action_saveemail', array($this,'save_email') );
 	}
 
 
@@ -183,6 +184,57 @@ function role_base() {
       SendPress_Admin::redirect('Emails_Send_Queue',array('emailID'=> $new_id));
         
   }
+
+
+  function save_email(){
+    //$this->security_check();
+
+    $post_id =  SPNL()->validate->_int('post_ID');
+    if($post_id > 0){
+
+
+      
+
+      $html = SPNL()->validate->_html('content_area_one_edit');
+      //SendPress_Error::Log($html);
+      $post_update = array(
+        'ID'           => $post_id,
+            'post_content' => $html
+        );
+       
+      update_post_meta( $post_id, '_sendpress_template', SPNL()->validate->_int('template') );
+      update_post_meta( $post_id, '_sendpress_subject', sanitize_text_field(SPNL()->validate->_string('post_subject' )) );
+      if( SPNL()->validate->_isset('header_content_edit')){
+        update_post_meta( $post_id, '_header_content', SPNL()->validate->_html('header_content_edit') );
+      } 
+      if( SPNL()->validate->_isset('footer_content_edit')){
+        update_post_meta( $post_id, '_footer_content', SPNL()->validate->_html('footer_content_edit') );
+      }
+
+      //  print_r($template);
+      remove_filter('content_save_pre', 'wp_filter_post_kses');
+      remove_filter('content_filtered_save_pre', 'wp_filter_post_kses');
+      wp_update_post( $post_update );
+      add_filter('content_save_pre', 'wp_filter_post_kses');
+      add_filter('content_filtered_save_pre', 'wp_filter_post_kses');
+    
+    }
+  
+        if( SPNL()->validate->_string('submit') == 'save-next'){
+            SendPress_Admin::redirect('Emails_Send', array('emailID'=> SPNL()->validate->_int('emailID') ) );
+        } else if (SPNL()->validate->_string('submit') == 'send-test'){
+            $email = new stdClass;
+            $email->emailID  = SPNL()->validate->_int('post_ID');
+            $email->subscriberID = 0;
+            $email->listID = 0;
+            $email->to_email = SPNL()->validate->_email('test-email');
+            $d =SendPress_Manager::send_test_email( $email );
+            //print_r($d);
+            SendPress_Admin::redirect('Emails_Edit', array('emailID'=>SPNL()->validate->_int('emailID') ));
+        } else {
+            SendPress_Admin::redirect('Emails_Edit', array('emailID'=>SPNL()->validate->_int('emailID') ));
+        }
+
 
   function create_subscriber(){
     $email = SPNL()->validate->_email('email');
