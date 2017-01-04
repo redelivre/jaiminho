@@ -118,7 +118,61 @@ class Jaiminho extends SendPress
 
 
   function create_list(){
-    var_dump($_GET);
+    $vars = isset($_GET) ? $_GET : "";
+    if(!isset($vars)){
+      SendPress_Admin::redirect('Emails_Send', array('emailID'=> SPNL()->validate->_int('post_ID') ) );
+    }
+
+    global $wpdb;
+    $meta_table = SendPress_Data::subscriber_meta_table();
+    $query = "select distinct subscriberID from $meta_table where";
+
+    $name = "";
+    foreach ($vars["states"] as $state) {
+      $name .= "_" . $state;
+      $query .= $wpdb->prepare( " meta_value=%s or ", $state);
+    }
+
+    foreach ($vars["cities"] as $city) {
+      $name .= "_" . $city;
+      $query .= $wpdb->prepare( " meta_value=%s or ", $city);
+    }
+
+    foreach ($vars["genres"] as $genre) {
+      $name .= "_" . $genre;
+      $query .= $wpdb->prepare( " meta_value=%s or ", $genre);
+    }
+    $last_value = end(array_values($vars["categories"]));
+    foreach ($vars["categories"] as $category) {
+      $name .= "_" . $category;
+      if ($category != $last_value) {
+        $query .= $wpdb->prepare( " meta_value=%s or ", $category);
+      }else{
+        $query .= $wpdb->prepare( " meta_value=%s", $category);
+      }
+    }
+    $public = 0;
+    
+
+    //create list
+    //$list = SendPress_Data::get_list( array('post_name'=> $name) );
+    //if (!isset($list)) {
+      $list = SendPress_Data::create_list( array('name'=> $name, 'public'=>$public ) );
+    //}
+    $subscribers = $wpdb->get_results($query);
+
+    //addsubscriber
+    foreach ($subscribers as $key => $subscriber) {
+      $subscriber = $subscriber->subscriberID;
+      $list_values['listID'] = $list;
+      $list_values['subscriberID'] = $subscriber;
+      $list_values['status'] = 2;
+      $list_values['updated'] = date('Y-m-d H:i:s');
+
+      $table = SendPress_Data::list_subcribers_table();
+      $result = $wpdb->insert($table,$list_values);
+    }
+    SendPress_Admin::redirect('Emails_Send', array('emailID'=> SPNL()->validate->_int('emailID') ) );
   }
 
   function send_emails(){
@@ -207,8 +261,7 @@ class Jaiminho extends SendPress
     }
   
         if( SPNL()->validate->_string('submit') == 'save-next'){
-          //SendPress_Admin::redirect('Emails_Send', array('emailID'=> SPNL()->validate->_int('post_ID') ) );
-          SendPress_Admin::redirect('Emails_List_Filter', array('emailID'=> SPNL()->validate->_int('post_ID') ) );
+          SendPress_Admin::redirect('Emails_List_Filter', array('emailID'=> SPNL()->validate->_int('emailID') ) );
         } else if (SPNL()->validate->_string('submit') == 'send-test'){
             $email = new stdClass;
             $email->emailID  = SPNL()->validate->_int('post_ID');
@@ -217,7 +270,7 @@ class Jaiminho extends SendPress
             $email->to_email = SPNL()->validate->_email('test-email');
             $d =SendPress_Manager::send_test_email( $email );
             //print_r($d);
-            SendPress_Admin::redirect('List_Filter', array('emailID'=>SPNL()->validate->_int('emailID') ));
+            SendPress_Admin::redirect('Emails_Edit', array('emailID'=>SPNL()->validate->_int('emailID') ));
         } else {
             SendPress_Admin::redirect('Emails_Edit', array('emailID'=>SPNL()->validate->_int('emailID') ));
         }
