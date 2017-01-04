@@ -278,7 +278,7 @@ function role_base() {
     }
   
         if( SPNL()->validate->_string('submit') == 'save-next'){
-          SendPress_Admin::redirect('Emails_List_Filter', array('emailID'=> SPNL()->validate->_int('emailID') ) );
+          SendPress_Admin::redirect('Emails_List_Filter', array('emailID'=> SPNL()->validate->_int('post_ID') ) );
         } else if (SPNL()->validate->_string('submit') == 'send-test'){
             $email = new stdClass;
             $email->emailID  = SPNL()->validate->_int('post_ID');
