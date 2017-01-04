@@ -125,6 +125,47 @@ class Jaiminho_View_Emails_List_Filter extends Jaiminho_View_Emails {
             }
         </style>
 
+        <style>
+            .multiselect_city {
+                width: 200px;
+            }
+            .selectBox_city {
+                position: relative;
+            }
+            .selectBox_city select {
+                width: 100%;
+                font-weight: bold;
+            }
+            .overSelect_city {
+                position: absolute;
+                left: 0; right: 0; top: 0; bottom: 0;
+            }
+            #checkboxes_city {
+                display: none;
+                border: 1px #dadada solid;
+            }
+            #checkboxes_city label {
+                display: block;
+            }
+            #checkboxes_city label:hover {
+                background-color: #1e90ff;
+            }
+        </style>
+
+        <script>
+            var expanded = false;
+            function showCheckboxes_city() {
+                var checkboxes_city = document.getElementById("checkboxes_city");
+                if (!expanded) {
+                    checkboxes_city.style.display = "block";
+                    expanded = true;
+                } else {
+                    checkboxes_city.style.display = "none";
+                    expanded = false;
+                }
+            }
+        </script>
+
         <script>
             var expanded = false;
             function showCheckboxes_category() {
@@ -140,7 +181,8 @@ class Jaiminho_View_Emails_List_Filter extends Jaiminho_View_Emails {
         </script>
 
 		<h1>Crie uma Lista nova com utilizando meta info dos Assinantes:</h1>
-		<form metho="post" action="">
+		<form metho="get" action="<?php echo esc_url( admin_url('admin.php') ); ?>">
+		    <input type="hidden" name="action" value="createlist">
 			<label>Primeiro Selecione as listas que você quer utilizar:</label>
 			<p>
 			<?php
@@ -164,8 +206,6 @@ class Jaiminho_View_Emails_List_Filter extends Jaiminho_View_Emails {
 	        </p>
 	        <label>Agora selecione quais os filtros que você gostaria de realizar:</label>
 	        <p>
-			<input type="hidden" name="action" value="xxx">
-
 			<div class="multiselect">
                 <div class="selectBox" onclick="showCheckboxes()">
                     <select>
@@ -174,33 +214,26 @@ class Jaiminho_View_Emails_List_Filter extends Jaiminho_View_Emails {
                     <div class="overSelect"></div>
                 </div>
                 <div id="checkboxes">
-                    <label><input type='checkbox' value='Acre'>Acre</label>
-                    <label><input type='checkbox' value='Alagoas'>Alagoas</label>
-                    <label><input type='checkbox' value='Amapá'>Amapá</label>
-                    <label><input type='checkbox' value='Amazonas'>Amazonas</label>
-                    <label><input type='checkbox' value='Bahia'>Bahia</label>
-                    <label><input type='checkbox' value='Ceará'>Ceará</label>
-                    <label><input type='checkbox' value='Distrito Federal'>Distrito Federal</label>
-                    <label><input type='checkbox' value='Espírito Santo'>Espírito Santo</label>
-                    <label><input type='checkbox' value='Goiás'>Goiás</label>
-                    <label><input type='checkbox' value='Maranhão'>Maranhão</label>
-                    <label><input type='checkbox' value='Mato Grosso'>Mato Grosso</label>
-                    <label><input type='checkbox' value='Mato Grosso do Sul'>Mato Grosso do Sul</label>
-                    <label><input type='checkbox' value='Minas Gerais'>Minas Gerais</label>
-                    <label><input type='checkbox' value='Pará'>Pará</label>
-                    <label><input type='checkbox' value='Paraíba'>Paraíba</label>
-                    <label><input type='checkbox' value='Paraná'>Paraná</label>
-                    <label><input type='checkbox' value='Pernambuco'>Pernambuco</label>
-                    <label><input type='checkbox' value='Piauí'>Piauí</label>
-                    <label><input type='checkbox' value='Rio de Janeiro'>Rio de Janeiro</label>
-                    <label><input type='checkbox' value='Rio Grande do Norte'>Rio Grande do Norte</label>
-                    <label><input type='checkbox' value='Rio Grande do Sul'>Rio Grande do Sul</label>
-                    <label><input type='checkbox' value='Rondônia'>Rondônia</label>
-                    <label><input type='checkbox' value='Roraima'>Roraima</label>
-                    <label><input type='checkbox' value='Santa Catarina'>Santa Catarina</label>
-                    <label><input type='checkbox' value='São Paulo'>São Paulo</label>
-                    <label><input type='checkbox' value='Sergipe'>Sergipe</label>
-                    <label><input type='checkbox' value='Tocantins'>Tocantins</label>
+                <?php
+                foreach ($this->get_keys('state') as $state) {
+                	echo "<label><input type='checkbox' name='states[]' value='$state->meta_value'>$state->meta_value</label>";
+                }
+                ?>
+                </div>
+            </div>
+            <div class="multiselect_city">
+                <div class="selectBox_city" onclick="showCheckboxes_city()">
+                    <select>
+                        <option>Selecione as Cidades</option>
+                    </select>
+                    <div class="overSelect_city"></div>
+                </div>
+                <div id="checkboxes_city">
+                <?php
+                foreach ($this->get_keys('city') as $state) {
+                	echo "<label><input type='checkbox' name='states[]' value='$state->meta_value'>$state->meta_value</label>";
+                }
+                ?>
                 </div>
             </div>
 
@@ -212,8 +245,11 @@ class Jaiminho_View_Emails_List_Filter extends Jaiminho_View_Emails {
                     <div class="overSelect_genre"></div>
                 </div>
                 <div id="checkboxes_genre">
-                    <label><input type='checkbox' value='feminino'>Feminino</label>
-                    <label><input type='checkbox' value='masculino'>masculino</label>
+                <?php
+                foreach ($this->get_keys('genre') as $state) {
+                	echo "<label><input type='checkbox' name='states[]' value='$state->meta_value'>$state->meta_value</label>";
+                }
+                ?>
                 </div>
             </div>
 
@@ -225,10 +261,11 @@ class Jaiminho_View_Emails_List_Filter extends Jaiminho_View_Emails {
                     <div class="overSelect_category"></div>
                 </div>
                 <div id="checkboxes_category">
-                    <label><input type='checkbox' value='education'>Educação</label>
-                    <label><input type='checkbox'value='health'>Saúde</label>
-                    <label><input type='checkbox' value='culture'>Cultura</label>
-                    <label><input type='checkbox' value='human_rights'>Direitos Humanos</label>
+                <?php
+                foreach ($this->get_keys('category') as $state) {
+                	echo "<label><input type='checkbox' name='states[]' value='$state->meta_value'>$state->meta_value</label>";
+                }
+                ?>
                 </div>
             </div>
             </p>
@@ -244,6 +281,15 @@ class Jaiminho_View_Emails_List_Filter extends Jaiminho_View_Emails {
 		$query = 'select subscriberID,listID from ' . $meta_table . ' where meta_key=' . $meta_key . ' and meta_value=' . $meta_value . ' and listID=' . $listID;
 		return $wpdb->get_results($query); 
 	}
+
+	function get_keys($meta_key){
+		global $wpdb;
+		$meta_table = SendPress_Data::subscriber_meta_table();
+		$query = "select distinct meta_value ";
+		$query .= $wpdb->prepare( " from $meta_table where meta_key = %s", $meta_key );
+		return $wpdb->get_results($query);
+	}
+
 
 }
 
