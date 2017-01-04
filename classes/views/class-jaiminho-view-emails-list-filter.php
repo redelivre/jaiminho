@@ -183,6 +183,7 @@ class Jaiminho_View_Emails_List_Filter extends Jaiminho_View_Emails {
 		<h1>Crie uma Lista nova com utilizando meta info dos Assinantes:</h1>
 		<form metho="get" action="<?php echo esc_url( admin_url('admin.php') ); ?>">
 		    <input type="hidden" name="action" value="createlist">
+		    <input type="hidden" name="emailID" value="<?php echo $_GET['emailID']; ?>">
 			<label>Primeiro Selecione as listas que você quer utilizar:</label>
 			<p>
 			<?php
