@@ -231,7 +231,7 @@ class Jaiminho_View_Emails_List_Filter extends Jaiminho_View_Emails {
                 <div id="checkboxes_city">
                 <?php
                 foreach ($this->get_keys('city') as $state) {
-                	echo "<label><input type='checkbox' name='states[]' value='$state->meta_value'>$state->meta_value</label>";
+                	echo "<label><input type='checkbox' name='cities[]' value='$state->meta_value'>$state->meta_value</label>";
                 }
                 ?>
                 </div>
@@ -247,7 +247,7 @@ class Jaiminho_View_Emails_List_Filter extends Jaiminho_View_Emails {
                 <div id="checkboxes_genre">
                 <?php
                 foreach ($this->get_keys('genre') as $state) {
-                	echo "<label><input type='checkbox' name='states[]' value='$state->meta_value'>$state->meta_value</label>";
+                	echo "<label><input type='checkbox' name='genres[]' value='$state->meta_value'>$state->meta_value</label>";
                 }
                 ?>
                 </div>
@@ -263,7 +263,7 @@ class Jaiminho_View_Emails_List_Filter extends Jaiminho_View_Emails {
                 <div id="checkboxes_category">
                 <?php
                 foreach ($this->get_keys('category') as $state) {
-                	echo "<label><input type='checkbox' name='states[]' value='$state->meta_value'>$state->meta_value</label>";
+                	echo "<label><input type='checkbox' name='categories[]' value='$state->meta_value'>$state->meta_value</label>";
                 }
                 ?>
                 </div>
