@@ -9,9 +9,6 @@ if ( !defined('SENDPRESS_VERSION') ) {
 }
 
 class Jaiminho_View_Emails_Edit extends Jaiminho_View_Emails {
-        
-
-	}
 
 	function admin_init(){
 		global $is_IE;
@@ -52,10 +49,9 @@ class Jaiminho_View_Emails_Edit extends Jaiminho_View_Emails {
 
 		?>
      <form method="post" id="post" role="form" action="<?php echo esc_url( admin_url('admin.php') ); ?>">
-     	<input type="hidden" name="action" value="sendemails">
+     	<input type="hidden" name="action" value="saveemail">
         <input type="hidden" name="post_ID" id="post_ID" value="<?php echo $post->ID; ?>" />
         <input type="hidden" name="post_type" id="post_type" value="sp_newsletters" />
-        <input type="hidden" name="action" id="action" value="save-email" />
        <div  >
        <div style="float:right;" class="btn-toolbar">
             <div id="sp-cancel-btn" class="btn-group">

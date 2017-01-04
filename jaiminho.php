@@ -56,6 +56,7 @@ require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaimin
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-subscribers.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-subscribers-csvimport.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-subscribers-add.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-list-filter.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-sender-redelivre.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-sender-network.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-sender-gmail.php' );
@@ -116,72 +117,63 @@ class Jaiminho extends SendPress
 
   function send_emails(){
 
+      $saveid = SPNL()->validate->_int('post_ID');
 
-    var_dump($_POST);
+      update_post_meta( $saveid, 'send_date', date('Y-m-d H:i:s') );
 
-        //$this->security_check();
-        /*$saveid = SPNL()->validate->_int('post_ID');
+      $email_post = get_post( $saveid );
 
-        update_post_meta( $saveid, 'send_date', date('Y-m-d H:i:s') );
+      var_dump($email_post);
 
-        $email_post = get_post( $saveid );
+      $subject = SendPress_Option::get('current_send_subject_'. $saveid);
 
-        var_dump($email_post);
+      $info = SendPress_Option::get('current_send_'.$saveid);
+      $slug = SendPress_Data::random_code();
 
-        $subject = SendPress_Option::get('current_send_subject_'. $saveid);
+      $new_id = SendPress_Posts::copy($email_post, $subject, $slug, SPNL()->_report_post_type );
+      SendPress_Posts::copy_meta_info($new_id, $saveid);
+      $lists = implode(',', $info['listIDS']);
+    
+      update_post_meta($new_id,'_send_time',  $info['send_at'] );
+      update_post_meta($new_id,'_send_lists', $lists );
+      update_post_meta($new_id,'_stat_type', 'new' );
+      $count = 0;    
+      if(get_post_meta($saveid ,'istest',true) == true ){
+          update_post_meta($new_id,'_report_type', 'test' );
+      }
 
-        $info = SendPress_Option::get('current_send_'.$saveid);
-        $slug = SendPress_Data::random_code();
+      update_post_meta($new_id ,'_sendpress_subject', $subject );
+      var_dump("aqui ele chega");
+      if(isset($info['testemails']) && $info['testemails'] != false ){
+          foreach($info['testemails'] as $email){
+                 
+                   $go = array(
+                      'from_name' => 'Josh',
+                      'from_email' => 'joshlyford@gmail.com',
+                      'to_email' => $email['email'],
+                      'emailID'=> $new_id,
+                      'subscriberID'=> 0,
+                      'subject' => $subject,
+                      'listID' => 0
+                      );
+                 
+                  SPNL()->add_email_to_queue($go);
+                  $count++;
 
-        $new_id = SendPress_Posts::copy($email_post, $subject, $slug, SPNL()->_report_post_type );
-        SendPress_Posts::copy_meta_info($new_id, $saveid);
-        $lists = implode(',', $info['listIDS']);
-      
-        update_post_meta($new_id,'_send_time',  $info['send_at'] );
-        update_post_meta($new_id,'_send_lists', $lists );
-        update_post_meta($new_id,'_stat_type', 'new' );
-        $count = 0;    
-        if(get_post_meta($saveid ,'istest',true) == true ){
-            update_post_meta($new_id,'_report_type', 'test' );
-        }
+          }
+      }
 
-        update_post_meta($new_id ,'_sendpress_subject', $subject );
-        var_dump("aqui ele chega");
-        if(isset($info['testemails']) && $info['testemails'] != false ){
-            foreach($info['testemails'] as $email){
-                   
-                     $go = array(
-                        'from_name' => 'Josh',
-                        'from_email' => 'joshlyford@gmail.com',
-                        'to_email' => $email['email'],
-                        'emailID'=> $new_id,
-                        'subscriberID'=> 0,
-                        'subject' => $subject,
-                        'listID' => 0
-                        );
-                   
-                    SPNL()->add_email_to_queue($go);
-                    $count++;
-
-            }
-        }
-
-        update_post_meta($new_id,'_send_count', $count );*/
-       
+      update_post_meta($new_id,'_send_count', $count );
    
-        //SendPress_Admin::redirect('Emails_Send_Queue',array('emailID'=> $new_id));
+      SendPress_Admin::redirect('Emails_Send_Queue',array('emailID'=> $new_id));
         
   }
 
 
   function save_email(){
-    //$this->security_check();
 
     $post_id =  SPNL()->validate->_int('post_ID');
     if($post_id > 0){
-
-
-      
 
       $html = SPNL()->validate->_html('content_area_one_edit');
       //SendPress_Error::Log($html);
@@ -209,7 +201,8 @@ class Jaiminho extends SendPress
     }
   
         if( SPNL()->validate->_string('submit') == 'save-next'){
-            SendPress_Admin::redirect('Emails_Send', array('emailID'=> SPNL()->validate->_int('emailID') ) );
+          //SendPress_Admin::redirect('Emails_Send', array('emailID'=> SPNL()->validate->_int('post_ID') ) );
+          SendPress_Admin::redirect('', array('emailID'=> SPNL()->validate->_int('post_ID') ) );
         } else if (SPNL()->validate->_string('submit') == 'send-test'){
             $email = new stdClass;
             $email->emailID  = SPNL()->validate->_int('post_ID');
@@ -218,12 +211,12 @@ class Jaiminho extends SendPress
             $email->to_email = SPNL()->validate->_email('test-email');
             $d =SendPress_Manager::send_test_email( $email );
             //print_r($d);
-            SendPress_Admin::redirect('Emails_Edit', array('emailID'=>SPNL()->validate->_int('emailID') ));
+            SendPress_Admin::redirect('List_Filter', array('emailID'=>SPNL()->validate->_int('emailID') ));
         } else {
             SendPress_Admin::redirect('Emails_Edit', array('emailID'=>SPNL()->validate->_int('emailID') ));
         }
 
-
+  }
   function create_subscriber(){
     $email = SPNL()->validate->_email('email');
         $fname = SPNL()->validate->_string('firstname');
