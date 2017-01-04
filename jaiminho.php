@@ -56,7 +56,7 @@ require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaimin
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-subscribers.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-subscribers-csvimport.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-subscribers-add.php' );
-require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-email-list-filter.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-list-filter.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-sender-redelivre.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-sender-network.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-sender-gmail.php' );
@@ -202,7 +202,7 @@ class Jaiminho extends SendPress
   
         if( SPNL()->validate->_string('submit') == 'save-next'){
           //SendPress_Admin::redirect('Emails_Send', array('emailID'=> SPNL()->validate->_int('post_ID') ) );
-          SendPress_Admin::redirect('Email_List_Filter', array('emailID'=> SPNL()->validate->_int('post_ID') ) );
+          SendPress_Admin::redirect('Emails_List_Filter', array('emailID'=> SPNL()->validate->_int('post_ID') ) );
         } else if (SPNL()->validate->_string('submit') == 'send-test'){
             $email = new stdClass;
             $email->emailID  = SPNL()->validate->_int('post_ID');
@@ -1289,8 +1289,8 @@ echo $return["wp_sendpress_report_url"];
 
 	public function jaiminho_get_view_class($page, $current_view, $emails_credits, $bounce_email)
 	{
-
 		$view_class = $this->get_view_class( $page, $current_view );
+
 		switch ( $view_class ) {
 			case "SendPress_View_Emails_Send":
 				return "Jaiminho_View_Emails_Send";
@@ -1334,8 +1334,8 @@ echo $return["wp_sendpress_report_url"];
 				return "Jaiminho_View_Reports";
 			case "SendPress_View_Subscribers":
 				return "Jaiminho_View_Subscribers";
-      case "SendPress_View_Email_List_Filter":
-        return "Jaiminho_View_Email_List_Filter";
+      case "SendPress_View_Emails_List_Filter":
+        return "Jaiminho_View_Emails_List_Filter";
 			case "SendPress_View_Subscribers_Csvimport":
 				return "Jaiminho_View_Subscribers_Csvimport";
       case "SendPress_View_Subscribers_Add":
@@ -1366,6 +1366,7 @@ echo $return["wp_sendpress_report_url"];
 		echo " nova: ".$view_class;  
 
 		$view_class = NEW $view_class;
+
 		$queue      = '<span id="queue-count-menu-tab">-</span>';
 
 		// xxx: ainda não foi possivel descobrir onde esta o problema, simplesmente a página do overview repete o template - depois reativar a aba
