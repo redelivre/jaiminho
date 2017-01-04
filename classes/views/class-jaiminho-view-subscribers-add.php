@@ -55,7 +55,6 @@ class Jaiminho_View_Subscribers_Add extends Jaiminho_View_Subscribers {
 				<option value='Sergipe'>Sergipe</option>
 				<option value='Tocantins'>Tocantins</option>
 			</select>
-
 	    <br>
 	    <span class="sublabel"><?php _e('Cidade','jaiminho'); ?>:</span><input type="text" name="city" value="" class="regular-text sp-text" /><br>
 	    <span class="sublabel"><?php _e('Genêro','sendpress'); ?>:</span>

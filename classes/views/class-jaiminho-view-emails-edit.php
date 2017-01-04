@@ -66,7 +66,7 @@ class Jaiminho_View_Emails_Edit extends Jaiminho_View_Emails {
 
 	function admin_init(){
 		global $is_IE;
-		remove_filter('the_editor',					'qtrans_modifyRichEditor');
+		remove_filter('the_editor',	'qtrans_modifyRichEditor');
 		/*
 		if (  ! wp_is_mobile() &&
 			 ! ( $is_IE && preg_match( '/MSIE [5678]/', $_SERVER['HTTP_USER_AGENT'] ) ) ) {
