@@ -56,7 +56,7 @@ require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaimin
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-subscribers.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-subscribers-csvimport.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-subscribers-add.php' );
-require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-list-filter.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-email-list-filter.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-sender-redelivre.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-sender-network.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-sender-gmail.php' );
@@ -219,7 +219,7 @@ function role_base() {
   
         if( SPNL()->validate->_string('submit') == 'save-next'){
           //SendPress_Admin::redirect('Emails_Send', array('emailID'=> SPNL()->validate->_int('post_ID') ) );
-          SendPress_Admin::redirect('', array('emailID'=> SPNL()->validate->_int('post_ID') ) );
+          SendPress_Admin::redirect('Email_List_Filter', array('emailID'=> SPNL()->validate->_int('post_ID') ) );
         } else if (SPNL()->validate->_string('submit') == 'send-test'){
             $email = new stdClass;
             $email->emailID  = SPNL()->validate->_int('post_ID');
@@ -1350,6 +1350,8 @@ echo $return["wp_sendpress_report_url"];
 				return "Jaiminho_View_Reports";
 			case "SendPress_View_Subscribers":
 				return "Jaiminho_View_Subscribers";
+      case "SendPress_View_Email_List_Filter":
+        return "Jaiminho_View_Email_List_Filter";
 			case "SendPress_View_Subscribers_Csvimport":
 				return "Jaiminho_View_Subscribers_Csvimport";
       case "SendPress_View_Subscribers_Add":
