@@ -8,7 +8,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 	die;
 }
 
-class Jaiminho_View_List_Filter extends Jaiminho_View_Emails {
+class Jaiminho_View_Email_List_Filter extends Jaiminho_View_Emails {
 
 	function html() {
 		var_dump("Conseguimos!!!");
