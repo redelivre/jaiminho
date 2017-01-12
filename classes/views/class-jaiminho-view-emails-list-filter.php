@@ -150,6 +150,9 @@ class Jaiminho_View_Emails_List_Filter extends Jaiminho_View_Emails {
             #checkboxes_city label:hover {
                 background-color: #1e90ff;
             }
+            .button-next{
+            	float:right;
+            }
         </style>
 
         <script>
@@ -180,7 +183,10 @@ class Jaiminho_View_Emails_List_Filter extends Jaiminho_View_Emails {
             }
         </script>
 
+        <a class="btn btn-primary button-next" href="<?php echo esc_url( admin_url('admin.php') ); ?>?page=sp-emails&view=send&emailID=<?php echo $_GET['emailID']; ?>" ><?php _e('Pular este Passo'); ?></a> 
+
 		<h1>Crie uma Lista nova com utilizando meta info dos Assinantes:</h1>
+
 		<form metho="get" action="<?php echo esc_url( admin_url('admin.php') ); ?>">
 		    <input type="hidden" name="action" value="createlist">
 		    <input type="hidden" name="emailID" value="<?php echo $_GET['emailID']; ?>">
