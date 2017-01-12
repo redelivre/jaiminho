@@ -55,6 +55,8 @@ require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaimin
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-reports.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-subscribers.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-subscribers-csvimport.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-subscribers-add.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-list-filter.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-sender-redelivre.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-sender-network.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-sender-gmail.php' );
@@ -107,9 +109,76 @@ class Jaiminho extends SendPress
     add_action( 'admin_action_import', array($this,'save_import') );
     add_filter( 'mce_buttons_2', array($this,'mce_buttons') );
     add_action( 'admin_action_addsubscriber', array($this,'addsubscriber') );
-
+    add_action( 'admin_action_createsubscriber', array($this,'create_subscriber') );
+    add_action( 'admin_action_createsubscribers', array($this,'create_subscribers') );
+    add_action( 'admin_action_sendemails', array($this,'send_emails') );
+    add_action( 'admin_action_saveemail', array($this,'save_email') );
+    add_action( 'admin_action_createlist', array($this,'create_list') );
 	}
 
+
+  function create_list(){
+    $vars = $_GET;
+    if(count($vars) == 4){
+      SendPress_Admin::redirect('Emails_Send', array('emailID'=> SPNL()->validate->_int('emailID') ) );
+    }
+
+    global $wpdb;
+    $meta_table = SendPress_Data::subscriber_meta_table();
+    $query = "select distinct subscriberID from $meta_table where";
+
+    $name = "";
+    if (isset($vars["states"])) {
+      foreach ($vars["states"] as $state) {
+        $name .= "_" . $state;
+        $query .= $wpdb->prepare( " meta_value=%s or ", $state);
+      }
+    }
+
+    if (isset($vars['cities'])) {
+      foreach ($vars["cities"] as $city) {
+        $name .= "_" . $city;
+        $query .= $wpdb->prepare( " meta_value=%s or ", $city);
+      }
+    }
+
+    if (isset($vars['genres'])) {
+      foreach ($vars["genres"] as $genre) {
+        $name .= "_" . $genre;
+        $query .= $wpdb->prepare( " meta_value=%s or ", $genre);
+      }
+    }
+
+    if (isset($vars['categories'])) {
+      $last_value = end(array_values($vars["categories"]));
+      foreach ($vars["categories"] as $category) {
+        $name .= "_" . $category;
+      }
+    }
+
+    $public = 0;
+
+    $query = substr($query, 0, -3);
+
+    $list = SendPress_Data::create_list( array('name'=> $name, 'public'=>$public ) );
+  
+    $subscribers = $wpdb->get_results($query);
+
+    //addsubscriber
+    
+    foreach ($subscribers as $key => $subscriber) {
+      $subscriber = $subscriber->subscriberID;
+      $list_values['listID'] = $list;
+      $list_values['subscriberID'] = $subscriber;
+      $list_values['status'] = 2;
+      $list_values['updated'] = date('Y-m-d H:i:s');
+
+      $table = SendPress_Data::list_subcribers_table();
+      $result = $wpdb->insert($table,$list_values);
+    }
+
+    SendPress_Admin::redirect('Emails_Send', array('emailID'=> SPNL()->validate->_int('emailID') ) );
+  }
 
 function role_base() {
 
@@ -137,6 +206,151 @@ function role_base() {
       $saverole->add_cap('sendpress_email');
   }
 
+
+  function send_emails(){
+      $saveid = SPNL()->validate->_int('post_ID');
+      update_post_meta( $saveid, 'send_date', date('Y-m-d H:i:s') );
+      $email_post = get_post( $saveid );
+      var_dump($email_post);
+      $subject = SendPress_Option::get('current_send_subject_'. $saveid);
+      $info = SendPress_Option::get('current_send_'.$saveid);
+      $slug = SendPress_Data::random_code();
+      $new_id = SendPress_Posts::copy($email_post, $subject, $slug, SPNL()->_report_post_type );
+      SendPress_Posts::copy_meta_info($new_id, $saveid);
+      $lists = implode(',', $info['listIDS']);
+    
+      update_post_meta($new_id,'_send_time',  $info['send_at'] );
+      update_post_meta($new_id,'_send_lists', $lists );
+      update_post_meta($new_id,'_stat_type', 'new' );
+      $count = 0;    
+      if(get_post_meta($saveid ,'istest',true) == true ){
+          update_post_meta($new_id,'_report_type', 'test' );
+      }
+      update_post_meta($new_id ,'_sendpress_subject', $subject );
+      var_dump("aqui ele chega");
+      if(isset($info['testemails']) && $info['testemails'] != false ){
+          foreach($info['testemails'] as $email){
+                 
+                   $go = array(
+                      'from_name' => 'Josh',
+                      'from_email' => 'joshlyford@gmail.com',
+                      'to_email' => $email['email'],
+                      'emailID'=> $new_id,
+                      'subscriberID'=> 0,
+                      'subject' => $subject,
+                      'listID' => 0
+                      );
+                 
+                  SPNL()->add_email_to_queue($go);
+                  $count++;
+          }
+      }
+      update_post_meta($new_id,'_send_count', $count );
+   
+      SendPress_Admin::redirect('Emails_Send_Queue',array('emailID'=> $new_id));
+        
+  }
+
+  function save_email(){
+
+    $post_id =  SPNL()->validate->_int('post_ID');
+    if($post_id > 0){
+
+      $html = SPNL()->validate->_html('content_area_one_edit');
+      //SendPress_Error::Log($html);
+      $post_update = array(
+        'ID'           => $post_id,
+            'post_content' => $html
+        );
+       
+      update_post_meta( $post_id, '_sendpress_template', SPNL()->validate->_int('template') );
+      update_post_meta( $post_id, '_sendpress_subject', sanitize_text_field(SPNL()->validate->_string('post_subject' )) );
+      if( SPNL()->validate->_isset('header_content_edit')){
+        update_post_meta( $post_id, '_header_content', SPNL()->validate->_html('header_content_edit') );
+      } 
+      if( SPNL()->validate->_isset('footer_content_edit')){
+        update_post_meta( $post_id, '_footer_content', SPNL()->validate->_html('footer_content_edit') );
+      }
+
+      //  print_r($template);
+      remove_filter('content_save_pre', 'wp_filter_post_kses');
+      remove_filter('content_filtered_save_pre', 'wp_filter_post_kses');
+      wp_update_post( $post_update );
+      add_filter('content_save_pre', 'wp_filter_post_kses');
+      add_filter('content_filtered_save_pre', 'wp_filter_post_kses');
+    
+    }
+  
+        if( SPNL()->validate->_string('submit') == 'save-next'){
+          SendPress_Admin::redirect('Emails_List_Filter', array('emailID'=> SPNL()->validate->_int('post_ID') ) );
+        } else if (SPNL()->validate->_string('submit') == 'send-test'){
+            $email = new stdClass;
+            $email->emailID  = SPNL()->validate->_int('post_ID');
+            $email->subscriberID = 0;
+            $email->listID = 0;
+            $email->to_email = SPNL()->validate->_email('test-email');
+            $d =SendPress_Manager::send_test_email( $email );
+            //print_r($d);
+            SendPress_Admin::redirect('Emails_Edit', array('emailID'=>SPNL()->validate->_int('emailID') ));
+        } else {
+            SendPress_Admin::redirect('Emails_Edit', array('emailID'=>SPNL()->validate->_int('emailID') ));
+        }
+
+  }
+  function create_subscriber(){
+    $email = SPNL()->validate->_email('email');
+        $fname = SPNL()->validate->_string('firstname');
+        $lname = SPNL()->validate->_string('lastname');
+        $phonenumber = SPNL()->validate->_string('phonenumber');
+        $salutation = SPNL()->validate->_string('salutation');
+        $listID = SPNL()->validate->_int('listID');
+        $status = SPNL()->validate->_string('status');
+        $subscriber_id = "";
+
+        if( is_email($email) ){
+            $result = SendPress_Data::add_subscriber( array('firstname'=> $fname ,'email'=> $email,'lastname'=>$lname, 'phonenumber'=>$phonenumber, 'salutation'=>$salutation) );
+            SendPress_Data::update_subscriber_status($listID, $result, $status ,false);
+            $subscriber_id = $result;
+        }
+
+        $state = SPNL()->validate->_string('state');
+        $city = SPNL()->validate->_string('city');
+        $genre = SPNL()->validate->_string('genre');
+        $category = SPNL()->validate->_string('category');
+
+        SendPress_Data::update_subscriber_meta($subscriber_id,'state',$state, $listID);
+        SendPress_Data::update_subscriber_meta($subscriber_id,'city',$city, $listID);
+        SendPress_Data::update_subscriber_meta($subscriber_id,'genre',$genre, $listID);
+        SendPress_Data::update_subscriber_meta($subscriber_id,'category',$category, $listID);
+
+    SendPress_Admin::redirect( 'Subscribers_Subscribers' , array( 'listID' => $listID ) );
+
+  }
+
+
+
+  function create_subscribers(){
+
+      $csvadd = "email,firstname,lastname,phonenumber,state,city,genre,category\n" . trim( SPNL()->validate->_string('csv-add') );
+      $listID = SPNL()->validate->_int('listID');
+      if($listID > 0 ){
+        $newsubscribers = SendPress_Data::subscriber_csv_post_to_array( $csvadd );
+        foreach( $newsubscribers as $subscriberx){
+          if( is_email( trim( $subscriberx['email'] ) ) ){
+        
+            $subscriber_id = SendPress_Data::add_subscriber( array('firstname'=> trim($subscriberx['firstname']) ,'email'=> trim($subscriberx['email']),'lastname'=> trim($subscriberx['lastname']) ) );
+            SendPress_Data::update_subscriber_status($listID, $subscriber_id, 2, false);
+
+            SendPress_Data::update_subscriber_meta($subscriber_id,'state',$subscriberx['state'], $listID);
+            SendPress_Data::update_subscriber_meta($subscriber_id,'city',$subscriberx['city'], $listID);
+            SendPress_Data::update_subscriber_meta($subscriber_id,'genre',$subscriberx['genre'], $listID);
+            SendPress_Data::update_subscriber_meta($subscriber_id,'category',$subscriberx['category'], $listID);
+
+          }
+        }
+    }
+      SendPress_Admin::redirect( 'Subscribers_Subscribers' , array( 'listID' => $listID ) );
+  }
 
   function addsubscriber(){
     if (isset($_POST)) {
@@ -1154,8 +1368,8 @@ echo $return["wp_sendpress_report_url"];
 
 	public function jaiminho_get_view_class($page, $current_view, $emails_credits, $bounce_email)
 	{
-
 		$view_class = $this->get_view_class( $page, $current_view );
+
 		switch ( $view_class ) {
 			case "SendPress_View_Emails_Send":
 				return "Jaiminho_View_Emails_Send";
@@ -1199,8 +1413,12 @@ echo $return["wp_sendpress_report_url"];
 				return "Jaiminho_View_Reports";
 			case "SendPress_View_Subscribers":
 				return "Jaiminho_View_Subscribers";
+      case "SendPress_View_Emails_List_Filter":
+        return "Jaiminho_View_Emails_List_Filter";
 			case "SendPress_View_Subscribers_Csvimport":
 				return "Jaiminho_View_Subscribers_Csvimport";
+      case "SendPress_View_Subscribers_Add":
+        return "Jaiminho_View_Subscribers_Add";
 			case "SendPress_View_Subscribers_Listcreate":
 				wp_enqueue_script('jaiminho_disable');
 				return $view_class;
@@ -1222,11 +1440,12 @@ echo $return["wp_sendpress_report_url"];
 		$bounce_email = isset (  $_POST['bounceemail'] ) ?  $_POST['bounceemail'] : null;
 		$view_class = $this->jaiminho_get_view_class( $this->_page , $this->_current_view ,  $emails_credits  , $bounce_email );
                 
-                // debug
+    // debug
 		//echo "About to render: $view_class, $this->_page";
 		//echo " nova: ".$view_class;  
 
 		$view_class = NEW $view_class;
+
 		$queue      = '<span id="queue-count-menu-tab">-</span>';
 
 		// xxx: ainda não foi possivel descobrir onde esta o problema, simplesmente a página do overview repete o template - depois reativar a aba

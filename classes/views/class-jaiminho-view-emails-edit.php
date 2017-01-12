@@ -9,64 +9,10 @@ if ( !defined('SENDPRESS_VERSION') ) {
 }
 
 class Jaiminho_View_Emails_Edit extends Jaiminho_View_Emails {
-	
-	
-
-	function save_email(){
-		//$this->security_check();
-
-		$post_id =	SPNL()->validate->_int('post_ID');
-		if($post_id > 0){
-
-
-			
-
-			$html = SPNL()->validate->_html('content_area_one_edit');
-			//SendPress_Error::Log($html);
-		 	$post_update = array(
-		 		'ID'           => $post_id,
-		      	'post_content' => $html
-		    );
-		   
-			update_post_meta( $post_id, '_sendpress_template', SPNL()->validate->_int('template') );
-			update_post_meta( $post_id, '_sendpress_subject', sanitize_text_field(SPNL()->validate->_string('post_subject' )) );
-			if( SPNL()->validate->_isset('header_content_edit')){
-				update_post_meta( $post_id, '_header_content', SPNL()->validate->_html('header_content_edit') );
-			} 
-			if( SPNL()->validate->_isset('footer_content_edit')){
-				update_post_meta( $post_id, '_footer_content', SPNL()->validate->_html('footer_content_edit') );
-			}
-
-		 	//	print_r($template);
-			remove_filter('content_save_pre', 'wp_filter_post_kses');
-			remove_filter('content_filtered_save_pre', 'wp_filter_post_kses');
-			wp_update_post( $post_update );
-			add_filter('content_save_pre', 'wp_filter_post_kses');
-			add_filter('content_filtered_save_pre', 'wp_filter_post_kses');
-		
-		}
-	
-        if( SPNL()->validate->_string('submit') == 'save-next'){
-            SendPress_Admin::redirect('Emails_Send', array('emailID'=> SPNL()->validate->_int('emailID') ) );
-        } else if (SPNL()->validate->_string('submit') == 'send-test'){
-            $email = new stdClass;
-            $email->emailID  = SPNL()->validate->_int('post_ID');
-            $email->subscriberID = 0;
-            $email->listID = 0;
-            $email->to_email = SPNL()->validate->_email('test-email');
-            $d =SendPress_Manager::send_test_email( $email );
-            //print_r($d);
-           	SendPress_Admin::redirect('Emails_Edit', array('emailID'=>SPNL()->validate->_int('emailID') ));
-        } else {
-            SendPress_Admin::redirect('Emails_Edit', array('emailID'=>SPNL()->validate->_int('emailID') ));
-        }
-        
-
-	}
 
 	function admin_init(){
 		global $is_IE;
-		remove_filter('the_editor',					'qtrans_modifyRichEditor');
+		remove_filter('the_editor',	'qtrans_modifyRichEditor');
 		/*
 		if (  ! wp_is_mobile() &&
 			 ! ( $is_IE && preg_match( '/MSIE [5678]/', $_SERVER['HTTP_USER_AGENT'] ) ) ) {
@@ -102,10 +48,10 @@ class Jaiminho_View_Emails_Edit extends Jaiminho_View_Emails {
         $template_id = get_post_meta( $post->ID , '_sendpress_template' , true);
 
 		?>
-     <form method="post" id="post" role="form">
+     <form method="post" id="post" role="form" action="<?php echo esc_url( admin_url('admin.php') ); ?>">
+     	<input type="hidden" name="action" value="saveemail">
         <input type="hidden" name="post_ID" id="post_ID" value="<?php echo $post->ID; ?>" />
         <input type="hidden" name="post_type" id="post_type" value="sp_newsletters" />
-        <input type="hidden" name="action" id="action" value="save-email" />
        <div  >
        <div style="float:right;" class="btn-toolbar">
             <div id="sp-cancel-btn" class="btn-group">
