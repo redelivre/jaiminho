@@ -202,28 +202,14 @@ class Jaiminho_View_Queue extends SendPress_View {
                  <?php } ?>
  		<?php
  		if(  $autocron == 'no'){
-$offset = get_option( 'gmt_offset' ) * 60 * 60; // Time offset in seconds
-$local_timestamp = wp_next_scheduled('sendpress_cron_action') + $offset;
 
+			$offset = get_option( 'gmt_offset' ) * 60 * 60; // Time offset in seconds
+			$local_timestamp = wp_next_scheduled('sendpress_cron_action') + $offset;
 
-
-
-
-
-
-
-
-?><br><small><?php _e('The cron will run again around','sendpress'); ?>: <?php
-echo date_i18n( get_option('date_format') .' '. get_option('time_format'), $local_timestamp);
-?></small>
-<?php } 
-
-
-
-
-
-
- ?>
+			?><br><small><?php _e('The cron will run again around','sendpress'); ?>: <?php
+			echo date_i18n( get_option('date_format') .' '. get_option('time_format'), $local_timestamp);
+			?></small>
+		<?php } ?>
  		<br><br>
 		</div>
 	<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
@@ -245,46 +231,48 @@ echo date_i18n( get_option('date_format') .' '. get_option('time_format'), $loca
 		<a class="btn btn-large  btn-danger" data-toggle="modal" href="#sendpress-empty-queue" ><i class="icon-warning-sign "></i> <?php _e('Delete All Emails in the Queue','sendpress'); ?></a>
 		<?php wp_nonce_field($this->_nonce_value); ?>
 	</form>
-<div class="modal fade" id="sendpress-empty-queue" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-  	<div class="modal-content">
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal">×</button>
-		<h3><?php _e('Really? Delete All Emails in the Queue.','sendpress');?></h3>
-	</div>
-	<div class="modal-body">
-		<p><?php _e('This will remove all emails from the queue without attempting to send them','sendpress');?>.</p>
-	</div>
-	<div class="modal-footer">
-	<a href="#" class="btn btn-primary" data-dismiss="modal"><?php _e('No! I was Joking','sendpress');?></a><a href="<?php echo SendPress_Admin::link('Queue'); ?>&action=empty-queue" id="confirm-delete" class="btn btn-danger" ><?php _e('Yes! Delete All Emails','sendpress');?></a>
-	</div>
-</div></div>
-</div>
 
-<div class="modal fade" id="sendpress-sending" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-	<div class="modal-content">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal">×</button>
-    <h3><?php _e('Sending Emails','sendpress');?></h3>
-  </div>
-  <div class="modal-body">
-    <div id="sendbar" class="progress progress-striped
-     active">
-  <div id="sendbar-inner" class="progress-bar"
-       style="width: 40%;"></div>
-</div>
-	<span id="queue-sent">-</span> <?php _e('of','sendpress');?> <span id="queue-total">-</span> <?php _e('emails left to send','sendpress'); ?>.<br>
-	<br>
-	<?php _e('You are also limited to','sendpress'); ?> <?php echo $emails_per_hour; ?> <?php _e('emails per hour','sendpress'); ?>.<br>
-	<?php _e('To change these settings go to','sendpress'); ?> <a href="<?php echo SendPress_Admin::link('Settings_Account'); ?>"> <?php _e('Settings','sendpress'); ?> > <?php _e('Sending Account','sendpress'); ?></a>.
-  </div>
-  <div class="modal-footer">
-   <?php _e('If you close this window sending will stop. ','sendpress');?><a href="#" class="btn btn-primary" data-dismiss="modal"><?php _e('Close','sendpress');?></a>
-  </div>
-</div>
-</div></div>
-<?php
+	<div class="modal fade" id="sendpress-empty-queue" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	  	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">×</button>
+			<h3><?php _e('Really? Delete All Emails in the Queue.','sendpress');?></h3>
+		</div>
+		<div class="modal-body">
+			<p><?php _e('This will remove all emails from the queue without attempting to send them','sendpress');?>.</p>
+		</div>
+		<div class="modal-footer">
+		<a href="#" class="btn btn-primary" data-dismiss="modal"><?php _e('No! I was Joking','sendpress');?></a><a href="<?php echo SendPress_Admin::link('Queue'); ?>&action=empty-queue" id="confirm-delete" class="btn btn-danger" ><?php _e('Yes! Delete All Emails','sendpress');?></a>
+		</div>
+	    </div>
+	  </div>
+	</div>
+
+	<div class="modal fade" id="sendpress-sending" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+		<div class="modal-content">
+	  <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal">×</button>
+	    <h3><?php _e('Sending Emails','sendpress');?></h3>
+	  </div>
+	  <div class="modal-body">
+	  <div id="sendbar" class="progress progress-striped active">
+		  <div id="sendbar-inner" class="progress-bar"
+		       style="width: 40%;">    	
+		  </div>
+	  </div>
+		<span id="queue-sent">-</span> <?php _e('of','sendpress');?> <span id="queue-total">-</span> <?php _e('emails left to send','sendpress'); ?>.<br>
+		<br>
+		<?php _e('You are also limited to','sendpress'); ?> <?php echo $emails_per_hour; ?> <?php _e('emails per hour','sendpress'); ?>.<br>
+		<?php _e('To change these settings go to','sendpress'); ?> <a href="<?php echo SendPress_Admin::link('Settings_Account'); ?>"> <?php _e('Settings','sendpress'); ?> > <?php _e('Sending Account','sendpress'); ?></a>.
+	  </div>
+	  <div class="modal-footer">
+	   <?php _e('If you close this window sending will stop. ','sendpress');?><a href="#" class="btn btn-primary" data-dismiss="modal"><?php _e('Close','sendpress');?></a>
+	  </div>
+	</div>
+	</div></div>
+	<?php
 	}
 
 }
