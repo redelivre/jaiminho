@@ -118,9 +118,9 @@ class Jaiminho extends SendPress
 
 
   function create_list(){
-    $vars = isset($_GET) ? $_GET : "";
-    if(!isset($vars)){
-      SendPress_Admin::redirect('Emails_Send', array('emailID'=> SPNL()->validate->_int('post_ID') ) );
+    $vars = $_GET;
+    if(count($vars) == 4){
+      SendPress_Admin::redirect('Emails_Send', array('emailID'=> SPNL()->validate->_int('emailID') ) );
     }
 
     global $wpdb;
@@ -128,40 +128,44 @@ class Jaiminho extends SendPress
     $query = "select distinct subscriberID from $meta_table where";
 
     $name = "";
-    foreach ($vars["states"] as $state) {
-      $name .= "_" . $state;
-      $query .= $wpdb->prepare( " meta_value=%s or ", $state);
-    }
-
-    foreach ($vars["cities"] as $city) {
-      $name .= "_" . $city;
-      $query .= $wpdb->prepare( " meta_value=%s or ", $city);
-    }
-
-    foreach ($vars["genres"] as $genre) {
-      $name .= "_" . $genre;
-      $query .= $wpdb->prepare( " meta_value=%s or ", $genre);
-    }
-    $last_value = end(array_values($vars["categories"]));
-    foreach ($vars["categories"] as $category) {
-      $name .= "_" . $category;
-      if ($category != $last_value) {
-        $query .= $wpdb->prepare( " meta_value=%s or ", $category);
-      }else{
-        $query .= $wpdb->prepare( " meta_value=%s", $category);
+    if (isset($vars["states"])) {
+      foreach ($vars["states"] as $state) {
+        $name .= "_" . $state;
+        $query .= $wpdb->prepare( " meta_value=%s or ", $state);
       }
     }
-    $public = 0;
-    
 
-    //create list
-    //$list = SendPress_Data::get_list( array('post_name'=> $name) );
-    //if (!isset($list)) {
-      $list = SendPress_Data::create_list( array('name'=> $name, 'public'=>$public ) );
-    //}
+    if (isset($vars['cities'])) {
+      foreach ($vars["cities"] as $city) {
+        $name .= "_" . $city;
+        $query .= $wpdb->prepare( " meta_value=%s or ", $city);
+      }
+    }
+
+    if (isset($vars['genres'])) {
+      foreach ($vars["genres"] as $genre) {
+        $name .= "_" . $genre;
+        $query .= $wpdb->prepare( " meta_value=%s or ", $genre);
+      }
+    }
+
+    if (isset($vars['categories'])) {
+      $last_value = end(array_values($vars["categories"]));
+      foreach ($vars["categories"] as $category) {
+        $name .= "_" . $category;
+      }
+    }
+
+    $public = 0;
+
+    $query = substr($query, 0, -3);
+
+    $list = SendPress_Data::create_list( array('name'=> $name, 'public'=>$public ) );
+  
     $subscribers = $wpdb->get_results($query);
 
     //addsubscriber
+    
     foreach ($subscribers as $key => $subscriber) {
       $subscriber = $subscriber->subscriberID;
       $list_values['listID'] = $list;
@@ -172,6 +176,7 @@ class Jaiminho extends SendPress
       $table = SendPress_Data::list_subcribers_table();
       $result = $wpdb->insert($table,$list_values);
     }
+
     SendPress_Admin::redirect('Emails_Send', array('emailID'=> SPNL()->validate->_int('emailID') ) );
   }
 

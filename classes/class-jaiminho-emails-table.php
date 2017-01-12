@@ -104,7 +104,7 @@ class Jaiminho_Emails_Table extends WP_List_Table {
 				$a .= '<a class="btn btn-primary" href="?page='.SPNL()->validate->page($_REQUEST['page']).'&view='.$editwindow.'&emailID='. $item->ID .'"><span class="glyphicon glyphicon-edit"></span> '.__('Edit','sendpress') .'</a> ';
 				$a = apply_filters('sendpress_email_table', $a, $item);
 				if( SendPress_Admin::access('Emails_Send') ) { 
-				$a .= '<a class="btn  btn-success " href="'. SendPress_Admin::link('Emails_Send').'&emailID='. $item->ID .'"><span class="glyphicon glyphicon-send"></span> '.__('Send','sendpress') .'</a>';
+				$a .= '<a class="btn  btn-success " href="'. esc_url( admin_url('admin.php') ) . '?page=sp-emails&view=list-filter&emailID='. $item->ID .'"><span class="glyphicon glyphicon-send"></span> '.__('Send','sendpress') .'</a>';
 				}
 
 				$a .= '</div>';

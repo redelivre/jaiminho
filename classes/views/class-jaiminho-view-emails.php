@@ -285,7 +285,8 @@ class Jaiminho_View_Emails extends SendPress_View{
 	function html(){
 		 SendPress_Tracking::event('Emails Tab');
 	//Create an instance of our package class...
-	$testListTable = new SendPress_Emails_Table();
+	$testListTable = new Jaiminho_Emails_Table();
+
 	//Fetch, prepare, sort, and filter our data...
 	$testListTable->prepare_items();
 
@@ -303,7 +304,7 @@ class Jaiminho_View_Emails extends SendPress_View{
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
 	    <input type="hidden" name="page" value="<?php echo SPNL()->validate->page(); ?>" />
 	    <!-- Now we can render the completed list table -->
-	    <?php $testListTable->display(); ?>
+	    <?php  $testListTable->display();  ?>
 	    <?php wp_nonce_field($this->_nonce_value); ?>
 	</form>
 	<?php
