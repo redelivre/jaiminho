@@ -330,7 +330,7 @@ function role_base() {
 
 
   function create_subscribers(){
-    
+
       $csvadd = "email,firstname,lastname,phonenumber,state,city,genre,category\n" . trim( SPNL()->validate->_string('csv-add') );
       $listID = SPNL()->validate->_int('listID');
       if($listID > 0 ){
@@ -1440,9 +1440,9 @@ echo $return["wp_sendpress_report_url"];
 		$bounce_email = isset (  $_POST['bounceemail'] ) ?  $_POST['bounceemail'] : null;
 		$view_class = $this->jaiminho_get_view_class( $this->_page , $this->_current_view ,  $emails_credits  , $bounce_email );
                 
-                // debug
-		echo "About to render: $view_class, $this->_page";
-		echo " nova: ".$view_class;  
+    // debug
+		//echo "About to render: $view_class, $this->_page";
+		//echo " nova: ".$view_class;  
 
 		$view_class = NEW $view_class;
 
