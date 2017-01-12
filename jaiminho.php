@@ -180,33 +180,6 @@ class Jaiminho extends SendPress
     SendPress_Admin::redirect('Emails_Send', array('emailID'=> SPNL()->validate->_int('emailID') ) );
   }
 
-function role_base() {
-
-      $saverole  = get_role( 'editor' );
-          
-      $saverole->add_cap('sendpress_email');
-      $saverole->add_cap('sendpress_email_send');
-      $saverole->add_cap('sendpress_reports');
-      $saverole->add_cap('sendpress_subscribers');
-      $saverole->add_cap('sendpress_settings');
-      $saverole->add_cap('sendpress_settings_access');
-      $saverole->add_cap('sendpress_addons');
-      $saverole->add_cap('sendpress_queue');
-      $saverole->add_cap('sendpress_view');
-
-      $saverole  = get_role( 'author' );
-          
-      $saverole->add_cap('sendpress_email');
-      $saverole->add_cap('sendpress_email_send');
-      $saverole->add_cap('sendpress_reports');
-      $saverole->add_cap('sendpress_subscribers');
-
-      $saverole  = get_role( 'contributor' );
-          
-      $saverole->add_cap('sendpress_email');
-  }
-
-
   function send_emails(){
       $saveid = SPNL()->validate->_int('post_ID');
       update_post_meta( $saveid, 'send_date', date('Y-m-d H:i:s') );
