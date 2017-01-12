@@ -17,16 +17,11 @@ class Jaiminho_View_Queue extends SendPress_View {
 
 	function admin_init(){
 		add_action('load-sendpress_page_sp-queue',array($this,'screen_options'));
-
 		SendPress_Data::clean_queue_table();
-		
-
-
 	}
 
 
 	function sub_menu(){
-
 
 		?>
 		<div class="navbar navbar-default" >
@@ -108,7 +103,7 @@ class Jaiminho_View_Queue extends SendPress_View {
 
 	function html() {
 
-		 SendPress_Tracking::event('Queue Tab');
+	SendPress_Tracking::event('Queue Tab');
 	if( SPNL()->validate->_isset('cron') ){
 		SPNL()->fetch_mail_from_queue();
 	}	
@@ -159,12 +154,12 @@ class Jaiminho_View_Queue extends SendPress_View {
 	</div>
 	</div>
 	<?php
-	          }
-              else 
-              {
-		        SendPress_Option::set('pause-sending','yes');
-              }
-        $emails_per_day = SendPress_Option::get('emails-per-day');
+      }
+      else 
+      {
+        SendPress_Option::set('pause-sending','yes');
+      }
+	    $emails_per_day = SendPress_Option::get('emails-per-day');
 		if($emails_per_day == 0){
 			$emails_per_day = __('Unlimited','sendpress');
 		}
@@ -252,26 +247,27 @@ class Jaiminho_View_Queue extends SendPress_View {
 	<div class="modal fade" id="sendpress-sending" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
 		<div class="modal-content">
-	  <div class="modal-header">
-	    <button type="button" class="close" data-dismiss="modal">×</button>
-	    <h3><?php _e('Sending Emails','sendpress');?></h3>
-	  </div>
-	  <div class="modal-body">
-	  <div id="sendbar" class="progress progress-striped active">
-		  <div id="sendbar-inner" class="progress-bar"
-		       style="width: 40%;">    	
+		  <div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal">×</button>
+		    <h3><?php _e('Sending Emails','sendpress');?></h3>
 		  </div>
-	  </div>
-		<span id="queue-sent">-</span> <?php _e('of','sendpress');?> <span id="queue-total">-</span> <?php _e('emails left to send','sendpress'); ?>.<br>
-		<br>
-		<?php _e('You are also limited to','sendpress'); ?> <?php echo $emails_per_hour; ?> <?php _e('emails per hour','sendpress'); ?>.<br>
-		<?php _e('To change these settings go to','sendpress'); ?> <a href="<?php echo SendPress_Admin::link('Settings_Account'); ?>"> <?php _e('Settings','sendpress'); ?> > <?php _e('Sending Account','sendpress'); ?></a>.
-	  </div>
-	  <div class="modal-footer">
-	   <?php _e('If you close this window sending will stop. ','sendpress');?><a href="#" class="btn btn-primary" data-dismiss="modal"><?php _e('Close','sendpress');?></a>
+		  <div class="modal-body">
+		  <div id="sendbar" class="progress progress-striped active">
+			  <div id="sendbar-inner" class="progress-bar"
+			       style="width: 40%;">    	
+			  </div>
+		  </div>
+			<span id="queue-sent">-</span> <?php _e('of','sendpress');?> <span id="queue-total">-</span> <?php _e('emails left to send','sendpress'); ?>.<br>
+			<br>
+			<?php _e('You are also limited to','sendpress'); ?> <?php echo $emails_per_hour; ?> <?php _e('emails per hour','sendpress'); ?>.<br>
+			<?php _e('To change these settings go to','sendpress'); ?> <a href="<?php echo SendPress_Admin::link('Settings_Account'); ?>"> <?php _e('Settings','sendpress'); ?> > <?php _e('Sending Account','sendpress'); ?></a>.
+		  </div>
+		  <div class="modal-footer">
+		   <?php _e('If you close this window sending will stop. ','sendpress');?><a href="#" class="btn btn-primary" data-dismiss="modal"><?php _e('Close','sendpress');?></a>
+		  </div>
+		</div>
 	  </div>
 	</div>
-	</div></div>
 	<?php
 	}
 

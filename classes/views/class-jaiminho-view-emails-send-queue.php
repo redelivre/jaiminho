@@ -33,10 +33,21 @@ class Jaiminho_View_Emails_Send_Queue extends Jaiminho_View_Emails
         if ( SPNL()->validate->_isset('finished') ) {
             $time = get_post_meta($post->ID, '_send_time', true);
             if ($time == '0000-00-00 00:00:00') {
+                set_time_limit(0);
+                $control = 1;
+                while ($control != 0) {
+                    $response = SendPress_Manager::send_single_from_queue();
+                    if($response['sent'] == 0){
+                        $control = 0;
+                    }
+                    $all = (int) SendPress_Data::emails_in_queue();
+                    $stuck = (int) SendPress_Data::emails_stuck_in_queue();
+                    $control = $all - $stuck;
+                }
+
                 SendPress_Admin::redirect('Queue');
             } 
             else {
-                
                 SendPress_Admin::redirect('Reports');
             }
         }
@@ -45,9 +56,6 @@ class Jaiminho_View_Emails_Send_Queue extends Jaiminho_View_Emails
         
         update_post_meta($post->ID, '_send_last_count', $subs);
         update_post_meta($post->ID, '_sendpress_report', 'new');
-        
-
-
 
         ?>
         <div id="taskbar" class="lists-dashboard rounded group"> 
@@ -56,14 +64,16 @@ class Jaiminho_View_Emails_Send_Queue extends Jaiminho_View_Emails
 </div><input type="hidden" id="post_ID" name="post_ID" value="<?php echo $post->ID; ?>" /><input type="hidden" id="reporttoqueue" name="reporttoqueue" value="<?php echo $lists; ?>" />
 <div class='well' id="confirm-queue-add">
     <h2><strong><?php
-        _e('Adding Subscribers to Queue', 'sendpress'); ?></strong></h2><br>
+        //_e('Adding Subscribers to Queue', 'sendpress'); 
+          _e('Enviando Mensagens', 'sendpress');  ?></strong></h2><br>
    <!-- <p>email:  <?php
         echo stripslashes(esc_attr(htmlspecialchars($subject))); ?></p>-->
     <div class="progress progress-striped active">
         <div class="progress-bar sp-queueit" style="width: 0%;"></div>
     </div>
-    <span id="queue-total">0</span> of <span id="list-total"><?php
-        echo $subs; ?></span>
+    <span id="queue-total">Este procedimento leva bastante tempo.</span>
+    <!--span id="queue-total">0</span> of <span id="list-total"><?php
+        echo $subs; ?></span-->
 </div>
         <?php
     }
