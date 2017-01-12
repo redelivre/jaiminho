@@ -114,8 +114,13 @@ class Jaiminho extends SendPress
     add_action( 'admin_action_sendemails', array($this,'send_emails') );
     add_action( 'admin_action_saveemail', array($this,'save_email') );
     add_action( 'admin_action_createlist', array($this,'create_list') );
+    add_action( 'admin_action_createlist', array($this,'confcredits') );
 	}
 
+
+  function confcredits(){
+    var_dump("expression");
+  }
 
   function create_list(){
     $vars = $_GET;

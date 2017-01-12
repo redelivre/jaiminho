@@ -260,7 +260,43 @@ echo '<strong>Delivery Method: </strong>';
 				</div>
 				<div class="panel-body">
 					<div class="boxer form-box">
-						<div style="float: right; width: 45%;">
+						<div style="float:left; position: relative">
+							<?php if(is_super_admin()){ ?> 
+							<h2>Configuração de créditos super-admin</h2>
+			                <p>
+			                Insira uma quantidade de créditos para este projeto:
+			                </p>
+			                <p>
+			                <input type="text" placeholder="eg. 5000" name="credits_super_admin"/>
+			                </p>
+			                <p>
+			                Defina a quantidade de créditos por hora:
+			                </p>
+			                <p>
+			                <input type="text" placeholder="eg. 1000" name="credits_per_hour_super_admin"/>
+			                </p>
+			                <p>
+			                <button class="btn btn-primary" type="submit" >
+			                  <?= __("Adicionar Créditos", "sendpress") ?>
+			                  <span class="glyphicon glyphicon-send"></span>
+			                </button>
+			                </p>
+
+
+			                <?php } 
+
+			                if (isset($_POST['credits_super_admin']) and $_POST['credits_super_admin'] != '') {
+							    SendPress_Option::set( 'wpcron-per-call' , $_POST['credits_super_admin'] );
+							    SendPress_Option::set( 'emails-per-day' , $_POST['credits_super_admin']);
+			                }
+			                if (isset($_POST['credits_per_hour_super_admin']) and $_POST['credits_per_hour_super_admin'] != '') {
+							    SendPress_Option::set( 'emails-per-hour' , $_POST['credits_per_hour_super_admin'] );
+			                }
+
+
+			                ?>
+						</div>
+						<div style="<?php echo is_super_admin()?"position: relative; float: right; width: 45%;": "float:left"; ?>
 							<h2><?php _e('Email Sending Limits','sendpress'); ?></h2>
 
 							<?php
