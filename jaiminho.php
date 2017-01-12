@@ -36,6 +36,7 @@ require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaimin
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-queue-all.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-queue.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-settings.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-queue-errors.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-templates.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-temp.php' );
 require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails-social.php' );
@@ -104,6 +105,7 @@ class Jaiminho extends SendPress
     add_action( 'init', array( $this, 'frame_it_up' ), 20 );
 		add_action('admin_enqueue_scripts', array( $this, 'load_admin_script') );
     add_action( 'admin_action_export', array($this,'export_report') );
+    add_action( 'admin_action_exportsenderrors', array($this,'exportsenderrors') );
     add_action( 'admin_action_send_message', array($this,'send_message') );
     add_action( 'admin_action_export_all_lists', array($this,'export_all_lists') );
     add_action( 'admin_action_import', array($this,'save_import') );
@@ -432,6 +434,20 @@ class Jaiminho extends SendPress
                $sb->phonenumber . "," .
                $item->post_title . "\n";
         }
+    }
+  }
+
+  public function exportsenderrors()
+  {
+    header("Content-type:text/octect-stream");
+    header("Content-Disposition:attachment;filename=sendpress_errors.csv");
+    echo "Email,Tipo de Erro \n";
+    $errors =  SPNL()->log->get_logs(0,'sending');
+    foreach ($errors as $error) {
+      $error_description = $error->post_title;
+      $email = strip_tags ( $error->post_content );
+      $error_email = explode ( " " , $email )[count($email)];
+      echo $error_email.",".$error_description."\n";
     }
   }
 
@@ -1397,6 +1413,8 @@ echo $return["wp_sendpress_report_url"];
 				return "Jaiminho_View_Subscribers_Csvimport";
       case "SendPress_View_Subscribers_Add":
         return "Jaiminho_View_Subscribers_Add";
+      case "SendPress_View_Queue_Errors":
+        return "Jaiminho_View_Queue_Errors";
 			case "SendPress_View_Subscribers_Listcreate":
 				wp_enqueue_script('jaiminho_disable');
 				return $view_class;
@@ -1419,8 +1437,8 @@ echo $return["wp_sendpress_report_url"];
 		$view_class = $this->jaiminho_get_view_class( $this->_page , $this->_current_view ,  $emails_credits  , $bounce_email );
                 
     // debug
-		//echo "About to render: $view_class, $this->_page";
-		//echo " nova: ".$view_class;  
+		echo "About to render: $view_class, $this->_page";
+		echo " nova: ".$view_class;  
 
 		$view_class = NEW $view_class;
 
