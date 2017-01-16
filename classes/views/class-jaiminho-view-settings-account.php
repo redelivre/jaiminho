@@ -11,8 +11,6 @@ if ( !defined( 'SENDPRESS_VERSION' ) ) {
 class Jaiminho_View_Settings_Account extends SendPress_View_Settings {
 
 	function account_setup(){
-//$this->security_check();
-	//if(  wp_verify_nonce( $_POST['_spnonce'] , basename(__FILE__) )){
 
 		$options =  array();
 
@@ -172,7 +170,7 @@ class Jaiminho_View_Settings_Account extends SendPress_View_Settings {
 						</div>
 					</div>
 				</div>
-				
+
 			</div>
 			<?php $this->panel_end(); ?>
 		</div>
@@ -192,7 +190,7 @@ foreach ( $senders as $key => $sender ) {
 	array_push($new, array($key,$sender->label() ));
 }
 echo '<strong>Delivery Method: </strong>';
- $this->select('sendpress-sender',$method, $new ); 
+ $this->select('sendpress-sender',$method, $new );
 			?><br><br>
 			<?php if( count($senders) < 3 ){
 				$c= 0;
@@ -201,7 +199,7 @@ echo '<strong>Delivery Method: </strong>';
 					if ( $c >= 1 ) { $class = "margin-left: 4%"; }
 					echo "<div style=' float:left; width: 48%; $class' id='$key'>";
 					?>
-					<!-- XXXX -->	
+					<!-- XXXX -->
 					<p>&nbsp;<!--<input name="sendpress-sender" type="radio"  <?php if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { ?>checked="checked"<?php } ?> id="website" value="<?php echo $key; ?>" /> <?php _e('Send Emails via','sendpress'); ?> -->
 						<?php
 						echo $sender->label();
@@ -261,19 +259,19 @@ echo '<strong>Delivery Method: </strong>';
 				<div class="panel-body">
 					<div class="boxer form-box">
 						<div style="float:left; position: relative">
-							<?php if(is_super_admin()){ ?> 
+							<?php if(is_super_admin()){ ?>
 							<h2>Configuração de créditos super-admin</h2>
 			                <p>
-			                Insira uma quantidade de créditos para este projeto:
+			                <?= __("Insira uma quantidade de créditos para este projeto:", "sendpress"); ?>
 			                </p>
 			                <p>
-			                <input type="text" placeholder="eg. 5000" name="credits_super_admin"/>
+			                <input type="text" placeholder="eg. 5000 name="credits_super_admin" value="<?= SendPress_Option::get('emails-per-day'); ?>"/>
 			                </p>
 			                <p>
-			                Defina a quantidade de créditos por hora:
+			                <?= __("Defina a quantidade de créditos por hora:", "sendpress"); ?>
 			                </p>
 			                <p>
-			                <input type="text" placeholder="eg. 1000" name="credits_per_hour_super_admin"/>
+			                <input type="text" placeholder="eg. 1000" name="credits_per_hour_super_admin" value="<?= SendPress_Option::get('emails-per-hour'); ?>" />
 			                </p>
 			                <p>
 			                <button class="btn btn-primary" type="submit" >
@@ -283,55 +281,65 @@ echo '<strong>Delivery Method: </strong>';
 			                </p>
 
 
-			                <?php } 
+			                <?php }
 
 			                if (isset($_POST['credits_super_admin']) and $_POST['credits_super_admin'] != '') {
-							    SendPress_Option::set( 'wpcron-per-call' , $_POST['credits_super_admin'] );
-							    SendPress_Option::set( 'emails-per-day' , $_POST['credits_super_admin']);
+							    			SendPress_Option::set( 'wpcron-per-call' , $_POST['credits_super_admin'] );
+							    			SendPress_Option::set( 'emails-per-day' , $_POST['credits_super_admin']);
 			                }
 			                if (isset($_POST['credits_per_hour_super_admin']) and $_POST['credits_per_hour_super_admin'] != '') {
-							    SendPress_Option::set( 'emails-per-hour' , $_POST['credits_per_hour_super_admin'] );
+							    			SendPress_Option::set( 'emails-per-hour' , $_POST['credits_per_hour_super_admin'] );
 			                }
-
-
 			                ?>
 						</div>
 						<div style="<?php echo is_super_admin()?"position: relative; float: right; width: 45%;": "float:left"; ?>
-							<h2><?php _e('Email Sending Limits','sendpress'); ?></h2>
+							<h2><?php _e('Email Sending Limits','sendpress'); ?>
+
+							</h2>
 
 							<?php
 							$emails_per_day = SendPress_Option::get('emails-per-day');
+
 							$emails_per_hour =  SendPress_Option::get('emails-per-hour');
 							$credits         = SendPress_Option::get('emails-credits');
 
-							//$hourly_emails = SendPress_Data::emails_sent_in_queue("hour");
 							$emails_so_far = SendPress_Data::emails_sent_in_queue("day");
-							?><?php
-$offset = get_option( 'gmt_offset' ) * 60 * 60; // Time offset in seconds
-$local_timestamp = wp_next_scheduled('sendpress_cron_action') + $offset;
-//print_r(wp_get_schedules());
-?>
-<?php sprintf(__('You have sent <strong>%s</strong> emails so far today and you have <strong>%s</strong> credits remaining.', 'sendpress'), $emails_so_far, $credits); ?><br><br>
-<input type="text" size="6" name="emails-per-day" value="<?php echo $emails_per_day; ?>" /> <?php _e('Emails Per Day','sendpress'); ?><br><br>
-<input type="text" size="6" name="emails-per-hour" value="<?php echo $emails_per_hour; ?>" /> <?php _e('Emails Per Hour','sendpress'); ?>
-<br><br>
-<h2><?php _e('Email Encoding','sendpress'); ?></h2>
-<?php
-$charset = SendPress_Option::get('email-charset','UTF-8');
-?>Charset:
-<select name="email-charset" id="">
 
-	<?php
-	$charsete = SendPress_Data::get_charset_types();
-	foreach ( $charsete as $type) {
-		$select="";
-		if($type == $charset){
-			$select = " selected ";
-		}
-		echo "<option $select value=$type>$type</option>";
+							$offset = get_option( 'gmt_offset' ) * 60 * 60;
 
-	}
-	?>
+						  $local_timestamp = wp_next_scheduled('sendpress_cron_action') + $offset;
+
+							sprintf(__('You have sent <strong>%s</strong> emails so far today and you have <strong>%s</strong> credits remaining.', 'sendpress'), $emails_so_far, $credits);
+							?>
+							<br><br>
+
+
+						<input type="hidden" />
+						<input type="text" size="6" name="emails-per-day" value="<?php echo $emails_per_day; ?>" />
+						<?php _e('Emails Per Day','sendpress'); ?>
+						<br><br>
+
+						<input type="text" size="6" name="emails-per-hour" value="<?php echo $emails_per_hour; ?>" />
+						<?php _e('Emails Per Hour','sendpress'); ?>
+						<br><br>
+
+						<h2><?php _e('Email Encoding','sendpress'); ?></h2>
+						<?php
+						$charset = SendPress_Option::get('email-charset','UTF-8');
+						?>Charset:
+						<select name="email-charset" id="">
+
+						<?php
+						$charsete = SendPress_Data::get_charset_types();
+						foreach ( $charsete as $type) {
+							$select="";
+							if($type == $charset){
+								$select = " selected ";
+							}
+							echo "<option $select value=$type>$type</option>";
+
+						}
+						?>
 </select><br>
 <?php _e('Squares or weird characters displaying in your emails select the charset for your language','sendpress'); ?>.
 <br><br>
