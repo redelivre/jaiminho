@@ -50,7 +50,7 @@ class Jaiminho_View_Emails extends SendPress_View{
 				    	<a href="<?php echo SendPress_Admin::link('Emails'); ?>"><?php _e('Newsletters','sendpress'); ?></a>
 				  	</li>
 				  	<?php  if(  false == true) {  //if(SendPress_Option::get('prerelease_templates') == 'yes') { ?>
-				 	
+
 				  	<li <?php if($the_view === 'all'){ ?>class="active"<?php } ?> >
 				    	<a href="<?php echo SendPress_Admin::link('Emails_Auto'); ?>"><?php _e('Autoresponders','sendpress'); ?></a>
 				  	</li>
@@ -70,15 +70,15 @@ class Jaiminho_View_Emails extends SendPress_View{
 				  	<!--li <?php if(in_array($the_view, array('postnotifications')) ) { ?>class="active"<?php } ?> >
               <a href="<?php echo SendPress_Admin::link('Emails_Postnotifications'); ?>"><?php _e('Post Notifications','sendpress'); ?></a>
             </li-->
-				  	
-            
+
+
             <?php if(SendPress_Option::get('beta')){ ?>
-         
+
               <li <?php if( in_array($the_view, array('autoresponder','autoedit')) ) { ?>class="active"<?php } ?> >
                 <a href="<?php echo SendPress_Admin::link('Emails_Autoresponder'); ?>"><?php _e('Automation','sendpress'); ?></a>
               </li>
-           
-              
+
+
             <?php } ?>
 
             <li <?php if(strpos(SPNL()->_current_view,'systememail') !== false){ ?>class="active"<?php } ?> ><a <?php if(strpos(SPNL()->_current_view,'systememail') !== false){ ?>class="wp-ui-primary"<?php } ?>  href="<?php echo SendPress_Admin::link('Emails_Systememail'); ?>"><i class=" icon-bullhorn"></i> <?php _e('System Email','sendpress'); ?></a></li>
@@ -103,7 +103,7 @@ class Jaiminho_View_Emails extends SendPress_View{
     <ul class="nav nav-tabs" id="myTab">
       <li class="active tabs-first"><a href="#posts"><?php _e('Single Post','sendpress'); ?></a></li>
         <li ><a href="#merge"><?php _e('Personalize','sendpress'); ?></a></li>
-     
+
         <!--
       <li><a href="#messages">Messages</a></li>
       <li><a href="#settings">Settings</a></li>
@@ -112,7 +112,7 @@ class Jaiminho_View_Emails extends SendPress_View{
   </div>
   <div class="modal-body">
 
- 
+
 <div class="tab-content">
    <div class="tab-pane active" id="posts">
 
@@ -172,7 +172,7 @@ class Jaiminho_View_Emails extends SendPress_View{
   <div class="tab-pane " id="merge">
     <h3>Subscriber specific content</h3>
       <table class="table table-condensed table-striped">
-        
+
   <thead>
     <tr>
       <th>Description</th>
@@ -201,7 +201,7 @@ class Jaiminho_View_Emails extends SendPress_View{
 </table>
   <h3>Site specific content</h3>
       <table class="table table-condensed table-striped">
-        
+
   <thead>
     <tr>
       <th>Description</th>
@@ -225,12 +225,12 @@ class Jaiminho_View_Emails extends SendPress_View{
         <td>*|SITE:DECRIPTION|*</td>
         <td class="text-right"><button class="btn btn-xs btn-success sp-insert-code"  data-code="*|SITE:DESCRIPTION|*">Insert</button></td>
     </tr>
-    
+
   </tbody>
 </table>
 <h3>Date and Time</h3>
       <table class="table table-condensed table-striped">
-        
+
   <thead>
     <tr>
       <th>Description</th>
@@ -254,17 +254,17 @@ class Jaiminho_View_Emails extends SendPress_View{
         <td>*|DATE:F j, Y, g:i a|*</td>
         <td class="text-right"><button class="btn btn-xs btn-success sp-insert-code" data-code="*|DATE:F j, Y, g:i a|*">Insert</button></td>
     </tr>
-  
-    
+
+
   </tbody>
 </table>
 
   </div>
- 
+
   <div class="tab-pane" id="messages">...</div>
   <div class="tab-pane" id="settings">...</div>
 </div>
-    
+
   </div>
   <div class="modal-footer">
     <a href="#" class="btn btn-primary" data-dismiss="modal">Close</a>

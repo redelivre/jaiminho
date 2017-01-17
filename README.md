@@ -1,5 +1,7 @@
 # Jaiminho
 
+[![Stories in Ready](https://badge.waffle.io/redelivre/jaiminho.png?label=ready&title=Ready)](http://waffle.io/redelivre/jaiminho)
+
 Jaiminho é um plugin que esta sendo desenvolvido para modificar alguns comportamentos do sendpress, nossa ideia é modificar o sendpress em tempo de execução, a cada carregamento do sendpress nos modificamos algumas caracteristicas para que ele se torne o Jaiminho, um outro cara!
 
 #Instalação:

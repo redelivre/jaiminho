@@ -14,10 +14,9 @@ class Jaiminho_View_Overview extends SendPress_View{
     SendPress_Admin::redirect('Overview');
   }
 
-  
   function html(){
     SendPress_Tracking::event('Overview Tab');
-  
+
 global $wp_version;
 
 $classes = 'sp-welcome-panel';
@@ -35,8 +34,8 @@ list( $display_version ) = explode( '-', $wp_version );
 
 <div class="sp-row ">
 
-  <div class="sp-block sp-25 sp-first"> 
-    <h2 class="nomargin nopadding"><?php echo SendPress_Data::bd_nice_number(SendPress_Data::get_total_subscribers()); ?></h2> <p class="fwb"><?php _e('Subscribers', 'sendpress');?></p>  
+  <div class="sp-block sp-25 sp-first">
+    <h2 class="nomargin nopadding"><?php echo SendPress_Data::bd_nice_number(SendPress_Data::get_total_subscribers()); ?></h2> <p class="fwb"><?php _e('Subscribers', 'sendpress');?></p>
   </div>
   <div class="sp-block sp-25">
     <h2 class="nomargin nopadding"><?php $report = SendPress_Data::get_last_report(); ?><?php echo SendPress_Data::emails_active_in_queue(); ?></h2> <p class="fwb"><?php _e('Emails Actively Sending', 'sendpress');?></small></p>
@@ -45,7 +44,7 @@ list( $display_version ) = explode( '-', $wp_version );
     <h2 class="nomargin nopadding"><?php echo  SendPress_Data::emails_maxed_in_queue(); ?></h2> <p class="fwb"><?php _e('Emails Stuck in Queue', 'sendpress');?></p>
   </div>
   <!--div class="sp-block sp-25">
-    <h2 class="nomargin nopadding"><?php _e('Autocron last check', 'sendpress');?></h2> <p class="fwb">  <?php 
+    <h2 class="nomargin nopadding"><?php _e('Autocron last check', 'sendpress');?></h2> <p class="fwb">  <?php
     /*$autocron = SendPress_Option::get('autocron','no');
     //print_r(SendPress_Data::emails_stuck_in_queue());
 
@@ -63,14 +62,14 @@ list( $display_version ) = explode( '-', $wp_version );
   </div-->
 
 </div>
-<?php 
-if($report){ 
+<?php
+if($report){
 $rec = get_post_meta($report->ID, '_send_last_count', true);
 $this->panel_start($report->post_title ." <small style='color:#333;'>".__('This email had', 'sendpress')." ". $rec ." ".__('Recipients', 'sendpress')."</small>");
 
 
 $stat_type = get_post_meta($report->ID, '_stat_type', true);
-         
+
           $clicks = SPNL()->load("Subscribers_Url")->clicks_email_id( $report->ID  );
           $clicks_total = SPNL()->load("Subscribers_Url")->clicks_total_email_id( $report->ID  );
 ?>
@@ -78,7 +77,7 @@ $stat_type = get_post_meta($report->ID, '_stat_type', true);
 <div class="sp-row">
   <div class="sp-50 sp-first">
     <h4 style="text-align:center;"><?php _e('Opens', 'sendpress');?></h4>
-      <?php 
+      <?php
         $this->panel_start();
         $open = 0;
         $rec = get_post_meta($report->ID, '_send_last_count', true);
@@ -91,7 +90,7 @@ $stat_type = get_post_meta($report->ID, '_stat_type', true);
             } else {
                 $open= SendPress_Data::get_opens($report->ID);
             }
-           
+
             $p = $open/$rec * 100;
           }
         ?>
@@ -106,7 +105,7 @@ $stat_type = get_post_meta($report->ID, '_stat_type', true);
         </div>
         </div>
         <div class="sp-50">
-        <?php 
+        <?php
           $ou = 0;
 
             if($stat_type == 'new'){
@@ -114,8 +113,8 @@ $stat_type = get_post_meta($report->ID, '_stat_type', true);
             } else {
                $ou =  SendPress_Data::get_opens_unique_total($report->ID);
             }
-         
-            
+
+
 
           $px = $ou/$rec * 100;
 
@@ -129,19 +128,19 @@ $stat_type = get_post_meta($report->ID, '_stat_type', true);
           </div>
        </div>
        </div>
-        
+
       <?php
         $this->panel_end();
       ?>
   </div>
   <div class="sp-50">
   <h4 style="text-align:center;"><?php _e('Clicks', 'sendpress');?></h4>
-    <?php 
+    <?php
         $this->panel_start();
          $click = 0;
         $rec = get_post_meta($report->ID, '_send_last_count', true);
           if($report){
-              
+
             if($stat_type == 'new'){
                 $click = SPNL()->load("Subscribers_Url")->clicks_email_id( $report->ID  );
             } else {
@@ -162,7 +161,7 @@ $stat_type = get_post_meta($report->ID, '_stat_type', true);
          </div>
         </div>
         <div class="sp-50">
-        <?php 
+        <?php
           $ou = 0;
 
           if($stat_type == 'new'){
@@ -170,7 +169,7 @@ $stat_type = get_post_meta($report->ID, '_stat_type', true);
             } else {
                 $ou = SendPress_Data::get_clicks_unique_total($report->ID);
             }
-          
+
           $px = $ou/$rec * 100;
 
         ?>
@@ -183,7 +182,7 @@ $stat_type = get_post_meta($report->ID, '_stat_type', true);
          </div>
        </div>
        </div>
-        
+
      <?php
         $this->panel_end();
       ?>
@@ -211,15 +210,15 @@ $stat_type = get_post_meta($report->ID, '_stat_type', true);
     <th>List</th>
     <th><div style="text-align:right;">Email</div></th>
     </tr>
-    <?php 
+    <?php
       $recent = SendPress_Data::get_recent_subscribers();
       foreach($recent as $item){
         echo "<tr>";
          echo "<td>";
         if(property_exists($item,'subscriberID')){
-       
+
         $d =  SendPress_Data::get_subscriber($item->subscriberID);
-        
+
         if(property_exists($item,'updated')){
            echo date_i18n("m.d.y" ,strtotime($item->updated) );
         }
@@ -233,13 +232,13 @@ echo "<td >";
         if(is_object($d)){
         echo  $d->email ."<br>";
         }
-        
+
        echo "</td>";
         echo "</tr>";
         }
       }
 
-      
+
 
     ?>
   </table>
@@ -255,7 +254,7 @@ echo "<td >";
       <ul>
       <?php
       $recent =  SPNL()->load("Subscribers_Tracker")->get_most_active(); // SendPress_Data::get_most_active_subscriber();
-      
+
       foreach($recent as $item){
         if(property_exists($item,'subscriber_id')){
         echo "<li>";
@@ -283,7 +282,7 @@ echo "<td >";
         <li><a href="http://sendpress.com/purchase-pricing/"><?php _e('Check Spam Scores', 'sendpress');?></a></li>
         <li><a href="http://sendpress.com/purchase-pricing/"><?php _e('Post Notifications', 'sendpress');?></a></li>
       </ul>
-   
+
     </div>
   </div>
   <?php } */?>

@@ -32,7 +32,7 @@ class Jaiminho_Widget_Signup extends WP_Widget {
 	            'sendpress-widget', // Base ID
         	    __('Cadastre-se no Jaiminho', 'jaiminho'), // Name
  	           	$widget_ops,
- 	           	$control_ops 
+ 	           	$control_ops
 		);
 
 
@@ -76,7 +76,7 @@ class Jaiminho_Widget_Signup extends WP_Widget {
 		$args.= 'label_display="'.$instance['label_display'].'" ';
 		$args.= 'desc="'.$instance['desc'].'" ';
 		$args.= 'no_list_error="<div><b>-- '. __('NENHUMA LISTA FOI SELECIONADA NO WIDGET DO JAIMINHO','jaiminho'). ' --</b></div>" ';
-	
+
 		$lists = SendPress_Data::get_lists(
 			array('meta_query' => array(
 				array(
@@ -95,9 +95,9 @@ class Jaiminho_Widget_Signup extends WP_Widget {
 				}
 			}
 		}
-	
+
 		$args.= 'listids="'.implode(',',$listids).'" ';
-		
+
 		$args = apply_filters('sendpress_signup_widget_args', $args, $instance);
 		//do_shortcode goes here
 		echo do_shortcode('[jaiminho-signup '.$args.']');
@@ -138,7 +138,7 @@ class Jaiminho_Widget_Signup extends WP_Widget {
 
 		$instance['lists_checked'] = true;
 
-		$args = array( 
+		$args = array(
 	   		'post_type' 	=> 'sendpress_list',
 	   		'numberposts'   => -1,
     		'offset'        => 0,
@@ -149,7 +149,7 @@ class Jaiminho_Widget_Signup extends WP_Widget {
 	    $listids = array();
 
 		foreach($lists as $list){
-			
+
 			if( get_post_meta($list->ID,'public',true) == 1 ){
 				( !array_key_exists('list_'.$list->ID,$new_instance) ) ? $instance['list_'.$list->ID] = false : $instance['list_'.$list->ID] = $new_instance['list_'.$list->ID];
 			}
@@ -166,18 +166,18 @@ class Jaiminho_Widget_Signup extends WP_Widget {
 	function form( $instance ) {
 
 		/* Set up some default widget settings. */
-		$defaults = array( 
-			'title' => '', 
+		$defaults = array(
+			'title' => '',
 			'show_first' => false,
 			'show_last' => false,
 			'show_job' => false,
 			'lists_checked' => true,
 			'label_display' => 0,
-			'first_label' => __('First Name', 'sendpress'), 
-			'last_label' => __('Last Name', 'sendpress'), 
-			'job_label' => __('Profissão', 'jaiminho'), 
-			'email_label' => __('E-Mail', 'sendpress'), 
-			'list_label' => __('List Selection', 'sendpress'), 
+			'first_label' => __('First Name', 'sendpress'),
+			'last_label' => __('Last Name', 'sendpress'),
+			'job_label' => __('Profissão', 'jaiminho'),
+			'email_label' => __('E-Mail', 'sendpress'),
+			'list_label' => __('List Selection', 'sendpress'),
 			'desc' => '',
 			'redirect_page'=>false,
 			'button_text' => __('Submit', 'sendpress'),
@@ -200,7 +200,7 @@ class Jaiminho_Widget_Signup extends WP_Widget {
 			$defaults['list_'.$list->ID] = false;
 		}
 
-		$instance = wp_parse_args( (array) $instance, $defaults ); 
+		$instance = wp_parse_args( (array) $instance, $defaults );
 
 		?>
 
@@ -218,19 +218,19 @@ class Jaiminho_Widget_Signup extends WP_Widget {
 		</p>
 
 		<p>
-			<input class="checkbox" type="checkbox" <?php checked( $instance['show_first'], 'on' ); ?> id="<?php echo $this->get_field_id( 'show_first' ); ?>" name="<?php echo $this->get_field_name( 'show_first' ); ?>" /> 
+			<input class="checkbox" type="checkbox" <?php checked( $instance['show_first'], 'on' ); ?> id="<?php echo $this->get_field_id( 'show_first' ); ?>" name="<?php echo $this->get_field_name( 'show_first' ); ?>" />
 			<label for="<?php echo $this->get_field_id( 'show_first' ); ?>"><?php _e('Collect First Name', 'sendpress'); ?></label>
-		</p> 
+		</p>
 
 		<!--p>
-			<input class="checkbox" type="checkbox" <?php checked( $instance['show_last'], 'on' ); ?> id="<?php echo $this->get_field_id( 'show_last' ); ?>" name="<?php echo $this->get_field_name( 'show_last' ); ?>" /> 
+			<input class="checkbox" type="checkbox" <?php checked( $instance['show_last'], 'on' ); ?> id="<?php echo $this->get_field_id( 'show_last' ); ?>" name="<?php echo $this->get_field_name( 'show_last' ); ?>" />
 			<label for="<?php echo $this->get_field_id( 'show_last' ); ?>"><?php _e('Collect Last Name', 'sendpress'); ?></label>
-		</p--> 
+		</p-->
 
 		<p>
-			<input class="checkbox" type="checkbox" <?php checked( $instance['show_job'], 'on' ); ?> id="<?php echo $this->get_field_id( 'show_job' ); ?>" name="<?php echo $this->get_field_name( 'show_job' ); ?>" /> 
+			<input class="checkbox" type="checkbox" <?php checked( $instance['show_job'], 'on' ); ?> id="<?php echo $this->get_field_id( 'show_job' ); ?>" name="<?php echo $this->get_field_name( 'show_job' ); ?>" />
 			<label for="<?php echo $this->get_field_id( 'show_job' ); ?>"><?php _e('Coletar Profissão', 'jaiminho'); ?></label>
-		</p> 
+		</p>
 
 		<p>
 			<label for="<?php echo $this->get_field_id( 'label_display' ); ?>"><?php _e('Display labels inside','sendpress'); ?>?:</label>
@@ -239,9 +239,9 @@ class Jaiminho_Widget_Signup extends WP_Widget {
 		</p>
 		<!--
 		<p>
-			<input class="checkbox" type="checkbox" <?php checked( $instance['lists_checked'], 'on' ); ?> id="<?php echo $this->get_field_id( 'lists_checked' ); ?>" name="<?php echo $this->get_field_name( 'lists_checked' ); ?>" /> 
+			<input class="checkbox" type="checkbox" <?php checked( $instance['lists_checked'], 'on' ); ?> id="<?php echo $this->get_field_id( 'lists_checked' ); ?>" name="<?php echo $this->get_field_name( 'lists_checked' ); ?>" />
 			<label for="<?php echo $this->get_field_id( 'lists_checked' ); ?>"><?php _e('Check all lists by default', 'sendpress'); ?></label>
-		</p> 
+		</p>
 		-->
 
 		<p>
@@ -273,7 +273,7 @@ class Jaiminho_Widget_Signup extends WP_Widget {
 			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'list_label' ); ?>" name="<?php echo $this->get_field_name( 'list_label' ); ?>" value="<?php echo $instance['list_label']; ?>" style="width:100%;" />
 		</p>
 		<p><b><?php __('Check off the lists you would like<br>users to subscribe to','sendpress') ?>.</b></p>
-		<?php 
+		<?php
 		if( count($lists) === 0 ){
 			?><p><?php
 			_e('No public lists available','sendpress');
@@ -282,15 +282,15 @@ class Jaiminho_Widget_Signup extends WP_Widget {
 			foreach($lists as $list){
 				?>
 				<p>
-					<input class="checkbox" type="checkbox" <?php checked( $instance['list_'.$list->ID], 'on' ); ?> id="<?php echo $this->get_field_id( 'list_'.$list->ID ); ?>" name="<?php echo $this->get_field_name( 'list_'.$list->ID ); ?>" /> 
+					<input class="checkbox" type="checkbox" <?php checked( $instance['list_'.$list->ID], 'on' ); ?> id="<?php echo $this->get_field_id( 'list_'.$list->ID ); ?>" name="<?php echo $this->get_field_name( 'list_'.$list->ID ); ?>" />
 					<label for="<?php echo $this->get_field_id( 'list_'.$list->ID ); ?>"><?php echo $list->post_title; ?></label>
-				</p> 
+				</p>
 				<?php
 			}
 		}
-		
+
 		if( !is_wp_error($lists) ||  !is_wp_error($instance) || !is_wp_error($this)   ){
-			
+
 			do_action('sendpress_post_notification_widget_form',$lists, $instance, $this);
 		}
 		?>
@@ -301,13 +301,13 @@ class Jaiminho_Widget_Signup extends WP_Widget {
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'redirect_page' ); ?>"><?php _e('Thank You Page (AJAX OFF ONLY):', 'sendpress'); ?></label>
-			<select name="<?php echo $this->get_field_name( 'redirect_page' ); ?>" id="<?php echo $this->get_field_id( 'redirect_page' ); ?>"> 
+			<select name="<?php echo $this->get_field_name( 'redirect_page' ); ?>" id="<?php echo $this->get_field_id( 'redirect_page' ); ?>">
  <option value="0">
- 	<?php $cpageid = $instance['redirect_page']; 
+ 	<?php $cpageid = $instance['redirect_page'];
  	?>
-<?php echo esc_attr( __( 'Default' ) ); ?></option> 
- <?php 
-  $pages = get_pages(); 
+<?php echo esc_attr( __( 'Default' ) ); ?></option>
+ <?php
+  $pages = get_pages();
   foreach ( $pages as $page ) {
   	$s ='';
   	if($cpageid == $page->ID){ $s =  "selected"; }
@@ -321,8 +321,8 @@ class Jaiminho_Widget_Signup extends WP_Widget {
 
 		</p>
 
-		
+
 		<?php
-		
+
 	}
 }

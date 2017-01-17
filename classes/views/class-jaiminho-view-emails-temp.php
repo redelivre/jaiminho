@@ -35,7 +35,7 @@ class Jaiminho_View_Emails_Temp extends Jaiminho_View_Emails{
 	function screen_options(){
 
 		$screen = get_current_screen();
-	 	
+
 		$args = array(
 			'label' => __('Emails per page', 'sendpress'),
 			'default' => 10,
@@ -44,14 +44,14 @@ class Jaiminho_View_Emails_Temp extends Jaiminho_View_Emails{
 		add_screen_option( 'per_page', $args );
 	}
 
- 	
+
 
 	function prerender($sp= false){
-	
-	
+
+
 
 	}
-	
+
 	function html(){
 		SendPress_Tracking::event('Emails Tab');
 		//SendPress_Template_Manager::update_template_content();
@@ -60,10 +60,10 @@ class Jaiminho_View_Emails_Temp extends Jaiminho_View_Emails{
 		//Fetch, prepare, sort, and filter our data...
 		$testListTable->prepare_items();
 	?>
-	
+
 	<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
 	<form id="email-filter" method="get">
-		<div id="taskbar" class="lists-dashboard rounded group"> 
+		<div id="taskbar" class="lists-dashboard rounded group">
 
 		<h2><?php _e('Templates','sendpress'); ?></h2>
 		<small><?php _e('Help','sendpress'); ?>: <a target="_blank" href="http://docs.sendpress.com/article/58-setting-up-a-newsletter-template/"><?php _e('Getting Started with Templates','sendpress'); ?></a></small>
@@ -80,8 +80,6 @@ class Jaiminho_View_Emails_Temp extends Jaiminho_View_Emails{
 	}
 
 }
-
-
 
 SendPress_Admin::add_cap('Emails_Templates','sendpress_email');
 

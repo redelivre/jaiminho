@@ -9,14 +9,14 @@ if ( !defined('SENDPRESS_VERSION') ) {
 }
 
 class Jaiminho_View_Emails_Tempstyle extends Jaiminho_View_Emails {
-    
+
     function save(){
         //$this->security_check();
         $saveid = SPNL()->validate->_int('post_ID');
-     
+
          update_post_meta($saveid ,'_header_page_text_color', SPNL()->validate->_hex('pagetxt-color-select') );
           update_post_meta($saveid ,'_header_page_link_color', SPNL()->validate->_hex('pagelink-color-select') );
-        
+
         update_post_meta($saveid ,'_header_text_color', SPNL()->validate->_hex('htxt-color-select') );
         update_post_meta($saveid ,'_header_bg_color', SPNL()->validate->_hex('bg-color-select') );
         if(SPNL()->validate->_isset('padding-heading')){
@@ -24,7 +24,7 @@ class Jaiminho_View_Emails_Tempstyle extends Jaiminho_View_Emails {
         } else {
              update_post_meta($saveid ,'_header_padding', false );
         }
-         
+
           update_post_meta($saveid ,'_body_color', SPNL()->validate->_hex('bg-page-color-select') );
           update_post_meta($saveid ,'_content_color', SPNL()->validate->_hex('content-color-select') );
 
@@ -34,13 +34,13 @@ class Jaiminho_View_Emails_Tempstyle extends Jaiminho_View_Emails {
 
         update_post_meta($saveid ,'_footer_text_color', SPNL()->validate->_hex('footer-txt-color-select') );
         update_post_meta($saveid ,'_footer_bg_color', SPNL()->validate->_hex('footer-bg-color-select') );
-       
+
         if(SPNL()->validate->_isset('padding-footer')){
             update_post_meta($saveid ,'_footer_padding', SPNL()->validate->_string('padding-footer') );
         } else {
              update_post_meta($saveid ,'_footer_padding', false );
         }
-     
+
 
 
     }
@@ -49,8 +49,8 @@ class Jaiminho_View_Emails_Tempstyle extends Jaiminho_View_Emails {
        wp_enqueue_script( 'wp-color-picker' );
    }
 
-   function html() { 
-   
+   function html() {
+
     global $sendpress_html_templates;
 
 
@@ -71,12 +71,12 @@ class Jaiminho_View_Emails_Tempstyle extends Jaiminho_View_Emails {
         <div  class="btn-toolbar">
 
             <div class="btn-group btn-group-justified" id="code-edit-buttons" >
-             
+
             <a href="<?php echo SendPress_Admin::link('Emails_Temp'); ?>" id="cancel-update" class="btn btn-lg btn-default" data-toggle="tooltip" data-placement="top" title="Cancel"><span class="glyphicon glyphicon-remove"></span></a>
             <div class="btn-group">
                 <button class="btn btn-default btn-lg " type="submit" value="save" name="submit"  data-toggle="tooltip" data-placement="top" title="Save"><span class="glyphicon glyphicon-floppy-disk"></span></button></div>
             </div>
-               
+
         </div><br>
             <div class="panel-group" id="accordion">
               <div class="panel panel-color">
@@ -91,7 +91,7 @@ class Jaiminho_View_Emails_Tempstyle extends Jaiminho_View_Emails {
           <div class="panel-body">
             <a class="btn btn-default btn-block" href="<?php echo SendPress_Admin::link('Emails_Headerpage', array('templateID' => SPNL()->validate->_int('templateID') )); ?>" class="btn"><?php _e('Edit Page Header HTML','sendpress'); ?></a>
             <br>
-           
+
             <?php
             $bgcolor = get_post_meta( $postdata->ID ,'_body_color',true );
                 if($bgcolor == false ){
@@ -99,25 +99,25 @@ class Jaiminho_View_Emails_Tempstyle extends Jaiminho_View_Emails {
                 }?>
             <?php _e('Background','sendpress'); ?><br><input type="text" value="<?php echo $bgcolor; ?>" id="bg-page-color-select" name="bg-page-color-select" class="my-color-field" data-default-color="#ebebeb" data-template-style="background-color" data-template-target=".sp-body-bg" />
             <hr>
-            <?php 
+            <?php
             $htext = get_post_meta( $postdata->ID ,'_header_page_text_color',true );
                 if($htext == false ){
                     $htext = '#333';
                 }?>
-           
+
             <?php _e('Text','sendpress'); ?><br><input type="text" value="<?php echo $htext; ?>" id="pagetxt-color-select" name="pagetxt-color-select" class="my-color-field" data-default-color="#333" data-template-style="color" data-template-target=".page-text-color" />
-                 <hr> <?php 
+                 <hr> <?php
             $linktextpage = get_post_meta( $postdata->ID ,'_header_page_link_color',true );
                 if($linktextpage == false ){
                     $linktextpage = '#2469a0';
                 }?>
-           
+
             <?php _e('Link','sendpress'); ?><br><input type="text" value="<?php echo $linktextpage; ?>" id="pagelink-color-select" name="pagelink-color-select" class="my-color-field" data-default-color="#2469a0" data-template-style="color" data-template-target=".page-text-color a" />
-          
+
 
             <br><br>
             <a class="btn btn-default btn-block" href="<?php echo SendPress_Admin::link('Emails_Footerpage', array('templateID' =>SPNL()->validate->_int('templateID') )); ?>" class="btn"><?php _e('Edit Page Footer HTML','sendpress'); ?></a>
-            
+
          </div>
     </div>
 </div>
@@ -133,13 +133,13 @@ class Jaiminho_View_Emails_Tempstyle extends Jaiminho_View_Emails {
   <div class="panel-body">
     <a class="btn btn-default btn-block" href="<?php echo SendPress_Admin::link('Emails_Header', array('templateID' => SPNL()->validate->_int('templateID') )); ?>" class="btn"><?php _e('Edit Header HTML','sendpress'); ?></a>
     <br>
-    <?php 
+    <?php
     $bgtext = get_post_meta( $postdata->ID ,'_header_bg_color',true );
         if($bgtext == false ){
             $bgtext = '#d1d1d1';
         }?>
     <?php _e('Background','sendpress'); ?><br><input type="text" value="<?php echo $bgtext; ?>" id="bg-color-select" name="bg-color-select" class="my-color-field" data-default-color="#d1d1d1" data-template-style="background-color" data-template-target=".sp-style-h-bg" />
-    <?php 
+    <?php
     $htext = get_post_meta( $postdata->ID ,'_header_text_color',true );
         if($htext == false ){
             $htext = '#333';
@@ -147,7 +147,7 @@ class Jaiminho_View_Emails_Tempstyle extends Jaiminho_View_Emails {
     <hr>
     <?php _e('Text','sendpress'); ?><br><input type="text" value="<?php echo $htext; ?>" id="htxt-color-select" name="htxt-color-select" class="my-color-field" data-default-color="#333" data-template-style="color" data-template-target=".sp-style-h-bg" />
     <hr>
-     <?php 
+     <?php
         $padheader = get_post_meta( $postdata->ID ,'_header_padding',true );
         if($padheader == 'pad-header' ){
             $padheader = 'checked';
@@ -193,7 +193,7 @@ class Jaiminho_View_Emails_Tempstyle extends Jaiminho_View_Emails {
         if($contenttext == false ){
             $contenttext = '#333333';
         }?>
-    
+
     <?php _e('Text','sendpress'); ?><br><input type="text" value="<?php echo $contenttext; ?>" id="content-text-color-select" name="content-text-color-select" class="my-color-field" data-default-color="#333333" data-template-style="color" data-template-target=".sp-style-c-bg" />
       <?php
   $contentlink = get_post_meta( $postdata->ID ,'_content_link_color',true );
@@ -202,7 +202,7 @@ class Jaiminho_View_Emails_Tempstyle extends Jaiminho_View_Emails {
         }?>
     <hr>
     <?php _e('Link','sendpress'); ?><br><input type="text" value="<?php echo $contentlink; ?>" id="content-link-color-select" name="content-link-color-select" class="my-color-field" data-default-color="#2469a0" data-template-style="color" data-template-target=".sp-style-c-bg a" />
-  
+
     <!--
     <hr>
     Link<br><input type="text" value="#bada55" id="bg-color-select" class="my-color-field" data-default-color="#effeff" data-template-style="color" data-template-target=".sp-style-c-bg a" />
@@ -222,13 +222,13 @@ class Jaiminho_View_Emails_Tempstyle extends Jaiminho_View_Emails {
   <div class="panel-body">
     <a class="btn btn-default btn-block" href="<?php echo SendPress_Admin::link('Emails_Footer', array('templateID' => SPNL()->validate->_int('templateID') )); ?>" class="btn">Edit Footer HTML</a>
     <br>
-     <?php 
+     <?php
     $bgtext = get_post_meta( $postdata->ID ,'_footer_bg_color',true );
         if($bgtext == false ){
             $bgtext = '#e2e2e2';
         }?>
     <?php _e('Background','sendpress'); ?><br><input type="text" value="<?php echo $bgtext; ?>" id="footer-bg-color-select" name="footer-bg-color-select" class="my-color-field" data-default-color="#e2e2e2" data-template-style="background-color" data-template-target=".sp-style-f-bg" />
-    <?php 
+    <?php
     $htext = get_post_meta( $postdata->ID ,'_footer_text_color',true );
         if($htext == false ){
             $htext = '#333';
@@ -242,9 +242,9 @@ class Jaiminho_View_Emails_Tempstyle extends Jaiminho_View_Emails {
         }?>
     <hr>
     <?php _e('Link','sendpress'); ?><br><input type="text" value="<?php echo $footerlink; ?>" id="footer-link-color-select" name="footer-link-color-select" class="my-color-field" data-default-color="#2469a0" data-template-style="color" data-template-target=".sp-style-f-bg a" />
-  
+
     <hr>
-     <?php 
+     <?php
         $padfooter = get_post_meta( $postdata->ID ,'_footer_padding',true );
         if($padfooter == 'pad-footer' ){
             $padfooter = 'checked';
@@ -265,13 +265,13 @@ echo spnl_get_emails_tags_list();
 
 <?php
 
-$home_url = ''; 
- 
-if (force_ssl_admin()) { 
-         $home_url = get_home_url(NULL, '', 'https'); 
-} 
-else { 
-         $home_url = get_home_url(); 
+$home_url = '';
+
+if (force_ssl_admin()) {
+         $home_url = get_home_url(NULL, '', 'https');
+}
+else {
+         $home_url = get_home_url();
 }
 
 ?>
@@ -316,7 +316,7 @@ else {
                    // styletag = content.find('head').append('<style>body{ background-color: #000; }</style>');
                     //.children('style');
                         body.css( target_style , ui.color.toString() );
-                   
+
                   //  console.log(styletag);
 
 
@@ -334,7 +334,7 @@ else {
 
         $('.my-color-field').wpColorPicker( styler_options );
 
-        
+
 
         /*
         var myCodeMirror = CodeMirror.fromTextArea(document.getElementById("template-content"), {
@@ -343,16 +343,16 @@ else {
             matchBrackets: true,
             mode: "text/html",
             extraKeys: {"Tab": "autocomplete"}
-          }); 
+          });
         $('#template-editor').submit(function(e){
             myCodeMirror.save();
             var txt = $('#template-content').val();
             var unsub = txt.indexOf('{unsubscribe-link}') != -1;
             if(unsub == false){
                     e.preventDefault();
-                $('.alert').removeClass('hide').addClass('in');  
+                $('.alert').removeClass('hide').addClass('in');
             }
-            
+
         });
 
         $('#iframe1').hide();
@@ -389,7 +389,7 @@ else {
             $("#code-edit-buttons button").removeClass('active');
         }
         */
-        
+
         $(window).resize(function(){
              var x = $( window ).height(); //jQuery('#wpbody').height();
 
@@ -401,14 +401,14 @@ else {
    });
 
         var x = $( window ).height(); //jQuery('#wpbody').height();
-        
+
        // $('.btn-group .btn').tooltip({container: 'body'});
         if(x - 350 < 700){
             $('#iframe1').height(700);
        } else {
             $('#iframe1').height(x - 350);
        }
-       
+
         ///myCodeMirror.setSize('100%',(x - 350));
     });
 </script>

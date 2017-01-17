@@ -10,26 +10,26 @@ if (!defined('SENDPRESS_VERSION')) {
 
 class Jaiminho_View_Emails_Send_Queue extends Jaiminho_View_Emails
 {
-    
-   
+
+
     function html() {
         global $post_ID, $post;
         $list = '';
         $emailID = SPNL()->validate->_int('emailID');
         if ($emailID > 0) {
-            
+
             $post = get_post($emailID);
             $post_ID = $post->ID;
         }
 
         update_post_meta($post->ID, '_send_last', 0);
-        
+
         $info = get_post_meta($post->ID, '_send_data', true);
         $lists = get_post_meta($post->ID, '_send_lists', true);
         $subject = $post->post_title;
-        
+
         $list = explode(",", $lists);
-        
+
         if ( SPNL()->validate->_isset('finished') ) {
             $time = get_post_meta($post->ID, '_send_time', true);
             if ($time == '0000-00-00 00:00:00') {
@@ -46,25 +46,25 @@ class Jaiminho_View_Emails_Send_Queue extends Jaiminho_View_Emails
                 }
 
                 SendPress_Admin::redirect('Queue');
-            } 
+            }
             else {
                 SendPress_Admin::redirect('Reports');
             }
         }
-        
+
         $subs = SendPress_Data::get_active_subscribers_count($list);
-        
+
         update_post_meta($post->ID, '_send_last_count', $subs);
         update_post_meta($post->ID, '_sendpress_report', 'new');
 
         ?>
-        <div id="taskbar" class="lists-dashboard rounded group"> 
+        <div id="taskbar" class="lists-dashboard rounded group">
 
-    
+
 </div><input type="hidden" id="post_ID" name="post_ID" value="<?php echo $post->ID; ?>" /><input type="hidden" id="reporttoqueue" name="reporttoqueue" value="<?php echo $lists; ?>" />
 <div class='well' id="confirm-queue-add">
     <h2><strong><?php
-        //_e('Adding Subscribers to Queue', 'sendpress'); 
+        //_e('Adding Subscribers to Queue', 'sendpress');
           _e('Enviando Mensagens', 'sendpress');  ?></strong></h2><br>
    <!-- <p>email:  <?php
         echo stripslashes(esc_attr(htmlspecialchars($subject))); ?></p>-->

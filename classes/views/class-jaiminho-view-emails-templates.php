@@ -72,10 +72,10 @@ class Jaiminho_View_Emails_Templates extends Jaiminho_View_Emails{
 
 	}
 	public function html(){
-		if(isset($_POST['submit'] ) && isset($_GET['templateID'])) 
+		if(isset($_POST['submit'] ) && isset($_GET['templateID']))
 		{
 			$this->update_template();
-		} 
+		}
 		if(isset($_POST['submit'] ) && !isset($_GET['templateID'])) {
 			$this->save_new_template();
 		}
@@ -129,7 +129,7 @@ class Jaiminho_View_Emails_Templates extends Jaiminho_View_Emails{
 							),
 						) ); ?><?php //wp_editor($post->post_content,'content_area_one_edit'); ?></div>
 
-			<?php 
+			<?php
 			if($enable_edits){
 				?>
 					<div class="tab-pane" id="header-content">
@@ -365,5 +365,3 @@ class Jaiminho_View_Emails_Templates extends Jaiminho_View_Emails{
 // Add Access Controll!
 //SendPress_Admin::add_cap('Emails_Templates','sendpress_email');
 //SendPress_View_Overview::cap('sendpress_access');
-
-

@@ -1,17 +1,17 @@
-<?php 
+<?php
 
 
 // Prevent loading this file directly
-if ( !defined('SENDPRESS_VERSION') ) 
+if ( !defined('SENDPRESS_VERSION') )
 {
 	header('HTTP/1.0 403 Forbidden');
 	die;
 }
 
 if(!class_exists('Jaiminho_Sender_NetWork'))
-{  
+{
 
-	class Jaiminho_Sender_NetWork extends SendPress_Sender 
+	class Jaiminho_Sender_NetWork extends SendPress_Sender
 	{
 		function label()
 		{
@@ -69,7 +69,7 @@ if(!class_exists('Jaiminho_Sender_NetWork'))
 			 * we stomp all over it.  Sorry, my plug-inis more important than yours :)
 			 */
 			do_action_ref_array( 'phpmailer_init', array( &$phpmailer ) );
-			
+
 			$from_email = SendPress_Option::get('fromemail');
 			$phpmailer->From = $from_email;
 			$phpmailer->FromName = SendPress_Option::get('fromname');
@@ -109,7 +109,7 @@ if(!class_exists('Jaiminho_Sender_NetWork'))
 
 			$phpmailer->Port = SendPress_Option::get('networkport');
 			// If we're using smtp auth, set the username & password
-			
+
 			//only auth if needed
 			$networkuser = trim(SendPress_Option::get('networkuser'));
 			$networkpass = trim(SendPress_Option::get('networkpass'));
@@ -134,7 +134,7 @@ if(!class_exists('Jaiminho_Sender_NetWork'))
 			if($istest == true){
 				$phpmailer->SMTPDebug = 2;
 				// Start output buffering to grab smtp output
-				ob_start(); 
+				ob_start();
 			}
 
 
@@ -151,7 +151,7 @@ if(!class_exists('Jaiminho_Sender_NetWork'))
 
 			}
 
-			if ( $result == true ) SendPress_Option::set('phpmailer_error', __('Nenhum erro encontrado' , 'jaiminho' ) ); 
+			if ( $result == true ) SendPress_Option::set('phpmailer_error', __('Nenhum erro encontrado' , 'jaiminho' ) );
 			if (  $result != true ){
 				$log_message = 'RedeLivre <br>';
 				$log_message .= $to . "<br>";
@@ -162,7 +162,7 @@ if(!class_exists('Jaiminho_Sender_NetWork'))
 				}
 				//$phpmailer->ErrorInfo
 				SPNL()->log->add(  $phpmailer->ErrorInfo , $log_message , 0 , 'sending' );
-			}	
+			}
 
 			if (  $result != true && $istest == true  ) {
 				$hostmsg = 'host: '.($phpmailer->Host).'  port: '.($phpmailer->Port).'  secure: '.($phpmailer->SMTPSecure) .'  auth: '.($phpmailer->SMTPAuth).'  user: '.($phpmailer->Username)."  pass: *******\n";

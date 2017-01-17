@@ -34,14 +34,14 @@ class Jaiminho_View_Emails_Edit extends Jaiminho_View_Emails {
 			$_wp_autoresize_on = true;
 		}
 		*/
-		
+
 		$emailID = SPNL()->validate->_int('emailID');
 		if( $emailID > 0 ){
 			$post = get_post( $emailID );
 			$post_ID = $post->ID;
 		}
 
-	
+
         if($post->post_type !== 'sp_newsletters'){
             SendPress_Admin::redirect('Emails');
         }
@@ -57,23 +57,23 @@ class Jaiminho_View_Emails_Edit extends Jaiminho_View_Emails {
             <div id="sp-cancel-btn" class="btn-group">
                <?php if($post->post_status != 'sp-autoresponder'  ) { ?>
                 <a href="?page=<?php echo SPNL()->validate->page(); ?>" id="cancel-update" class="btn btn-default"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
-            
-            <?php 
+
+            <?php
             } else { ?>
      		<a href="<?php echo SendPress_Admin::link('Emails_Autoresponder'); ?>" id="cancel-update" class="btn btn-default"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
-           
+
             <?php } ?>
             </div>
             <div class="btn-group">
-            
+
              <button class="btn btn-default " type="submit" value="save" name="submit"><i class="icon-white icon-ok"></i> <?php echo __('Update','sendpress'); ?></button>
-           
+
             <?php if( SendPress_Admin::access('Emails_Send')  && $post->post_status != 'sp-autoresponder' ) { ?>
             <button class="btn btn-primary " type="submit" value="save-next" name="submit"><i class="icon-envelope icon-white"></i> <?php echo __('Send','sendpress'); ?></button>
             <?php } ?>
             </div>
         </div>
-	
+
 
 </div>
         <h2><?php _e('Edit Email Content','sendpress'); ?></h2>
@@ -96,7 +96,7 @@ class Jaiminho_View_Emails_Edit extends Jaiminho_View_Emails {
   }
 
   ?>
- 
+
   <!--
   <li><a href="#messages" data-toggle="tab">Messages</a></li>
   <li><a href="#settings" data-toggle="tab">Settings</a></li>
@@ -117,7 +117,7 @@ class Jaiminho_View_Emails_Edit extends Jaiminho_View_Emails {
 	),
 ) ); ?><?php //wp_editor($post->post_content,'content_area_one_edit'); ?></div>
 
-	<?php 
+	<?php
 	if($enable_edits){
 		?>
 		<div class="tab-pane" id="header-content">
@@ -185,7 +185,7 @@ class Jaiminho_View_Emails_Edit extends Jaiminho_View_Emails {
 				echo '<option value="'.$temp_id .'" '.$s.'>' . get_the_title() . '</option>';
 			}
 			echo  '</optgroup>';
-			
+
 			} else {
 				echo '<option value="0" ></option>';
 			}
@@ -210,10 +210,10 @@ class Jaiminho_View_Emails_Edit extends Jaiminho_View_Emails {
 				echo '<option value="'.$temp_id .'" '.$s.'>' . get_the_title() . '</option>';
 			}
 			echo  '</optgroup>';
-			
+
 		}
 	?>
-	
+
 	</select>
 	<?php $this->panel_end(  ); ?>
 </div>
@@ -233,7 +233,7 @@ class Jaiminho_View_Emails_Edit extends Jaiminho_View_Emails {
 		<ul class="nav nav-tabs" id="myTab">
 			<li class="active tabs-first"><a href="#posts"><?php _e('Single Post','sendpress'); ?></a></li>
 		  	<li ><a href="#merge"><?php _e('Personalize','sendpress'); ?></a></li>
-		 
+
 		  	<!--
 		  <li><a href="#messages">Messages</a></li>
 		  <li><a href="#settings">Settings</a></li>
@@ -242,7 +242,7 @@ class Jaiminho_View_Emails_Edit extends Jaiminho_View_Emails {
 	</div>
 	<div class="modal-body">
 
- 
+
 <div class="tab-content">
 	 <div class="tab-pane active" id="posts">
 
@@ -302,7 +302,7 @@ class Jaiminho_View_Emails_Edit extends Jaiminho_View_Emails {
  	<div class="tab-pane " id="merge">
  		<h3><?php _e('Subscriber specific content','sendpress'); ?></h3>
   		<table class="table table-condensed table-striped">
-  			
+
   <thead>
     <tr>
       <th><?php _e('Description','sendpress'); ?></th>
@@ -331,7 +331,7 @@ class Jaiminho_View_Emails_Edit extends Jaiminho_View_Emails {
 </table>
 	<h3><?php _e('Site specific content','sendpress'); ?></h3>
   		<table class="table table-condensed table-striped">
-  			
+
   <thead>
     <tr>
       <th><?php _e('Description','sendpress'); ?></th>
@@ -355,12 +355,12 @@ class Jaiminho_View_Emails_Edit extends Jaiminho_View_Emails {
       	<td>*|SITE:DECRIPTION|*</td>
       	<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code"  data-code="*|SITE:DESCRIPTION|*"><?php _e('Insert','sendpress'); ?></button></td>
     </tr>
-    
+
   </tbody>
 </table>
 <h3><?php _e('Date and Time','sendpress'); ?></h3>
   		<table class="table table-condensed table-striped">
-  			
+
   <thead>
     <tr>
       <th><?php _e('Description','sendpress'); ?></th>
@@ -384,17 +384,17 @@ class Jaiminho_View_Emails_Edit extends Jaiminho_View_Emails {
       	<td>*|DATE:F j, Y, g:i a|*</td>
       	<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code" data-code="*|DATE:F j, Y, g:i a|*"><?php _e('Insert','sendpress'); ?></button></td>
     </tr>
-  
-    
+
+
   </tbody>
 </table>
 
   </div>
- 
+
   <div class="tab-pane" id="messages">...</div>
   <div class="tab-pane" id="settings">...</div>
 </div>
-		
+
 	</div>
 	<div class="modal-footer">
 	 	<a href="#" class="btn btn-primary" data-dismiss="modal"><?php _e('Close','sendpress'); ?></a>

@@ -65,7 +65,7 @@ class ET_Builder_Module_Jaiminho extends ET_Builder_Module {
 	    	'orderby'         => 'post_title',
 	    	'order'           => 'DESC'
 	    );
-	   
+
 		//set the post type after filter so our function name always makes sense ;)
 	    $args['post_type'] = 'sendpress_list';
 
@@ -229,10 +229,59 @@ class ET_Builder_Module_Jaiminho extends ET_Builder_Module {
 			$output .= '<input type="text" name="phonenumber" placeholder="Telefone">';
 			$output .= '</p>';
 
+			$output .= '<input type="text" name="city" placeholder="'.__("Cidade", "jaiminho").'"value="" class="regular-text sp-text" /><br>';
+	    $output .= '<span class="sublabel">' . __('Estado','sendpress') . ':</span><br>';
+			$output .= '<select name="state">';
+				$output .= '<option value="">Selecione seu Estado</option>';
+				$output .= '<option value="Acre">Acre</option>';
+				$output .= '<option value="Alagoas">Alagoas</option>';
+				$output .= '<option value="Amapá">Amapá</option>';
+				$output .= '<option value="Amazonas">Amazonas</option>';
+				$output .= '<option value="Bahia">Bahia</option>';
+				$output .= '<option value="Ceará">Ceará</option>';
+				$output .= '<option value="Distrito Federal">Distrito Federal</option>';
+				$output .= '<option value="Espírito Santo">Espírito Santo</option>';
+				$output .= '<option value="Goiás">Goiás</option>';
+				$output .= '<option value="Maranhão">Maranhão</option>';
+				$output .= '<option value="Mato Grosso">Mato Grosso</option>';
+				$output .= '<option value="Mato Grosso do Sul">Mato Grosso do Sul</option>';
+				$output .= '<option value="Minas Gerais">Minas Gerais</option>';
+				$output .= '<option value="Pará">Pará</option>';
+				$output .= '<option value="Paraíba">Paraíba</option>';
+				$output .= '<option value="Paraná">Paraná</option>';
+				$output .= '<option value="Pernambuco">Pernambuco</option>';
+				$output .= '<option value="Piauí">Piauí</option>';
+				$output .= '<option value="Rio de Janeiro">Rio de Janeiro</option>';
+				$output .= '<option value="Rio Grande do Norte">Rio Grande do Norte</option>';
+				$output .= '<option value="Rio Grande do Sul">Rio Grande do Sul</option>';
+				$output .= '<option value="Rondônia">Rondônia</option>';
+				$output .= '<option value="Roraima">Roraima</option>';
+				$output .= '<option value="Santa Catarina">Santa Catarina</option>';
+				$output .= '<option value="São Paulo">São Paulo</option>';
+				$output .= '<option value="Sergipe">Sergipe</option>';
+				$output .= '<option value="Tocantins">Tocantins</option>';
+			$output .= '</select>';
+
+			$output .= '<br>';
+
+	    $output .= '<span class="sublabel">' . __('Genêro','sendpress') . ':</span><br>';
+	    $output .= '<select name="genre">';
+				$output .= '<option value="masculino">Masculino</option>';
+				$output .= '<option value="feminino">Feminino</option>';
+      $output .= '</select><br>';
+
+      $output .= '<span class="sublabel">' . __('Categoria','sendpress') .':</span><br>';
+	    $output .= '<select name="category">';
+				$output .= '<option value="education">Educação</option>';
+				$output .= '<option value="health">Saúde</option>';
+				$output .= '<option value="culture">Cultura</option>';
+				$output .= '<option value="human_rights">Direitos Humanos</option>';
+      $output .= '</select><br><br>';
+
 			$output .= '<input type="hidden" name="action" value="addsubscriber">';
 			$output .= '<input type="hidden" name="link" value="' . get_page_link()	 . '">';
 			$output .=  '<input type="hidden" name="list" value="' . $select_list . '">';
-			
+
 	 		$output .= '<button class="et_pb_button" style="background-color:#545454; color: white ">' . ('' !== $button_text ? esc_html( $button_text ) : 'Assinar Newsletter') . '</button>';
 	 		$output .= '</p>';
 		$output .= '</form>';

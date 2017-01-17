@@ -29,7 +29,7 @@ class Jaiminho_View_Emails_Tempclone extends Jaiminho_View_Emails {
   		update_post_meta($new_post, '_guid','');
   		SendPress_Admin::redirect('Emails_Tempstyle', array('templateID' => $new_post ) );
 	}
-	
+
 	function html() {
 		  global $sendpress_html_templates;
 
@@ -46,27 +46,27 @@ class Jaiminho_View_Emails_Tempclone extends Jaiminho_View_Emails {
 				<a href="<?php echo SendPress_Admin::link('Emails_Templates'); ?>" id="cancel-update" class="btn btn-default"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
 			</div>
 		</div>
-		
+
 		<h2><?php _e('Clone Template','sendpress'); ?> - <?php echo $postdata->post_title; ?></h2>
 		<br>
 		<!--
 		has-right-sidebar">
 		<div id="side-info-column" class="inner-sidebar">
-			
+
 			<div class="clear"><br>
-			<?php echo do_action('do_meta_boxes', SPNL()->_email_post_type, 'side', $post); 
+			<?php echo do_action('do_meta_boxes', SPNL()->_email_post_type, 'side', $post);
 			do_meta_boxes($post_type, 'side', $post);?>
 			</div>
 		</div>
 		-->
-	
+
 			<?php $this->panel_start('<span class="glyphicon glyphicon-list-alt"></span> '. __('Template Name','sendpress')); ?>
 			<input type="text" class="form-control" name="post_title" size="30" tabindex="1" value="" id="post_title" autocomplete="off" />
 <?php
 $this->panel_end();
 ?>
 		<!--
-			
+
 <div class="sp-row">
 	<div class="sp-25 sp-first">
 		<?php $this->panel_start('<input type="radio" name="starter" value="orginal" checked /> SP Original' ); ?>
@@ -76,7 +76,7 @@ $this->panel_end();
 		<?php $this->panel_start('<input type="radio" name="starter" value="blank"  /> Blank Template' ); ?>
 		<?php $this->panel_end(); ?>
 	</div>
-	
+
 	<div class="sp-25">
 		<?php $this->panel_start('<input type="radio" name="starter" value="default"  /> SP Original' ); ?>
 		<?php $this->panel_end(); ?>
@@ -85,17 +85,17 @@ $this->panel_end();
 		<?php $this->panel_start('<input type="radio" name="starter" value="default"  /> SP Original' ); ?>
 		<?php $this->panel_end(); ?>
 	</div>
-	
+
 </div>-->
 
 
-		
-		
+
+
 		<?php //wp_editor($post->post_content,'textversion'); ?>
 
 		 <?php wp_nonce_field($this->_nonce_value); ?><br><br>
 		 </form>
-		 
+
 		<?php
 	}
 

@@ -9,7 +9,7 @@ if ( !defined('SENDPRESS_VERSION') ) {
 }
 
 class Jaiminho_View_Emails_Social extends Jaiminho_View_Emails {
-	
+
 	function save(){
 		//$this->security_check();
 		$icon_list = SendPress_Data::social_icons();
@@ -19,22 +19,19 @@ class Jaiminho_View_Emails_Social extends Jaiminho_View_Emails {
 				$links[$key] = $_POST["url-" . $key];
 			}
 		}
-	
+
 		SendPress_Option::set('socialicons', $links );
 		SendPress_Option::set('socialsize', $_POST['icon-view'] );
         //SendPress_Admin::redirect('Settings_Advanced');
 	}
 
-
-
-
-	function html() { 
+	function html() {
 		$icon_list = SendPress_Data::social_icons();
 		$socialsize = SendPress_Option::get('socialsize','large');
 ?>
 <form method="post" id="post" role="form">
 <div  >
-	<div id="button-area">  
+	<div id="button-area">
 		<input type="submit" value="<?php _e('Save','sendpress'); ?>" class="btn btn-large btn-primary"/>
 	</div>
 
@@ -65,14 +62,14 @@ class Jaiminho_View_Emails_Social extends Jaiminho_View_Emails {
 
 <div class="sp-row">
 <div class="sp-50 sp-first">
-<?php 
+<?php
 	$icons = count($icon_list);
 	$link = SendPress_Option::get('socialicons');
 	$firsthalf = array_slice($icon_list, 0, $icons / 2);
 	$secondhalf = array_slice($icon_list, $icons / 2);
 
-	$firsthalf = array_merge( array_flip( array ( 'Facebook' , 'LinkedIn' , 'GitHub' , 'Instagram' ) ) , $firsthalf); 
-    $secondhalf = array_merge( array_flip( array( 'Twitter', 'Skype' , 'Vimeo' , 'YouTube' , 'WordPress') ) , $secondhalf); 
+	$firsthalf = array_merge( array_flip( array ( 'Facebook' , 'LinkedIn' , 'GitHub' , 'Instagram' ) ) , $firsthalf);
+    $secondhalf = array_merge( array_flip( array( 'Twitter', 'Skype' , 'Vimeo' , 'YouTube' , 'WordPress') ) , $secondhalf);
 
 	foreach ($firsthalf as $key => $value) {
 		$class = "";
@@ -80,10 +77,7 @@ class Jaiminho_View_Emails_Social extends Jaiminho_View_Emails {
 			$class =  "bg-success";
 		}
 		?>
-	
-   
-   		
-      
+
 		<div class="well <?php echo $class; ?>">
 			<div class="form-group">
 			<?php echo "<span class='hidden-xs hidden-sm pull-right text-muted'>". $value . "</span>"; ?>
@@ -91,34 +85,31 @@ class Jaiminho_View_Emails_Social extends Jaiminho_View_Emails {
 		<img src="<?php echo SENDPRESS_URL ."img/16px/". $key .".png" ;  ?>" />
 		<img src="<?php echo SENDPRESS_URL ."img/32px/". $key .".png" ;  ?>" />
 		<?php
-		echo $key ."</label>"; 
+		echo $key ."</label>";
 		$xlink = "";
 		if(isset( $link[$key] )){
 			$xlink = $link[$key] ;
 		}
 
 		?>
-		 
+
   </div><input type="text" name="url-<?php echo $key; ?>" value="<?php echo $xlink; ?>" class="form-control" placeholder="<?php echo __('URL da mídia social: por favor, inclua http:// ou https://' , 'jaiminho' ); ?>">
     </div>
 		<?php
-		
+
 	}
 
 ?>
 </div>
 <div class="sp-50">
-<?php 
+<?php
 foreach ($secondhalf as $key => $value) {
 	$class = "";
 		if(isset( $link[$key] )){
 			$class =  "bg-success";
 		}
 		?>
-	
-   
-   		
-      
+
 		<div class="well <?php echo $class; ?>">
 			<div class="form-group">
 			<?php echo "<span class='hidden-xs hidden-sm pull-right text-muted'>". $value . "</span>"; ?>
@@ -126,14 +117,14 @@ foreach ($secondhalf as $key => $value) {
 		<img src="<?php echo SENDPRESS_URL ."img/16px/". $key .".png" ;  ?>" />
 		<img src="<?php echo SENDPRESS_URL ."img/32px/". $key .".png" ;  ?>" />
 		<?php
-		echo $key ."</label>"; 
+		echo $key ."</label>";
 		$xlink = "";
 		if(isset( $link[$key] )){
 			$xlink = $link[$key] ;
 		}
 
 		?>
-		 
+
     </div><input type="text" name="url-<?php echo $key; ?>" value="<?php echo $xlink; ?>" class="form-control" placeholder="<?php echo __('URL da mídia social: por favor, inclua http:// ou https://' , 'jaiminho' ); ?>" />
 
     </div>
@@ -145,7 +136,6 @@ foreach ($secondhalf as $key => $value) {
 
 <?php $this->panel_end(); ?>
 		
-
 <?php wp_nonce_field($this->_nonce_value); ?>
 </form>
 <?php

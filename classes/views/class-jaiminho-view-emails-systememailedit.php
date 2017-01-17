@@ -9,8 +9,6 @@ if ( !defined('SENDPRESS_VERSION') ) {
 }
 
 class Jaiminho_View_Emails_Systememailedit extends Jaiminho_View_Emails {
-	
-	
 
 	function save_email(){
 		//$this->security_check();
@@ -20,7 +18,7 @@ class Jaiminho_View_Emails_Systememailedit extends Jaiminho_View_Emails {
 	 		'ID'           => $clean_post_id,
 	      	'post_content' => $_POST['content_area_one_edit']
 	    );
-	 	
+
 		update_post_meta( $clean_post_id, '_sendpress_template', SPNL()->validate->int($_POST['template']) );
 		update_post_meta( $clean_post_id, '_sendpress_subject', sanitize_text_field($_POST['post_subject']) );
 		update_post_meta( $clean_post_id, '_header_content', sanitize_text_field($_POST['header_content_edit']) );
@@ -28,7 +26,7 @@ class Jaiminho_View_Emails_Systememailedit extends Jaiminho_View_Emails {
 
 	 	//	print_r($template);
 		wp_update_post( $post_update );
-		
+
 
 	        if(isset($_POST['submit']) && $_POST['submit'] == 'save-next'){
 	            SendPress_Admin::redirect('Emails_Systememail', array('emailID'=>SPNL()->validate->_int('emailID') ));
@@ -72,13 +70,13 @@ class Jaiminho_View_Emails_Systememailedit extends Jaiminho_View_Emails {
 			$_wp_autoresize_on = true;
 		}
 		*/
-		
+
 		$emailID = SPNL()->validate->_int('emailID');
 		if($emailID  > 0){
 			$post = get_post( $emailID );
 			$post_ID = $post->ID;
 		}
-	
+
         if($post->post_type !== 'sp_newsletters'){
             SendPress_Admin::redirect('Emails');
         }
@@ -89,7 +87,7 @@ class Jaiminho_View_Emails_Systememailedit extends Jaiminho_View_Emails {
         <input type="hidden" name="post_ID" id="post_ID" value="<?php echo $post->ID; ?>" />
         <input type="hidden" name="post_type" id="post_type" value="sp_newsletters" />
         <input type="hidden" name="action" id="action" value="save-email" />
-       
+
        <div style="float:right;" class="btn-toolbar">
             <div class="btn-group">
              	<a href="?page=<?php echo SPNL()->validate->page(); ?>&view=systememail" id="cancel-update" class="btn btn-default"><?php echo __('Cancel','sendpress'); ?></a>
@@ -115,7 +113,7 @@ class Jaiminho_View_Emails_Systememailedit extends Jaiminho_View_Emails {
   }
 
   ?>
- 
+
   <!--
   <li><a href="#messages" data-toggle="tab">Messages</a></li>
   <li><a href="#settings" data-toggle="tab">Settings</a></li>
@@ -136,7 +134,7 @@ class Jaiminho_View_Emails_Systememailedit extends Jaiminho_View_Emails {
 	),
 ) ); ?><?php //wp_editor($post->post_content,'content_area_one_edit'); ?></div>
 
-	<?php 
+	<?php
 	if($enable_edits){
 		?>
 		<div class="tab-pane" id="header-content">
@@ -202,7 +200,7 @@ class Jaiminho_View_Emails_Systememailedit extends Jaiminho_View_Emails {
 				echo '<option value="'.$temp_id .'" '.$s.'>' . get_the_title() . '</option>';
 			}
 			echo  '</optgroup>';
-			
+
 			} else {
 				echo '<option value="0" ></option>';
 			}
@@ -226,10 +224,10 @@ class Jaiminho_View_Emails_Systememailedit extends Jaiminho_View_Emails {
 				echo '<option value="'.$temp_id .'" '.$s.'>' . get_the_title() . '</option>';
 			}
 			echo  '</optgroup>';
-			
+
 		}
 	?>
-	
+
 	</select>
 	<?php $this->panel_end(  ); ?>
 </div>
@@ -249,7 +247,7 @@ class Jaiminho_View_Emails_Systememailedit extends Jaiminho_View_Emails {
 		<ul class="nav nav-tabs" id="myTab">
 			<li class="active tabs-first"><a href="#posts"><?php _e('Single Post','sendpress'); ?></a></li>
 		  	<li ><a href="#merge"><?php _e('Personalize','sendpress'); ?></a></li>
-		 
+
 		  	<!--
 		  <li><a href="#messages">Messages</a></li>
 		  <li><a href="#settings">Settings</a></li>
@@ -258,7 +256,7 @@ class Jaiminho_View_Emails_Systememailedit extends Jaiminho_View_Emails {
 	</div>
 	<div class="modal-body">
 
- 
+
 <div class="tab-content">
 	 <div class="tab-pane active" id="posts">
 
@@ -318,7 +316,7 @@ class Jaiminho_View_Emails_Systememailedit extends Jaiminho_View_Emails {
  	<div class="tab-pane " id="merge">
  		<h3><?php _e('Subscriber specific content','sendpress'); ?></h3>
   		<table class="table table-condensed table-striped">
-  			
+
   <thead>
     <tr>
       <th><?php _e('Description','sendpress'); ?></th>
@@ -347,7 +345,7 @@ class Jaiminho_View_Emails_Systememailedit extends Jaiminho_View_Emails {
 </table>
 	<h3><?php _e('Site specific content','sendpress'); ?></h3>
   		<table class="table table-condensed table-striped">
-  			
+
   <thead>
     <tr>
       <th><?php _e('Description','sendpress'); ?></th>
@@ -371,12 +369,12 @@ class Jaiminho_View_Emails_Systememailedit extends Jaiminho_View_Emails {
       	<td>*|SITE:DECRIPTION|*</td>
       	<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code"  data-code="*|SITE:DESCRIPTION|*"><?php _e('Insert','sendpress'); ?></button></td>
     </tr>
-    
+
   </tbody>
 </table>
 <h3><?php _e('Date and Time','sendpress'); ?></h3>
   		<table class="table table-condensed table-striped">
-  			
+
   <thead>
     <tr>
       <th><?php _e('Description','sendpress'); ?></th>
@@ -400,17 +398,17 @@ class Jaiminho_View_Emails_Systememailedit extends Jaiminho_View_Emails {
       	<td>*|DATE:F j, Y, g:i a|*</td>
       	<td class="text-right"><button class="btn btn-xs btn-success sp-insert-code" data-code="*|DATE:F j, Y, g:i a|*"><?php _e('Insert','sendpress'); ?></button></td>
     </tr>
-  
-    
+
+
   </tbody>
 </table>
 
   </div>
- 
+
   <div class="tab-pane" id="messages">...</div>
   <div class="tab-pane" id="settings">...</div>
 </div>
-		
+
 	</div>
 	<div class="modal-footer">
 	 	<a href="#" class="btn btn-primary" data-dismiss="modal"><?php _e('Close','sendpress'); ?></a>

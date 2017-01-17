@@ -17,7 +17,7 @@ class Jaiminho_View_Emails_Send_Confirm extends Jaiminho_View_Emails {
         $list ='';
         $emailID = SPNL()->validate->_int('emailID');
         if($emailID > 0){
-            
+
             $post = get_post( $emailID );
             $post_ID = $post->ID;
         }
@@ -55,8 +55,8 @@ class Jaiminho_View_Emails_Send_Confirm extends Jaiminho_View_Emails {
             } else {
                 echo "Your email will start sending on " .date('Y/m/d',strtotime($info['send_at'])) . " at " .date('h:i A',strtotime($info['send_at']))  ;
             }?>
-            <?php 
-            $this->panel_end(); 
+            <?php
+            $this->panel_end();
 
             $this->panel_start('<span class="glyphicon glyphicon-list"></span> '. __('Lists','sendpress'));
             ?>
@@ -68,9 +68,9 @@ class Jaiminho_View_Emails_Send_Confirm extends Jaiminho_View_Emails {
             if( !empty($info['listIDS']) ){
                 foreach($info['listIDS'] as $list_id){
                     $list = SendPress_Data::get_list_details( $list_id );
-                    echo $list->post_title. " <small>(".SendPress_Data::get_count_subscribers($list_id). ")</small><br>";      
+                    echo $list->post_title. " <small>(".SendPress_Data::get_count_subscribers($list_id). ")</small><br>";
 
-                } 
+                }
             } else {
                 _e('No Lists Selected','sendpress');
                 echo "<br>";
@@ -95,7 +95,7 @@ class Jaiminho_View_Emails_Send_Confirm extends Jaiminho_View_Emails {
             <div style="margin-left: 250px;">
             <div class="widerightcol">
             <?php
-            $link =  get_permalink( $post->ID ); 
+            $link =  get_permalink( $post->ID );
             $sep = strstr($link, '?') ? '&' : '?';
             $link = $link.$sep.'inline=true';
 
@@ -121,7 +121,7 @@ class Jaiminho_View_Emails_Send_Confirm extends Jaiminho_View_Emails {
             <br class="clear" />
             </div>
         /form>
-    <?php   
+    <?php
     }
 
 }

@@ -168,19 +168,17 @@ class Jaiminho_View_Queue extends SendPress_View {
 	  $emails_per_hour =  SendPress_Option::get('emails-per-hour');
 	  $hourly_emails = SendPress_Data::emails_sent_in_queue("hour");
 	  $emails_so_far = SendPress_Data::emails_sent_in_queue("day");
-	  $credits = SendPress_Option::get('emails-credits');
-
-		//print_r(SendPress_Data::emails_stuck_in_queue());
+	  $credits = get_option( "emails-credits" );
 
 	  global $wpdb;
       $table = SendPress_Data::queue_table();
       $date = getdate();
-      // Maurilio TODO: fazer com os créditos sejam contados a partir da 00:00:00 do primeiro dia do mês atual
-      $hour_ago = strtotime('-'.$date["mday"].' day');
-      $time = date('Y-m-d H:i:s', $hour_ago);
+
+			$time = ($date['year'])."-".$date['mon']."-1 00:00:000";
       $query = $wpdb->prepare("SELECT COUNT(*) FROM $table where last_attempt > %s and success = %d", $time, 1 );
       $credits_so_far =  $wpdb->get_var( $query );
       $result_credits = $credits-$credits_so_far;
+
       if ($credits <= 0)
       {
         echo "<p class='alert alert-danger' style='width:50%;'>" . __("Vixe! Você não tem créditos. Para enviar emails em sua fila ou enviar novos emails, você precisa obter mais créditos.", "sendpress") . "</p>";

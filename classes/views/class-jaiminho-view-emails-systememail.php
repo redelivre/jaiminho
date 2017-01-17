@@ -24,8 +24,8 @@ class Jaiminho_View_Emails_Systememail extends Jaiminho_View_Emails{
 	<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
 	<form id="email-filter" method="get">
 		<div id="taskbar" class="lists-dashboard rounded group">
-		<?php 
-			$form_types = SendPress_Data::get_system_email_types(); 
+		<?php
+			$form_types = SendPress_Data::get_system_email_types();
 			if($form_types){
 			?>
 				<div id="button-area">
@@ -50,4 +50,3 @@ class Jaiminho_View_Emails_Systememail extends Jaiminho_View_Emails{
 	}
 
 }
-

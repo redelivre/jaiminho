@@ -47,7 +47,7 @@ class Jaiminho_Signup_Shortcode{
 			'thank_you'=>'Thank you for subscribing!',
 			'button_text' => 'Submit',
 			'no_list_error' => '<div><b>-- NO LIST HAS BEEN SET! --</b></div>',
-			'postnotification' => '', 
+			'postnotification' => '',
 			'pnlistid' => 0
 		), $attr));
 
@@ -55,10 +55,10 @@ class Jaiminho_Signup_Shortcode{
 
 		$widget_options = SendPress_Option::get('widget_options');
 	    ?>
-	    
+
 	    <div class="sendpress-signup-form">
 			<form id="sendpress_signup" method="POST" <?php if( !$widget_options['load_ajax'] ){ ?>class="sendpress-signup"<?php } else { ?>action="?sendpress=post"<?php } ?> >
-				<?php 
+				<?php
 					if( $widget_options['load_ajax'] ){
 						echo '<input type="hidden" name="action" value="signup-user" />';
 						//echo '<input type="hidden" name="redirect" value="'.get_permalink().'" />';
@@ -71,7 +71,7 @@ class Jaiminho_Signup_Shortcode{
 					}
 
 				?>
-					
+
 				<div id="error"><?php echo $sendpress_signup_error; ?></div>
 				<div id="thanks" <?php if( $sendpress_show_thanks ){ echo 'style="display:block;"'; }else{ echo 'style="display:none;"'; } ?>><?php echo $thank_you; ?></div>
 				<div id="form-wrap" <?php if( $sendpress_show_thanks ){ echo 'style="display:none;"'; } ?>>
@@ -81,7 +81,7 @@ class Jaiminho_Signup_Shortcode{
 					if( strlen($postnotification) > 0 ){
 						do_action('sendpress_add_post_notification_list', $postnotification, $pnlistid);
 					}
-					
+
 					?>
 
 					<?php if( filter_var($display_firstname, FILTER_VALIDATE_BOOLEAN)  ): ?>
@@ -129,7 +129,7 @@ class Jaiminho_Signup_Shortcode{
 						foreach ($list_ids as $id) { ?>
 							<input type="checkbox" name="sp_list[]" class="sp_list" id="list<?php echo $id; ?>" value="<?php echo $id; ?>" <?php if($lists_checked){ echo 'checked'; }?> /> <?php echo get_the_title($id); ?><br>
 						<?php
-						} ?>	
+						} ?>
 						</p>
 						<?php
 
@@ -143,8 +143,8 @@ class Jaiminho_Signup_Shortcode{
 					</p>
 				</div>
 			</form>
-		</div> 
-	
+		</div>
+
 	    <?php
 
 	    $output = ob_get_contents();
@@ -153,4 +153,3 @@ class Jaiminho_Signup_Shortcode{
 	}
 
 }
-

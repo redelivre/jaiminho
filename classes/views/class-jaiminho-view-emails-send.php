@@ -11,14 +11,14 @@ if ( !defined('SENDPRESS_VERSION') ) {
 class Jaiminho_View_Emails_Send extends Jaiminho_View_Emails {
 
     function save(){
-        
+
         $post_info_id =  SPNL()->validate->int( $_POST['post_ID']);
         if($post_info_id > 0){
             if(isset($_POST['send-date']) && $_POST['send-date'] == 'later'){
                 $send_at = $_POST['date-pickit'] . " " . $_POST['send-later-time'];
             } else {
                 $send_at = '0000-00-00 00:00:00';
-            }   
+            }
             if(isset($_POST['test-add'])){
             $csvadd ="email,firstname,lastname\n" . sanitize_text_field( trim($_POST['test-add']) ) ;
 
@@ -49,9 +49,9 @@ class Jaiminho_View_Emails_Send extends Jaiminho_View_Emails {
                 SendPress_Admin::redirect('Emails_Style', array('emailID'=>SPNL()->validate->_int('emailID') ));
             }
         }
-       
+
     }
-    
+
     function admin_init(){
         wp_enqueue_script('jquery-ui-datepicker');
         wp_register_style( 'sendpress_css_jquery-ui', SENDPRESS_URL . 'css/smoothness/jquery-ui-1.10.3.custom.min.css', false, SENDPRESS_VERSION );
@@ -84,10 +84,10 @@ class Jaiminho_View_Emails_Send extends Jaiminho_View_Emails {
         <div style="float:right;"  class="btn-toolbar">
         <div id="sp-cancel-btn" class="btn-group">
         <a href="?page=<?php echo SPNL()->validate->page(); ?>"  class="btn btn-default "><?php echo __('Cancel','sendpress'); ?></a>
-        </div> 
+        </div>
 
         <div class="btn-group">
-            
+
 
             <!--<button class="btn btn-default " type="submit" value="save" name="submit"><i class="icon-white icon-ok"></i> <?php echo __('Edit','sendpress'); ?></button>-->
             <button class="btn btn-primary " type="submit" value="save-next" id="sp-send-next" name="submit"><i class="icon-envelope icon-white"></i> <?php echo __('Send','sendpress'); ?></button>
@@ -158,7 +158,7 @@ class Jaiminho_View_Emails_Send extends Jaiminho_View_Emails {
         <option value="23:00:00">11:00 pm</option>
         </select>
         </div>
-        <?php 
+        <?php
         $this->panel_end();
 
         do_action('spnl_add_to_sending' , $this);
@@ -168,16 +168,16 @@ class Jaiminho_View_Emails_Send extends Jaiminho_View_Emails {
                 'offset'          => 0,
                 'orderby'         => 'post_title',
                 'order'           => 'DESC', );
-                
+
         $current_lists = get_posts( $post_args );
         foreach($current_lists as $list){
 
              $t = '';
              $tlist = '';
-                if( get_post_meta($list->ID,'_test_list',true) == 1 ){ 
+                if( get_post_meta($list->ID,'_test_list',true) == 1 ){
                    $t = '  <span class="label label-info">Test List</span>';
                    $tlist = ' test-list-add';
-                } 
+                }
             echo "<input name='listIDS[]' type='checkbox' id='listIDS' class='sp-send-lists ". $tlist ."' value=" . $list->ID. "> ".$list->post_title . " <small>(".SendPress_Data::get_count_subscribers($list->ID). ")</small>$t<br>";
         }
 
@@ -209,7 +209,7 @@ class Jaiminho_View_Emails_Send extends Jaiminho_View_Emails {
         <div class="widerightcol">
         <?php
         $url = get_site_url();
-        //$link =  get_permalink( $post->ID ); 
+        //$link =  get_permalink( $post->ID );
         $open_info = array(
             "id"=>$post->ID,
 

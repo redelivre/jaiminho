@@ -251,6 +251,20 @@ echo '<strong>Delivery Method: </strong>';
 
 				</div>
 			</div>
+
+
+<?php
+
+        if (isset($_POST['credits_super_admin']) and $_POST['credits_super_admin'] != '') {
+    			SendPress_Option::set( 'wpcron-per-call' , $_POST['credits_super_admin'] );
+    			SendPress_Option::set( 'emails-per-day' , $_POST['credits_super_admin'] );
+					update_option( 'emails-credits', $_POST['credits_super_admin'] );
+
+        }
+        if (isset($_POST['credits_per_hour_super_admin']) and $_POST['credits_per_hour_super_admin'] != '') {
+    			SendPress_Option::set( 'emails-per-hour' , $_POST['credits_per_hour_super_admin'] );
+        }
+ ?>
 			<br class="clear">
 			<div class="panel panel-default">
 				<div class="panel-heading">
@@ -265,7 +279,7 @@ echo '<strong>Delivery Method: </strong>';
 			                <?= __("Insira uma quantidade de créditos para este projeto:", "sendpress"); ?>
 			                </p>
 			                <p>
-			                <input type="text" placeholder="eg. 5000 name="credits_super_admin" value="<?= SendPress_Option::get('emails-per-day'); ?>"/>
+			                <input type="text" placeholder="eg. 5000" name="credits_super_admin" value="<?= SendPress_Option::get('emails-per-day'); ?>"/>
 			                </p>
 			                <p>
 			                <?= __("Defina a quantidade de créditos por hora:", "sendpress"); ?>
@@ -281,16 +295,7 @@ echo '<strong>Delivery Method: </strong>';
 			                </p>
 
 
-			                <?php }
-
-			                if (isset($_POST['credits_super_admin']) and $_POST['credits_super_admin'] != '') {
-							    			SendPress_Option::set( 'wpcron-per-call' , $_POST['credits_super_admin'] );
-							    			SendPress_Option::set( 'emails-per-day' , $_POST['credits_super_admin']);
-			                }
-			                if (isset($_POST['credits_per_hour_super_admin']) and $_POST['credits_per_hour_super_admin'] != '') {
-							    			SendPress_Option::set( 'emails-per-hour' , $_POST['credits_per_hour_super_admin'] );
-			                }
-			                ?>
+			                <?php } ?>
 						</div>
 						<div style="<?php echo is_super_admin()?"position: relative; float: right; width: 45%;": "float:left"; ?>
 							<h2><?php _e('Email Sending Limits','sendpress'); ?>
@@ -447,16 +452,12 @@ if ( !empty( $error ) && isset($_POST['testemail'])) {
 						echo '</div>';
 
 					}
-
+					
 					echo $phpmailer_error;
 				} ?>
 
-
 				<pre>
 					<?php
-
-
-
 
 					$whoops = SendPress_Option::get( 'last_test_debug' );
 					if ( empty( $whoops ) ) {

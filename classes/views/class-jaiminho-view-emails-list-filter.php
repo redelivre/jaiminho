@@ -183,7 +183,7 @@ class Jaiminho_View_Emails_List_Filter extends Jaiminho_View_Emails {
             }
         </script>
 
-        <a class="btn btn-primary button-next" href="<?php echo esc_url( admin_url('admin.php') ); ?>?page=sp-emails&view=send&emailID=<?php echo $_GET['emailID']; ?>" ><?php _e('Pular este Passo'); ?></a> 
+        <a class="btn btn-primary button-next" href="<?php echo esc_url( admin_url('admin.php') ); ?>?page=sp-emails&view=send&emailID=<?php echo $_GET['emailID']; ?>" ><?php _e('Pular este Passo'); ?></a>
 
 		<h1>Crie uma Lista nova com utilizando meta info dos Assinantes:</h1>
 
@@ -203,10 +203,10 @@ class Jaiminho_View_Emails_List_Filter extends Jaiminho_View_Emails {
 
 	             $t = '';
 	             $tlist = '';
-	                if( get_post_meta($list->ID,'_test_list',true) == 1 ){ 
+	                if( get_post_meta($list->ID,'_test_list',true) == 1 ){
 	                   $t = '  <span class="label label-info">Test List</span>';
 	                   $tlist = ' test-list-add';
-	                } 
+	                }
 	            echo "<input name='listIDS[]' type='checkbox' id='listIDS' class='sp-send-lists ". $tlist ."' value=" . $list->ID. "> ".$list->post_title . " <small>(".SendPress_Data::get_count_subscribers($list->ID). ")</small>$t<br>";
 	        }
 	        ?>
@@ -286,7 +286,7 @@ class Jaiminho_View_Emails_List_Filter extends Jaiminho_View_Emails {
 		global $wpdb;
 		$meta_table = SendPress_Data::subscriber_meta_table();
 		$query = 'select subscriberID,listID from ' . $meta_table . ' where meta_key=' . $meta_key . ' and meta_value=' . $meta_value . ' and listID=' . $listID;
-		return $wpdb->get_results($query); 
+		return $wpdb->get_results($query);
 	}
 
 	function get_keys($meta_key){
