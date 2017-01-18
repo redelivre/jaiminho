@@ -89,7 +89,7 @@ class Jaiminho extends SendPress
 		add_action( 'admin_menu', array($this,'admin_menu'));
 		add_action( 'toplevel_page_sp-overview', array($this,'render_view_jaiminho'));
 		add_action( 'jaiminho_page_sp-settings', array($this,'render_view_jaiminho'));
-		add_filter( 'admin_footer_text', '__return_empty_string', 11 ); 
+		add_filter( 'admin_footer_text', '__return_empty_string', 11 );
 		add_filter( 'update_footer', '__return_empty_string', 11 );
 		add_action( 'admin_print_styles' , array( $this , 'jaiminho_admin_footer_css_hide' ) );
 		add_filter( 'tiny_mce_before_init', array( $this, 'myformatTinyMCE' ) );
@@ -103,7 +103,7 @@ class Jaiminho extends SendPress
 		remove_action( 'init' , array( SPNL() , 'toplevel_page_sp-overview' ) );
 		add_action( 'sendpress_notices', array( $this, 'jaiminho_notices' ) );
     add_action( 'init', array( $this, 'frame_it_up' ), 20 );
-		add_action('admin_enqueue_scripts', array( $this, 'load_admin_script') );
+		add_action( 'admin_enqueue_scripts', array( $this, 'load_admin_script') );
     add_action( 'admin_action_export', array($this,'export_report') );
     add_action( 'admin_action_exportsenderrors', array($this,'exportsenderrors') );
     add_action( 'admin_action_send_message', array($this,'send_message') );
@@ -116,6 +116,61 @@ class Jaiminho extends SendPress
     add_action( 'admin_action_sendemails', array($this,'send_emails') );
     add_action( 'admin_action_saveemail', array($this,'save_email') );
     add_action( 'admin_action_createlist', array($this,'create_list') );
+		add_action( 'admin_action_gethtml', array($this,'get_link_html_callback') );
+		add_action( 'admin_init', array($this,'my_tinymce_button') );
+		add_action( 'wp_ajax_get_link_html', array($this,'get_link_html_callback') );
+		add_action( 'wp_ajax_nopriv_get_link_html', array($this,'get_link_html_callback' ));
+
+		// docs to understand this see: https://codex.wordpress.org/Plugin_API/Admin_Screen_Reference
+    add_action( "admin_head-toplevel_page_sp-emails", array($this,'my_admin_head') );
+
+	}
+
+	/**
+	 * Localize Script
+	 */
+	function my_admin_head() {
+	    $plugin_url = plugins_url( '/', __FILE__ );
+	    ?>
+	<!-- TinyMCE Shortcode Plugin -->
+	<script type='text/javascript'>
+	var my_plugin = {
+	    'url': '<?php echo admin_url('admin.php'); ?>',
+	};
+	</script>
+	<!-- TinyMCE Shortcode Plugin -->
+	    <?php
+	}
+
+	function get_link_html_callback(){
+		if($_GET["url"] != ""){
+			$url = $_GET["url"];
+			if(filter_var($url, FILTER_VALIDATE_URL)){
+				$ch = curl_init($url);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+				curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
+				$content = curl_exec($ch);
+				curl_close($ch);
+				echo $content;
+			}
+		}
+		die();
+	}
+	function my_tinymce_button() {
+	     if ( current_user_can( 'edit_posts' ) && current_user_can( 'edit_pages' ) ) {
+	          add_filter( 'mce_buttons', array($this,'my_register_tinymce_button') );
+	          add_filter( 'mce_external_plugins', array($this,'my_add_tinymce_button') );
+	     }
+	}
+
+	function my_register_tinymce_button( $buttons ) {
+	     array_push( $buttons, "button_addlink" );
+	     return $buttons;
+	}
+
+	function my_add_tinymce_button( $plugin_array ) {
+	     $plugin_array['my_button_script'] = plugins_url( '/mybuttons.js', __FILE__ ) ;
+	     return $plugin_array;
 	}
 
   function create_list(){
@@ -162,11 +217,11 @@ class Jaiminho extends SendPress
     $query = substr($query, 0, -3);
 
     $list = SendPress_Data::create_list( array('name'=> $name, 'public'=>$public ) );
-  
+
     $subscribers = $wpdb->get_results($query);
 
     //addsubscriber
-    
+
     foreach ($subscribers as $key => $subscriber) {
       $subscriber = $subscriber->subscriberID;
       $list_values['listID'] = $list;
@@ -192,11 +247,11 @@ class Jaiminho extends SendPress
       $new_id = SendPress_Posts::copy($email_post, $subject, $slug, SPNL()->_report_post_type );
       SendPress_Posts::copy_meta_info($new_id, $saveid);
       $lists = implode(',', $info['listIDS']);
-    
+
       update_post_meta($new_id,'_send_time',  $info['send_at'] );
       update_post_meta($new_id,'_send_lists', $lists );
       update_post_meta($new_id,'_stat_type', 'new' );
-      $count = 0;    
+      $count = 0;
       if(get_post_meta($saveid ,'istest',true) == true ){
           update_post_meta($new_id,'_report_type', 'test' );
       }
@@ -204,7 +259,7 @@ class Jaiminho extends SendPress
       var_dump("aqui ele chega");
       if(isset($info['testemails']) && $info['testemails'] != false ){
           foreach($info['testemails'] as $email){
-                 
+
                    $go = array(
                       'from_name' => 'Josh',
                       'from_email' => 'joshlyford@gmail.com',
@@ -214,15 +269,15 @@ class Jaiminho extends SendPress
                       'subject' => $subject,
                       'listID' => 0
                       );
-                 
+
                   SPNL()->add_email_to_queue($go);
                   $count++;
           }
       }
       update_post_meta($new_id,'_send_count', $count );
-   
+
       SendPress_Admin::redirect('Emails_Send_Queue',array('emailID'=> $new_id));
-        
+
   }
 
   function save_email(){
@@ -236,12 +291,12 @@ class Jaiminho extends SendPress
         'ID'           => $post_id,
             'post_content' => $html
         );
-       
+
       update_post_meta( $post_id, '_sendpress_template', SPNL()->validate->_int('template') );
       update_post_meta( $post_id, '_sendpress_subject', sanitize_text_field(SPNL()->validate->_string('post_subject' )) );
       if( SPNL()->validate->_isset('header_content_edit')){
         update_post_meta( $post_id, '_header_content', SPNL()->validate->_html('header_content_edit') );
-      } 
+      }
       if( SPNL()->validate->_isset('footer_content_edit')){
         update_post_meta( $post_id, '_footer_content', SPNL()->validate->_html('footer_content_edit') );
       }
@@ -252,9 +307,9 @@ class Jaiminho extends SendPress
       wp_update_post( $post_update );
       add_filter('content_save_pre', 'wp_filter_post_kses');
       add_filter('content_filtered_save_pre', 'wp_filter_post_kses');
-    
+
     }
-  
+
         if( SPNL()->validate->_string('submit') == 'save-next'){
           SendPress_Admin::redirect('Emails_List_Filter', array('emailID'=> SPNL()->validate->_int('post_ID') ) );
         } else if (SPNL()->validate->_string('submit') == 'send-test'){
@@ -301,8 +356,6 @@ class Jaiminho extends SendPress
 
   }
 
-
-
   function create_subscribers(){
 
       $csvadd = "email,firstname,lastname,phonenumber,state,city,genre,category\n" . trim( SPNL()->validate->_string('csv-add') );
@@ -311,7 +364,7 @@ class Jaiminho extends SendPress
         $newsubscribers = SendPress_Data::subscriber_csv_post_to_array( $csvadd );
         foreach( $newsubscribers as $subscriberx){
           if( is_email( trim( $subscriberx['email'] ) ) ){
-        
+
             $subscriber_id = SendPress_Data::add_subscriber( array('firstname'=> trim($subscriberx['firstname']) ,'email'=> trim($subscriberx['email']),'lastname'=> trim($subscriberx['lastname']) ) );
             SendPress_Data::update_subscriber_status($listID, $subscriber_id, 2, false);
 
@@ -391,7 +444,7 @@ class Jaiminho extends SendPress
 
         $filedest = str_replace('\\','/', $filedest);
         if ( !is_writeable( $upload_dir['path'] ) ) {
-          SendPress_Option::set('import_error', true);  
+          SendPress_Option::set('import_error', true);
         }
 
         if ( !@move_uploaded_file($filetmp, $filedest) ){
@@ -407,7 +460,7 @@ class Jaiminho extends SendPress
 
   function mce_buttons( $buttons ) {
     array_unshift( $buttons, 'fontselect' );
-    array_unshift( $buttons, 'fontsizeselect' ); 
+    array_unshift( $buttons, 'fontsizeselect' );
     return $buttons;
   }
 
@@ -455,7 +508,7 @@ class Jaiminho extends SendPress
            array(
                'key' => '_report_type',
                'compare' => 'not exists',
-    
+
             ),
         ),
     );
@@ -472,11 +525,11 @@ class Jaiminho extends SendPress
             $query->the_post();
             $item = get_post();
             $stat_type = get_post_meta($item->ID, '_stat_type', true);
-    
-    
+
+
             $rec = get_post_meta($item->ID, '_send_count', true) + get_post_meta($item->ID, '_send_last_count', true)  . '';
             $sentold = get_post_meta($item->ID, '_sent_total', true);
-    
+
             $queue = 0;
             $sent = get_post_meta($item->ID, '_send_total', true);
             $inqueue = get_post_meta($item->ID, '_in_queue', true);
@@ -490,41 +543,41 @@ class Jaiminho extends SendPress
                 if($queue == 0){
                    update_post_meta($item->ID, '_in_queue', 'none');
                 }
-            } 
-    
-        
+            }
+
+
                 $display = '';
             $info = get_post_meta($item->ID, '_send_data', true);
             if(!empty($info['listIDS']) ){
                 foreach($info['listIDS'] as $list_id){
-                
+
                 $list = get_post( $list_id );
                 if($list &&  $list->post_type == 'sendpress_list'){
-                    $display .= $list->post_title.'<br>';      
+                    $display .= $list->post_title.'<br>';
                 }
-    
-                } 
+
+                }
             } else {
-                
+
                 $lists = get_post_meta($item->ID,'_send_lists', true);
                 $list = explode(",",$lists );
                 foreach($list as $list_id){
-                
+
                 $list = get_post( $list_id );
                 if($list &&  $list->post_type == 'sendpress_list'){
-                    $display .= $list->post_title.'<br>';      
+                    $display .= $list->post_title.'<br>';
                 }
-    
-                } 
-    
+
+                }
+
             }
-    
-        
+
+
             $opens = SPNL()->load("Subscribers_Tracker")->get_opens( $item->ID  );
             $opens_total = SPNL()->load("Subscribers_Tracker")->get_opens_total( $item->ID  );
             $opens =  $opens == 0 ? '-' : $opens;
             $opens_total =  $opens_total == 0 ? '-' : $opens_total;
-            
+
             $clicks = SPNL()->load("Subscribers_Url")->clicks_email_id( $item->ID  );
             $clicks_total = SPNL()->load("Subscribers_Url")->clicks_total_email_id( $item->ID  );
             $clicks =  $clicks == 0 ? '-' : $clicks;
@@ -581,7 +634,7 @@ class Jaiminho extends SendPress
 
     switch_to_blog( 1 );
     $args = array (
-                   'networkuser'     => get_option('networkuser'), 
+                   'networkuser'     => get_option('networkuser'),
                    'networkpass'     => get_option('networkpass'),
                    'networkserver'   => get_option('networkserver'),
                    'networkport'     => get_option('networkport'),
@@ -589,7 +642,7 @@ class Jaiminho extends SendPress
                    'sendmethod'      => 'Jaiminho_Sender_NetWork',
                  );
     switch_to_blog( $blog_id );
-    foreach( $args as $key => $value ) 
+    foreach( $args as $key => $value )
     {
       $method = SendPress_Option::set($key,$value);
     }
@@ -606,19 +659,19 @@ class Jaiminho extends SendPress
 		$my_post = array(
 				'ID'           => $optin,
 				'post_title' => "Por favor responda para entrar na lista de emails da *|SITE:TITLE|*",
-				'post_content' => "Olá! 
+				'post_content' => "Olá!
 
 				Falta pouco para podermos enviar para você e-mail do site *|SITE:TITLE|*, mas antes disto precisamos que você confirme que você realmente quer receber nossas informações.
 
-				Se você quer receber informações do *|SITE:TITLE|* no seu e-mail, você só precisa clicar no linque abaixo. Muito obrigado! 
+				Se você quer receber informações do *|SITE:TITLE|* no seu e-mail, você só precisa clicar no linque abaixo. Muito obrigado!
 				———————————————————————————————————
-				CONFIRME UTILIZANDO O LINQUE ABAIXO: 
+				CONFIRME UTILIZANDO O LINQUE ABAIXO:
 
-				*|SP:CONFIRMLINK|* 
+				*|SP:CONFIRMLINK|*
 
 				Clique no linque acima para nos dar permissão de te enviar
-				informações. É rápido e fácil! Se você não conseguir clicar, 
-				copie e cole o linque o seu navegador. 
+				informações. É rápido e fácil! Se você não conseguir clicar,
+				copie e cole o linque o seu navegador.
 				———————————————————————————————————
 
 				Se você não quiser receber e-mails, simplesmente ignore esta mensagem."
@@ -652,7 +705,7 @@ class Jaiminho extends SendPress
 		tgmpa( $plugins, $config );
 	}
 
-	public function jaiminho_check_rewrite(){ 
+	public function jaiminho_check_rewrite(){
 		global $wp_rewrite;
 
 		$rules = $wp_rewrite->extra_rules_top;
@@ -704,7 +757,7 @@ class Jaiminho extends SendPress
 				'manage_network_options',
 				'jaiminho-emails-limits-settings',
 				array( $this , 'jaiminho_emails_limits_html' )
-		);    
+		);
 
 		add_submenu_page(
 				$basename,
@@ -713,7 +766,7 @@ class Jaiminho extends SendPress
 				'manage_network_options',
 				'jaiminho-fix-tables--settings',
 				array( $this , 'jaiminho_fix_tables_html' )
-		);    
+		);
 	}
 
   public function jaiminho_fix_tables_html(){
@@ -726,11 +779,11 @@ class Jaiminho extends SendPress
         if( ! empty($wpdb->charset ) ){
               $collate .= "DEFAULT CHARACTER SET $wpdb->charset";
         }
-          
+
         if( ! empty($wpdb->collate ) ){
              $collate .= " COLLATE $wpdb->collate";
         }
-           
+
     }
     ?>
 		<form method="post">
@@ -763,27 +816,27 @@ class Jaiminho extends SendPress
 			  echo "<b>Database Tables</b>: <br>";
 
         // primera tabela
-			  
+
         $subscriber_events_table =  new SendPress_DB_Subscribers_Tracker();
 			  $subscriber_events_table = $subscriber_events_table->table_name;
 			  if($wpdb->get_var("show tables like '$subscriber_events_table'") != $subscriber_events_table) {
 				  echo $subscriber_events_table . " Not Installed<br>";
-                                
+
 				  if(isset($_POST['fix_tables'])){
             $command = " CREATE TABLE $subscriber_events_table (
             subscriberID int(11) unsigned NOT NULL,
             emailID int(11) unsigned NOT NULL,
-            sent_at datetime NOT NULL DEFAULT '0000-00-00 00:00:00', 
+            sent_at datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
             opened_at datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
             status tinyint(4) NOT NULL DEFAULT '0',
             PRIMARY KEY  (subscriberID,emailID)
-            )  $collate;\n"; 
+            )  $collate;\n";
 
             $return = dbDelta($command);
 
             echo $return["wp_sendpress_report_url"];
 				  }
-			  } 
+			  }
         else {
 				  echo $subscriber_events_table . " OK<br>";
 			  }
@@ -795,17 +848,17 @@ class Jaiminho extends SendPress
 			$subscriber_events_table = $subscriber_events_table->table_name;
 			if($wpdb->get_var("show tables like '$subscriber_events_table'") != $subscriber_events_table) {
 				echo $subscriber_events_table . " Not Installed<br>";
-                                
+
 				if(isset($_POST['fix_tables']))
 						{
 $command = " CREATE TABLE $subscriber_events_table (
 subscriberID int(11) unsigned NOT NULL,
 emailID int(11) unsigned NOT NULL,
 urlID int(11) unsigned NOT NULL,
-clicked_at datetime NOT NULL DEFAULT '0000-00-00 00:00:00', 
+clicked_at datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
 click_count int(11) unsigned NOT NULL,
 PRIMARY KEY  ( subscriberID , emailID , urlID )
-)  $collate;\n"; 
+)  $collate;\n";
 
 $return = dbDelta($command);
 
@@ -821,10 +874,10 @@ echo $return["wp_sendpress_report_url"];
 			$subscriber_events_table = $subscriber_events_table->table_name;
 			if($wpdb->get_var("show tables like '$subscriber_events_table'") != $subscriber_events_table) {
 				echo $subscriber_events_table . " Not Installed<br>";
-                                
+
 				if(isset($_POST['fix_tables']))
 						{
-$command = " CREATE TABLE $subscriber_events_table (urlID int(11) unsigned NOT NULL AUTO_INCREMENT, url text,hash varchar(255) DEFAULT NULL, PRIMARY KEY  (urlID), KEY hash (hash))  $collate;\n"; 
+$command = " CREATE TABLE $subscriber_events_table (urlID int(11) unsigned NOT NULL AUTO_INCREMENT, url text,hash varchar(255) DEFAULT NULL, PRIMARY KEY  (urlID), KEY hash (hash))  $collate;\n";
 $return = dbDelta($command);
 
 echo $return["wp_sendpress_report_url"];
@@ -838,7 +891,7 @@ echo $return["wp_sendpress_report_url"];
 			$report_url_table =  SendPress_DB_Tables::report_url_table();
 			if($wpdb->get_var("show tables like '$report_url_table'") != $report_url_table) {
 				echo $report_url_table . " Not Installed<br>";
-                                
+
 				if(isset($_POST['fix_tables']))
 						{
 $command = " CREATE TABLE $report_url_table (
@@ -848,7 +901,7 @@ reportID int(11) DEFAULT NULL,
 PRIMARY KEY  (urlID),
 KEY reportID (reportID),
 KEY url (url(255))
-) $collate;\n"; 
+) $collate;\n";
 
 $return = dbDelta($command);
 
@@ -861,14 +914,14 @@ echo $return["wp_sendpress_report_url"];
 			$subscriber_status_table =  SendPress_DB_Tables::subscriber_status_table();
 			if($wpdb->get_var("show tables like '$subscriber_status_table'") != $subscriber_status_table) {
 				echo $subscriber_status_table . " Not Installed<br>";
-                               
+
 				if(isset($_POST['fix_tables']))
 						{
 $command = " CREATE TABLE $subscriber_status_table (
-statusid int(11) unsigned NOT NULL AUTO_INCREMENT, 
-status varchar(255) DEFAULT NULL, 
+statusid int(11) unsigned NOT NULL AUTO_INCREMENT,
+status varchar(255) DEFAULT NULL,
 PRIMARY KEY  (statusid)
-) $collate;\n"; 
+) $collate;\n";
 
 $return = dbDelta($command);
 
@@ -881,33 +934,33 @@ echo $return["wp_sendpress_report_url"];
 			$subscriber_table = SendPress_DB_Tables::subscriber_table();
 			if($wpdb->get_var("show tables like '$subscriber_table'") != $subscriber_table) {
 				echo $subscriber_table . " Not Installed<br>";
-                                              
+
 				if(isset($_POST['fix_tables']))
-						{                 
+						{
 $command = " CREATE TABLE $subscriber_table (
-subscriberID bigint(20) unsigned NOT NULL AUTO_INCREMENT, 
-email varchar(100) NOT NULL DEFAULT '', 
-join_date datetime  NOT NULL DEFAULT '0000-00-00 00:00:00', 
-status int(1) NOT NULL DEFAULT '1', 
-registered datetime  NOT NULL DEFAULT '0000-00-00 00:00:00', 
-registered_ip varchar(20) NOT NULL DEFAULT '', 
-identity_key varchar(60) NOT NULL DEFAULT '', 
-bounced int(1) NOT NULL DEFAULT '0', 
-firstname varchar(250) NOT NULL DEFAULT '', 
-lastname varchar(250) NOT NULL DEFAULT '', 
-wp_user_id bigint(20) DEFAULT NULL, 
-phonenumber varchar(12) DEFAULT NULL, 
+subscriberID bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+email varchar(100) NOT NULL DEFAULT '',
+join_date datetime  NOT NULL DEFAULT '0000-00-00 00:00:00',
+status int(1) NOT NULL DEFAULT '1',
+registered datetime  NOT NULL DEFAULT '0000-00-00 00:00:00',
+registered_ip varchar(20) NOT NULL DEFAULT '',
+identity_key varchar(60) NOT NULL DEFAULT '',
+bounced int(1) NOT NULL DEFAULT '0',
+firstname varchar(250) NOT NULL DEFAULT '',
+lastname varchar(250) NOT NULL DEFAULT '',
+wp_user_id bigint(20) DEFAULT NULL,
+phonenumber varchar(12) DEFAULT NULL,
 salutation varchar(40) DEFAULT NULL,
-PRIMARY KEY  (subscriberID), 
-UNIQUE KEY email (email) , 
-UNIQUE KEY identity_key (identity_key), 
+PRIMARY KEY  (subscriberID),
+UNIQUE KEY email (email) ,
+UNIQUE KEY identity_key (identity_key),
 UNIQUE KEY wp_user_id (wp_user_id)
-) $collate;\n"; 
+) $collate;\n";
 
 $return = dbDelta($command);
 
 echo $return["wp_sendpress_report_url"];
-				}          
+				}
 			} else {
 				echo $subscriber_table . " OK<br>";
 			}
@@ -915,26 +968,26 @@ echo $return["wp_sendpress_report_url"];
 			$subscriber_list_subscribers = SendPress_DB_Tables::list_subcribers_table();
 			if($wpdb->get_var("show tables like '$subscriber_list_subscribers'") != $subscriber_list_subscribers) {
 				echo $subscriber_list_subscribers . " Not Installed<br>";
-                                             
+
 				if(isset($_POST['fix_tables']))
-						{     
+						{
 $command .= " CREATE TABLE $subscriber_list_subscribers (
-id int(11) unsigned NOT NULL AUTO_INCREMENT, 
-listID int(11) DEFAULT NULL, 
-subscriberID int(11) DEFAULT NULL, 
-status int(1) DEFAULT NULL, 
-updated datetime NOT NULL DEFAULT '0000-00-00 00:00:00', 
-PRIMARY KEY  (id), 
-KEY listID (listID) , 
-KEY subscriberID (subscriberID) , 
-KEY status (status), 
+id int(11) unsigned NOT NULL AUTO_INCREMENT,
+listID int(11) DEFAULT NULL,
+subscriberID int(11) DEFAULT NULL,
+status int(1) DEFAULT NULL,
+updated datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+PRIMARY KEY  (id),
+KEY listID (listID) ,
+KEY subscriberID (subscriberID) ,
+KEY status (status),
 UNIQUE KEY listsub (subscriberID,listID)
 ) $collate;\n";
 
 $return = dbDelta($command);
 
 echo $return["wp_sendpress_report_url"];
-				} 	
+				}
 			} else {
 				echo $subscriber_list_subscribers . " OK<br>";
 			}
@@ -942,34 +995,34 @@ echo $return["wp_sendpress_report_url"];
 			$subscriber_queue = SendPress_DB_Tables::queue_table();
 			if($wpdb->get_var("show tables like '$subscriber_queue'") != $subscriber_queue) {
 				echo $subscriber_queue . " Not Installed<br>";
-                                             
+
 				if(isset($_POST['fix_tables']))
-						{    
+						{
 $command .=" CREATE TABLE $subscriber_queue (
-id int(11) NOT NULL AUTO_INCREMENT, 
-subscriberID int(11) DEFAULT NULL, 
-listID int(11) DEFAULT NULL, 
-from_name varchar(64) DEFAULT NULL, 
-from_email varchar(128) NOT NULL, 
-to_email varchar(128) NOT NULL, 
-subject varchar(255) NOT NULL, 
-messageID varchar(400) NOT NULL, 
-emailID int(11) NOT NULL, 
-max_attempts int(11) NOT NULL DEFAULT '3', 
-attempts int(11) NOT NULL DEFAULT '0', 
-success tinyint(1) NOT NULL DEFAULT '0', 
-date_published datetime  NOT NULL DEFAULT '0000-00-00 00:00:00', 
-inprocess int(1) DEFAULT '0', 
-last_attempt datetime  NOT NULL DEFAULT '0000-00-00 00:00:00', 
-date_sent datetime  NOT NULL DEFAULT '0000-00-00 00:00:00', 
-PRIMARY KEY  (id), 
-KEY to_email (to_email), 
-KEY subscriberID (subscriberID), 
-KEY listID (listID), 
-KEY inprocess (inprocess), 
-KEY success (success), 
-KEY max_attempts (max_attempts), 
-KEY attempts (attempts), 
+id int(11) NOT NULL AUTO_INCREMENT,
+subscriberID int(11) DEFAULT NULL,
+listID int(11) DEFAULT NULL,
+from_name varchar(64) DEFAULT NULL,
+from_email varchar(128) NOT NULL,
+to_email varchar(128) NOT NULL,
+subject varchar(255) NOT NULL,
+messageID varchar(400) NOT NULL,
+emailID int(11) NOT NULL,
+max_attempts int(11) NOT NULL DEFAULT '3',
+attempts int(11) NOT NULL DEFAULT '0',
+success tinyint(1) NOT NULL DEFAULT '0',
+date_published datetime  NOT NULL DEFAULT '0000-00-00 00:00:00',
+inprocess int(1) DEFAULT '0',
+last_attempt datetime  NOT NULL DEFAULT '0000-00-00 00:00:00',
+date_sent datetime  NOT NULL DEFAULT '0000-00-00 00:00:00',
+PRIMARY KEY  (id),
+KEY to_email (to_email),
+KEY subscriberID (subscriberID),
+KEY listID (listID),
+KEY inprocess (inprocess),
+KEY success (success),
+KEY max_attempts (max_attempts),
+KEY attempts (attempts),
 KEY last_attempt (last_attempt),
 KEY date_sent (date_sent),
 KEY success_date (success,last_attempt,max_attempts,attempts,inprocess,date_sent)
@@ -978,7 +1031,7 @@ KEY success_date (success,last_attempt,max_attempts,attempts,inprocess,date_sent
 $return = dbDelta($command);
 
 echo $return["wp_sendpress_report_url"];
-				} 				
+				}
 			} else {
 				echo $subscriber_queue . " OK<br>";
 			}
@@ -1033,7 +1086,7 @@ echo $return["wp_sendpress_report_url"];
 	{
 		?>
 		<h1><?php _e("Configurar créditos"); ?></h1>
-		
+
 		<p>
 		<input id="filter" type="text">
 		<label><?php _e( 'Filtro' , 'jaiminho' ); ?></label>
@@ -1049,7 +1102,7 @@ echo $return["wp_sendpress_report_url"];
 				'deleted'    => null,
 				'limit'      => null,
 				'offset'     => 0,
-			     ); 
+			     );
 		$blogs = wp_get_sites( $args );
 
 
@@ -1060,7 +1113,7 @@ echo $return["wp_sendpress_report_url"];
 			if(isset($_POST['blogs']))
 			{
 				foreach( $_POST['blogs'] as $blog )
-				{ 
+				{
 					switch_to_blog( $blog );
 					$this->jaiminho_settings_account_email($_POST["emails-credits"]);
 					//SendPress_Option::set('emails-credits' , $_POST["emails-credits"] );
@@ -1070,7 +1123,7 @@ echo $return["wp_sendpress_report_url"];
 			else
 			{
 				foreach( $blogs as $blog )
-				{ 
+				{
 					switch_to_blog( $blog['blog_id'] );
 					$this->jaiminho_settings_account_email($_POST["emails-credits"]);
 					//SendPress_Option::set('emails-credits' , $_POST["emails-credits"] );
@@ -1085,7 +1138,7 @@ echo $return["wp_sendpress_report_url"];
 		?>
 	    <form method="post">
 			<select name="blogs[]" multiple >
-			<?php 
+			<?php
 			foreach ($blogs as $blog)
 			{
 			  switch_to_blog(  $blog['blog_id'] );
@@ -1093,7 +1146,7 @@ echo $return["wp_sendpress_report_url"];
 			}
 		    restore_current_blog();
 		    ?>
-			</select>	
+			</select>
 			<p>
 			<input type="text" name="emails-credits" value="<?php echo $credits; ?>" placeholder="<?php _e('Insira um valor, ex.: 5000', 'jaiminho' ); ?>" />
 			<label><?php _e('Créditos Disponiveis', 'jaiminho'); ?></label>
@@ -1117,7 +1170,7 @@ echo $return["wp_sendpress_report_url"];
 					'deleted'    => null,
 					'limit'      => null,
 					'offset'     => 0,
-				     ); 
+				     );
 			$blogs = wp_get_sites( $args );
 
                         if (isset($_POST['networkuser'])) update_option('networkuser', $_POST['networkuser'] );
@@ -1127,9 +1180,9 @@ echo $return["wp_sendpress_report_url"];
                         if (isset($_POST['bounce_email'])) update_option('bounce_email', $_POST['bounce_email'] );
 
 			$post = array (
-					'networkuser'   => get_option('networkuser'), 
+					'networkuser'   => get_option('networkuser'),
 					'networkpass'   => get_option('networkpass'),
-					'networkserver' => get_option('networkserver'), 
+					'networkserver' => get_option('networkserver'),
 					'networkport'   => get_option('networkport'),
 					'bounce_email'    => get_option('bounce_email'),
 					'sendmethod'      => 'Jaiminho_Sender_NetWork',
@@ -1147,8 +1200,8 @@ echo $return["wp_sendpress_report_url"];
 			if(isset($_POST['blogs']))
 			{
 				foreach( $_POST['blogs'] as $blog )
-				{ 
-					foreach( $post as $key => $value ) 
+				{
+					foreach( $post as $key => $value )
 					{
 						switch_to_blog( $blog );
 						$method = SendPress_Option::set($key,$value);
@@ -1159,8 +1212,8 @@ echo $return["wp_sendpress_report_url"];
 			else
 			{
 				foreach( $blogs as $blog )
-				{ 
-					foreach( $post as $key => $value ) 
+				{
+					foreach( $post as $key => $value )
 					{
 						switch_to_blog( $blog['blog_id'] );
 						$method = SendPress_Option::set($key,$value);
@@ -1176,12 +1229,12 @@ echo $return["wp_sendpress_report_url"];
 		?>
 		<h1><?= $sender->label(); ?></h1>
 		<p><?php _e( 'Selecione os blogs que devem receber a configuração ou não selecione nenhum e todos os blogs serão configurados' , 'jaiminho' ); ?>.</p>
-		
+
 		<p><label><?php _e( 'Filtro' , 'jaiminho' ); ?></label></p>
 		<p>
 		<input id="filter" type="text">
 		<p>
-	    
+
 	    <form method="post" id="post" >
 
 			<div class="panel panel-default">
@@ -1192,7 +1245,7 @@ echo $return["wp_sendpress_report_url"];
 		echo "</p><div class='well'>";
 		?>
 			<select name="blogs[]" multiple >
-			<?php 
+			<?php
 			$blogs = wp_get_sites( $args );
 		foreach ($blogs as $blog)
 		{
@@ -1228,14 +1281,14 @@ echo $return["wp_sendpress_report_url"];
 	}
 
 	function load_admin_script( $hook ){
-	    wp_enqueue_script( 
+	    wp_enqueue_script(
 	        'wptuts53021_script', //unique handle
 	        plugin_dir_url( __FILE__ ) . '/admin-scripts.js', //location
 	        array('jquery')  //dependencies
 	     );
 	}
 
-	public function myformatTinyMCE( $in ) 
+	public function myformatTinyMCE( $in )
 	{
 
                 $ext = 'pre[id|name|class|style],iframe[align|longdesc|name|width|height|frameborder|scrolling|marginheight|marginwidth|src]';
@@ -1285,7 +1338,7 @@ echo $return["wp_sendpress_report_url"];
 	{
 		// Initialize!
 		//$sendpress_instance = SendPress::get_instance();
-		if ( current_user_can( 'sendpress_view' ) ) 
+		if ( current_user_can( 'sendpress_view' ) )
 		{
 			$role = "sendpress_view";
 		}
@@ -1321,7 +1374,7 @@ echo $return["wp_sendpress_report_url"];
 
 	public function jaiminho_settings_account_email( $emails_credits ){
 		$chars = array(".", ",", " ", ":", ";", "$", "%", "*", "-", "=");
-		SendPress_Option::set( 'emails-credits' , str_replace( $chars , "" , $emails_credits ) ); 
+		SendPress_Option::set( 'emails-credits' , str_replace( $chars , "" , $emails_credits ) );
 	}
 
 
@@ -1333,7 +1386,7 @@ echo $return["wp_sendpress_report_url"];
 		}
 		else if ( SendPress_Option::get( 'bounce_email' ) )
 			$_bounce_email = SendPress_Option::get('bounce_email');
-		else 
+		else
 		{
 			// Get the site domain and get rid of www.
 			$sitename = strtolower( $_SERVER['SERVER_NAME'] );
@@ -1429,10 +1482,10 @@ echo $return["wp_sendpress_report_url"];
 		$emails_credits = isset (  $_POST['emails-credits'] ) ?  $_POST['emails-credits'] : SendPress_Option::get( 'emails-credits' );
 		$bounce_email = isset (  $_POST['bounceemail'] ) ?  $_POST['bounceemail'] : null;
 		$view_class = $this->jaiminho_get_view_class( $this->_page , $this->_current_view ,  $emails_credits  , $bounce_email );
-                
+
     // debug
 		//echo "About to render: $view_class, $this->_page";
-		//echo " nova: ".$view_class;  
+		//echo " nova: ".$view_class;
 
 		$view_class = NEW $view_class;
 
