@@ -149,8 +149,50 @@ class Jaiminho extends SendPress
 				$ch = curl_init($url);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 				curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
-				$content = curl_exec($ch);
+				$content_old = curl_exec($ch);
 				curl_close($ch);
+				$content_old = preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', "", $content_old);
+				$content = wp_kses($content_old,
+				array(
+					'head' => array(
+						'meta' => array(),
+						'title' => array(),
+					),
+			    'a' => array(
+			        'href' => array(
+							),
+			        'title' => array(),
+							'style' => array(),
+			    ),
+			    'br' => array(),
+			    'em' => array(),
+					'p' => array(
+						'stylle' => array(),
+					),
+					'img' => array(
+						'src' => array(),
+						'style' => array(),
+					),
+			    'strong' => array(),
+					'center' => array(),
+					'table' => array(
+						'tr' => array(
+							'style' => array()
+						),
+						'td' => array(
+							'style' => array()
+						),
+						'style' => array(),
+					),
+					'div' => array(
+						'style' => array(),
+					),
+					'style' => array(
+						'type' => array(
+							'text/css'
+						),
+					),
+				), array("http","https","ftp", "irc", "mailto"));
 				echo $content;
 			}
 		}
