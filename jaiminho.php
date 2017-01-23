@@ -163,6 +163,12 @@ class Jaiminho extends SendPress
 		    echo $overview[0]->from."<br>";
 		    $multiArray = $bouncehandler->get_the_facts($bounce);
 		    var_dump($multiArray);
+				if($multiArray != array()){
+					$subscriberID = SendPress_Data::get_subscriber_by_email($multiArray[0]["recipient"]);
+					var_dump($subscriberID);
+					SendPress_Data::delete_subscriber($subscriberID);
+				}
+
 		    echo "<br><br>##################<br>";
 			}
 		}
