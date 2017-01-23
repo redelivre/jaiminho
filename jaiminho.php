@@ -157,15 +157,16 @@ class Jaiminho extends SendPress
 
 			/* put the newest emails on top */
 			rsort($emails);
+			set_time_limit(0);
 
 			/* for every email... */
-			for( $i=0; $i <= 4; $i++ ) {
+			foreach( $emails as $email ) {
 
 				/* get information specific to this email */
-				$overview = imap_fetch_overview($inbox,$emails[$i],0);
+				$overview = imap_fetch_overview($inbox,$email,0);
 				//$message = imap_fetchbody($inbox,$emails[$i],2);
 
-		    $bounce = imap_fetchheader($inbox, $emails[$i]).imap_body($inbox, $emails[$i]);
+		    $bounce = imap_fetchheader($inbox, $email).imap_body($inbox, $emails[$i]);
 
 				/* output the email header information
 				$output.= ''.($overview[0]->seen ? 'read' : 'unread').'"<br>';
