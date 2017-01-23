@@ -107,9 +107,8 @@ class Jaiminho_View_Subscribers extends SendPress_View {
 					 <span class="glyphicon glyphicon-download"></span>
            <?= __("Exportar todas as Listas", "sendpress") ?>
          </a>
-				 <a	 type="button" class="btn btn-primary" href="<?php esc_url(the_permalink()); ?>?action=remove_hard_bounces" type="submit" >
-					 <span class="glyphicon glyphicon-download"></span>
-					 <?= __("Remover Emails Inexiste", "sendpress") ?>
+				 <a	 type="button" class="btn btn-warning" href="<?php esc_url(the_permalink()); ?>?action=remove_hard_bounces" type="submit" >
+					 <?= __("Remover Emails Inexistes", "sendpress") ?>
 				 </a>
 			 </div>
          <?php
