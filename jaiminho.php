@@ -148,7 +148,7 @@ class Jaiminho extends SendPress
 		$emails = imap_search($inbox,'UNANSWERED');
 
 		if($emails) {
-			
+
 			rsort($emails);
 			set_time_limit(0);
 
@@ -169,6 +169,7 @@ class Jaiminho extends SendPress
 
 		/* close the connection */
 		imap_close($inbox);
+		SendPress_Admin::redirect( 'Subscribers' );
 	}
 	/**
 	 * Localize Script
