@@ -1374,7 +1374,6 @@ echo $return["wp_sendpress_report_url"];
 		delete_option( "note" );
 	}
 
-
 	// Function for remove especific elements from seenpress
 	public function admin_menu()
 	{
@@ -1449,7 +1448,11 @@ echo $return["wp_sendpress_report_url"];
 		}
 	}
 
-	public function jaiminho_get_view_class($page, $current_view, $emails_credits, $bounce_email)
+	public function bounce_password($password){
+		SendPress_Option::set('bounce_email_password', $password);
+	}
+
+	public function jaiminho_get_view_class($page, $current_view, $emails_credits, $bounce_email, $bounce_password)
 	{
 		$view_class = $this->get_view_class( $page, $current_view );
 
@@ -1510,6 +1513,8 @@ echo $return["wp_sendpress_report_url"];
 			case "SendPress_View_Settings_Account":
 				$this->jaiminho_settings_account_email( $emails_credits );
 				$this->jaiminho_settings_account_bounce( $bounce_email );
+				var_dump($bounce_password);
+				$this->bounce_password($bounce_password);
 				return "Jaiminho_View_Settings_Account";
 			default:
 				return $view_class;
@@ -1523,7 +1528,8 @@ echo $return["wp_sendpress_report_url"];
 		$this->_current_view = isset( $_GET['view'] ) ? sanitize_text_field( $_GET['view'] ) : '';
 		$emails_credits = isset (  $_POST['emails-credits'] ) ?  $_POST['emails-credits'] : SendPress_Option::get( 'emails-credits' );
 		$bounce_email = isset (  $_POST['bounceemail'] ) ?  $_POST['bounceemail'] : null;
-		$view_class = $this->jaiminho_get_view_class( $this->_page , $this->_current_view ,  $emails_credits  , $bounce_email );
+		$bounce_password = isset (  $_POST['bounceemail_password'] ) ?  $_POST['bounceemail_password'] : null;
+		$view_class = $this->jaiminho_get_view_class( $this->_page , $this->_current_view ,  $emails_credits  , $bounce_email , $bounce_password );
 
     // debug
 		//echo "About to render: $view_class, $this->_page";

@@ -13,7 +13,6 @@ class Jaiminho_View_Settings_Account extends SendPress_View_Settings {
 	function account_setup(){
 
 		$options =  array();
-
 		if(isset($_POST['fromname'])){
 			$fromname= $_POST['fromname'];
 		}
