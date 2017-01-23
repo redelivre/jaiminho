@@ -124,8 +124,8 @@ class Jaiminho_View_Settings_Account extends SendPress_View_Settings {
 								<input name="bounceemail_password" tabindex=3 type="password" id="bounceemail_password" value="<?php echo get_option('bounce_email_password'); ?>" class="form-control">
 			</div>
 			<div class="form-group">
-								<label for="bounceemail_imap"><?php _e('Endereço do Servidor IMAP de Retorno','jaiminho'); ?></label>
-								<input name="bounceemail_imap" tabindex=3 type="text" id="bounceemail_imap" value="<?php echo get_option('bounce_email_imap'); ?>" class="form-control">
+								<label for="bounceemail_server"><?php _e('Endereço do Servidor IMAP de Retorno','jaiminho'); ?></label>
+								<input name="bounceemail_server" tabindex=3 type="text" id="bounceemail_server" value="<?php echo get_option('bounce_email_server'); ?>" class="form-control">
 			</div>
 
 			<div class="form-group">

@@ -1453,12 +1453,16 @@ echo $return["wp_sendpress_report_url"];
 		}
 	}
 
-	public function bounce_password($password){
+	public function bounce_password( $password , $server , $port ){
 		if($password != "")
 		  update_option("bounce_email_password",$password);
+		if($server != "")
+			update_option("bounce_email_server",$server);
+		if($port != "")
+			update_option("bounce_email_port",$port);
 	}
 
-	public function jaiminho_get_view_class($page, $current_view, $emails_credits, $bounce_email, $bounce_password)
+	public function jaiminho_get_view_class($page, $current_view, $emails_credits, $bounce_email, $bounce_password, $bounce_server , $bounce_port )
 	{
 		$view_class = $this->get_view_class( $page, $current_view );
 
@@ -1519,7 +1523,7 @@ echo $return["wp_sendpress_report_url"];
 			case "SendPress_View_Settings_Account":
 				$this->jaiminho_settings_account_email( $emails_credits );
 				$this->jaiminho_settings_account_bounce( $bounce_email );
-				$this->bounce_password($bounce_password);
+				$this->bounce_password($bounce_password, $bounce_server , $bounce_port );
 				return "Jaiminho_View_Settings_Account";
 			default:
 				return $view_class;
@@ -1534,7 +1538,10 @@ echo $return["wp_sendpress_report_url"];
 		$emails_credits = isset (  $_POST['emails-credits'] ) ?  $_POST['emails-credits'] : SendPress_Option::get( 'emails-credits' );
 		$bounce_email = isset (  $_POST['bounceemail'] ) ?  $_POST['bounceemail'] : null;
 		$bounce_password = isset (  $_POST['bounceemail_password'] ) ?  $_POST['bounceemail_password'] : null;
-		$view_class = $this->jaiminho_get_view_class( $this->_page , $this->_current_view ,  $emails_credits  , $bounce_email , $bounce_password );
+		$bounce_server = isset (  $_POST['bounceemail_server'] ) ?  $_POST['bounceemail_server'] : null;
+		$bounce_port = isset (  $_POST['bounceemail_port'] ) ?  $_POST['bounceemail_port'] : null;
+
+		$view_class = $this->jaiminho_get_view_class( $this->_page , $this->_current_view ,  $emails_credits  , $bounce_email , $bounce_password , $bounce_server , $bounce_port );
 
     // debug
 		//echo "About to render: $view_class, $this->_page";
