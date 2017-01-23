@@ -148,9 +148,7 @@ class Jaiminho extends SendPress
 		$emails = imap_search($inbox,'UNANSWERED');
 
 		if($emails) {
-
-			$output = '';
-
+			
 			rsort($emails);
 			set_time_limit(0);
 
@@ -160,16 +158,12 @@ class Jaiminho extends SendPress
 
 		    $bounce = imap_fetchheader($inbox, $email).imap_body($inbox, $email);
 
-		    echo $overview[0]->from."<br>";
 		    $multiArray = $bouncehandler->get_the_facts($bounce);
-		    var_dump($multiArray);
 				if($multiArray != array()){
 					$subscriberID = SendPress_Data::get_subscriber_by_email($multiArray[0]["recipient"]);
-					var_dump($subscriberID);
 					SendPress_Data::delete_subscriber($subscriberID);
 				}
 
-		    echo "<br><br>##################<br>";
 			}
 		}
 
