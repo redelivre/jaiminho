@@ -128,8 +128,66 @@ class Jaiminho extends SendPress
 	}
 
   public function remove_hard_bounces(){
-		var_dump(SendPress_Option::get("bounce_email"));
-		var_dump(get_option("bounce_email_password"));
+		$email = SendPress_Option::get("bounce_email");
+		$password = get_option("bounce_email_password");
+		$server = get_option("bounce_email_server");
+		$port = get_option("bounce_email_port");
+
+
+		require_once("includes/php-bounce-handler/bounce_driver.class.php");
+		$bouncehandler = new Bouncehandler();
+
+		/* connect to gmail */
+		//$hostname = '{imap.gmail.com:993/imap/ssl/novalidate-cert}INBOX';
+		$hostname = '{'.$server.':'.$port.'/imap/ssl/novalidate-cert}INBOX';
+		$username = $email;
+		$password = $password;
+
+		/* try to connect */
+		$inbox = imap_open($hostname,$username,$password) or die('Cannot connect to Gmail: ' . imap_last_error());
+
+		/* grab emails */
+		$emails = imap_search($inbox,'UNANSWERED');
+
+		/* if emails are returned, cycle through each... */
+		if($emails) {
+
+			/* begin output var */
+			$output = '';
+
+			/* put the newest emails on top */
+			rsort($emails);
+
+			/* for every email... */
+			for( $i=0; $i <= 4; $i++ ) {
+
+				/* get information specific to this email */
+				$overview = imap_fetch_overview($inbox,$emails[$i],0);
+				//$message = imap_fetchbody($inbox,$emails[$i],2);
+
+		    $bounce = imap_fetchheader($inbox, $emails[$i]).imap_body($inbox, $emails[$i]);
+
+				/* output the email header information
+				$output.= ''.($overview[0]->seen ? 'read' : 'unread').'"<br>';
+				$output.= ''.$overview[0]->subject.'<br>';
+				$output.= ''.$overview[0]->from.'<br>';
+				$output.= ''.$overview[0]->date.'<br>';
+
+				/* output the email body */
+				//$output.= ''.$message.'<br><br>';
+		    echo $overview[0]->from."<br>";
+		    //echo $message."<br>";
+		    $multiArray = $bouncehandler->get_the_facts($bounce);
+		    var_dump($multiArray);
+		    echo "<br><br>##################<br>";
+			}
+
+			//echo $output;
+
+		}
+
+		/* close the connection */
+		imap_close($inbox);
 	}
 	/**
 	 * Localize Script
