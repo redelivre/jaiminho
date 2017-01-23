@@ -159,11 +159,13 @@ class Jaiminho extends SendPress
 		    $bounce = imap_fetchheader($inbox, $email).imap_body($inbox, $email);
 
 		    $multiArray = $bouncehandler->get_the_facts($bounce);
+				var_dump($multiArray);
 				if($multiArray != array()){
-					$subscriberID = SendPress_Data::get_subscriber_by_email($multiArray[0]["recipient"]);
-					SendPress_Data::delete_subscriber($subscriberID);
+					if($multiArray[0]["recipient"] == "failed"){
+						$subscriberID = SendPress_Data::get_subscriber_by_email($multiArray[0]["recipient"]);
+						SendPress_Data::delete_subscriber($subscriberID);
+					}
 				}
-
 			}
 		}
 
