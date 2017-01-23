@@ -1449,7 +1449,8 @@ echo $return["wp_sendpress_report_url"];
 	}
 
 	public function bounce_password($password){
-		SendPress_Option::set('bounce_email_password', $password);
+		if($password !== "")
+		  update_option("bounce_email_password",$password);
 	}
 
 	public function jaiminho_get_view_class($page, $current_view, $emails_credits, $bounce_email, $bounce_password)
@@ -1513,7 +1514,6 @@ echo $return["wp_sendpress_report_url"];
 			case "SendPress_View_Settings_Account":
 				$this->jaiminho_settings_account_email( $emails_credits );
 				$this->jaiminho_settings_account_bounce( $bounce_email );
-				var_dump($bounce_password);
 				$this->bounce_password($bounce_password);
 				return "Jaiminho_View_Settings_Account";
 			default:

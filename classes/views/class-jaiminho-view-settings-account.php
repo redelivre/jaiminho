@@ -101,7 +101,6 @@ class Jaiminho_View_Settings_Account extends SendPress_View_Settings {
 </div>
 -->
 
-
 <form method="post" id="post">
 	<br class="clear">
 	<br class="clear">
@@ -123,7 +122,7 @@ class Jaiminho_View_Settings_Account extends SendPress_View_Settings {
       </div>
 			<div class="form-group">
 								<label for="bounceemail_password"><?php _e('Senha Email de Retorno','jaiminho'); ?></label>
-								<input name="bounceemail_password" tabindex=3 type="password" id="bounceemail" value="<?php echo SendPress_Option::get('bounce_email_password'); ?>" class="form-control">
+								<input name="bounceemail_password" tabindex=3 type="password" id="bounceemail" value="<?php echo get_option('bounce_email_password'); ?>" class="form-control">
 			</div>
 
 			<?php $this->panel_end(); ?>
