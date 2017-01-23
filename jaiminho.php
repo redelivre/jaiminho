@@ -166,7 +166,7 @@ class Jaiminho extends SendPress
 				$overview = imap_fetch_overview($inbox,$email,0);
 				//$message = imap_fetchbody($inbox,$emails[$i],2);
 
-		    $bounce = imap_fetchheader($inbox, $email).imap_body($inbox, $emails[$i]);
+		    $bounce = imap_fetchheader($inbox, $email).imap_body($inbox, $email);
 
 				/* output the email header information
 				$output.= ''.($overview[0]->seen ? 'read' : 'unread').'"<br>';
