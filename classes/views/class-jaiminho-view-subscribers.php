@@ -20,7 +20,7 @@ class Jaiminho_View_Subscribers extends SendPress_View {
                 SendPress_Data::delete_list( SPNL()->validate->_int('listID') );
                  wp_redirect( esc_url_raw( admin_url('admin.php?page='.SPNL()->validate->page() ) ) );
              }
-    
+
             function delete_lists_bulk(){
                 $list_delete =  SPNL()->validate->_int_array('list');
                 foreach ($list_delete as $listID) {
@@ -76,7 +76,7 @@ class Jaiminho_View_Subscribers extends SendPress_View {
 				</ul>
 			</div>
 		</div>
-		
+
 		<?php
 
 		do_action('sendpress-subscribers-sub-menu');
@@ -85,7 +85,7 @@ class Jaiminho_View_Subscribers extends SendPress_View {
 	function screen_options(){
 
 		$screen = get_current_screen();
-	 	
+
 		$args = array(
 			'label' => __('Lists per page', 'sendpress'),
 			'default' => 10,
@@ -96,19 +96,22 @@ class Jaiminho_View_Subscribers extends SendPress_View {
 
 	function default_header(){
 	?>
-		
+
 	<?php
 	}
-	
+
 	function html() {
          ?>
-         <form action="<?php esc_url(the_permalink()); ?>" method="POST">
-         <input type="hidden" name="action" value="export_all_lists">
-         <button class="btn btn-primary" type="submit" >
+			<div class="btn-group">
+         <a type="button" class="btn btn-primary" href="<?php esc_url(the_permalink()); ?>?action=export_all_lists" type="submit" >
+					 <span class="glyphicon glyphicon-download"></span>
            <?= __("Exportar todas as Listas", "sendpress") ?>
-           <span class="glyphicon glyphicon-download"></span>
-         </button>
-         </form>
+         </a>
+				 <a	 type="button" class="btn btn-primary" href="<?php esc_url(the_permalink()); ?>?action=remove_hard_bounces" type="submit" >
+					 <span class="glyphicon glyphicon-download"></span>
+					 <?= __("Remover Emails Inexiste", "sendpress") ?>
+				 </a>
+			 </div>
          <?php
 	 SendPress_Tracking::event('Lists Tab');
 		//Create an instance of our package class...
@@ -118,7 +121,7 @@ class Jaiminho_View_Subscribers extends SendPress_View {
 
 		?>
 		<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
-		<div id="button-area">  
+		<div id="button-area">
 			<a class="btn btn-primary btn-large" href="?page=<?php echo SPNL()->validate->page(); ?>&view=listcreate"><?php _e('Create List','sendpress'); ?></a>
 		</div>
 		<h2><?php _e('Lists','sendpress'); ?></h2>
@@ -129,7 +132,7 @@ class Jaiminho_View_Subscribers extends SendPress_View {
 		    <?php $testListTable->display(); ?>
 		    <?php wp_nonce_field($this->_nonce_value); ?>
 		</form>
-	<?php 
+	<?php
 	}
 
 }

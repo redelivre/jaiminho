@@ -108,6 +108,7 @@ class Jaiminho extends SendPress
     add_action( 'admin_action_exportsenderrors', array($this,'exportsenderrors') );
     add_action( 'admin_action_send_message', array($this,'send_message') );
     add_action( 'admin_action_export_all_lists', array($this,'export_all_lists') );
+		add_action( 'admin_action_remove_hard_bounces', array($this,'remove_hard_bounces') );
     add_action( 'admin_action_import', array($this,'save_import') );
     add_filter( 'mce_buttons_2', array($this,'mce_buttons') );
     add_action( 'admin_action_addsubscriber', array($this,'addsubscriber') );
@@ -126,6 +127,10 @@ class Jaiminho extends SendPress
 
 	}
 
+  public function remove_hard_bounces(){
+		var_dump(SendPress_Option::get("bounce_email"));
+		var_dump(get_option("bounce_email_password"));
+	}
 	/**
 	 * Localize Script
 	 */
@@ -1449,7 +1454,7 @@ echo $return["wp_sendpress_report_url"];
 	}
 
 	public function bounce_password($password){
-		if($password !== "")
+		if($password != "")
 		  update_option("bounce_email_password",$password);
 	}
 

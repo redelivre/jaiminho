@@ -100,7 +100,6 @@ class Jaiminho_View_Settings_Account extends SendPress_View_Settings {
   <a href="" class="btn btn-large btn-default" ><i class="icon-remove"></i> <?php _e( 'Cancel', 'sendpress' ); ?></a> <a href="#" id="save-update" class="btn btn-primary btn-large"><i class="icon-white icon-ok"></i> <?php _e( 'Save', 'sendpress' ); ?></a>
 </div>
 -->
-
 <form method="post" id="post">
 	<br class="clear">
 	<br class="clear">
