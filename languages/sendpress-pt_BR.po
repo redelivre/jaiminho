@@ -1742,7 +1742,7 @@ msgstr "Para modificar essas configurações entre em"
 #: classes/views/class-sendpress-view-queue-stuck.php:237
 #: classes/views/class-sendpress-view-queue.php:295
 msgid "If you close this window sending will stop. "
-msgstr "Se vocêc fechar esta janela o envio de emails cessará."
+msgstr "Se você fechar esta janela o envio de emails cessará."
 
 #: classes/views/class-sendpress-view-subscribers-listcreate.php:38
 #: classes/views/class-sendpress-view-subscribers-listedit.php:50

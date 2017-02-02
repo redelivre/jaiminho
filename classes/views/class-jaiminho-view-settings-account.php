@@ -12,10 +12,7 @@ class Jaiminho_View_Settings_Account extends SendPress_View_Settings {
 
 	function account_setup(){
 
-	//if(  wp_verify_nonce( $_POST['_spnonce'] , basename(__FILE__) )){
-
 		$options =  array();
-
 		if(isset($_POST['fromname'])){
 			$fromname= $_POST['fromname'];
 		}
@@ -40,14 +37,17 @@ class Jaiminho_View_Settings_Account extends SendPress_View_Settings {
 
 			$fromemail = 'wordpress@' . $sitename;
 		}
-                
+
+
 		SendPress_Option::set('fromemail', $fromemail );
 		SendPress_Option::set('fromname', $fromname );
-                $options['sendmethod'] = $_POST['sendpress-sender'];
+
+
+		$options['sendmethod'] = $_POST['sendpress-sender'];
 		// Provides: Hll Wrld f PHP
 		$chars = array(".", ",", " ", ":", ";", "$", "%", "*", "-", "=");
 		$options['emails-per-day'] =  str_replace($chars,"",$_POST['emails-per-day']);
-		$options['emails-per-hour'] =  str_replace($chars,"",$_POST['emails-per-hour']);
+		$options['emails-per-hour'] = str_replace($chars,"",$_POST['emails-per-hour']);
 		$options['email-charset'] = $_POST['email-charset'];
 		$options['email-encoding'] = $_POST['email-encoding'];
 		$options['testemail'] = $_POST['testemail'];
@@ -74,6 +74,7 @@ class Jaiminho_View_Settings_Account extends SendPress_View_Settings {
 	}
 
 	function send_test_email(){
+		//$this->security_check();
 		$options = array();
 
 		$options['testemail'] = $_POST['testemail'];
@@ -86,14 +87,11 @@ class Jaiminho_View_Settings_Account extends SendPress_View_Settings {
 	}
 
 
-	function html( $sp ) {
-                //if (is_multisite() && !is_super_admin())                            
-                //  return;
+	function html( ) {
 		global  $sendpress_sender_factory;
 		$senders = $sendpress_sender_factory->get_all_senders();
 		ksort($senders);
 		$method = SendPress_Option::get( 'sendmethod' );
-                //var_dump($method);
 		$fe = __('From Email','sendpress');
 		$fn = __('From Name','sendpress');
 		?>
@@ -102,8 +100,6 @@ class Jaiminho_View_Settings_Account extends SendPress_View_Settings {
   <a href="" class="btn btn-large btn-default" ><i class="icon-remove"></i> <?php _e( 'Cancel', 'sendpress' ); ?></a> <a href="#" id="save-update" class="btn btn-primary btn-large"><i class="icon-white icon-ok"></i> <?php _e( 'Save', 'sendpress' ); ?></a>
 </div>
 -->
-
-
 <form method="post" id="post">
 	<br class="clear">
 	<br class="clear">
@@ -118,9 +114,23 @@ class Jaiminho_View_Settings_Account extends SendPress_View_Settings {
 				<label for="fromemail"><?php _e('From Email','sendpress'); ?></label>
 				<input name="fromemail" tabindex=2 type="text" id="fromemail" value="<?php echo SendPress_Option::get('fromemail'); ?>" class="form-control">
 			</div>
+
 			<div class="form-group">
-				<label for="bounceemail"><?php _e('Email de Retorno','jaiminho'); ?></label>
-				<input name="bounceemail" tabindex=3 type="text" id="bounceemail" value="<?php echo SendPress_Option::get('bounce_email'); ?>" class="form-control">
+                <label for="bounceemail"><?php _e('Email de Retorno','jaiminho'); ?></label>
+                <input name="bounceemail" tabindex=3 type="text" id="bounceemail" value="<?php echo SendPress_Option::get('bounce_email'); ?>" class="form-control">
+      </div>
+			<div class="form-group">
+								<label for="bounceemail_password"><?php _e('Senha Email de Retorno','jaiminho'); ?></label>
+								<input name="bounceemail_password" tabindex=3 type="password" id="bounceemail_password" value="<?php echo get_option('bounce_email_password'); ?>" class="form-control">
+			</div>
+			<div class="form-group">
+								<label for="bounceemail_server"><?php _e('Endereço do Servidor IMAP de Retorno','jaiminho'); ?></label>
+								<input name="bounceemail_server" tabindex=3 type="text" id="bounceemail_server" value="<?php echo get_option('bounce_email_server'); ?>" class="form-control">
+			</div>
+
+			<div class="form-group">
+								<label for="bounceemail_port"><?php _e('Porta de Leitura do Servidor IMAP de Retorno','jaiminho'); ?></label>
+								<input name="bounceemail_port" tabindex=3 type="text" id="bounceemail_port" value="<?php echo get_option('bounce_email_port'); ?>" class="form-control">
 			</div>
 
 			<?php $this->panel_end(); ?>
@@ -170,7 +180,7 @@ class Jaiminho_View_Settings_Account extends SendPress_View_Settings {
 						</div>
 					</div>
 				</div>
-				
+
 			</div>
 			<?php $this->panel_end(); ?>
 		</div>
@@ -183,7 +193,15 @@ class Jaiminho_View_Settings_Account extends SendPress_View_Settings {
 		<div class="panel-body">
 
 			<input type="hidden" name="action" value="account-setup" />
-			
+			<?php
+
+$new =array();
+foreach ( $senders as $key => $sender ) {
+	array_push($new, array($key,$sender->label() ));
+}
+echo '<strong>Delivery Method: </strong>';
+ $this->select('sendpress-sender',$method, $new );
+			?><br><br>
 			<?php if( count($senders) < 3 ){
 				$c= 0;
 				foreach ( $senders as $key => $sender ) {
@@ -191,7 +209,8 @@ class Jaiminho_View_Settings_Account extends SendPress_View_Settings {
 					if ( $c >= 1 ) { $class = "margin-left: 4%"; }
 					echo "<div style=' float:left; width: 48%; $class' id='$key'>";
 					?>
-					<p>&nbsp;<input name="sendpress-sender" type="radio"  <?php if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { ?>checked="checked"<?php } ?> id="website" value="<?php echo $key; ?>" /> <?php _e('Send Emails via','sendpress'); ?>
+					<!-- XXXX -->
+					<p>&nbsp;<!--<input name="sendpress-sender" type="radio"  <?php if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { ?>checked="checked"<?php } ?> id="website" value="<?php echo $key; ?>" /> <?php _e('Send Emails via','sendpress'); ?> -->
 						<?php
 						echo $sender->label();
 						echo "</p><div class='well'>";
@@ -219,20 +238,17 @@ class Jaiminho_View_Settings_Account extends SendPress_View_Settings {
 					<div class="tab-content" style="display:block;">
 						<?php
 						foreach ( $senders as $key => $sender ) {
-							    $class ='';
-							    if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { $class = "active"; }
-							    echo "<div class='tab-pane $class' id='$key'>";
-							    ?>
-							    <p>&nbsp;<input name="sendpress-sender" type="<?php if($key==='SendPress_Sender_Website' && is_multisite()) {echo 'radio';} else {echo 'radio';} ?>" <?php if($key==='SendPress_Sender_Website' && is_multisite()) {echo 'style="display:none"'; } ?> <?php if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { ?>checked="checked"<?php } ?> id="website" value="<?php echo $key; ?>" /> <?php _e('Activate','sendpress'); ?>
-							    	<?php
-							    	echo $sender->label();
-							    	echo "</p>";
-                                                                if($key !== 'SendPress_Sender_Website')
-                                                                {
-                                                                  echo "<div class='well'>";
-							    	  echo $sender->settings();
-							    	  echo "</div></div>";
-                                                                }
+							$class ='';
+							if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { $class = "active"; }
+							echo "<div class='tab-pane $class' id='$key'>";
+							?>
+							<!-- XXXX -->
+							<!--<p>&nbsp;<input name="sendpress-sender" type="radio"  <?php if($key==='SendPress_Sender_Website' && is_multisite()) {echo 'style="display:none"'; } ?> <?php if ( $method == $key || strpos(strtolower($key) , $method) > 0 ) { ?>checked="checked"<?php } ?> id="website" value="<?php echo $key; ?>" /> <?php _e('Activate','sendpress'); ?>-->
+								<?php
+								//echo $sender->label();
+								echo "</p><div class='well'>";
+								echo $sender->settings();
+								echo "</div></div>";
 							}
 							?>
 
@@ -245,6 +261,20 @@ class Jaiminho_View_Settings_Account extends SendPress_View_Settings {
 
 				</div>
 			</div>
+
+
+<?php
+
+        if (isset($_POST['credits_super_admin']) and $_POST['credits_super_admin'] != '') {
+    			SendPress_Option::set( 'wpcron-per-call' , $_POST['credits_super_admin'] );
+    			SendPress_Option::set( 'emails-per-day' , $_POST['credits_super_admin'] );
+					update_option( 'emails-credits', $_POST['credits_super_admin'] );
+
+        }
+        if (isset($_POST['credits_per_hour_super_admin']) and $_POST['credits_per_hour_super_admin'] != '') {
+    			SendPress_Option::set( 'emails-per-hour' , $_POST['credits_per_hour_super_admin'] );
+        }
+ ?>
 			<br class="clear">
 			<div class="panel panel-default">
 				<div class="panel-heading">
@@ -252,41 +282,79 @@ class Jaiminho_View_Settings_Account extends SendPress_View_Settings {
 				</div>
 				<div class="panel-body">
 					<div class="boxer form-box">
-						<div>
-							<h2><?php _e('Email Sending Limits','sendpress'); ?></h2>
+						<div style="float:left; position: relative">
+							<?php if(is_super_admin()){ ?>
+							<h2>Configuração de créditos super-admin</h2>
+			                <p>
+			                <?= __("Insira uma quantidade de créditos para este projeto:", "sendpress"); ?>
+			                </p>
+			                <p>
+			                <input type="text" placeholder="eg. 5000" name="credits_super_admin" value="<?= SendPress_Option::get('emails-per-day'); ?>"/>
+			                </p>
+			                <p>
+			                <?= __("Defina a quantidade de créditos por hora:", "sendpress"); ?>
+			                </p>
+			                <p>
+			                <input type="text" placeholder="eg. 1000" name="credits_per_hour_super_admin" value="<?= SendPress_Option::get('emails-per-hour'); ?>" />
+			                </p>
+			                <p>
+			                <button class="btn btn-primary" type="submit" >
+			                  <?= __("Adicionar Créditos", "sendpress") ?>
+			                  <span class="glyphicon glyphicon-send"></span>
+			                </button>
+			                </p>
+
+
+			                <?php } ?>
+						</div>
+						<div style="<?php echo is_super_admin()?"position: relative; float: right; width: 45%;": "float:left"; ?>
+							<h2><?php _e('Email Sending Limits','sendpress'); ?>
+
+							</h2>
 
 							<?php
-							$emails_per_day  = SendPress_Option::get('emails-per-day');
+							$emails_per_day = SendPress_Option::get('emails-per-day');
+
 							$emails_per_hour =  SendPress_Option::get('emails-per-hour');
-                                                        $credits         = SendPress_Option::get('emails-credits');
-                                                        //Maurilio: Amarelo comentou esta linha
-							//$hourly_emails = SendPress_Data::emails_sent_in_queue("hour");
+							$credits         = SendPress_Option::get('emails-credits');
+
 							$emails_so_far = SendPress_Data::emails_sent_in_queue("day");
-							?><?php
-$offset = get_option( 'gmt_offset' ) * 60 * 60; // Time offset in seconds
-$local_timestamp = wp_next_scheduled('sendpress_cron_action') + $offset;
-?>
-<?php sprintf(__('You have sent <strong>%s</strong> emails so far today and you have <strong>%s</strong> credits remaining.', 'sendpress'), $emails_so_far, $credits); ?><br><br>
-<input type="text" size="6" name="emails-per-day" value="<?php echo $emails_per_day; ?>" /> <?php _e('Emails Per Day','sendpress'); ?><br><br>
-<input type="text" size="6" name="emails-per-hour" value="<?php echo $emails_per_hour; ?>" /> <?php _e('Emails Per Hour','sendpress'); ?><br><br>
-<br><br>
-<h2><?php _e('Email Encoding','sendpress'); ?></h2>
-<?php
-$charset = SendPress_Option::get('email-charset','UTF-8');
-?>Charset:
-<select name="email-charset" id="">
 
-	<?php
-	$charsete = SendPress_Data::get_charset_types();
-	foreach ( $charsete as $type) {
-		$select="";
-		if($type == $charset){
-			$select = " selected ";
-		}
-		echo "<option $select value=$type>$type</option>";
+							$offset = get_option( 'gmt_offset' ) * 60 * 60;
 
-	}
-	?>
+						  $local_timestamp = wp_next_scheduled('sendpress_cron_action') + $offset;
+
+							sprintf(__('You have sent <strong>%s</strong> emails so far today and you have <strong>%s</strong> credits remaining.', 'sendpress'), $emails_so_far, $credits);
+							?>
+							<br><br>
+
+
+						<input type="hidden" />
+						<input type="text" size="6" name="emails-per-day" value="<?php echo $emails_per_day; ?>" />
+						<?php _e('Emails Per Day','sendpress'); ?>
+						<br><br>
+
+						<input type="text" size="6" name="emails-per-hour" value="<?php echo $emails_per_hour; ?>" />
+						<?php _e('Emails Per Hour','sendpress'); ?>
+						<br><br>
+
+						<h2><?php _e('Email Encoding','sendpress'); ?></h2>
+						<?php
+						$charset = SendPress_Option::get('email-charset','UTF-8');
+						?>Charset:
+						<select name="email-charset" id="">
+
+						<?php
+						$charsete = SendPress_Data::get_charset_types();
+						foreach ( $charsete as $type) {
+							$select="";
+							if($type == $charset){
+								$select = " selected ";
+							}
+							echo "<option $select value=$type>$type</option>";
+
+						}
+						?>
 </select><br>
 <?php _e('Squares or weird characters displaying in your emails select the charset for your language','sendpress'); ?>.
 <br><br>
@@ -315,7 +383,7 @@ foreach ( $charsete as $type) {
 <?php
 //Page Nonce
 //wp_nonce_field(  basename(__FILE__) ,'_spnonce' );
-wp_nonce_field( $sp->_nonce_value );
+wp_nonce_field( $this->_nonce_value );
 ?>
 <input type="submit" class="btn btn-primary" value="Save"/> <a href="" class="btn btn-default"><i class="icon-remove"></i> <?php _e('Cancel','sendpress'); ?></a>
 </form>
@@ -332,7 +400,7 @@ wp_nonce_field( $sp->_nonce_value );
 //Page Nonce
 //wp_nonce_field(  basename(__FILE__) ,'_spnonce' );
 //SendPress General Nonce
-	wp_nonce_field( $sp->_nonce_value );
+	wp_nonce_field( $this->_nonce_value );
 	?>
 </form>
 <?php
@@ -398,12 +466,8 @@ if ( !empty( $error ) && isset($_POST['testemail'])) {
 					echo $phpmailer_error;
 				} ?>
 
-
 				<pre>
 					<?php
-
-
-
 
 					$whoops = SendPress_Option::get( 'last_test_debug' );
 					if ( empty( $whoops ) ) {

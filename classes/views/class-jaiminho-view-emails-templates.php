@@ -1,18 +1,18 @@
 <?php
 
-// Prevent loading this file directly
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails.php' );
+
 if ( !defined('SENDPRESS_VERSION') ) {
 	header('HTTP/1.0 403 Forbidden');
 	die;
 }
 
-require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails.php' );
 
 class Jaiminho_View_Emails_Templates extends Jaiminho_View_Emails{
 
 
 
-	public function prerender($sp = false)
+	public function prerender()
 	{
 		wp_enqueue_script( 'dashboard' );
 		/*
@@ -71,12 +71,11 @@ class Jaiminho_View_Emails_Templates extends Jaiminho_View_Emails{
 
 
 	}
-	public function html($sp){
-		if(isset($_POST['submit'] ) && isset($_GET['templateID'])) 
+	public function html(){
+		if(isset($_POST['submit'] ) && isset($_GET['templateID']))
 		{
 			$this->update_template();
-		} 
-		var_dump(isset($_GET['templateID']));
+		}
 		if(isset($_POST['submit'] ) && !isset($_GET['templateID'])) {
 			$this->save_new_template();
 		}
@@ -93,13 +92,12 @@ class Jaiminho_View_Emails_Templates extends Jaiminho_View_Emails{
 			<div id="sp-cancel-btn" class="btn-group">
 			<a href="<?php echo SendPress_Admin::link('Emails_Temp'); ?>" id="cancel-update" class="btn btn-default"><?php echo __('Cancel','sendpress'); ?></a>&nbsp;
 		</div>
-			<!--a class="btn btn-primary" href="<?php echo get_site_url().'/wp-admin/admin.php?page=sp-emails&view=temp'; ?>"><i class="icon-white icon-ok"></i> <?php echo __('Back','jaiminho'); ?></a-->
 			<button class="btn btn-primary " type="submit" value="save" name="submit"><i class="icon-white icon-ok"></i> <?php echo __('Save','sendpress'); ?></button>
 			</div>
 
 
 			</div>
-			<h2><?php __('Create Template','jaiminho'); ?></h2>
+			<h2><?php _e('Create Template','jaiminho'); ?></h2>
 			<br>
 			<div class="sp-row">
 			<div class="sp-75 sp-first">
@@ -131,7 +129,7 @@ class Jaiminho_View_Emails_Templates extends Jaiminho_View_Emails{
 							),
 						) ); ?><?php //wp_editor($post->post_content,'content_area_one_edit'); ?></div>
 
-			<?php 
+			<?php
 			if($enable_edits){
 				?>
 					<div class="tab-pane" id="header-content">
@@ -149,7 +147,7 @@ class Jaiminho_View_Emails_Templates extends Jaiminho_View_Emails{
 
 					</div>
 					<div class="tab-pane" id="footer-content">
-					<?php wp_editor(  SendPress_Tag_Footer_Page::content() , 'footer_content_edit', array(
+					<?php wp_editor(  SendPress_Data::build_social(  ) . SendPress_Tag_Footer_Page::content() , 'footer_content_edit', array(
 								'dfw' => true,
 								'drag_drop_upload' => true,
 								'tabfocus_elements' => 'insert-media-button-1,save-post',
@@ -367,4 +365,3 @@ class Jaiminho_View_Emails_Templates extends Jaiminho_View_Emails{
 // Add Access Controll!
 //SendPress_Admin::add_cap('Emails_Templates','sendpress_email');
 //SendPress_View_Overview::cap('sendpress_access');
-

@@ -1,5 +1,6 @@
 <?php
-
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-email-local-table.php' );
+require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails.php' );
 // Prevent loading this file directly
 if ( !defined('SENDPRESS_VERSION') ) {
 	header('HTTP/1.0 403 Forbidden');
@@ -9,9 +10,6 @@ if ( !defined('SENDPRESS_VERSION') ) {
 if( !class_exists('Jaiminho_View_Emails_Temp') ){
 
 
-require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/class-jaiminho-email-local-table.php' );
-require_once( ABSPATH . '/wp-content/plugins/jaiminho/classes/views/class-jaiminho-view-emails.php' );
-
 class Jaiminho_View_Emails_Temp extends Jaiminho_View_Emails{
 
 	function admin_init(){
@@ -19,8 +17,8 @@ class Jaiminho_View_Emails_Temp extends Jaiminho_View_Emails{
 	}
 
 	function delete(){
-
-		$p = $_GET['templateID'];
+		//$this->security_check();
+		$p = SPNL()->validate->_int('templateID');
 		//$type = get_post_meta( $p , "_template_type", true);
 		//if($type == 'clone'){
 			wp_delete_post($p, true);
@@ -28,8 +26,8 @@ class Jaiminho_View_Emails_Temp extends Jaiminho_View_Emails{
 		SendPress_Admin::redirect('Emails_Temp');
 	}
 
-	static function install(){
-		
+	function install(){
+		//$this->security_check();
 		SendPress_Template_Manager::install_template_content();
 		SendPress_Admin::redirect('Emails_Temp');
 	}
@@ -37,7 +35,7 @@ class Jaiminho_View_Emails_Temp extends Jaiminho_View_Emails{
 	function screen_options(){
 
 		$screen = get_current_screen();
-	 	
+
 		$args = array(
 			'label' => __('Emails per page', 'sendpress'),
 			'default' => 10,
@@ -46,15 +44,15 @@ class Jaiminho_View_Emails_Temp extends Jaiminho_View_Emails{
 		add_screen_option( 'per_page', $args );
 	}
 
- 	
+
 
 	function prerender($sp= false){
-	
-	
+
+
 
 	}
-	
-	function html($sp){
+
+	function html(){
 		SendPress_Tracking::event('Emails Tab');
 		//SendPress_Template_Manager::update_template_content();
 		//Create an instance of our package class...
@@ -62,27 +60,26 @@ class Jaiminho_View_Emails_Temp extends Jaiminho_View_Emails{
 		//Fetch, prepare, sort, and filter our data...
 		$testListTable->prepare_items();
 	?>
-	
+
 	<!-- Forms are NOT created automatically, so you need to wrap the table in one to use features like bulk actions -->
 	<form id="email-filter" method="get">
-		<div id="taskbar" class="lists-dashboard rounded group"> 
+		<div id="taskbar" class="lists-dashboard rounded group">
 
 		<h2><?php _e('Templates','sendpress'); ?></h2>
 		<small><?php _e('Help','sendpress'); ?>: <a target="_blank" href="http://docs.sendpress.com/article/58-setting-up-a-newsletter-template/"><?php _e('Getting Started with Templates','sendpress'); ?></a></small>
 	</div>
 		<!-- For plugins, we also need to ensure that the form posts back to our current page -->
-	    <input type="hidden" name="page" value="<?php echo SPNL()->validate->page($_REQUEST['page']) ?>" />
+	    <input type="hidden" name="page" value="<?php echo SPNL()->validate->page(); ?>" />
 	    <!-- Now we can render the completed list table -->
 	    <?php $testListTable->display(); ?>
 	    <?php wp_nonce_field($this->_nonce_value); ?>
 	</form><br>
 	<!--a href="<?php echo SendPress_Admin::link('Emails_Temp',array('action'=>'install')); ?>" class="btn btn-primary">Install Starter Templates</a-->
+	<a href="<?php echo SendPress_Admin::link('Emails_Temp',array('action'=>'install')); ?>" class="btn btn-primary">Install Starter Templates</a>
 	<?php
 	}
 
 }
-
-
 
 SendPress_Admin::add_cap('Emails_Templates','sendpress_email');
 

@@ -1,22 +1,22 @@
 <?php
 // Prevent loading this file directly
 if ( !defined('SENDPRESS_VERSION') ) {
-	header('HTTP/1.0 403 Forbidden');
-	die;
+  header('HTTP/1.0 403 Forbidden');
+  die;
 }
 
 if( !class_exists('Jaiminho_View_Overview') ){
 class Jaiminho_View_Overview extends SendPress_View{
 
-	function tracking( $get, $sp ){
-		SendPress_Option::set('allow_tracking', $get['allow_tracking']);
-		SendPress_Admin::redirect('Overview');
-	}
+  function tracking(){
+    //$this->security_check();
+    SendPress_Option::set('allow_tracking', SPNL()->validate->_string('allow_tracking'));
+    SendPress_Admin::redirect('Overview');
+  }
 
-	
-	function html($sp){
-   	SendPress_Tracking::event('Overview Tab');
-	
+  function html(){
+    SendPress_Tracking::event('Overview Tab');
+
 global $wp_version;
 
 $classes = 'sp-welcome-panel';
@@ -34,21 +34,21 @@ list( $display_version ) = explode( '-', $wp_version );
 
 <div class="sp-row ">
 
-  <div class="sp-block sp-33 sp-first"> 
-    <h2 class="nomargin nopadding"><?php echo SendPress_Data::bd_nice_number(SendPress_Data::get_total_subscribers()); ?></h2> <p class="fwb"><?php _e('Subscribers', 'sendpress');?></p>  
+  <div class="sp-block sp-25 sp-first">
+    <h2 class="nomargin nopadding"><?php echo SendPress_Data::bd_nice_number(SendPress_Data::get_total_subscribers()); ?></h2> <p class="fwb"><?php _e('Subscribers', 'sendpress');?></p>
   </div>
-  <div class="sp-block sp-33">
+  <div class="sp-block sp-25">
     <h2 class="nomargin nopadding"><?php $report = SendPress_Data::get_last_report(); ?><?php echo SendPress_Data::emails_active_in_queue(); ?></h2> <p class="fwb"><?php _e('Emails Actively Sending', 'sendpress');?></small></p>
   </div>
-  <div class="sp-block sp-34">
+  <div class="sp-block sp-25">
     <h2 class="nomargin nopadding"><?php echo  SendPress_Data::emails_maxed_in_queue(); ?></h2> <p class="fwb"><?php _e('Emails Stuck in Queue', 'sendpress');?></p>
   </div>
   <!--div class="sp-block sp-25">
-    <h2 class="nomargin nopadding"><?php //_e('Autocron last check', 'sendpress');?></h2> <p class="fwb">  <?php 
-    //$autocron = SendPress_Option::get('autocron','no');
+    <h2 class="nomargin nopadding"><?php _e('Autocron last check', 'sendpress');?></h2> <p class="fwb">  <?php
+    /*$autocron = SendPress_Option::get('autocron','no');
     //print_r(SendPress_Data::emails_stuck_in_queue());
 
-    /*if($autocron == 'yes') {
+    if($autocron == 'yes') {
       $api_info = json_decode( SendPress_Cron::get_info() );
       if(isset($api_info->lastcheck)){
         echo $api_info->lastcheck . " UTC";
@@ -62,14 +62,14 @@ list( $display_version ) = explode( '-', $wp_version );
   </div-->
 
 </div>
-<?php 
-if($report){ 
+<?php
+if($report){
 $rec = get_post_meta($report->ID, '_send_last_count', true);
 $this->panel_start($report->post_title ." <small style='color:#333;'>".__('This email had', 'sendpress')." ". $rec ." ".__('Recipients', 'sendpress')."</small>");
 
 
 $stat_type = get_post_meta($report->ID, '_stat_type', true);
-         
+
           $clicks = SPNL()->load("Subscribers_Url")->clicks_email_id( $report->ID  );
           $clicks_total = SPNL()->load("Subscribers_Url")->clicks_total_email_id( $report->ID  );
 ?>
@@ -77,17 +77,20 @@ $stat_type = get_post_meta($report->ID, '_stat_type', true);
 <div class="sp-row">
   <div class="sp-50 sp-first">
     <h4 style="text-align:center;"><?php _e('Opens', 'sendpress');?></h4>
-      <?php 
+      <?php
         $this->panel_start();
         $open = 0;
         $rec = get_post_meta($report->ID, '_send_last_count', true);
+        if($rec == 0 ){
+          $rec = 1;
+        }
           if($report){
             if($stat_type == 'new'){
                 $open = SPNL()->load("Subscribers_Tracker")->get_opens_total( $report->ID  );
             } else {
                 $open= SendPress_Data::get_opens($report->ID);
             }
-           
+
             $p = $open/$rec * 100;
           }
         ?>
@@ -102,7 +105,7 @@ $stat_type = get_post_meta($report->ID, '_stat_type', true);
         </div>
         </div>
         <div class="sp-50">
-        <?php 
+        <?php
           $ou = 0;
 
             if($stat_type == 'new'){
@@ -110,8 +113,8 @@ $stat_type = get_post_meta($report->ID, '_stat_type', true);
             } else {
                $ou =  SendPress_Data::get_opens_unique_total($report->ID);
             }
-         
-            
+
+
 
           $px = $ou/$rec * 100;
 
@@ -125,19 +128,19 @@ $stat_type = get_post_meta($report->ID, '_stat_type', true);
           </div>
        </div>
        </div>
-        
+
       <?php
         $this->panel_end();
       ?>
   </div>
   <div class="sp-50">
   <h4 style="text-align:center;"><?php _e('Clicks', 'sendpress');?></h4>
-    <?php 
+    <?php
         $this->panel_start();
          $click = 0;
         $rec = get_post_meta($report->ID, '_send_last_count', true);
           if($report){
-              
+
             if($stat_type == 'new'){
                 $click = SPNL()->load("Subscribers_Url")->clicks_email_id( $report->ID  );
             } else {
@@ -158,7 +161,7 @@ $stat_type = get_post_meta($report->ID, '_stat_type', true);
          </div>
         </div>
         <div class="sp-50">
-        <?php 
+        <?php
           $ou = 0;
 
           if($stat_type == 'new'){
@@ -166,7 +169,7 @@ $stat_type = get_post_meta($report->ID, '_stat_type', true);
             } else {
                 $ou = SendPress_Data::get_clicks_unique_total($report->ID);
             }
-          
+
           $px = $ou/$rec * 100;
 
         ?>
@@ -179,7 +182,7 @@ $stat_type = get_post_meta($report->ID, '_stat_type', true);
          </div>
        </div>
        </div>
-        
+
      <?php
         $this->panel_end();
       ?>
@@ -195,29 +198,29 @@ $stat_type = get_post_meta($report->ID, '_stat_type', true);
 
 
 <div class="sp-row">
-<div class="sp-50 sp-first">
+<div class="sp-33 sp-first">
 <div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title"><?php _e('Recent Subscribers', 'sendpress');?></h3>
   </div>
   <div class="panel-body">
-  	<table class="table table-striped table-condensed">
+    <table class="table table-striped table-condensed">
     <tr>
     <th>Date</th>
     <th>List</th>
     <th><div style="text-align:right;">Email</div></th>
     </tr>
-  	<?php 
-  		$recent = SPNL()->load("Subscribers_Tracker")->get_most_active(); // SendPress_Data::get_most_active_subscriber();
-  		foreach($recent as $item){
+    <?php
+      $recent = SendPress_Data::get_recent_subscribers();
+      foreach($recent as $item){
         echo "<tr>";
          echo "<td>";
-  			if(property_exists($item,'subscriberID')){
-       
-  			$d = 	SendPress_Data::get_subscriber($item->subscriberID);
-        
+        if(property_exists($item,'subscriberID')){
+
+        $d =  SendPress_Data::get_subscriber($item->subscriberID);
+
         if(property_exists($item,'updated')){
-  			   echo date_i18n("m.d.y" ,strtotime($item->updated) );
+           echo date_i18n("m.d.y" ,strtotime($item->updated) );
         }
           echo "</td>";
 echo "<td >";
@@ -227,46 +230,63 @@ echo "<td >";
          echo "</td>";
            echo "<td align='right'>";
         if(is_object($d)){
-  			echo  $d->email ."<br>";
+        echo  $d->email ."<br>";
         }
-        
+
        echo "</td>";
-  			echo "</tr>";
-  		  }
+        echo "</tr>";
+        }
       }
 
-  		
 
-  	?>
+
+    ?>
   </table>
   </div>
 </div>
 </div>
-<div class="sp-50">
-	<div class="panel panel-default">
-	  <div class="panel-heading">
-	    <h3 class="panel-title"><?php _e('Most Active Subscribers', 'sendpress');?></h3>
-	  </div>
-	  <div class="panel-body">
-	  	<ul>
-	  	<?php
-	  	$recent =  SendPress_Data::get_most_active_subscriber();
-  		
+<div class="sp-33">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><?php _e('Most Active Subscribers', 'sendpress');?></h3>
+    </div>
+    <div class="panel-body">
+      <ul>
+      <?php
+      $recent =  SPNL()->load("Subscribers_Tracker")->get_most_active(); // SendPress_Data::get_most_active_subscriber();
+
       foreach($recent as $item){
         if(property_exists($item,'subscriber_id')){
-  			echo "<li>";
-  			$d = 	SendPress_Data::get_subscriber($item->subscriber_id);
+        echo "<li>";
+        $d =  SendPress_Data::get_subscriber($item->subscriber_id);
         if(is_object($d)){
-  		    echo  $d->email;
+          echo  $d->email;
         }
-  			echo "</li>";
+        echo "</li>";
       }
-  		}
-	  	?>
-	  	</ul>
-	  </div>
-	</div>
+      }
+      ?>
+      </ul>
+    </div>
+  </div>
 </div>
+<!--div class="sp-33">
+  <?php /*if(!defined('SENDPRESS_PRO_VERSION')){ ?>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><?php _e('Go Pro!', 'sendpress');?></h3>
+    </div>
+    <div class="panel-body">
+      <ul>
+        <li><a href="http://sendpress.com/purchase-pricing/"><?php _e('Advanced Reports', 'sendpress');?></a></li>
+        <li><a href="http://sendpress.com/purchase-pricing/"><?php _e('Check Spam Scores', 'sendpress');?></a></li>
+        <li><a href="http://sendpress.com/purchase-pricing/"><?php _e('Post Notifications', 'sendpress');?></a></li>
+      </ul>
+
+    </div>
+  </div>
+  <?php } */?>
+</div-->
 </div>
 
 <script>
@@ -286,10 +306,10 @@ jQuery( document ).ready(function($) {
     if(SendPress_Option::get('feedback') == 'yes' || SendPress_Option::get('allow_tracking') == 'yes'){
       SendPress_Tracking::data();
     }
-	}
+  }
 
 }
 // Add Access Controll!
 SendPress_Admin::add_cap('Overview','sendpress_view');
-//SendPress_View_Overview::cap('sendpress_access');
+//Jaiminho_View_Overview::cap('sendpress_access');
 }
