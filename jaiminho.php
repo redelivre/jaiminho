@@ -171,7 +171,7 @@ class Jaiminho extends SendPress
 
 		/* close the connection */
 		imap_close($inbox);
-		SendPress_Admin::redirect( 'Subscribers' );
+			SendPress_Admin::redirect( 'Subscribers' );
 	}
 	/**
 	 * Localize Script
@@ -345,7 +345,6 @@ class Jaiminho extends SendPress
           update_post_meta($new_id,'_report_type', 'test' );
       }
       update_post_meta($new_id ,'_sendpress_subject', $subject );
-      var_dump("aqui ele chega");
       if(isset($info['testemails']) && $info['testemails'] != false ){
           foreach($info['testemails'] as $email){
 
@@ -891,6 +890,7 @@ class Jaiminho extends SendPress
 				'limit'      => null,
 				'offset'     => 0,
 			);
+			//TODO: this function is deprecated for wp 4.6.0
 		  $blogs = wp_get_sites( $args );
       // debug info
 		  // echo '<pre>';
@@ -1733,6 +1733,46 @@ register_activation_hook( __FILE__, array( 'Jaiminho' , 'jaiminho_define_opt_in_
 register_activation_hook( __FILE__, array( 'Jaiminho' , 'create_templates' ) );
 register_activation_hook( __FILE__, array( 'Jaiminho' , 'jaiminho_define_redelivre_default_smtp' ) );
 register_deactivation_hook( __FILE__, array( 'Jaiminho' , 'remove_templates' ) );
+
+/*
+Plugin Name: WP-CLI Commands
+Version: 1.0
+Description: Extending WP-CLI with custom commands
+Author: Konstantinos Kouratoras
+Author URI: http://www.kouratoras.gr
+*/
+
+if( defined( 'WP_CLI' ) && WP_CLI ) {
+
+        class Jaiminho_Commands {
+
+								function sendemails ( $args, $assoc_args ){
+									$blogs = wp_get_sites( $args );
+								  foreach( $blogs as $blog ){
+									  switch_to_blog( $blog['blog_id'] );
+										$blog_name = get_bloginfo( 'name' );
+										set_time_limit(0);
+		                $control = 1;
+		                while ($control != 0) {
+		                    $response = SendPress_Manager::send_single_from_queue();
+		                    if($response['sent'] == 0){
+		                        $control = 0;
+		                    }
+		                    $all = (int) SendPress_Data::emails_in_queue();
+		                    $stuck = (int) SendPress_Data::emails_stuck_in_queue();
+		                    $control = $all - $stuck;
+												//WP_CLI::success( $control );
+		                }
+
+										if ($control == 0)
+											WP_CLI::success( "$blog_name: Todos os emails foram enviados!" );
+								  }
+								  restore_current_blog();
+								}
+        }
+
+        WP_CLI::add_command( 'jaiminho', 'Jaiminho_Commands' );
+}
 
 global $Jaiminho;
 
