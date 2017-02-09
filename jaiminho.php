@@ -1746,6 +1746,7 @@ if( defined( 'WP_CLI' ) && WP_CLI ) {
 
         class Jaiminho_Commands {
 
+
 								function sendemails ( $args, $assoc_args ){
 									$blogs = wp_get_sites( $args );
 								  foreach( $blogs as $blog ){
@@ -1761,7 +1762,7 @@ if( defined( 'WP_CLI' ) && WP_CLI ) {
 		                    $all = (int) SendPress_Data::emails_in_queue();
 		                    $stuck = (int) SendPress_Data::emails_stuck_in_queue();
 		                    $control = $all - $stuck;
-												//WP_CLI::success( $control );
+												WP_CLI::success( $control );
 		                }
 
 										if ($control == 0)
