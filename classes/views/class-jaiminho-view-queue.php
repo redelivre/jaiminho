@@ -145,22 +145,28 @@ class Jaiminho_View_Queue extends SendPress_View {
 	?>
 	<div class="btn-group">
 
-       <?php if (SendPress_Option::get('emails-credits') &&  SendPress_Option::get( 'sendmethod' ) === 'Jaiminho_Sender_NetWork' || SendPress_Option::get( 'sendmethod' ) != 'Jaiminho_Sender_NetWork' ){
-          SendPress_Option::set('pause-sending','no');
-          ?>
-          <a class="btn btn-large btn-danger " href="<?php echo esc_url( admin_url('admin.php') ); ?>?action=send_message" ><i class="icon-repeat icon-white "></i>Pedir Créditos</a>
+       <?php
+
+			 if (get_option('emails-credits') &&
+			 SendPress_Option::get( 'sendmethod' ) == 'Jaiminho_Sender_NetWork'){
+               SendPress_Option::set('pause-sending','no');
+			?>
+      <a class="btn btn-large btn-danger " href="<?php echo esc_url( admin_url('admin.php') ); ?>?action=send_message" >
+				<i class="icon-repeat icon-white "></i>Pedir Créditos</a>
+      <?php }
+			else
+      {
+        SendPress_Option::set('pause-sending','yes');
+      }
+			 ?>
 					<?php if(is_super_admin()){ ?>
           <a class="btn btn-large btn-default " href="<?php echo SendPress_Admin::link('Queue'); ?>&action=pause-queue" ><i class="icon-repeat icon-white "></i> <?php echo $txt; ?></a>
           <a id="send-now" class="btn btn-primary btn-large " data-toggle="modal" href="#sendpress-sending"   ><i class="icon-white icon-refresh"></i> <?php _e('Send Emails Now','sendpress');?></a>
 					<?php } ?>
 	</div>
 	</div>
-	<?php
-      }
-      else
-      {
-        SendPress_Option::set('pause-sending','yes');
-      }
+<?php
+
 	    $emails_per_day = SendPress_Option::get('emails-per-day');
 		if($emails_per_day == 0){
 			$emails_per_day = __('Unlimited','sendpress');

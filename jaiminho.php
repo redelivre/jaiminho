@@ -700,7 +700,7 @@ class Jaiminho extends SendPress
 
 
 	function jaiminho_notices() {
-		if (!SendPress_Option::get('emails-credits')  &&  SendPress_Option::get( 'sendmethod' ) === 'Jaiminho_Sender_NetWork'  )
+		if (!get_option('emails-credits')  &&  SendPress_Option::get( 'sendmethod' ) === 'Jaiminho_Sender_NetWork'  )
 		{
 			echo '<div class="error"><p>';
 			echo "<strong>";
