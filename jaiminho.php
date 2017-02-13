@@ -507,6 +507,7 @@ class Jaiminho extends SendPress
 	function save_import(){
 
     $uploadfiles = $_FILES['uploadfiles'];
+
 	  if (is_array($uploadfiles)) {
       if ( $uploadfiles['error'] == 0 ) {
 
@@ -515,19 +516,24 @@ class Jaiminho extends SendPress
         $filename = $uploadfiles['name'];
 
         $filetype = wp_check_filetype( $filename, array('csv' => 'text/csv') );
+
         $filetitle = preg_replace('/\.[^.]+$/', '', basename( $filename ) );
         $filename = $filetitle . '.' . $filetype['ext'];
 
+				var_dump($filename);
+
         $upload_dir = wp_upload_dir();
-        if( $filetype['ext'] != 'csv' ){
+        if( $filetype['ext'] != 'csv' || $filetype['type'] != 'text/csv'){
           SendPress_Admin::redirect('Subscribers_Csvimport',array('listID'=> SPNL()->validate->_int( 'listID' )));
         }
 
-        $i = 0;
-        while ( file_exists( $upload_dir['path'] .'/' . $filename ) ) {
-          $filename = $filetitle . '_' . $i . '.' . $filetype['ext'];
-          $i++;
-        }
+        // $i = 0;
+        // while ( file_exists( $upload_dir['path'] .'/' . $filename ) ) {
+        //   $filename = $filetitle . '_' . $i . '.' . $filetype['ext'];
+				// 	var_dump($filename);
+        //   $i++;
+        // }
+				
         $filedest = $upload_dir['path'] . '/' . $filename;
 
         $filedest = str_replace('\\','/', $filedest);
@@ -539,9 +545,10 @@ class Jaiminho extends SendPress
           SendPress_Option::set('import_error', true);
         }
         update_post_meta(SPNL()->validate->_int( 'listID' ),'csv_import',$filedest);
-        if(SendPress_Option::get('import_error', false) == false  ){
+				var_dump(SendPress_Option::get('import_error'));
+        //if( SendPress_Option::get('import_error', false) == 1 ){
 		      SendPress_Admin::redirect('Subscribers_Csvprep',array('listID'=> SPNL()->validate->_int( 'listID' )));
-        }
+        //}
       }
     }
 	}
