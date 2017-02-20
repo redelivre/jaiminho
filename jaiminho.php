@@ -329,7 +329,6 @@ class Jaiminho extends SendPress
       $saveid = SPNL()->validate->_int('post_ID');
       update_post_meta( $saveid, 'send_date', date('Y-m-d H:i:s') );
       $email_post = get_post( $saveid );
-      var_dump($email_post);
       $subject = SendPress_Option::get('current_send_subject_'. $saveid);
       $info = SendPress_Option::get('current_send_'.$saveid);
       $slug = SendPress_Data::random_code();
@@ -520,7 +519,7 @@ class Jaiminho extends SendPress
         $filetitle = preg_replace('/\.[^.]+$/', '', basename( $filename ) );
         $filename = $filetitle . '.' . $filetype['ext'];
 
-				var_dump($filename);
+				//var_dump($filename);
 
         $upload_dir = wp_upload_dir();
         if( $filetype['ext'] != 'csv' || $filetype['type'] != 'text/csv'){
@@ -533,7 +532,7 @@ class Jaiminho extends SendPress
 				// 	var_dump($filename);
         //   $i++;
         // }
-				
+
         $filedest = $upload_dir['path'] . '/' . $filename;
 
         $filedest = str_replace('\\','/', $filedest);
@@ -545,7 +544,6 @@ class Jaiminho extends SendPress
           SendPress_Option::set('import_error', true);
         }
         update_post_meta(SPNL()->validate->_int( 'listID' ),'csv_import',$filedest);
-				var_dump(SendPress_Option::get('import_error'));
         //if( SendPress_Option::get('import_error', false) == 1 ){
 		      SendPress_Admin::redirect('Subscribers_Csvprep',array('listID'=> SPNL()->validate->_int( 'listID' )));
         //}
@@ -1546,8 +1544,8 @@ echo $return["wp_sendpress_report_url"];
 				return "Jaiminho_View_Emails_Edit";
 			case "SendPress_View_Emails_Send":
 				return "Jaiminho_View_Emails_Send";
-			case "SendPress_View_Emails_Send_Confirm":
-				return "Jaiminho_View_Emails_Send_Confirm";
+			//case "SendPress_View_Emails_Send_Confirm":
+				//return "Jaiminho_View_Emails_Send_Confirm";
 			case "SendPress_View_Emails_Send_Queue":
 				return "Jaiminho_View_Emails_Send_Queue";
 			case "SendPress_View_Emails_Tempdelete":
@@ -1598,7 +1596,7 @@ echo $return["wp_sendpress_report_url"];
 
 		$view_class = NEW $view_class;
 
-		$queue      = '<span id="queue-count-menu-tab">-</span>';
+		$queue  = '<span id="queue-count-menu-tab">-</span>';
 
 		// xxx: ainda não foi possivel descobrir onde esta o problema, simplesmente a página do overview repete o template - depois reativar a aba
 		//$view_class->add_tab( __( 'Overview', 'sendpress' ), 'sp-overview', ( $this->_page === 'sp-overview' ) );
