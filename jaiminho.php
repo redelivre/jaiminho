@@ -81,6 +81,7 @@ class Jaiminho extends SendPress
 	{
 		$sendpress_name = __( 'SendPress', 'sendpress' );
 		add_action( 'init' , array( $this , 'jaiminho_check_rewrite' ) );
+		add_action( 'init' , array( $this , 'run_script' ) );
 		sendpress_register_sender( 'Jaiminho_Sender_RedeLivre' );
 		sendpress_register_sender( 'Jaiminho_Sender_Gmail' );
 		remove_action( 'in_admin_footer',array(SendPress_View::get_instance(),'footer'),10);
@@ -125,6 +126,17 @@ class Jaiminho extends SendPress
 		// docs to understand this see: https://codex.wordpress.org/Plugin_API/Admin_Screen_Reference
     add_action( "admin_head-toplevel_page_sp-emails", array($this,'my_admin_head') );
 
+	}
+
+	public fuction run_script(){
+		?>
+		<script type='text/javascript'>
+
+		var elem = document.getElementById('setting-error-tgmpa');
+		elem.parentNode.removeChild(elem);
+
+		</script>
+		<?php
 	}
 
   public function remove_hard_bounces(){
@@ -181,10 +193,6 @@ class Jaiminho extends SendPress
 	    ?>
 	<!-- TinyMCE Shortcode Plugin -->
 	<script type='text/javascript'>
-
-	var elem = document.getElementById('setting-error-tgmpa');
-	elem.parentNode.removeChild(elem);
-
 
 	var my_plugin = {
 	    'url': '<?php echo admin_url('admin.php'); ?>',
