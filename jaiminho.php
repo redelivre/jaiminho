@@ -715,7 +715,7 @@ class Jaiminho extends SendPress
 			printf( __( '  Seus créditos acabaram, entre em contato para pedir mais créditos', 'jaiminho' ));
 			echo '</p></div>';
 		}
-		var_dump(get_option('emails-credits'));
+
 		if (get_option('emails-credits') == "5000" && $days <10 )
 		{
 			echo '<div class="notice notice-success is-dismissible"><p>';
@@ -1750,7 +1750,9 @@ register_activation_hook( __FILE__, array( 'Jaiminho' , 'role_base' ) );
 register_activation_hook( __FILE__, array( 'Jaiminho' , 'jaiminho_define_opt_in_email' ) );
 register_activation_hook( __FILE__, array( 'Jaiminho' , 'create_templates' ) );
 register_activation_hook( __FILE__, array( 'Jaiminho' , 'jaiminho_define_redelivre_default_smtp' ) );
+register_activation_hook( __FILE__, array( 'Jaiminho' , 'jaiminho_set_settings_for_new_site' ) );
 register_deactivation_hook( __FILE__, array( 'Jaiminho' , 'remove_templates' ) );
+
 
 /*
 Plugin Name: WP-CLI Commands
