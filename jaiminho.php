@@ -128,17 +128,6 @@ class Jaiminho extends SendPress
 
 	}
 
-	public fuction run_script(){
-		?>
-		<script type='text/javascript'>
-
-		var elem = document.getElementById('setting-error-tgmpa');
-		elem.parentNode.removeChild(elem);
-
-		</script>
-		<?php
-	}
-
   public function remove_hard_bounces(){
 		$email = SendPress_Option::get("bounce_email");
 		$password = get_option("bounce_email_password");
