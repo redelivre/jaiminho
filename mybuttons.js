@@ -34,6 +34,7 @@
                                   ed.execCommand('mceInsertContent', 0, data);
                                   }
                               });
+                              jQuery('#jaiminho-helper').modal('hide');
                             }
                           );
                       });
