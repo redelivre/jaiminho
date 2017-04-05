@@ -102,6 +102,7 @@ class Jaiminho_View_Subscribers_Add extends Jaiminho_View_Subscribers {
 			<form id="subscribers-create" method="post" action="<?php echo esc_url( admin_url('admin.php') ); ?>">
 					<!-- For plugins, we also need to ensure that the form posts back to our current page -->
 				    <input type="hidden" name="action" value="createsubscribers" />
+ 				    <?php var_dump(SPNL()->validate->_int( 'listID' )); ?> 
 				    <input type="hidden" name="listID" value="<?php echo SPNL()->validate->_int( 'listID' ); ?>" />
 				   	<textarea name="csv-add"></textarea>
 				   	<button type="submit" class="btn btn-primary"><?php _e('Submit','sendpress'); ?></button>

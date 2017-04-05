@@ -159,7 +159,7 @@ class Jaiminho extends SendPress
 		    $bounce = imap_fetchheader($inbox, $email).imap_body($inbox, $email);
 
 		    $multiArray = $bouncehandler->get_the_facts($bounce);
-				var_dump($multiArray);
+				//var_dump($multiArray);
 				if($multiArray != array()){
 					if($multiArray[0]["recipient"] == "failed"){
 						$subscriberID = SendPress_Data::get_subscriber_by_email($multiArray[0]["recipient"]);
@@ -373,7 +373,6 @@ class Jaiminho extends SendPress
     if($post_id > 0){
 
       $html = SPNL()->validate->_html('content_area_one_edit');
-      //SendPress_Error::Log($html);
       $post_update = array(
         'ID'           => $post_id,
             'post_content' => $html
@@ -388,7 +387,6 @@ class Jaiminho extends SendPress
         update_post_meta( $post_id, '_footer_content', SPNL()->validate->_html('footer_content_edit') );
       }
 
-      //  print_r($template);
       remove_filter('content_save_pre', 'wp_filter_post_kses');
       remove_filter('content_filtered_save_pre', 'wp_filter_post_kses');
       wp_update_post( $post_update );
@@ -415,56 +413,52 @@ class Jaiminho extends SendPress
   }
   function create_subscriber(){
     $email = SPNL()->validate->_email('email');
-        $fname = SPNL()->validate->_string('firstname');
-        $lname = SPNL()->validate->_string('lastname');
-        $phonenumber = SPNL()->validate->_string('phonenumber');
-        $salutation = SPNL()->validate->_string('salutation');
-        $listID = SPNL()->validate->_int('listID');
-        $status = SPNL()->validate->_string('status');
-        $subscriber_id = "";
+    $fname = SPNL()->validate->_string('firstname');
+    $lname = SPNL()->validate->_string('lastname');
+    $phonenumber = SPNL()->validate->_string('phonenumber');
+    $salutation = SPNL()->validate->_string('salutation');
+    $listID = SPNL()->validate->_int('listID');
+    $status = SPNL()->validate->_string('status');
+    $subscriber_id = "";
 
-        if( is_email($email) ){
-            $result = SendPress_Data::add_subscriber( array('firstname'=> $fname ,'email'=> $email,'lastname'=>$lname, 'phonenumber'=>$phonenumber, 'salutation'=>$salutation) );
-            SendPress_Data::update_subscriber_status($listID, $result, $status ,false);
-            $subscriber_id = $result;
-        }
+    if( is_email($email) ){
+        $result = SendPress_Data::add_subscriber( array('firstname'=> $fname ,'email'=> $email,'lastname'=>$lname, 'phonenumber'=>$phonenumber, 'salutation'=>$salutation) );
+        SendPress_Data::update_subscriber_status($listID, $result, $status ,false);
+        $subscriber_id = $result;
+    }
 
-        $state = SPNL()->validate->_string('state');
-        $city = SPNL()->validate->_string('city');
-        $genre = SPNL()->validate->_string('genre');
-        $category = SPNL()->validate->_string('category');
+    $state = SPNL()->validate->_string('state');
+    $city = SPNL()->validate->_string('city');
+    $genre = SPNL()->validate->_string('genre');
+    $category = SPNL()->validate->_string('category');
 
-        SendPress_Data::update_subscriber_meta($subscriber_id,'state',$state, $listID);
-        SendPress_Data::update_subscriber_meta($subscriber_id,'city',$city, $listID);
-        SendPress_Data::update_subscriber_meta($subscriber_id,'genre',$genre, $listID);
-        SendPress_Data::update_subscriber_meta($subscriber_id,'category',$category, $listID);
+    SendPress_Data::update_subscriber_meta($subscriber_id,'state',$state, $listID);
+    SendPress_Data::update_subscriber_meta($subscriber_id,'city',$city, $listID);
+    SendPress_Data::update_subscriber_meta($subscriber_id,'genre',$genre, $listID);
+    SendPress_Data::update_subscriber_meta($subscriber_id,'category',$category, $listID);
 
     SendPress_Admin::redirect( 'Subscribers_Subscribers' , array( 'listID' => $listID ) );
 
   }
 
-  function create_subscribers(){
+	function create_subscribers(){
+	//$this->security_check();
+	$csvadd = "email,firstname,lastname\n" . trim( SPNL()->validate->_string('csv-add') );
+	$listID = SPNL()->validate->_int('listID');
+	if($listID > 0 ){
+	$newsubscribers = SendPress_Data::subscriber_csv_post_to_array( $csvadd );
 
-      $csvadd = "email,firstname,lastname,phonenumber,state,city,genre,category\n" . trim( SPNL()->validate->_string('csv-add') );
-      $listID = SPNL()->validate->_int('listID');
-      if($listID > 0 ){
-        $newsubscribers = SendPress_Data::subscriber_csv_post_to_array( $csvadd );
-        foreach( $newsubscribers as $subscriberx){
-          if( is_email( trim( $subscriberx['email'] ) ) ){
+	foreach( $newsubscribers as $subscriberx){
+			if( is_email( trim( $subscriberx['email'] ) ) ){
 
-            $subscriber_id = SendPress_Data::add_subscriber( array('firstname'=> trim($subscriberx['firstname']) ,'email'=> trim($subscriberx['email']),'lastname'=> trim($subscriberx['lastname']) ) );
-            SendPress_Data::update_subscriber_status($listID, $subscriber_id, 2, false);
+			$result = SendPress_Data::add_subscriber( array('firstname'=> trim($subscriberx['firstname']) ,'email'=> trim($subscriberx['email']),'lastname'=> trim($subscriberx['lastname']) ) );
+			SendPress_Data::update_subscriber_status($listID, $result, 2, false);
+			}
+	}
 
-            SendPress_Data::update_subscriber_meta($subscriber_id,'state',$subscriberx['state'], $listID);
-            SendPress_Data::update_subscriber_meta($subscriber_id,'city',$subscriberx['city'], $listID);
-            SendPress_Data::update_subscriber_meta($subscriber_id,'genre',$subscriberx['genre'], $listID);
-            SendPress_Data::update_subscriber_meta($subscriber_id,'category',$subscriberx['category'], $listID);
-
-          }
-        }
-    }
-      SendPress_Admin::redirect( 'Subscribers_Subscribers' , array( 'listID' => $listID ) );
-  }
+	}
+	SendPress_Admin::redirect( 'Subscribers_Subscribers' , array( 'listID' => $listID ) );
+}
 
   function addsubscriber(){
     if (isset($_POST)) {
@@ -518,8 +512,6 @@ class Jaiminho extends SendPress
 
         $filetitle = preg_replace('/\.[^.]+$/', '', basename( $filename ) );
         $filename = $filetitle . '.' . $filetype['ext'];
-
-				//var_dump($filename);
 
         $upload_dir = wp_upload_dir();
         if( $filetype['ext'] != 'csv' || $filetype['type'] != 'text/csv'){

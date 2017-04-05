@@ -17,15 +17,13 @@ class Jaiminho_View_Overview extends SendPress_View{
   function html(){
     SendPress_Tracking::event('Overview Tab');
 
-global $wp_version;
-
 $classes = 'sp-welcome-panel';
 
 $option = get_user_meta( get_current_user_id(), 'show_sp_welcome_panel', true );
 // 0 = hide, 1 = toggled to show or single site creator, 2 = multisite site owner
 $hide = 0 == $option || ( 2 == $option && wp_get_current_user()->user_email != get_option( 'admin_email' ) );
 
-list( $display_version ) = explode( '-', $wp_version );
+list( $display_version ) = explode( '-', get_bloginfo( 'version' ) );
 
 ?>
 <br>
