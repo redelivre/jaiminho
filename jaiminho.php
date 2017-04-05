@@ -181,6 +181,11 @@ class Jaiminho extends SendPress
 	    ?>
 	<!-- TinyMCE Shortcode Plugin -->
 	<script type='text/javascript'>
+
+	var elem = document.getElementById('setting-error-tgmpa');
+	elem.parentNode.removeChild(elem);
+
+
 	var my_plugin = {
 	    'url': '<?php echo admin_url('admin.php'); ?>',
 	};
@@ -1469,7 +1474,7 @@ echo $return["wp_sendpress_report_url"];
 		{
 			$_bounce_email = $bounce_email;
 		}
-		else if ( SendPress_Option::get( 'bounce_email' ) )
+		elseif ( SendPress_Option::get( 'bounce_email' ) )
 			$_bounce_email = SendPress_Option::get('bounce_email');
 		else
 		{
