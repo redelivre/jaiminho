@@ -708,7 +708,7 @@ class Jaiminho extends SendPress
 
 		if (!get_option('emails-credits') && $days > 100 &&  SendPress_Option::get( 'sendmethod' ) === 'Jaiminho_Sender_NetWork'  )
 		{
-			echo '<div class="notice-info is-dismissible"><p>';
+			echo '<div class="notice notice-info is-dismissible"><p>';
 			echo "<strong>";
 			_e( 'Olá!', 'sendpress' );
 			echo "</strong>&nbsp;";
@@ -716,9 +716,9 @@ class Jaiminho extends SendPress
 			echo '</p></div>';
 		}
 
-		if ( $days <10 &&  SendPress_Option::get( 'sendmethod' ) === 'Jaiminho_Sender_NetWork'  )
+		if (get_option('emails-credits') == "5000" && $days <10 )
 		{
-			echo '<div class="notice-success is-dismissible"><p>';
+			echo '<div class="notice notice-success is-dismissible"><p>';
 			echo "<strong>";
 			_e( 'Olá!', 'sendpress' );
 			echo "</strong>&nbsp;";
