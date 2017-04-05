@@ -715,7 +715,7 @@ class Jaiminho extends SendPress
 			printf( __( '  Seus créditos acabaram, entre em contato para pedir mais créditos', 'jaiminho' ));
 			echo '</p></div>';
 		}
-
+		var_dump(get_option('emails-credits'));
 		if (get_option('emails-credits') == "5000" && $days <10 )
 		{
 			echo '<div class="notice notice-success is-dismissible"><p>';
