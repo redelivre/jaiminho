@@ -699,15 +699,34 @@ class Jaiminho extends SendPress
 
 
 	function jaiminho_notices() {
-		if (!get_option('emails-credits')  &&  SendPress_Option::get( 'sendmethod' ) === 'Jaiminho_Sender_NetWork'  )
+
+		$registered = strtotime(get_blog_details()->registered);
+		$now = new DateTime();
+		$now = strtotime($now->format('Y-m-d H:i:s'));
+		$secs = $now - $registered;
+		$days = $secs / 86400;
+
+		if (!get_option('emails-credits') && $days > 100 &&  SendPress_Option::get( 'sendmethod' ) === 'Jaiminho_Sender_NetWork'  )
 		{
-			echo '<div class="error"><p>';
+			echo '<div class="notice-info is-dismissible"><p>';
 			echo "<strong>";
-			_e( 'Warning!', 'sendpress' );
+			_e( 'Olá!', 'sendpress' );
 			echo "</strong>&nbsp;";
-			printf( __( '  Seus créditos acabaram, você deve esperar até o próximo mês para que seus créditos reiniciem.', 'jaiminho' ));
+			printf( __( '  Seus créditos acabaram, entre em contato para pedir mais créditos', 'jaiminho' ));
 			echo '</p></div>';
 		}
+
+		if (get_option('emails-credits') && $days <10 &&  SendPress_Option::get( 'sendmethod' ) === 'Jaiminho_Sender_NetWork'  )
+		{
+			echo '<div class="notice-success is-dismissible"><p>';
+			echo "<strong>";
+			_e( 'Olá!', 'sendpress' );
+			echo "</strong>&nbsp;";
+			printf( __( '  Bem vindo a plataforma, nós colocamos 5000 créditos, ou seja você pode enviar 5k emails a partir de agora, se precisar de mais entre em contato com a gente', 'jaiminho' ));
+			echo '</p></div>';
+		}
+
+
 	}
 
   function jaiminho_set_settings_for_new_site($blog_id){
