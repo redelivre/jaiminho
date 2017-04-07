@@ -1,0 +1,694 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: SendPress\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sendpress\n"
+"POT-Creation-Date: 2015-07-15 14:01:56+00:00\n"
+"PO-Revision-Date: 2015-07-15 14:04+0000\n"
+"Last-Translator: Josh Lyford <josh@brewlabs.us>\n"
+"Language-Team: Spanish (Spain) (http://www.transifex.com/projects/p/"
+"sendpress/language/es_ES/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es_ES\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid " MByte"
+msgstr "MByte"
+
+msgid ""
+"<b>SendPress</b>: We have upgraded your lists to a new format. Please check "
+"your <a href=\"%1$s\">widget settings</a> to re-enable your list(s). | <a "
+"href=\"%2$s\">Hide Notice</a>"
+msgstr ""
+"<b>SendPress</b>: Tus listas han sido actualizadas a un nuevo formato. Por "
+"favor, comprueba la <a href=\"%1$s\">configuración del widget</a> para "
+"reactivar tus listas. | <a href=\"%2$s\">Ocultar notificación</a>"
+
+msgid "A Test Email from SendPress."
+msgstr "Un mensaje de prueba desde SendPress."
+
+msgid "A list of download links for each download purchased"
+msgstr "Una lista de links de descarga, una por cada descarga comprada"
+
+msgid "API Key"
+msgstr "Clave API"
+
+msgid "Actions"
+msgstr "Acciones"
+
+msgid "Activate"
+msgstr "Activar"
+
+msgid "Active"
+msgstr "Activo"
+
+msgid "Add"
+msgstr "Añadir"
+
+msgid "Add Subscriber"
+msgstr "Añadir suscriptor"
+
+msgid "Add Subscribers"
+msgstr "Añadir suscriptores"
+
+msgid "Add-ons"
+msgstr "Módulos"
+
+msgid "Advanced"
+msgstr "Avanzado"
+
+msgid "Allow tracking"
+msgstr "Permitir seguimiento"
+
+msgid "Allow user to sign up to this list"
+msgstr "Permitir a los usuarios suscribirse a esta lista"
+
+msgid "Background"
+msgstr "Fondo"
+
+msgid "Basic Setup"
+msgstr "Configuración básica"
+
+msgid "Body"
+msgstr "Cuerpo"
+
+msgid "Button Text:"
+msgstr "Texto del botón:"
+
+msgid "Buy Now"
+msgstr "Comprar ahora"
+
+msgid "CAN-SPAM"
+msgstr "CAN-SPAM"
+
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgid "Cancel Send"
+msgstr "Cancelar envío"
+
+msgid "Check your inbox now to confirm your subscription."
+msgstr "Comprueba tu correo ahora para confirmar la suscripción."
+
+msgid "Clone"
+msgstr "Clonar"
+
+msgid "Close"
+msgstr "Cerrar"
+
+msgid "Code"
+msgstr "Código"
+
+msgid "Collect First Name"
+msgstr "Recopilar Nombre"
+
+msgid "Collect Last Name"
+msgstr "Recopilar Apellido"
+
+msgid "Configure"
+msgstr "Configurar"
+
+msgid "Confirm Send"
+msgstr "Confirmar envío"
+
+msgid "Content"
+msgstr "Contenido"
+
+msgid "Correct formats"
+msgstr "Corregir formatos"
+
+msgid "Create Email"
+msgstr "Crear email"
+
+msgid "Create List"
+msgstr "Crear lista"
+
+msgid "Create/Edit/Delete"
+msgstr "Crear/Editar/Eliminar"
+
+msgid "Created"
+msgstr "Creado"
+
+msgid "Custom Fields"
+msgstr "Campos personalizados"
+
+msgid "Daily"
+msgstr "Diario"
+
+msgid "Date"
+msgstr "Fecha"
+
+msgid "Days"
+msgstr "Días"
+
+msgid "Deactivate"
+msgstr "Desactivar"
+
+msgid "Debug Info"
+msgstr "Debug Info"
+
+msgid "Default"
+msgstr "Por defecto"
+
+msgid "Delete"
+msgstr "Eliminar"
+
+msgid "Delete All Emails in the Queue"
+msgstr "Eliminar todos los emails de la cola de envío"
+
+msgid "Description"
+msgstr "Descripción"
+
+msgid "Description:"
+msgstr "Descripción:"
+
+msgid "Disable front end CSS"
+msgstr "Desactivar las hojas de estilo CSS de la interfaz"
+
+msgid "Disable signup form ajax"
+msgstr "Desactivar el formulario Ajax"
+
+msgid ""
+"Displays a signup form so your users can sign up for your public e-mail "
+"lists."
+msgstr ""
+"Muestra un formulario de alta, de manera que los usuarios pueden inscribirse "
+"a tus listas de correo públicas."
+
+msgid "Do not allow tracking"
+msgstr "Bloquear seguimiento"
+
+msgid "E-Mail"
+msgstr "E-mail"
+
+msgid "E-Mail Label:"
+msgstr "Etiqueta de Email:"
+
+msgid "Edit"
+msgstr "Editar"
+
+msgid "Edit List"
+msgstr "Editar lista"
+
+msgid "Edit Subscriber"
+msgstr "Editar suscriptor"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Emails"
+msgstr "Emails"
+
+msgid ""
+"Emails shoud be written in separate lines. A line could also include a name, "
+"which is separated from the email by a comma"
+msgstr ""
+"Los emails deben estar escritos en líneas separadas. Una línea puede incluir "
+"también el nombre, que debe estar separado del email por una coma"
+
+msgid "Encoding"
+msgstr "Codificación"
+
+msgid "Excerpt"
+msgstr "Extracto"
+
+msgid "Export"
+msgstr "Exportar"
+
+msgid "Filter"
+msgstr "Filtrar"
+
+msgid "First Name"
+msgstr "Nombre"
+
+msgid "First Name Label:"
+msgstr "Etiqueta de Nombre:"
+
+msgid "First name"
+msgstr "Nombre"
+
+msgid "Firstname"
+msgstr "Nombre"
+
+msgid "Footer"
+msgstr "Pie"
+
+msgid "Form"
+msgstr "Formulario"
+
+msgid "Form Name"
+msgstr "Nombre de formulario"
+
+msgid "Forms"
+msgstr "Formularios"
+
+msgid "From Email"
+msgstr "Email del remitente"
+
+msgid "From Name"
+msgstr "Nombre del remitente"
+
+msgid "Full Access"
+msgstr "Acceso completo"
+
+msgid "Full Access (<small>No Permissions Access</small>)"
+msgstr "Acceso completo (<small>Sin permisos de acceso</small>)"
+
+msgid ""
+"Gmail is limited to 500 emails a day. We recommend that you open a dedicated "
+"Gmail account for this purpose"
+msgstr ""
+"Gmail está limitado a 500 emails diarios. Se recomienda abrir una cuenta de "
+"Gmail exclusivamente para esto"
+
+msgid "Header"
+msgstr "Cabecera"
+
+msgid "Help"
+msgstr "Ayuda"
+
+msgid "Help Make SendPress Better"
+msgstr "Ayuda a mejorar SendPress"
+
+msgid "IP address"
+msgstr "Dirección IP"
+
+msgid "If you close this window sending will stop. "
+msgstr "Si cierras esta ventana, el envío se cancelará."
+
+msgid "Import"
+msgstr "Importar"
+
+msgid "Info"
+msgstr "Información"
+
+msgid "Insert"
+msgstr "Insertar"
+
+msgid "Instantly"
+msgstr "fácilmente"
+
+msgid "Invalid API key!"
+msgstr "¡Clave API inválida!"
+
+msgid "Invalid query!"
+msgstr "¡Petición inválida!"
+
+msgid "Is this email not displaying correctly?"
+msgstr "¿Problemas para visualizar el mensaje?"
+
+msgid "Large"
+msgstr "Grande"
+
+msgid "Last Name"
+msgstr "Apellido"
+
+msgid "Last Name Label:"
+msgstr "Etiqueta de Apellido:"
+
+msgid "Last Send"
+msgstr "Último envío"
+
+msgid "Last name"
+msgstr "Apellido"
+
+msgid "Lastname"
+msgstr "Apellidos"
+
+msgid "Link"
+msgstr "Enlace"
+
+msgid "List"
+msgstr "Lista"
+
+msgid "Lists"
+msgstr "Listas"
+
+msgid "Load Javascript in Footer"
+msgstr "Cargar el Javascript en el pie de página"
+
+msgid "Logs"
+msgstr "Registros"
+
+msgid "Main Content"
+msgstr "Contenido principal"
+
+msgid "Manage Subscription"
+msgstr "Gestionar suscripción"
+
+msgid "Monthly"
+msgstr "Mensual"
+
+msgid "Name"
+msgstr "Nombre"
+
+msgid "Never Subscribed"
+msgstr "Sin suscripción"
+
+msgid "No"
+msgstr "No"
+
+msgid "No Debug info saved."
+msgstr "No se guardó Debug Info"
+
+msgid "No Lists Selected"
+msgstr "No hay listas seleccionadas"
+
+msgid "No! I was Joking"
+msgstr "¡No, era broma!"
+
+msgid "None"
+msgstr "Ninguno"
+
+msgid "Not interested anymore?"
+msgstr "¿No te interesa?"
+
+msgid "Once Every Minute"
+msgstr "Una vez cada minuto"
+
+msgid "Once every two minutes"
+msgstr "Una vez cada dos minutos"
+
+msgid "Overview"
+msgstr "General"
+
+msgid "Page"
+msgstr "Página"
+
+msgid "Password"
+msgstr "Contraseña"
+
+msgid "Permissions"
+msgstr "Permisos"
+
+msgid "Please enter your e-mail address"
+msgstr "Por favor, introduce tu email"
+
+msgid "Port 25 seems to be blocked."
+msgstr "El puerto 25 parece estar bloqueado"
+
+msgid "Port 465 seems to be blocked. Gmail may have trouble"
+msgstr "El puerto 465 parece estar bloqueado. Puede que Gmail tenga problemas"
+
+msgid "Port 587 seems to be blocked."
+msgstr "El puerto 587 parece estar bloqueado."
+
+msgid "Pro"
+msgstr "Pro"
+
+msgid "Queue"
+msgstr "Cola de envío"
+
+msgid "Really? Delete All Emails in the Queue."
+msgstr "¿Estas seguro? Esto borrará todos los emails en la cola de envío."
+
+msgid "Reports"
+msgstr "Informes"
+
+msgid "Role"
+msgstr "Perfil"
+
+msgid "SMTP Debug Info"
+msgstr "SMTP Debug Info"
+
+msgid "Save"
+msgstr "Guardar"
+
+msgid "Save & Next"
+msgstr "Guardar y continuar"
+
+msgid "Save My Settings"
+msgstr "Guardar mi configuración"
+
+msgid "Saved"
+msgstr "Guardado"
+
+msgid "Search Posts"
+msgstr "Buscar entradas"
+
+msgid "Select page"
+msgstr "Seleccionar página"
+
+msgid "Send"
+msgstr "Enviar"
+
+msgid "Send Email"
+msgstr "Enviar email"
+
+msgid "Send Emails Now"
+msgstr "Enviar emails ahora"
+
+msgid "Send Test!"
+msgstr "¡Enviar prueba!"
+
+msgid "SendPress"
+msgstr "SendPress"
+
+msgid "SendPress Internal Container"
+msgstr "Contenedor interno de SendPress"
+
+msgid "SendPress List"
+msgstr "Lista SendPress"
+
+msgid "SendPress Page"
+msgstr "Página SendPress"
+
+msgid "SendPress Signup"
+msgstr "Alta en SendPress"
+
+msgid "SendPress requires WordPress version %s or later."
+msgstr "SendPress requiere la versión %s de WordPress o superior."
+
+msgid "SendPress test email :)."
+msgstr "Mensaje de prueba SendPress :)."
+
+msgid "Sending Account"
+msgstr "Cuenta de envío"
+
+msgid "Sending Emails"
+msgstr "Enviando correos"
+
+msgid "Sendpress Pages"
+msgstr "Páginas SendPress"
+
+msgid "Settings"
+msgstr "Configuración"
+
+msgid "Shortcode"
+msgstr "Atajo"
+
+msgid "Signup"
+msgstr "Registrarse"
+
+msgid "Signup Date"
+msgstr "Fecha de alta"
+
+msgid "Single Post"
+msgstr "Entrada individual"
+
+msgid "Start Tour"
+msgstr "Comenzar visita guiada"
+
+msgid "Status"
+msgstr "Estado"
+
+msgid "Styles"
+msgstr "Estilos"
+
+msgid "Subject"
+msgstr "Asunto"
+
+msgid "Submit"
+msgstr "Enviar"
+
+msgid "Subscribed"
+msgstr "Altas"
+
+msgid "Subscribers"
+msgstr "Suscriptores"
+
+msgid "Template"
+msgstr "Plantilla"
+
+msgid "Templates"
+msgstr "Plantillas"
+
+msgid "Test"
+msgstr "Test"
+
+msgid "Tests"
+msgstr "Test"
+
+msgid "Text"
+msgstr "Texto"
+
+msgid "Thank you for signing up!"
+msgstr "¡Gracias por suscribirte!"
+
+msgid "Thank you message:"
+msgstr "Mensaje de agradecimiento:"
+
+msgid "The SMTP debugging output is shown below:\n"
+msgstr ""
+"A continuación se muestra la información del control de errores del SMTP:\n"
+
+msgid "The mailer error info: "
+msgstr "Información del error del remitente:"
+
+msgid "The result was: "
+msgstr "El resultado fue:"
+
+msgid ""
+"This is dictated under the <a href=\"http://business.ftc.gov/documents/bus61-"
+"can-spam-act-compliance-guide-business\" target=\"_blank\">Federal CAN-SPAM "
+"Act of 2003</a>."
+msgstr ""
+"Esto está regulado según el <a href=\"http://business.ftc.gov/documents/"
+"bus61-can-spam-act-compliance-guide-business\" target=\"_blank\">Acta "
+"Federal CAN-SPAM de 2003</a>."
+
+msgid "This is text only alternative body."
+msgstr "Este es sólo el texto alternativo del cuerpo."
+
+msgid ""
+"This will remove all emails from the queue without attempting to send them"
+msgstr ""
+"Esto eliminará todos los emails de la cola de envío sin intentar procesarlos"
+
+msgid "Title:"
+msgstr "Título:"
+
+msgid ""
+"To copy the system info, click below then press Ctrl + C (PC) or Cmd + C "
+"(Mac)."
+msgstr ""
+"Para copiar la información del sistema, haga clic a continuación a "
+"continuación, pulse Ctrl + C (PC) o Cmd + C (Mac)."
+
+msgid "Toggle navigation"
+msgstr "Navigación"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Unlimited"
+msgstr "Ilimitado."
+
+msgid "Unsubscribe"
+msgstr "Date de baja"
+
+msgid "Unsubscribed"
+msgstr "Bajas"
+
+msgid "Update"
+msgstr "Actualizar"
+
+msgid "Updated"
+msgstr "Actualizar"
+
+msgid "Use as %s"
+msgstr "Usar como %s"
+
+msgid "Use this Image"
+msgstr "Utilizar esta imagen"
+
+msgid "User was not subscribed to the list."
+msgstr "El usuario no se ha suscrito a la lista."
+
+msgid "Username"
+msgstr "Nombre de usuario"
+
+msgid "View"
+msgstr "Ver"
+
+msgid "View Page"
+msgstr "Ver página"
+
+msgid "View it in your browser"
+msgstr "Ábrelo en tu explorador"
+
+msgid "Warning!"
+msgstr "¡Aviso!"
+
+msgid "Website URL"
+msgstr "URL del sitio web"
+
+msgid "Weekly"
+msgstr "Semanal"
+
+msgid "Welcome to SendPress"
+msgstr "Bienvenido a SendPress"
+
+msgid "Yes"
+msgstr "Si"
+
+msgid "Yes! Delete All Emails"
+msgstr "Si, elimínalos todos"
+
+msgid "You are subscribed to the following lists:"
+msgstr "Estás suscrito a las siguientes listas:"
+
+msgid "You do not have sufficient permissions to access this page."
+msgstr "No tienes suficientes permisos para acceder a esta página"
+
+msgid "You must specify both a token and API key!"
+msgstr "¡Debes especificar tanto una clave API como un token!"
+
+msgid "You're all set, and should start receiving emails soon."
+msgstr ""
+"El proceso se ha completado y recibirás emails a partir de este momento."
+
+msgid ""
+"You've just installed SendPres. Please helps us improve it by allowing us to "
+"gather anonymous usage stats so we know which configurations, plugins and "
+"themes to test with."
+msgstr ""
+"Acabas de instalar SendPress. Por favor, ayúdanos a mejorarlo permitiendo "
+"recopilar estadísticas anónimas, de manera que conozcamos con qué "
+"configuraciones, plugins y temas probarlo."
+
+msgid ""
+"You've just installed SendPress! Click &ldquo;Start Tour&rdquo; to view a "
+"quick introduction of this plugins core functionality."
+msgstr ""
+"Acabas de instalar SendPress! Haz click en &ldquo;Comenzar visita "
+"guiada&rdquo; para ver una introducción rápida sobre la funcionalidad de "
+"este plugin.."
+
+msgid "Your Website"
+msgstr "Tu sitio web"
+
+msgid ""
+"Your message must include your valid physical postal address. This can be "
+"your current street address, a post office box youve registered with the U."
+"S. Postal Service, or a private mailbox youve registered with a commercial "
+"mail receiving agency established under Postal Service regulations."
+msgstr ""
+"Tu mensaje debe incluir una dirección postal válida. Ésta puede ser tu "
+"domicilio actual, un apartado de correos registrado en el servicio postal de "
+"EE.UU., o un buzón de recepción registrado con una agencia establecida según "
+"la normativa del Servicio Postal."
+
+msgid "Your request could not be authenticated!"
+msgstr "¡Tu petición no ha podido ser autentificada!"
+
+msgid "Your subscriptions have been updated. Thanks."
+msgstr "Tus suscripciones han sido guardadas. Gracias."
+
+msgid "of"
+msgstr "de"
+
+msgid "required in the US."
+msgstr "requisito en EE.UU."
+
+msgctxt "sendpress"
+msgid "Form"
+msgstr "Formulario"
+
+msgctxt "sendpress"
+msgid "Standard"
+msgstr "Estándar"
