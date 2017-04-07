@@ -733,7 +733,7 @@ class Jaiminho extends SendPress
     switch_to_blog( $blog_id );
 
     activate_plugin('sendpress/sendpress.php');
-    activate_plugin('jaiminho/jaiminho.php');
+    //activate_plugin('jaiminho/jaiminho.php');
     SendPress_Option::set( 'wpcron-per-call' , 5000 );
     SendPress_Option::set( 'emails-per-day' , 5000);
     SendPress_Option::set( 'emails-per-hour' , 2500 );
@@ -752,9 +752,9 @@ class Jaiminho extends SendPress
     {
       $method = SendPress_Option::set($key,$value);
     }
-
-    $this->jaiminho_define_opt_in_email();
-    $this->create_templates();
+		$jaiminho = new Jaiminho();
+    $jaiminho->jaiminho_define_opt_in_email();
+    $jaiminho->create_templates();
 
     restore_current_blog();
   }
