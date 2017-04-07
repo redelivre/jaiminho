@@ -1504,6 +1504,8 @@ echo $return["wp_sendpress_report_url"];
 				$sitename = substr( $sitename, 4 );
 			}
 			$sets = array();
+			$sets['value'] = "";
+
 			$sets['value'] = array_merge(array($sets['value']), get_option('plataform_defined_settings', array()));
 			$_bounce_email = 'bounce@' . $sitename;
 		}
