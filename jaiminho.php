@@ -1,9 +1,9 @@
 <?php
 /*
    Plugin Name: Jaiminho Newsletters
-   Version: 2.0
+   Version: 2.1
    Plugin URI: https://jaiminho.redelivre.org.br
-   Description: Fork do Seedpress com algumas personalizações para a Rede Livre.
+   Description: Plugin que atualiza o Seedpress em tempo de execução com algumas personalizações para a Rede Livre.
    Author: RedeLivre
    Author URI: https://redelivre.org.br
    Developer: https://github.com/cabelotaina
@@ -1747,11 +1747,9 @@ public static function autoload( $className ) {
 	}
 
 	return;
-
 }
 }
 
-register_activation_hook( __FILE__, array( 'Jaiminho' , 'role_base' ) );
 register_activation_hook( __FILE__, array( 'Jaiminho' , 'jaiminho_define_opt_in_email' ) );
 register_activation_hook( __FILE__, array( 'Jaiminho' , 'create_templates' ) );
 register_activation_hook( __FILE__, array( 'Jaiminho' , 'jaiminho_define_redelivre_default_smtp' ) );
