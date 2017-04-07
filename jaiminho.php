@@ -1503,6 +1503,7 @@ echo $return["wp_sendpress_report_url"];
 			if ( substr( $sitename, 0, 4 ) == 'www.' ) {
 				$sitename = substr( $sitename, 4 );
 			}
+			$sets = array();
 			$sets['value'] = array_merge(array($sets['value']), get_option('plataform_defined_settings', array()));
 			$_bounce_email = 'bounce@' . $sitename;
 		}
