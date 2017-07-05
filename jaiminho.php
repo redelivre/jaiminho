@@ -1752,13 +1752,6 @@ public static function autoload( $className ) {
 }
 }
 
-register_activation_hook( __FILE__, array( 'Jaiminho' , 'jaiminho_define_opt_in_email' ) );
-register_activation_hook( __FILE__, array( 'Jaiminho' , 'create_templates' ) );
-register_activation_hook( __FILE__, array( 'Jaiminho' , 'jaiminho_define_redelivre_default_smtp' ) );
-register_activation_hook( __FILE__, array( 'Jaiminho' , 'jaiminho_set_settings_for_new_site' ) );
-register_deactivation_hook( __FILE__, array( 'Jaiminho' , 'remove_templates' ) );
-
-
 /*
 Plugin Name: WP-CLI Commands
 Version: 1.0
@@ -1803,3 +1796,9 @@ if( defined( 'WP_CLI' ) && WP_CLI ) {
 global $Jaiminho;
 
 $Jaiminho = new Jaiminho();
+
+register_activation_hook( __FILE__, array( 'Jaiminho' , 'jaiminho_define_opt_in_email' ) );
+register_activation_hook( __FILE__, array( $Jaiminho , 'create_templates' ) );
+register_activation_hook( __FILE__, array( $Jaiminho , 'jaiminho_define_redelivre_default_smtp' ) );
+register_activation_hook( __FILE__, array( $Jaiminho , 'jaiminho_set_settings_for_new_site' ) );
+register_deactivation_hook( __FILE__, array( $Jaiminho , 'remove_templates' ) );
