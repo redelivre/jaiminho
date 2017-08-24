@@ -1,0 +1,3 @@
+[submodule "includes/php-bounce-handler"]
+	path = includes/php-bounce-handler
+	url = https://github.com/cfortune/PHP-Bounce-Handler.git
