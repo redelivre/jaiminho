@@ -76,6 +76,7 @@ class ET_Builder_Module_Jaiminho extends ET_Builder_Module {
             $item = get_post();
 			$lists[$item->ID] = esc_html__( get_the_title() . " id: " . $item->ID, 'et_builder' );
 		}
+		wp_reset_postdata();
 
 		$fields = array(
 			'select_background_layout' => array(
